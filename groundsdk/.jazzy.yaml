@@ -1,0 +1,131 @@
+module: GroundSdk
+author: Parrot Drones SAS
+author_url: http://developer.parrot.com
+copyright: "Copyright (C) 2019 Parrot Drones SAS"
+theme: "fullwidth"
+exclude:
+  - GroundSdk/Internal/**
+documentation: doc/*.md
+disable_search: true
+clean: true
+
+custom_categories:
+  - name: Guide
+    children:
+    - Overview
+    - Mavlink
+
+  - name: GroundSdk
+    children:
+    - GroundSdk
+    - GroundSdkConfig
+    - Ref
+
+  - name: Devices
+    children:
+    - Drone
+    - RemoteControl
+    - DroneListEntry
+    - RemoteControlListEntry
+    - DeviceState
+    - DeviceConnector
+
+  - name: Instruments
+    children:
+    - Instrument
+    - Instruments
+    - InstrumentProvider
+    - Alarms
+    - Altimeter
+    - AttitudeIndicator
+    - BatteryInfo
+    - CameraExposureValues
+    - Compass
+    - FlyingIndicators
+    - FlightMeter
+    - Gps
+    - Radio
+    - Speedometer
+    - PhotoProgressIndicator
+
+  - name: Peripherals
+    children:
+    - Peripheral
+    - Peripherals
+    - PeripheralProvider
+    - Antiflicker
+    - Beeper
+    - Camera
+    - MainCamera
+    - ThermalCamera
+    - CopterMotors
+    - CrashReportDownloader
+    - DroneFinder
+    - FlightDataDownloader
+    - FlightLogDownloader
+    - Geofence
+    - Gimbal
+    - Leds
+    - Magnetometer
+    - MagnetometerWith1StepCalibration
+    - MagnetometerWith3StepCalibration
+    - MediaStore
+    - PreciseHome
+    - RemovableUserStorage
+    - SkyCtrl3Gamepad
+    - StreamServer
+    - SystemInfo
+    - TargetTracker
+    - ThermalControl
+    - Updater
+    - VirtualGamepad
+    - WifiAccessPoint
+    - WifiScanner
+
+  - name: Piloting Interfaces
+    children:
+    - PilotingItf
+    - PilotingItfs
+    - PilotingItfProvider
+    - ActivablePilotingItf
+    - ActivablePilotingItfState
+    - AnimationPilotingItf
+    - FlightPlanPilotingItf
+    - FollowMePilotingItf
+    - GuidedPilotingItf
+    - LookAtPilotingItf
+    - ManualCopterPilotingItf
+    - PointOfInterestPilotingItf
+    - ReturnHomePilotingItf
+
+  - name: Facilities
+    children:
+    - Facility
+    - Facilities
+    - AutoConnection
+    - BlackBoxReporter
+    - CrashReporter
+    - FirmwareManager
+    - FlightDataManager
+    - FlightLogReporter
+    - ReverseGeocoder
+    - UserAccount
+    - UserHeading
+    - UserLocation
+
+  - name: Settings
+    children:
+    - BoolSetting
+    - DoubleSetting
+    - IntSetting
+    - StringSetting
+
+  - name: Stream
+    children:
+    - FileReplay
+    - Replay
+    - Overlayer
+    - Stream
+    - StreamView
+    - TextureLoader
+    - YuvSinkListener

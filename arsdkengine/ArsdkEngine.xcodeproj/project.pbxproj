@@ -1,0 +1,1831 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		020B171A2089D0EA00CB64A8 /* FollowFeatureTrackingSharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020B17192089D0EA00CB64A8 /* FollowFeatureTrackingSharing.swift */; };
+		020C8E78202863BF0003B0CD /* FlightMeterMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020C8E77202863BE0003B0CD /* FlightMeterMatcher.swift */; };
+		020F1DB820907F7200CCEB5E /* SkyCtrl3MappingEntryMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F1DB720907F7200CCEB5E /* SkyCtrl3MappingEntryMatcher.swift */; };
+		020F1DBA20907FE100CCEB5E /* Sc3GamepadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F1DB920907FE100CCEB5E /* Sc3GamepadTests.swift */; };
+		02108837209B021500F013E4 /* FlightDataDownloaderMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02108836209B021500F013E4 /* FlightDataDownloaderMatcher.swift */; };
+		02156A3420502F01002F3F7D /* AnafiPoiPilotingItf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02156A3320502F00002F3F7D /* AnafiPoiPilotingItf.swift */; };
+		0216F7BD1FCF1D3900841577 /* GuidedPilotingItfController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216F7BC1FCF1D3900841577 /* GuidedPilotingItfController.swift */; };
+		0216F7BF1FD002FC00841577 /* AnafiGuidedPilotingItf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216F7BE1FD002FB00841577 /* AnafiGuidedPilotingItf.swift */; };
+		021D82242093219500C53EC3 /* AnafiGeofence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021D82232093219500C53EC3 /* AnafiGeofence.swift */; };
+		021D8226209367D500C53EC3 /* AnafiGeofenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021D8225209367D500C53EC3 /* AnafiGeofenceTests.swift */; };
+		0226198C206933F9005587B2 /* WifiAccessPointController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226198B206933F8005587B2 /* WifiAccessPointController.swift */; };
+		022637BF205FBB6F00D390B3 /* FtpFlightPlanUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022637BE205FBB6F00D390B3 /* FtpFlightPlanUploader.swift */; };
+		022637C1205FD2AA00D390B3 /* HttpFlightPlanUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022637C0205FD2AA00D390B3 /* HttpFlightPlanUploader.swift */; };
+		022637C3205FD52D00D390B3 /* FlightPlanRestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022637C2205FD52C00D390B3 /* FlightPlanRestApi.swift */; };
+		022C387920A34B7000B4E319 /* anafi_binary_pud_1 in Resources */ = {isa = PBXBuildFile; fileRef = 022C387820A34B7000B4E319 /* anafi_binary_pud_1 */; };
+		022C387B20A34B8200B4E319 /* FlightDataDecoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022C387A20A34B8200B4E319 /* FlightDataDecoderTests.swift */; };
+		022C387D20A4D94400B4E319 /* expected_result.pud in Resources */ = {isa = PBXBuildFile; fileRef = 022C387C20A4D94400B4E319 /* expected_result.pud */; };
+		0235EDC92076530C006E7C9C /* TargetTrackerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0235EDC82076530C006E7C9C /* TargetTrackerController.swift */; };
+		0235EDCB20765F67006E7C9C /* TargetTrackerControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0235EDCA20765F67006E7C9C /* TargetTrackerControllerTests.swift */; };
+		0235EDCD20766245006E7C9C /* TargetFramingSettingMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0235EDCC20766244006E7C9C /* TargetFramingSettingMatcher.swift */; };
+		0235EDCF207671A6006E7C9C /* MockSystemLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0235EDCE207671A6006E7C9C /* MockSystemLocation.swift */; };
+		0237580D209C92CD0077F63C /* MockFlightDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237580C209C92CD0077F63C /* MockFlightDataStorage.swift */; };
+		02375856209C9C8A0077F63C /* ArsdkFlightDataDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02375855209C9C8A0077F63C /* ArsdkFlightDataDownloaderTests.swift */; };
+		0237586220A08B340077F63C /* PudStreamDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237586120A08B340077F63C /* PudStreamDecoder.swift */; };
+		0253D60720601DA400FA5029 /* HttpFlightPlanPilotingItfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253D60620601DA300FA5029 /* HttpFlightPlanPilotingItfTests.swift */; };
+		025EF0322057E26F00768014 /* SkyControllerFamilyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025EF0312057E26F00768014 /* SkyControllerFamilyController.swift */; };
+		025FB9FB20AC8AED00D84597 /* ArsdkEngineUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025FB9FA20AC8AED00D84597 /* ArsdkEngineUtil.swift */; };
+		025FB9FD20AC8B6400D84597 /* UserAccountInfoMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025FB9FC20AC8B6400D84597 /* UserAccountInfoMatcher.swift */; };
+		025FB9FF20AC8C1A00D84597 /* MockUserAccountUtilityCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025FB9FE20AC8C1A00D84597 /* MockUserAccountUtilityCore.swift */; };
+		026B64D32085FF7900FE5C86 /* FollowFeatureFollowMePilotingItf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026B64D22085FF7900FE5C86 /* FollowFeatureFollowMePilotingItf.swift */; };
+		026B64D5208628AB00FE5C86 /* FollowFeatureFollowMePilotingItfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026B64D4208628AB00FE5C86 /* FollowFeatureFollowMePilotingItfTests.swift */; };
+		02706251207E5F8000FB072F /* FollowFeatureLookAtPilotingItfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02706250207E5F7F00FB072F /* FollowFeatureLookAtPilotingItfTests.swift */; };
+		0271AF1F207BA71600EE56F1 /* FollowFeatureLookAtPilotingItf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0271AF1E207BA71600EE56F1 /* FollowFeatureLookAtPilotingItf.swift */; };
+		02ADCD29209C4D15008AF7D6 /* ArsdkFlightDataDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ADCD28209C4D15008AF7D6 /* ArsdkFlightDataDownloader.swift */; };
+		02ADCD2C209C4D20008AF7D6 /* HttpFlightDataDownloaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ADCD2B209C4D20008AF7D6 /* HttpFlightDataDownloaderDelegate.swift */; };
+		02ADCD2E209C5D98008AF7D6 /* PudRestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ADCD2D209C5D98008AF7D6 /* PudRestApi.swift */; };
+		02ADCD30209C8820008AF7D6 /* HttpFlightDataDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ADCD2F209C8820008AF7D6 /* HttpFlightDataDownloaderTests.swift */; };
+		02C5D0101FD83BD20028DFEE /* GuidedPilotingItfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C5D00F1FD83BD10028DFEE /* GuidedPilotingItfTests.swift */; };
+		02C5D0121FD860040028DFEE /* GuidedDirectiveMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C5D0111FD860040028DFEE /* GuidedDirectiveMatcher.swift */; };
+		02CA284520512F60005AB316 /* PoiPilotingItfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA284420512F60005AB316 /* PoiPilotingItfTests.swift */; };
+		02CA284720513274005AB316 /* PointOfInterestMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA284620513274005AB316 /* PointOfInterestMatcher.swift */; };
+		02CB17AB2080F7AF006478DA /* FollowFeatureTrackingPilotingItf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB17AA2080F7AE006478DA /* FollowFeatureTrackingPilotingItf.swift */; };
+		02CE4467208E0039007B9F9F /* Sc3Gamepad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE4466208E0038007B9F9F /* Sc3Gamepad.swift */; };
+		02CE4469208E0074007B9F9F /* Sc3MapperTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE4468208E0074007B9F9F /* Sc3MapperTranslator.swift */; };
+		02D12B28202899A1002C00BB /* AnafiBeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D12B27202899A1002C00BB /* AnafiBeeper.swift */; };
+		02D12B2C2028A3CD002C00BB /* AnafiBeeperControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D12B2B2028A3CD002C00BB /* AnafiBeeperControllerTests.swift */; };
+		02D96EFF2084B23D004A3553 /* TargetTrajectoryMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D96EFE2084B23D004A3553 /* TargetTrajectoryMatcher.swift */; };
+		02FC4C7D2024AE2A00D76490 /* AnafiFlightMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC4C7C2024AE2A00D76490 /* AnafiFlightMeter.swift */; };
+		02FC4C8120285F7A00D76490 /* AnafiFlightMeterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC4C8020285F7900D76490 /* AnafiFlightMeterTests.swift */; };
+		1D2194E21EE6D479005A6883 /* ArsdkCrashmlDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2194E11EE6D479005A6883 /* ArsdkCrashmlDownloader.swift */; };
+		1DA626ED1EF8137E0031AA69 /* CrashReportDownloaderMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA626EC1EF8137E0031AA69 /* CrashReportDownloaderMatcher.swift */; };
+		1DA626EF1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA626EE1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift */; };
+		70F73FD62136A6B4006E27BB /* ArsdkFlightLogDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F73FD52136A6B4006E27BB /* ArsdkFlightLogDownloader.swift */; };
+		70F73FDA2136A820006E27BB /* FtpFlightLogDownloaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F73FD82136A81F006E27BB /* FtpFlightLogDownloaderDelegate.swift */; };
+		70F73FDB2136A820006E27BB /* HttpFlightLogDownloaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F73FD92136A81F006E27BB /* HttpFlightLogDownloaderDelegate.swift */; };
+		718552A6219D837100E4A881 /* MockArsdkStreamMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718552A5219D837100E4A881 /* MockArsdkStreamMatcher.swift */; };
+		71D766052182FD7000517136 /* StreamServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D766042182FD7000517136 /* StreamServerController.swift */; };
+		7C0366E61E3B88A20041D71E /* AnafiReturnHomePilotingItfNoOfflineSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0366E51E3B88A20041D71E /* AnafiReturnHomePilotingItfNoOfflineSettingsTests.swift */; };
+		7C06715B1DBE42D000C90162 /* DiscoveredDroneMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C06715A1DBE42D000C90162 /* DiscoveredDroneMatcher.swift */; };
+		7C06D2D4209C58E800A01588 /* MockWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C06D2D3209C58E800A01588 /* MockWebSocket.swift */; };
+		7C1A874B1D7F0CC300C9E113 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1A874A1D7F0CC300C9E113 /* SettingsStore.swift */; };
+		7C2045F51D2FD0BD007E0405 /* AnafiManualPilotingItfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2045F41D2FD0BD007E0405 /* AnafiManualPilotingItfTests.swift */; };
+		7C2045F71D2FD792007E0405 /* ReturnHomePreferredTargetMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2045F61D2FD792007E0405 /* ReturnHomePreferredTargetMatcher.swift */; };
+		7C2045F91D2FD91B007E0405 /* IntSettingMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2045F81D2FD91B007E0405 /* IntSettingMatcher.swift */; };
+		7C214EC31CE3967F00A40253 /* ULogTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C214EC21CE3967F00A40253 /* ULogTag.swift */; };
+		7C25FB271DFEDA880028585B /* Asserts.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C25FB261DFEDA880028585B /* Asserts.xcassets */; };
+		7C2C7AC01D3F7AC3009D47C7 /* PersistentStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C7ABF1D3F7AC3009D47C7 /* PersistentStoreTests.swift */; };
+		7C2F62D81DA69CCC007FB22A /* RemoteControlMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2F62D61DA69CCC007FB22A /* RemoteControlMatchers.swift */; };
+		7C30D99C1D26886D0099E07F /* AnafiReturnHomePilotingItf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C30D99B1D26886D0099E07F /* AnafiReturnHomePilotingItf.swift */; };
+		7C32FF791F868DDF0099A750 /* CameraMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C32FF781F868DDF0099A750 /* CameraMatcher.swift */; };
+		7C372EB31D77107C00B8727C /* RCController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C372EB21D77107C00B8727C /* RCController.swift */; };
+		7C44B8972005381C005CA536 /* Storable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C44B8962005381B005CA536 /* Storable.swift */; };
+		7C44FF701DBE2B9C003E59D3 /* DroneManagerDroneFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C44FF6F1DBE2B9C003E59D3 /* DroneManagerDroneFinderTests.swift */; };
+		7C52A8E620056530004B5749 /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C52A8E520056530004B5749 /* Mapper.swift */; };
+		7C5413981C80A96300CE922E /* ArsdkEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5413971C80A96300CE922E /* ArsdkEngine.swift */; };
+		7C5FA4E71DAF8BEB001B68A3 /* DroneManagerDroneFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA4E61DAF8BEB001B68A3 /* DroneManagerDroneFinder.swift */; };
+		7C6947B91CD8F92B001FE253 /* AnafiFlyingIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6947B81CD8F92B001FE253 /* AnafiFlyingIndicators.swift */; };
+		7C6947BB1CD9037B001FE253 /* DeviceComponentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6947BA1CD9037B001FE253 /* DeviceComponentController.swift */; };
+		7C6D3B5C2007B2A300E698A5 /* CameraControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6D3B5B2007B2A300E698A5 /* CameraControllerBase.swift */; };
+		7C731110200609AD0048BA89 /* SettingsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C73110F200609AD0048BA89 /* SettingsStoreTests.swift */; };
+		7C74069C204EE24F00D1CD78 /* AntiflickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C74069B204EE24F00D1CD78 /* AntiflickerController.swift */; };
+		7C74069E204EE9D500D1CD78 /* CameraFeatureAntiflicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C74069D204EE9D500D1CD78 /* CameraFeatureAntiflicker.swift */; };
+		7C7406A82050144400D1CD78 /* AntiflickerMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7406A72050144400D1CD78 /* AntiflickerMatcher.swift */; };
+		7C7406AA2050250700D1CD78 /* CameraFeatureAntiflickerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7406A92050250700D1CD78 /* CameraFeatureAntiflickerTests.swift */; };
+		7C76AB551C8D75BF00FC213E /* ArithmeticMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76AB471C8D75BF00FC213E /* ArithmeticMatchers.swift */; };
+		7C76AB561C8D75BF00FC213E /* BasicMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76AB481C8D75BF00FC213E /* BasicMatchers.swift */; };
+		7C76AB571C8D75BF00FC213E /* Descriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76AB491C8D75BF00FC213E /* Descriptions.swift */; };
+		7C76AB581C8D75BF00FC213E /* DictionaryMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76AB4A1C8D75BF00FC213E /* DictionaryMatchers.swift */; };
+		7C76AB591C8D75BF00FC213E /* Hamcrest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76AB4B1C8D75BF00FC213E /* Hamcrest.swift */; };
+		7C76AB5A1C8D75BF00FC213E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 7C76AB4C1C8D75BF00FC213E /* LICENSE */; };
+		7C76AB5B1C8D75BF00FC213E /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76AB4D1C8D75BF00FC213E /* Matcher.swift */; };
+		7C76AB5C1C8D75BF00FC213E /* MatchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76AB4E1C8D75BF00FC213E /* MatchResult.swift */; };
+		7C76AB5D1C8D75BF00FC213E /* MetaMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76AB4F1C8D75BF00FC213E /* MetaMatchers.swift */; };
+		7C76AB5E1C8D75BF00FC213E /* OperatorMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76AB501C8D75BF00FC213E /* OperatorMatchers.swift */; };
+		7C76AB5F1C8D75BF00FC213E /* README in Resources */ = {isa = PBXBuildFile; fileRef = 7C76AB511C8D75BF00FC213E /* README */; };
+		7C76AB601C8D75BF00FC213E /* ReflectionMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76AB521C8D75BF00FC213E /* ReflectionMatchers.swift */; };
+		7C76AB611C8D75BF00FC213E /* SequenceMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76AB531C8D75BF00FC213E /* SequenceMatchers.swift */; };
+		7C76AB621C8D75BF00FC213E /* StringMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76AB541C8D75BF00FC213E /* StringMatchers.swift */; };
+		7C812AF91D9C20380004149C /* ArsdkProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C812AF81D9C20380004149C /* ArsdkProxy.swift */; };
+		7C895B09207798F900DD689C /* CameraFeatureCameraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C895B08207798F900DD689C /* CameraFeatureCameraTests.swift */; };
+		7C9005191E0C0A8D00B9EE2B /* ArsdkMediaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C33AF151DE5C5A00097BAC9 /* ArsdkMediaStore.swift */; };
+		7C9138CC1E39E9F80064A5FD /* AnafiManualPilotingItfNoOfflineSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9138CB1E39E9F80064A5FD /* AnafiManualPilotingItfNoOfflineSettingsTests.swift */; };
+		7C9B8FE61D48ACAC00366ADD /* BoolSettingMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9B8FE51D48ACAC00366ADD /* BoolSettingMatcher.swift */; };
+		7C9CFB241DABB72400F3915B /* ArsdkEngineAddRemoveDevicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9CFB231DABB72400F3915B /* ArsdkEngineAddRemoveDevicesTests.swift */; };
+		7C9CFB261DABC07100F3915B /* DroneManagerFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9CFB251DABC07100F3915B /* DroneManagerFeature.swift */; };
+		7C9CFB281DABE00900F3915B /* DroneManagerFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9CFB271DABE00900F3915B /* DroneManagerFeatureTests.swift */; };
+		7C9F73491CFDA963004DE672 /* AnafiReturnHomePilotingItfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9F73481CFDA963004DE672 /* AnafiReturnHomePilotingItfTests.swift */; };
+		7CA1C9711C807AC200FE9ED4 /* ArsdkEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CA1C9701C807AC200FE9ED4 /* ArsdkEngine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7CA1C9781C807AC200FE9ED4 /* ArsdkEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA1C96D1C807AC200FE9ED4 /* ArsdkEngine.framework */; };
+		7CA1C97D1C807AC200FE9ED4 /* ArsdkEngineConnectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA1C97C1C807AC200FE9ED4 /* ArsdkEngineConnectTests.swift */; };
+		7CA47FA02057E44400A5843A /* MockReverseGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA47F9F2057E44400A5843A /* MockReverseGeocoder.swift */; };
+		7CA52A9D1FDEB70900C118FB /* CameraFeatureCameraRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA52A9C1FDEB70900C118FB /* CameraFeatureCameraRouter.swift */; };
+		7CA52AA41FDEEF7E00C118FB /* ArsdkMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA52AA31FDEEF7E00C118FB /* ArsdkMapper.swift */; };
+		7CA52AA61FDFDD1400C118FB /* CameraStorableEmumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA52AA51FDFDD1400C118FB /* CameraStorableEmumTests.swift */; };
+		7CA8BDB91ECC7E0A00B79CCC /* CommonRadio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA8BDB81ECC7E0A00B79CCC /* CommonRadio.swift */; };
+		7CA8BDBD1ECC880100B79CCC /* CommonRadioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA8BDBC1ECC880100B79CCC /* CommonRadioTests.swift */; };
+		7CAF16321D47A3580014F2E4 /* ManualCopterPilotingItfController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF16311D47A3580014F2E4 /* ManualCopterPilotingItfController.swift */; };
+		7CB1CF631D92D69A00E1CDE7 /* Arsdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB1CF621D92D69A00E1CDE7 /* Arsdk.swift */; };
+		7CB53B771D2D002100D695CC /* ActivablePilotingItfController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB53B761D2D002100D695CC /* ActivablePilotingItfController.swift */; };
+		7CCBC7622099C52A006C3378 /* StreamSocketConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBC7602099C52A006C3378 /* StreamSocketConnection.swift */; };
+		7CCBC7632099C52A006C3378 /* Websocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBC7612099C52A006C3378 /* Websocket.swift */; };
+		7CCBC7652099F4C3006C3378 /* MediaWsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBC7642099F4C3006C3378 /* MediaWsApi.swift */; };
+		7CCFFA951E1260D50029D35A /* MediaItemMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCFFA941E1260D50029D35A /* MediaItemMatcher.swift */; };
+		7CCFFA971E1278FD0029D35A /* MediaDownloaderMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCFFA961E1278FD0029D35A /* MediaDownloaderMatcher.swift */; };
+		7CCFFA9B1E12A5FA0029D35A /* MediaDeleterMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCFFA9A1E12A5FA0029D35A /* MediaDeleterMatcher.swift */; };
+		7CD624A91D588E7A00307BCD /* ReturnHomePilotingItfController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD624A81D588E7A00307BCD /* ReturnHomePilotingItfController.swift */; };
+		7CE1371D1CFC891E0041E197 /* AnafiFlyingIndicatorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE1371C1CFC891E0041E197 /* AnafiFlyingIndicatorsTests.swift */; };
+		7CE137201CFC8C0C0041E197 /* DoubleSettingMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE1371E1CFC8C0C0041E197 /* DoubleSettingMatcher.swift */; };
+		7CE137211CFC8C0C0041E197 /* FlyingIndicatorsMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE1371F1CFC8C0C0041E197 /* FlyingIndicatorsMatcher.swift */; };
+		7CE137231CFCA06A0041E197 /* ArsdkEngineTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE137221CFCA06A0041E197 /* ArsdkEngineTestBase.swift */; };
+		7CE5B8D61DA261E500C7D688 /* ProxyDeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE5B8D51DA261E500C7D688 /* ProxyDeviceController.swift */; };
+		9B2B789721426B940045ED0F /* EphemerisRestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2B789621426B940045ED0F /* EphemerisRestApi.swift */; };
+		9B2B789B21426BF60045ED0F /* EphemerisUploaderEphemerisDisabledTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2B789921426BF50045ED0F /* EphemerisUploaderEphemerisDisabledTests.swift */; };
+		9B2B789C21426BF60045ED0F /* EphemerisUploaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2B789A21426BF50045ED0F /* EphemerisUploaderTests.swift */; };
+		9B2B78A221426DD00045ED0F /* MockEphemerisUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2B78A121426DD00045ED0F /* MockEphemerisUtility.swift */; };
+		9B31E00221C93545006F389E /* ThermalControlMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B31E00121C93545006F389E /* ThermalControlMatcher.swift */; };
+		9B31E00421C93572006F389E /* ThermalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B31E00321C93572006F389E /* ThermalController.swift */; };
+		9B31E00621C93E9A006F389E /* ThermalControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B31E00521C93E9A006F389E /* ThermalControllerTests.swift */; };
+		9B40FAD1215E557400CF6690 /* PreciseHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B40FAD0215E557300CF6690 /* PreciseHomeController.swift */; };
+		9B40FADD2162741600CF6690 /* PreciseHomeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B40FADC2162741600CF6690 /* PreciseHomeControllerTests.swift */; };
+		9B40FADF2163633500CF6690 /* PreciseHomeMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B40FADE2163633500CF6690 /* PreciseHomeMatcher.swift */; };
+		9B4E7177214AB451007D4DA7 /* EphemerisUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4E7175214AB451007D4DA7 /* EphemerisUploader.swift */; };
+		9B4E7178214AB451007D4DA7 /* EphemerisConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4E7176214AB451007D4DA7 /* EphemerisConfig.swift */; };
+		9B6ACC7621F0CBBF0024B837 /* CameraFeatureCameraRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6ACC7521F0CBBF0024B837 /* CameraFeatureCameraRouterTests.swift */; };
+		9B73BDC8221707C2008DA1F7 /* LedsControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B73BDC7221707C2008DA1F7 /* LedsControllerTests.swift */; };
+		9BBAAFC22215B48B00E1E5BF /* LedsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBAAFC12215B48B00E1E5BF /* LedsController.swift */; };
+		9BBD4151222EAF700006CBAF /* PhotoProgressIndicatorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBD4150222EAF700006CBAF /* PhotoProgressIndicatorController.swift */; };
+		9BBD4159222ED5CD0006CBAF /* PhotoProgressIndicatorControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBD4158222ED5CD0006CBAF /* PhotoProgressIndicatorControllerTests.swift */; };
+		9BD67C7121CCF4B600CA1568 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD67C7021CCF4B600CA1568 /* Model.swift */; };
+		9BDDF1A52146920E008252BA /* FlightLogRestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDDF1A42146920E008252BA /* FlightLogRestApi.swift */; };
+		9BDDF1A72146A83F008252BA /* ArsdkFlightLogDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDDF1A62146A83F008252BA /* ArsdkFlightLogDownloaderTests.swift */; };
+		9BDDF1A92146A85A008252BA /* HttpFlightLogDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDDF1A82146A85A008252BA /* HttpFlightLogDownloaderTests.swift */; };
+		9BDDF1AB21479D60008252BA /* FtpFlightLogDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDDF1AA21479D60008252BA /* FtpFlightLogDownloaderTests.swift */; };
+		9BDDF1AD2147A050008252BA /* FlightLogDownloaderMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDDF1AC2147A050008252BA /* FlightLogDownloaderMatcher.swift */; };
+		9BDDF1AF2147A5C6008252BA /* MockFlightLogStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDDF1AE2147A5C6008252BA /* MockFlightLogStorage.swift */; };
+		F8034F981D33CD6F003A3CFD /* AnafiMagnetometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8034F971D33CD6F003A3CFD /* AnafiMagnetometer.swift */; };
+		F804B01920D979FC00BE2CF7 /* AppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F804B01820D979FB00BE2CF7 /* AppDefaults.swift */; };
+		F809C23F1E851CEF008B8153 /* UpdaterControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F809C23E1E851CEF008B8153 /* UpdaterControllerTests.swift */; };
+		F80F2CFD1F179F950008CAC2 /* WifiFeatureWifiAccessPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80F2CFC1F179F950008CAC2 /* WifiFeatureWifiAccessPointTests.swift */; };
+		F8123B54200CFA9B0071672B /* UserStorageRemovableUserStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8123B53200CFA9B0071672B /* UserStorageRemovableUserStorage.swift */; };
+		F8123B5A200D0A670071672B /* UserStorageRemovableUserStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8123B59200D0A670071672B /* UserStorageRemovableUserStorageTests.swift */; };
+		F8123B5C200D12650071672B /* RemovableUserStorageMediaInfoMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8123B5B200D12650071672B /* RemovableUserStorageMediaInfoMatcher.swift */; };
+		F821EA1B203B316E0091C186 /* HttpMediaStoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F821EA1A203B316E0091C186 /* HttpMediaStoreDelegate.swift */; };
+		F821EA1D203B33C30091C186 /* MediaRestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F821EA1C203B33C30091C186 /* MediaRestApi.swift */; };
+		F822E3511E43307A0037DB0F /* ArsdkSystemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F822E3501E43307A0037DB0F /* ArsdkSystemInfo.swift */; };
+		F82722D01F17732C00D4C398 /* WifiFeatureWifiAccessPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82722CF1F17732C00D4C398 /* WifiFeatureWifiAccessPoint.swift */; };
+		F832FA4B1E48BC580019AC08 /* UpdaterMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832FA4A1E48BC580019AC08 /* UpdaterMatcher.swift */; };
+		F83497F51CA2F90B009E3A2D /* GroundSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F83497F41CA2F90B009E3A2D /* GroundSdk.framework */; };
+		F8369C8F20A1DB81008010AE /* MockUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8369C8E20A1DB81008010AE /* MockUserDefaults.swift */; };
+		F8441DAF1D47B8CC0062DC77 /* EnumSettingMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8441DAE1D47B8CC0062DC77 /* EnumSettingMatcher.swift */; };
+		F857E0851DF71CA70026CAF2 /* AnafiSystemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F857E0841DF71CA70026CAF2 /* AnafiSystemInfo.swift */; };
+		F857F5331EE166B100324343 /* ManualPilotingItfController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F857F5321EE166B100324343 /* ManualPilotingItfController.swift */; };
+		F85909B01CAAC3C800B08530 /* PersistentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85909AF1CAAC3C800B08530 /* PersistentStore.swift */; };
+		F85CF0901E9E6B2200C82969 /* AnafiFamilyDroneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85CF08F1E9E6B2200C82969 /* AnafiFamilyDroneController.swift */; };
+		F862C5B71FFB92A2009662CC /* FtpCrashmlDownloaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F862C5B61FFB92A2009662CC /* FtpCrashmlDownloaderDelegate.swift */; };
+		F862C5B91FFB9512009662CC /* HttpCrashmlDownloaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F862C5B81FFB9512009662CC /* HttpCrashmlDownloaderDelegate.swift */; };
+		F862C5BB1FFBD92C009662CC /* FtpCrashmlDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F862C5BA1FFBD92C009662CC /* FtpCrashmlDownloaderTests.swift */; };
+		F862C5BD1FFBE0A6009662CC /* HttpCrashmlDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F862C5BC1FFBE0A6009662CC /* HttpCrashmlDownloaderTests.swift */; };
+		F868F8B01CAD0B000045DBD1 /* DeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F868F8AF1CAD0B000045DBD1 /* DeviceController.swift */; };
+		F868F8B21CAD20560045DBD1 /* DroneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F868F8B11CAD20560045DBD1 /* DroneController.swift */; };
+		F868F8C81CAD658F0045DBD1 /* DroneListEntryMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F868F8C21CAD658F0045DBD1 /* DroneListEntryMatcher.swift */; };
+		F868F8C91CAD658F0045DBD1 /* DroneMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F868F8C31CAD658F0045DBD1 /* DroneMatchers.swift */; };
+		F868F8CA1CAD658F0045DBD1 /* DeviceStateMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F868F8C41CAD658F0045DBD1 /* DeviceStateMatcher.swift */; };
+		F86A81641F8BC83700F7EE60 /* AnimFeaturePilotingItfController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86A81631F8BC83700F7EE60 /* AnimFeaturePilotingItfController.swift */; };
+		F86BA98521230489004DFAB2 /* MockInternetConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86BA98421230488004DFAB2 /* MockInternetConnectivity.swift */; };
+		F86BA987212308E9004DFAB2 /* MockFirmwareDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86BA986212308E9004DFAB2 /* MockFirmwareDownloader.swift */; };
+		F86BA98B21231DFC004DFAB2 /* FirmwareInfoMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86BA98A21231DFC004DFAB2 /* FirmwareInfoMatcher.swift */; };
+		F86BA98D2125A68F004DFAB2 /* DroneFirmwareUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86BA98C2125A68F004DFAB2 /* DroneFirmwareUpdaterTests.swift */; };
+		F86BA98F2125B129004DFAB2 /* RcFirmwareUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86BA98E2125B129004DFAB2 /* RcFirmwareUpdaterTests.swift */; };
+		F87005641FC88477003114D9 /* MockTimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F870055E1FC88477003114D9 /* MockTimeProvider.swift */; };
+		F87005651FC88477003114D9 /* MockArsdkEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F870055F1FC88477003114D9 /* MockArsdkEngine.swift */; };
+		F87005681FC88477003114D9 /* MockPersistentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87005621FC88477003114D9 /* MockPersistentStore.swift */; };
+		F870056A1FC885E0003114D9 /* MockEnginesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87005691FC885E0003114D9 /* MockEnginesController.swift */; };
+		F870057B1FC88C66003114D9 /* MockCrashReportStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F870057A1FC88C66003114D9 /* MockCrashReportStorage.swift */; };
+		F877E4E120220048006B0929 /* SkyControllerCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F877E4E020220048006B0929 /* SkyControllerCompass.swift */; };
+		F877E4E320220B29006B0929 /* SkyControllerCompassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F877E4E220220B28006B0929 /* SkyControllerCompassTests.swift */; };
+		F877E4EE20246BE0006B0929 /* DroneServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F877E4ED20246BE0006B0929 /* DroneServer.swift */; };
+		F87C037B1D1303A0007B2391 /* AnafiAttitudeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87C037A1D1303A0007B2391 /* AnafiAttitudeIndicator.swift */; };
+		F87D5A3F1FFFEA24005AF079 /* SkyControllerMagnetometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87D5A3E1FFFEA24005AF079 /* SkyControllerMagnetometer.swift */; };
+		F87D5A47200387FC005AF079 /* SkyControllerMagnetometerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87D5A46200387FC005AF079 /* SkyControllerMagnetometerTests.swift */; };
+		F88415D41F98E842000A1FAF /* PilotingCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88415D31F98E842000A1FAF /* PilotingCommand.swift */; };
+		F88415D61F9DEF7C000A1FAF /* TimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88415D51F9DEF7C000A1FAF /* TimeProvider.swift */; };
+		F88468771DEC7AFE00ACE941 /* SkyControllerSystemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88468761DEC7AFE00ACE941 /* SkyControllerSystemInfo.swift */; };
+		F88468951DEF23CC00ACE941 /* AnafiSystemInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88468941DEF23CC00ACE941 /* AnafiSystemInfoTests.swift */; };
+		F88468991DEF253300ACE941 /* SystemVersionMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88468971DEF253300ACE941 /* SystemVersionMatcher.swift */; };
+		F884689B1DEF3FAC00ACE941 /* SkyControllerSystemInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F884689A1DEF3FAC00ACE941 /* SkyControllerSystemInfoTests.swift */; };
+		F88C31E41D05B81E00A3A814 /* AnafiGps.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88C31E31D05B81E00A3A814 /* AnafiGps.swift */; };
+		F88C31EC1D05C78800A3A814 /* AnafiCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88C31EB1D05C78800A3A814 /* AnafiCompass.swift */; };
+		F88C31F41D06BF7300A3A814 /* AnafiAltimeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88C31F31D06BF7300A3A814 /* AnafiAltimeter.swift */; };
+		F88C31FC1D06FEC400A3A814 /* AnafiSpeedometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88C31FB1D06FEC400A3A814 /* AnafiSpeedometer.swift */; };
+		F88E246B1FEA79D200D7AAC7 /* HttpFirmwareUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88E246A1FEA79D200D7AAC7 /* HttpFirmwareUpdaterTests.swift */; };
+		F88E246D1FEAA81D00D7AAC7 /* MockUrlSessionTaskMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88E246C1FEAA81D00D7AAC7 /* MockUrlSessionTaskMatcher.swift */; };
+		F88E246F1FEAB8D400D7AAC7 /* UpdaterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88E246E1FEAB8D400D7AAC7 /* UpdaterController.swift */; };
+		F89A06371EDC75470069ACD4 /* FlightPlanPilotingItfController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89A06361EDC75470069ACD4 /* FlightPlanPilotingItfController.swift */; };
+		F89A063B1EDD6C9B0069ACD4 /* PilotingItfActivationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89A063A1EDD6C9B0069ACD4 /* PilotingItfActivationController.swift */; };
+		F89D8FA11EE6EE400094C524 /* CommonFlightPlanPilotingItfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89D8FA01EE6EE400094C524 /* CommonFlightPlanPilotingItfTests.swift */; };
+		F89D8FA51EE8344E0094C524 /* CommonFlightPlanPilotingItfNoOfflineSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89D8FA41EE8344E0094C524 /* CommonFlightPlanPilotingItfNoOfflineSettingsTests.swift */; };
+		F89D8FA71EE836C50094C524 /* PilotingItfActivationControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89D8FA61EE836C50094C524 /* PilotingItfActivationControllerTests.swift */; };
+		F8A11A9720AC619D0062253D /* DroneUpdaterEventReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A11A9520AC619D0062253D /* DroneUpdaterEventReceiver.swift */; };
+		F8A11A9820AC619D0062253D /* RcUpdaterEventReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A11A9620AC619D0062253D /* RcUpdaterEventReceiver.swift */; };
+		F8A3D0CD2049866B00AF0126 /* GimbalFeatureGimbal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3D0CC2049866B00AF0126 /* GimbalFeatureGimbal.swift */; };
+		F8A3D0CF204ED61A00AF0126 /* GimbalFeatureGimbalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3D0CE204ED61A00AF0126 /* GimbalFeatureGimbalTests.swift */; };
+		F8A8D26920C559810062DD24 /* NoAckCmdEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A8D26820C559810062DD24 /* NoAckCmdEncoder.swift */; };
+		F8B240321FE2EB520092974F /* BlackBoxCircularArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B240311FE2EB520092974F /* BlackBoxCircularArrayTests.swift */; };
+		F8BFCDBE1FE95FFE0060D6A0 /* UpdateRestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BFCDBD1FE95FFE0060D6A0 /* UpdateRestApi.swift */; };
+		F8BFCDC01FE984B10060D6A0 /* HttpFirmwareUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BFCDBF1FE984B10060D6A0 /* HttpFirmwareUploader.swift */; };
+		F8BFCDC21FEA5D0F0060D6A0 /* MockHttpSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BFCDC11FEA5D0F0060D6A0 /* MockHttpSession.swift */; };
+		F8C7DF131F04F37A00A781D8 /* StringSettingMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C7DF111F04F37A00A781D8 /* StringSettingMatcher.swift */; };
+		F8C7DF141F04F37A00A781D8 /* WifiAccessPointMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C7DF121F04F37A00A781D8 /* WifiAccessPointMatcher.swift */; };
+		F8C9C42F1D18216200DB1647 /* AnafiGpsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C9C42E1D18216200DB1647 /* AnafiGpsTests.swift */; };
+		F8C9C4311D18287F00DB1647 /* AnafiCompassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C9C4301D18287F00DB1647 /* AnafiCompassTests.swift */; };
+		F8C9C4331D182C4300DB1647 /* AnafiAltimeterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C9C4321D182C4300DB1647 /* AnafiAltimeterTests.swift */; };
+		F8C9C4351D182F8400DB1647 /* AnafiSpeedometerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C9C4341D182F8400DB1647 /* AnafiSpeedometerTests.swift */; };
+		F8C9C4371D18309F00DB1647 /* AnafiAttitudeIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C9C4361D18309F00DB1647 /* AnafiAttitudeIndicatorTests.swift */; };
+		F8D007891DDE1A41002D478A /* ArsdkStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D007881DDE1A41002D478A /* ArsdkStreamTests.swift */; };
+		F8D0078B1DDE1B07002D478A /* LiveStreamMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D0078A1DDE1B07002D478A /* LiveStreamMatcher.swift */; };
+		F8D32CB51EF017A900074795 /* CommonBatteryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D32CB41EF017A900074795 /* CommonBatteryInfo.swift */; };
+		F8D32CB71EF01BE600074795 /* SkyControllerBatteryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D32CB61EF01BE600074795 /* SkyControllerBatteryInfo.swift */; };
+		F8D32CBD1EF025AC00074795 /* CommonBatteryInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D32CBC1EF025AC00074795 /* CommonBatteryInfoTests.swift */; };
+		F8D32CBF1EF02E0D00074795 /* SkyControllerBatteryInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D32CBE1EF02E0D00074795 /* SkyControllerBatteryInfoTests.swift */; };
+		F8D32CCB1EF12CE800074795 /* AnafiCopterMotors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D32CCA1EF12CE800074795 /* AnafiCopterMotors.swift */; };
+		F8D32CD51EF1802A00074795 /* AnafiMotors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D32CD41EF1802A00074795 /* AnafiMotors.swift */; };
+		F8D32CD71EF1856600074795 /* AnafiCopterMotorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D32CD61EF1856600074795 /* AnafiCopterMotorsTests.swift */; };
+		F8D32CD91EF1877400074795 /* CopterMotorsMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D32CD81EF1877400074795 /* CopterMotorsMatcher.swift */; };
+		F8D82B551E00628D0047ABF1 /* MapperVirtualGamepad.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D82B541E00628D0047ABF1 /* MapperVirtualGamepad.swift */; };
+		F8D8784A1F1CAD2E00991465 /* Bitfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D878491F1CAD2E00991465 /* Bitfield.swift */; };
+		F8D9B45B1CC615B2006DEDF8 /* SdkCoreTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B941FD1CC615570099CBBC /* SdkCoreTesting.framework */; };
+		F8D9B4A71CC7CFE7006DEDF8 /* SdkCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D9B4A61CC7CFE7006DEDF8 /* SdkCore.framework */; };
+		F8DB46411D33EA7000297E15 /* AnafiMagnetometerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DB46401D33EA7000297E15 /* AnafiMagnetometerTests.swift */; };
+		F8DB46431D33ECCB00297E15 /* MagnetometerCalibrationProcessStateMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DB46421D33ECCB00297E15 /* MagnetometerCalibrationProcessStateMatcher.swift */; };
+		F8E011251FD98A16005A9520 /* BlackBoxRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E011241FD98A16005A9520 /* BlackBoxRecorder.swift */; };
+		F8E011271FD99996005A9520 /* BlackBoxContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E011261FD99996005A9520 /* BlackBoxContext.swift */; };
+		F8E011291FD99E1B005A9520 /* BlackBoxDroneSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E011281FD99E1B005A9520 /* BlackBoxDroneSession.swift */; };
+		F8E0112B1FD99E29005A9520 /* BlackBoxRcSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E0112A1FD99E29005A9520 /* BlackBoxRcSession.swift */; };
+		F8E0112D1FD99FA3005A9520 /* BlackBoxData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E0112C1FD99FA3005A9520 /* BlackBoxData.swift */; };
+		F8E0112F1FD9A4B7005A9520 /* BlackBoxSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E0112E1FD9A4B7005A9520 /* BlackBoxSession.swift */; };
+		F8E011361FDAF75E005A9520 /* BlackBoxEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E011351FDAF75E005A9520 /* BlackBoxEvent.swift */; };
+		F8E1F1F020DA8CC5009379D6 /* AppDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E1F1EF20DA8CC5009379D6 /* AppDefaultsTests.swift */; };
+		F8E1F1F220DAA1E2009379D6 /* app_defaults_tests.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8E1F1F120DAA1E2009379D6 /* app_defaults_tests.plist */; };
+		F8E1F1F420DAABD3009379D6 /* PersistentStoreMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E1F1F320DAABD3009379D6 /* PersistentStoreMatcher.swift */; };
+		F8E2B3011F8FB4AC004AC24D /* AnimationFeaturePilotingItfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E2B3001F8FB4AC004AC24D /* AnimationFeaturePilotingItfTests.swift */; };
+		F8E2B3031F8FCB92004AC24D /* AnimationMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E2B3021F8FCB92004AC24D /* AnimationMatcher.swift */; };
+		F8E9E7891EF4240D00A5BE86 /* WifiChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E9E7881EF4240D00A5BE86 /* WifiChannel.swift */; };
+		F8ED48B61E81320100C0FFC0 /* FtpFirmwareUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ED48B51E81320100C0FFC0 /* FtpFirmwareUploader.swift */; };
+		F8ED8B022040745B005D9D57 /* ArsdkMediaStoreHttpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ED8B012040745B005D9D57 /* ArsdkMediaStoreHttpTests.swift */; };
+		F8ED95501FDEB2C2004300DE /* BlackBoxCircularArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ED954F1FDEB2C1004300DE /* BlackBoxCircularArray.swift */; };
+		F8ED95521FDEB9D5004300DE /* BlackBoxFlightData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ED95511FDEB9D5004300DE /* BlackBoxFlightData.swift */; };
+		F8ED95541FDEDDE9004300DE /* BlackBoxEnvironmentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ED95531FDEDDE9004300DE /* BlackBoxEnvironmentData.swift */; };
+		F8ED95561FDEDE17004300DE /* BlackBoxLocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ED95551FDEDE17004300DE /* BlackBoxLocationData.swift */; };
+		F8ED95581FDEE741004300DE /* BlackBoxHeaderData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ED95571FDEE741004300DE /* BlackBoxHeaderData.swift */; };
+		F8ED955A1FDEF3A4004300DE /* BlackBoxRemoteControlData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ED95591FDEF3A4004300DE /* BlackBoxRemoteControlData.swift */; };
+		F8EE9F642084EBDE001A2860 /* AnafiAlarms.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EE9F632084EBDE001A2860 /* AnafiAlarms.swift */; };
+		F8EE9F662085D847001A2860 /* AnafiAlarmsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EE9F652085D847001A2860 /* AnafiAlarmsTests.swift */; };
+		F8F2B19D20E3914200A1A802 /* CameraFeatureExposureValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F2B19C20E3914200A1A802 /* CameraFeatureExposureValues.swift */; };
+		F8F2B1A320E3AE6E00A1A802 /* CameraFeatureExposureValuesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F2B1A220E3AE6E00A1A802 /* CameraFeatureExposureValuesTests.swift */; };
+		F8F974A71CD3837B0060318C /* AnafiCopterManualPilotingItf.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F974A61CD3837B0060318C /* AnafiCopterManualPilotingItf.swift */; };
+		F8FB2E661FEBF3FC0037B930 /* ReportRestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FB2E651FEBF3FC0037B930 /* ReportRestApi.swift */; };
+		F8FF144E1D2A627800A87DA6 /* CLLocationMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FF144D1D2A627800A87DA6 /* CLLocationMatcher.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7CA1C9791C807AC200FE9ED4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7CA1C9641C807AC200FE9ED4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7CA1C96C1C807AC200FE9ED4;
+			remoteInfo = ArsdkEngine;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		020B17192089D0EA00CB64A8 /* FollowFeatureTrackingSharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowFeatureTrackingSharing.swift; sourceTree = "<group>"; };
+		020C8E77202863BE0003B0CD /* FlightMeterMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightMeterMatcher.swift; sourceTree = "<group>"; };
+		020F1DB720907F7200CCEB5E /* SkyCtrl3MappingEntryMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkyCtrl3MappingEntryMatcher.swift; sourceTree = "<group>"; };
+		020F1DB920907FE100CCEB5E /* Sc3GamepadTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sc3GamepadTests.swift; sourceTree = "<group>"; };
+		02108836209B021500F013E4 /* FlightDataDownloaderMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightDataDownloaderMatcher.swift; sourceTree = "<group>"; };
+		02155D8020470E290078B498 /* CLPlacemarkMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLPlacemarkMatcher.swift; sourceTree = "<group>"; };
+		02156A3320502F00002F3F7D /* AnafiPoiPilotingItf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiPoiPilotingItf.swift; sourceTree = "<group>"; };
+		0216F7BC1FCF1D3900841577 /* GuidedPilotingItfController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuidedPilotingItfController.swift; sourceTree = "<group>"; };
+		0216F7BE1FD002FB00841577 /* AnafiGuidedPilotingItf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiGuidedPilotingItf.swift; sourceTree = "<group>"; };
+		021D82232093219500C53EC3 /* AnafiGeofence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiGeofence.swift; sourceTree = "<group>"; };
+		021D8225209367D500C53EC3 /* AnafiGeofenceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiGeofenceTests.swift; sourceTree = "<group>"; };
+		0226198B206933F8005587B2 /* WifiAccessPointController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WifiAccessPointController.swift; sourceTree = "<group>"; };
+		022637BE205FBB6F00D390B3 /* FtpFlightPlanUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FtpFlightPlanUploader.swift; sourceTree = "<group>"; };
+		022637C0205FD2AA00D390B3 /* HttpFlightPlanUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpFlightPlanUploader.swift; sourceTree = "<group>"; };
+		022637C2205FD52C00D390B3 /* FlightPlanRestApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightPlanRestApi.swift; sourceTree = "<group>"; };
+		022C387820A34B7000B4E319 /* anafi_binary_pud_1 */ = {isa = PBXFileReference; lastKnownFileType = text; path = anafi_binary_pud_1; sourceTree = "<group>"; };
+		022C387A20A34B8200B4E319 /* FlightDataDecoderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightDataDecoderTests.swift; sourceTree = "<group>"; };
+		022C387C20A4D94400B4E319 /* expected_result.pud */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = expected_result.pud; sourceTree = "<group>"; };
+		0235EDC82076530C006E7C9C /* TargetTrackerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetTrackerController.swift; sourceTree = "<group>"; };
+		0235EDCA20765F67006E7C9C /* TargetTrackerControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetTrackerControllerTests.swift; sourceTree = "<group>"; };
+		0235EDCC20766244006E7C9C /* TargetFramingSettingMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetFramingSettingMatcher.swift; sourceTree = "<group>"; };
+		0235EDCE207671A6006E7C9C /* MockSystemLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSystemLocation.swift; sourceTree = "<group>"; };
+		0237580C209C92CD0077F63C /* MockFlightDataStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFlightDataStorage.swift; sourceTree = "<group>"; };
+		02375855209C9C8A0077F63C /* ArsdkFlightDataDownloaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkFlightDataDownloaderTests.swift; sourceTree = "<group>"; };
+		0237586120A08B340077F63C /* PudStreamDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PudStreamDecoder.swift; sourceTree = "<group>"; };
+		0253D60620601DA300FA5029 /* HttpFlightPlanPilotingItfTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpFlightPlanPilotingItfTests.swift; sourceTree = "<group>"; };
+		025EF0312057E26F00768014 /* SkyControllerFamilyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkyControllerFamilyController.swift; sourceTree = "<group>"; };
+		025FB9FA20AC8AED00D84597 /* ArsdkEngineUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkEngineUtil.swift; sourceTree = "<group>"; };
+		025FB9FC20AC8B6400D84597 /* UserAccountInfoMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAccountInfoMatcher.swift; sourceTree = "<group>"; };
+		025FB9FE20AC8C1A00D84597 /* MockUserAccountUtilityCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUserAccountUtilityCore.swift; sourceTree = "<group>"; };
+		026B64D22085FF7900FE5C86 /* FollowFeatureFollowMePilotingItf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowFeatureFollowMePilotingItf.swift; sourceTree = "<group>"; };
+		026B64D4208628AB00FE5C86 /* FollowFeatureFollowMePilotingItfTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowFeatureFollowMePilotingItfTests.swift; sourceTree = "<group>"; };
+		02706250207E5F7F00FB072F /* FollowFeatureLookAtPilotingItfTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowFeatureLookAtPilotingItfTests.swift; sourceTree = "<group>"; };
+		0271AF1E207BA71600EE56F1 /* FollowFeatureLookAtPilotingItf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowFeatureLookAtPilotingItf.swift; sourceTree = "<group>"; };
+		02ADCD28209C4D15008AF7D6 /* ArsdkFlightDataDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkFlightDataDownloader.swift; sourceTree = "<group>"; };
+		02ADCD2B209C4D20008AF7D6 /* HttpFlightDataDownloaderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpFlightDataDownloaderDelegate.swift; sourceTree = "<group>"; };
+		02ADCD2D209C5D98008AF7D6 /* PudRestApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PudRestApi.swift; sourceTree = "<group>"; };
+		02ADCD2F209C8820008AF7D6 /* HttpFlightDataDownloaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpFlightDataDownloaderTests.swift; sourceTree = "<group>"; };
+		02C5D00F1FD83BD10028DFEE /* GuidedPilotingItfTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuidedPilotingItfTests.swift; sourceTree = "<group>"; };
+		02C5D0111FD860040028DFEE /* GuidedDirectiveMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuidedDirectiveMatcher.swift; sourceTree = "<group>"; };
+		02CA284420512F60005AB316 /* PoiPilotingItfTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoiPilotingItfTests.swift; sourceTree = "<group>"; };
+		02CA284620513274005AB316 /* PointOfInterestMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointOfInterestMatcher.swift; sourceTree = "<group>"; };
+		02CB17AA2080F7AE006478DA /* FollowFeatureTrackingPilotingItf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowFeatureTrackingPilotingItf.swift; sourceTree = "<group>"; };
+		02CE4466208E0038007B9F9F /* Sc3Gamepad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sc3Gamepad.swift; sourceTree = "<group>"; };
+		02CE4468208E0074007B9F9F /* Sc3MapperTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sc3MapperTranslator.swift; sourceTree = "<group>"; };
+		02D12B27202899A1002C00BB /* AnafiBeeper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiBeeper.swift; sourceTree = "<group>"; };
+		02D12B2B2028A3CD002C00BB /* AnafiBeeperControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiBeeperControllerTests.swift; sourceTree = "<group>"; };
+		02D96EFE2084B23D004A3553 /* TargetTrajectoryMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetTrajectoryMatcher.swift; sourceTree = "<group>"; };
+		02FC4C7C2024AE2A00D76490 /* AnafiFlightMeter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiFlightMeter.swift; sourceTree = "<group>"; };
+		02FC4C8020285F7900D76490 /* AnafiFlightMeterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiFlightMeterTests.swift; sourceTree = "<group>"; };
+		1D2194E11EE6D479005A6883 /* ArsdkCrashmlDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkCrashmlDownloader.swift; sourceTree = "<group>"; };
+		1DA626EC1EF8137E0031AA69 /* CrashReportDownloaderMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashReportDownloaderMatcher.swift; sourceTree = "<group>"; };
+		1DA626EE1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkCrashmlDownloaderTests.swift; sourceTree = "<group>"; };
+		70F73FD52136A6B4006E27BB /* ArsdkFlightLogDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkFlightLogDownloader.swift; sourceTree = "<group>"; };
+		70F73FD82136A81F006E27BB /* FtpFlightLogDownloaderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FtpFlightLogDownloaderDelegate.swift; sourceTree = "<group>"; };
+		70F73FD92136A81F006E27BB /* HttpFlightLogDownloaderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpFlightLogDownloaderDelegate.swift; sourceTree = "<group>"; };
+		718552A5219D837100E4A881 /* MockArsdkStreamMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockArsdkStreamMatcher.swift; sourceTree = "<group>"; };
+		71D766042182FD7000517136 /* StreamServerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamServerController.swift; sourceTree = "<group>"; };
+		7C0366E51E3B88A20041D71E /* AnafiReturnHomePilotingItfNoOfflineSettingsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiReturnHomePilotingItfNoOfflineSettingsTests.swift; sourceTree = "<group>"; };
+		7C06715A1DBE42D000C90162 /* DiscoveredDroneMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveredDroneMatcher.swift; sourceTree = "<group>"; };
+		7C06D2D3209C58E800A01588 /* MockWebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockWebSocket.swift; sourceTree = "<group>"; };
+		7C1A874A1D7F0CC300C9E113 /* SettingsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		7C2045F41D2FD0BD007E0405 /* AnafiManualPilotingItfTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiManualPilotingItfTests.swift; sourceTree = "<group>"; };
+		7C2045F61D2FD792007E0405 /* ReturnHomePreferredTargetMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnHomePreferredTargetMatcher.swift; sourceTree = "<group>"; };
+		7C2045F81D2FD91B007E0405 /* IntSettingMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntSettingMatcher.swift; sourceTree = "<group>"; };
+		7C214EC21CE3967F00A40253 /* ULogTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ULogTag.swift; sourceTree = "<group>"; };
+		7C25FB261DFEDA880028585B /* Asserts.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Asserts.xcassets; path = ../../groundsdk/GroundSdkTests/Asserts.xcassets; sourceTree = "<group>"; };
+		7C29CB561D58E056006BF0BE /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		7C29CB5C1D58E0EB006BF0BE /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		7C2C7ABF1D3F7AC3009D47C7 /* PersistentStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentStoreTests.swift; sourceTree = "<group>"; };
+		7C2F62D61DA69CCC007FB22A /* RemoteControlMatchers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteControlMatchers.swift; sourceTree = "<group>"; };
+		7C30D99B1D26886D0099E07F /* AnafiReturnHomePilotingItf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnafiReturnHomePilotingItf.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C32FF781F868DDF0099A750 /* CameraMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraMatcher.swift; sourceTree = "<group>"; };
+		7C33AF151DE5C5A00097BAC9 /* ArsdkMediaStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ArsdkMediaStore.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C372EB21D77107C00B8727C /* RCController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RCController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C44B8962005381B005CA536 /* Storable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storable.swift; sourceTree = "<group>"; };
+		7C44FF6F1DBE2B9C003E59D3 /* DroneManagerDroneFinderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DroneManagerDroneFinderTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C52A8E520056530004B5749 /* Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
+		7C5413971C80A96300CE922E /* ArsdkEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkEngine.swift; sourceTree = "<group>"; };
+		7C5FA4E61DAF8BEB001B68A3 /* DroneManagerDroneFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroneManagerDroneFinder.swift; sourceTree = "<group>"; };
+		7C6947B81CD8F92B001FE253 /* AnafiFlyingIndicators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnafiFlyingIndicators.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C6947BA1CD9037B001FE253 /* DeviceComponentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceComponentController.swift; sourceTree = "<group>"; };
+		7C6D3B5B2007B2A300E698A5 /* CameraControllerBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraControllerBase.swift; sourceTree = "<group>"; };
+		7C73110F200609AD0048BA89 /* SettingsStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsStoreTests.swift; sourceTree = "<group>"; };
+		7C74069B204EE24F00D1CD78 /* AntiflickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AntiflickerController.swift; sourceTree = "<group>"; };
+		7C74069D204EE9D500D1CD78 /* CameraFeatureAntiflicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFeatureAntiflicker.swift; sourceTree = "<group>"; };
+		7C7406A72050144400D1CD78 /* AntiflickerMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AntiflickerMatcher.swift; sourceTree = "<group>"; };
+		7C7406A92050250700D1CD78 /* CameraFeatureAntiflickerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraFeatureAntiflickerTests.swift; sourceTree = "<group>"; };
+		7C76AB471C8D75BF00FC213E /* ArithmeticMatchers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArithmeticMatchers.swift; sourceTree = "<group>"; };
+		7C76AB481C8D75BF00FC213E /* BasicMatchers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicMatchers.swift; sourceTree = "<group>"; };
+		7C76AB491C8D75BF00FC213E /* Descriptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Descriptions.swift; sourceTree = "<group>"; };
+		7C76AB4A1C8D75BF00FC213E /* DictionaryMatchers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryMatchers.swift; sourceTree = "<group>"; };
+		7C76AB4B1C8D75BF00FC213E /* Hamcrest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Hamcrest.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C76AB4C1C8D75BF00FC213E /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		7C76AB4D1C8D75BF00FC213E /* Matcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matcher.swift; sourceTree = "<group>"; };
+		7C76AB4E1C8D75BF00FC213E /* MatchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchResult.swift; sourceTree = "<group>"; };
+		7C76AB4F1C8D75BF00FC213E /* MetaMatchers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaMatchers.swift; sourceTree = "<group>"; };
+		7C76AB501C8D75BF00FC213E /* OperatorMatchers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperatorMatchers.swift; sourceTree = "<group>"; };
+		7C76AB511C8D75BF00FC213E /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		7C76AB521C8D75BF00FC213E /* ReflectionMatchers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReflectionMatchers.swift; sourceTree = "<group>"; };
+		7C76AB531C8D75BF00FC213E /* SequenceMatchers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceMatchers.swift; sourceTree = "<group>"; };
+		7C76AB541C8D75BF00FC213E /* StringMatchers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringMatchers.swift; sourceTree = "<group>"; };
+		7C812AF81D9C20380004149C /* ArsdkProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkProxy.swift; sourceTree = "<group>"; };
+		7C895B08207798F900DD689C /* CameraFeatureCameraTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraFeatureCameraTests.swift; sourceTree = "<group>"; };
+		7C9138CB1E39E9F80064A5FD /* AnafiManualPilotingItfNoOfflineSettingsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiManualPilotingItfNoOfflineSettingsTests.swift; sourceTree = "<group>"; };
+		7C9B8FE51D48ACAC00366ADD /* BoolSettingMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolSettingMatcher.swift; sourceTree = "<group>"; };
+		7C9CFB231DABB72400F3915B /* ArsdkEngineAddRemoveDevicesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ArsdkEngineAddRemoveDevicesTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C9CFB251DABC07100F3915B /* DroneManagerFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DroneManagerFeature.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C9CFB271DABE00900F3915B /* DroneManagerFeatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DroneManagerFeatureTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C9F73481CFDA963004DE672 /* AnafiReturnHomePilotingItfTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnafiReturnHomePilotingItfTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7CA1C96D1C807AC200FE9ED4 /* ArsdkEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArsdkEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CA1C9701C807AC200FE9ED4 /* ArsdkEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArsdkEngine.h; sourceTree = "<group>"; };
+		7CA1C9721C807AC200FE9ED4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7CA1C9771C807AC200FE9ED4 /* ArsdkEngineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArsdkEngineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CA1C97C1C807AC200FE9ED4 /* ArsdkEngineConnectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ArsdkEngineConnectTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7CA1C97E1C807AC200FE9ED4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7CA1C9871C807C8300FE9ED4 /* config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = config.xcconfig; sourceTree = "<group>"; };
+		7CA47F9F2057E44400A5843A /* MockReverseGeocoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockReverseGeocoder.swift; sourceTree = "<group>"; };
+		7CA52A9C1FDEB70900C118FB /* CameraFeatureCameraRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraFeatureCameraRouter.swift; sourceTree = "<group>"; };
+		7CA52AA31FDEEF7E00C118FB /* ArsdkMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkMapper.swift; sourceTree = "<group>"; };
+		7CA52AA51FDFDD1400C118FB /* CameraStorableEmumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraStorableEmumTests.swift; sourceTree = "<group>"; };
+		7CA8BDB81ECC7E0A00B79CCC /* CommonRadio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonRadio.swift; sourceTree = "<group>"; };
+		7CA8BDBC1ECC880100B79CCC /* CommonRadioTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonRadioTests.swift; sourceTree = "<group>"; };
+		7CAF16311D47A3580014F2E4 /* ManualCopterPilotingItfController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualCopterPilotingItfController.swift; sourceTree = "<group>"; };
+		7CB1CF621D92D69A00E1CDE7 /* Arsdk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arsdk.swift; sourceTree = "<group>"; };
+		7CB53B761D2D002100D695CC /* ActivablePilotingItfController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivablePilotingItfController.swift; sourceTree = "<group>"; };
+		7CB698EF20583C67004B3008 /* testConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = testConfig.xcconfig; sourceTree = "<group>"; };
+		7CCBC7602099C52A006C3378 /* StreamSocketConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamSocketConnection.swift; sourceTree = "<group>"; };
+		7CCBC7612099C52A006C3378 /* Websocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Websocket.swift; sourceTree = "<group>"; };
+		7CCBC7642099F4C3006C3378 /* MediaWsApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaWsApi.swift; sourceTree = "<group>"; };
+		7CCFFA941E1260D50029D35A /* MediaItemMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemMatcher.swift; sourceTree = "<group>"; };
+		7CCFFA961E1278FD0029D35A /* MediaDownloaderMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaDownloaderMatcher.swift; sourceTree = "<group>"; };
+		7CCFFA9A1E12A5FA0029D35A /* MediaDeleterMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaDeleterMatcher.swift; sourceTree = "<group>"; };
+		7CD624A81D588E7A00307BCD /* ReturnHomePilotingItfController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnHomePilotingItfController.swift; sourceTree = "<group>"; };
+		7CE1371C1CFC891E0041E197 /* AnafiFlyingIndicatorsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiFlyingIndicatorsTests.swift; sourceTree = "<group>"; };
+		7CE1371E1CFC8C0C0041E197 /* DoubleSettingMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSettingMatcher.swift; sourceTree = "<group>"; };
+		7CE1371F1CFC8C0C0041E197 /* FlyingIndicatorsMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlyingIndicatorsMatcher.swift; sourceTree = "<group>"; };
+		7CE137221CFCA06A0041E197 /* ArsdkEngineTestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ArsdkEngineTestBase.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7CE5B8D51DA261E500C7D688 /* ProxyDeviceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxyDeviceController.swift; sourceTree = "<group>"; };
+		9B2B789621426B940045ED0F /* EphemerisRestApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemerisRestApi.swift; sourceTree = "<group>"; };
+		9B2B789921426BF50045ED0F /* EphemerisUploaderEphemerisDisabledTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EphemerisUploaderEphemerisDisabledTests.swift; path = ArsdkEngineTests/Ephemeris/EphemerisUploaderEphemerisDisabledTests.swift; sourceTree = SOURCE_ROOT; };
+		9B2B789A21426BF50045ED0F /* EphemerisUploaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EphemerisUploaderTests.swift; path = ArsdkEngineTests/Ephemeris/EphemerisUploaderTests.swift; sourceTree = SOURCE_ROOT; };
+		9B2B78A121426DD00045ED0F /* MockEphemerisUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockEphemerisUtility.swift; sourceTree = "<group>"; };
+		9B31E00121C93545006F389E /* ThermalControlMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalControlMatcher.swift; sourceTree = "<group>"; };
+		9B31E00321C93572006F389E /* ThermalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalController.swift; sourceTree = "<group>"; };
+		9B31E00521C93E9A006F389E /* ThermalControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalControllerTests.swift; sourceTree = "<group>"; };
+		9B40FAD0215E557300CF6690 /* PreciseHomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreciseHomeController.swift; sourceTree = "<group>"; };
+		9B40FADC2162741600CF6690 /* PreciseHomeControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreciseHomeControllerTests.swift; sourceTree = "<group>"; };
+		9B40FADE2163633500CF6690 /* PreciseHomeMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreciseHomeMatcher.swift; sourceTree = "<group>"; };
+		9B4E7175214AB451007D4DA7 /* EphemerisUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemerisUploader.swift; sourceTree = "<group>"; };
+		9B4E7176214AB451007D4DA7 /* EphemerisConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemerisConfig.swift; sourceTree = "<group>"; };
+		9B6ACC7521F0CBBF0024B837 /* CameraFeatureCameraRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFeatureCameraRouterTests.swift; sourceTree = "<group>"; };
+		9B73BDC7221707C2008DA1F7 /* LedsControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedsControllerTests.swift; sourceTree = "<group>"; };
+		9BBAAFC12215B48B00E1E5BF /* LedsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedsController.swift; sourceTree = "<group>"; };
+		9BBD4150222EAF700006CBAF /* PhotoProgressIndicatorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProgressIndicatorController.swift; sourceTree = "<group>"; };
+		9BBD4158222ED5CD0006CBAF /* PhotoProgressIndicatorControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProgressIndicatorControllerTests.swift; sourceTree = "<group>"; };
+		9BD67C7021CCF4B600CA1568 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		9BDDF1A42146920E008252BA /* FlightLogRestApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightLogRestApi.swift; sourceTree = "<group>"; };
+		9BDDF1A62146A83F008252BA /* ArsdkFlightLogDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArsdkFlightLogDownloaderTests.swift; sourceTree = "<group>"; };
+		9BDDF1A82146A85A008252BA /* HttpFlightLogDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpFlightLogDownloaderTests.swift; sourceTree = "<group>"; };
+		9BDDF1AA21479D60008252BA /* FtpFlightLogDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FtpFlightLogDownloaderTests.swift; sourceTree = "<group>"; };
+		9BDDF1AC2147A050008252BA /* FlightLogDownloaderMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogDownloaderMatcher.swift; sourceTree = "<group>"; };
+		9BDDF1AE2147A5C6008252BA /* MockFlightLogStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlightLogStorage.swift; sourceTree = "<group>"; };
+		F8034F971D33CD6F003A3CFD /* AnafiMagnetometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnafiMagnetometer.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F804B01820D979FB00BE2CF7 /* AppDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDefaults.swift; sourceTree = "<group>"; };
+		F809C23E1E851CEF008B8153 /* UpdaterControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdaterControllerTests.swift; sourceTree = "<group>"; };
+		F80F2CFC1F179F950008CAC2 /* WifiFeatureWifiAccessPointTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WifiFeatureWifiAccessPointTests.swift; sourceTree = "<group>"; };
+		F8123B53200CFA9B0071672B /* UserStorageRemovableUserStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStorageRemovableUserStorage.swift; sourceTree = "<group>"; };
+		F8123B59200D0A670071672B /* UserStorageRemovableUserStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStorageRemovableUserStorageTests.swift; sourceTree = "<group>"; };
+		F8123B5B200D12650071672B /* RemovableUserStorageMediaInfoMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemovableUserStorageMediaInfoMatcher.swift; sourceTree = "<group>"; };
+		F821EA1A203B316E0091C186 /* HttpMediaStoreDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMediaStoreDelegate.swift; sourceTree = "<group>"; };
+		F821EA1C203B33C30091C186 /* MediaRestApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaRestApi.swift; sourceTree = "<group>"; };
+		F822E3501E43307A0037DB0F /* ArsdkSystemInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkSystemInfo.swift; sourceTree = "<group>"; };
+		F82449AE1DDE272D0063FCC7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		F82722CF1F17732C00D4C398 /* WifiFeatureWifiAccessPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WifiFeatureWifiAccessPoint.swift; sourceTree = "<group>"; };
+		F832FA4A1E48BC580019AC08 /* UpdaterMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdaterMatcher.swift; sourceTree = "<group>"; };
+		F83497F41CA2F90B009E3A2D /* GroundSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GroundSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8369C8E20A1DB81008010AE /* MockUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUserDefaults.swift; sourceTree = "<group>"; };
+		F8441DAE1D47B8CC0062DC77 /* EnumSettingMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnumSettingMatcher.swift; sourceTree = "<group>"; };
+		F857E0841DF71CA70026CAF2 /* AnafiSystemInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiSystemInfo.swift; sourceTree = "<group>"; };
+		F857F5321EE166B100324343 /* ManualPilotingItfController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualPilotingItfController.swift; sourceTree = "<group>"; };
+		F85909AF1CAAC3C800B08530 /* PersistentStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PersistentStore.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F85CF08F1E9E6B2200C82969 /* AnafiFamilyDroneController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiFamilyDroneController.swift; sourceTree = "<group>"; };
+		F862C5B61FFB92A2009662CC /* FtpCrashmlDownloaderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FtpCrashmlDownloaderDelegate.swift; sourceTree = "<group>"; };
+		F862C5B81FFB9512009662CC /* HttpCrashmlDownloaderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpCrashmlDownloaderDelegate.swift; sourceTree = "<group>"; };
+		F862C5BA1FFBD92C009662CC /* FtpCrashmlDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FtpCrashmlDownloaderTests.swift; sourceTree = "<group>"; };
+		F862C5BC1FFBE0A6009662CC /* HttpCrashmlDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpCrashmlDownloaderTests.swift; sourceTree = "<group>"; };
+		F868F8AF1CAD0B000045DBD1 /* DeviceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceController.swift; sourceTree = "<group>"; };
+		F868F8B11CAD20560045DBD1 /* DroneController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroneController.swift; sourceTree = "<group>"; };
+		F868F8C21CAD658F0045DBD1 /* DroneListEntryMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroneListEntryMatcher.swift; sourceTree = "<group>"; };
+		F868F8C31CAD658F0045DBD1 /* DroneMatchers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroneMatchers.swift; sourceTree = "<group>"; };
+		F868F8C41CAD658F0045DBD1 /* DeviceStateMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceStateMatcher.swift; sourceTree = "<group>"; };
+		F86A81631F8BC83700F7EE60 /* AnimFeaturePilotingItfController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimFeaturePilotingItfController.swift; sourceTree = "<group>"; };
+		F86BA98421230488004DFAB2 /* MockInternetConnectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockInternetConnectivity.swift; sourceTree = "<group>"; };
+		F86BA986212308E9004DFAB2 /* MockFirmwareDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFirmwareDownloader.swift; sourceTree = "<group>"; };
+		F86BA98A21231DFC004DFAB2 /* FirmwareInfoMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareInfoMatcher.swift; sourceTree = "<group>"; };
+		F86BA98C2125A68F004DFAB2 /* DroneFirmwareUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneFirmwareUpdaterTests.swift; sourceTree = "<group>"; };
+		F86BA98E2125B129004DFAB2 /* RcFirmwareUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RcFirmwareUpdaterTests.swift; sourceTree = "<group>"; };
+		F870055E1FC88477003114D9 /* MockTimeProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTimeProvider.swift; sourceTree = "<group>"; };
+		F870055F1FC88477003114D9 /* MockArsdkEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockArsdkEngine.swift; sourceTree = "<group>"; };
+		F87005621FC88477003114D9 /* MockPersistentStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPersistentStore.swift; sourceTree = "<group>"; };
+		F87005691FC885E0003114D9 /* MockEnginesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEnginesController.swift; sourceTree = "<group>"; };
+		F870057A1FC88C66003114D9 /* MockCrashReportStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCrashReportStorage.swift; sourceTree = "<group>"; };
+		F877E4E020220048006B0929 /* SkyControllerCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyControllerCompass.swift; sourceTree = "<group>"; };
+		F877E4E220220B28006B0929 /* SkyControllerCompassTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyControllerCompassTests.swift; sourceTree = "<group>"; };
+		F877E4ED20246BE0006B0929 /* DroneServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneServer.swift; sourceTree = "<group>"; };
+		F87C037A1D1303A0007B2391 /* AnafiAttitudeIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiAttitudeIndicator.swift; sourceTree = "<group>"; };
+		F87D5A3E1FFFEA24005AF079 /* SkyControllerMagnetometer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyControllerMagnetometer.swift; sourceTree = "<group>"; };
+		F87D5A46200387FC005AF079 /* SkyControllerMagnetometerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyControllerMagnetometerTests.swift; sourceTree = "<group>"; };
+		F88415D31F98E842000A1FAF /* PilotingCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotingCommand.swift; sourceTree = "<group>"; };
+		F88415D51F9DEF7C000A1FAF /* TimeProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeProvider.swift; sourceTree = "<group>"; };
+		F88468761DEC7AFE00ACE941 /* SkyControllerSystemInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SkyControllerSystemInfo.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F88468941DEF23CC00ACE941 /* AnafiSystemInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnafiSystemInfoTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F88468971DEF253300ACE941 /* SystemVersionMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemVersionMatcher.swift; sourceTree = "<group>"; };
+		F884689A1DEF3FAC00ACE941 /* SkyControllerSystemInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SkyControllerSystemInfoTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F88C31E31D05B81E00A3A814 /* AnafiGps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiGps.swift; sourceTree = "<group>"; };
+		F88C31EB1D05C78800A3A814 /* AnafiCompass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnafiCompass.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F88C31F31D06BF7300A3A814 /* AnafiAltimeter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnafiAltimeter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F88C31FB1D06FEC400A3A814 /* AnafiSpeedometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnafiSpeedometer.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F88E246A1FEA79D200D7AAC7 /* HttpFirmwareUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpFirmwareUpdaterTests.swift; sourceTree = "<group>"; };
+		F88E246C1FEAA81D00D7AAC7 /* MockUrlSessionTaskMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUrlSessionTaskMatcher.swift; sourceTree = "<group>"; };
+		F88E246E1FEAB8D400D7AAC7 /* UpdaterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterController.swift; sourceTree = "<group>"; };
+		F89A06361EDC75470069ACD4 /* FlightPlanPilotingItfController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightPlanPilotingItfController.swift; sourceTree = "<group>"; };
+		F89A063A1EDD6C9B0069ACD4 /* PilotingItfActivationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotingItfActivationController.swift; sourceTree = "<group>"; };
+		F89D8FA01EE6EE400094C524 /* CommonFlightPlanPilotingItfTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonFlightPlanPilotingItfTests.swift; sourceTree = "<group>"; };
+		F89D8FA41EE8344E0094C524 /* CommonFlightPlanPilotingItfNoOfflineSettingsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonFlightPlanPilotingItfNoOfflineSettingsTests.swift; sourceTree = "<group>"; };
+		F89D8FA61EE836C50094C524 /* PilotingItfActivationControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotingItfActivationControllerTests.swift; sourceTree = "<group>"; };
+		F8A11A9520AC619D0062253D /* DroneUpdaterEventReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroneUpdaterEventReceiver.swift; sourceTree = "<group>"; };
+		F8A11A9620AC619D0062253D /* RcUpdaterEventReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RcUpdaterEventReceiver.swift; sourceTree = "<group>"; };
+		F8A3D0CC2049866B00AF0126 /* GimbalFeatureGimbal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GimbalFeatureGimbal.swift; sourceTree = "<group>"; };
+		F8A3D0CE204ED61A00AF0126 /* GimbalFeatureGimbalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GimbalFeatureGimbalTests.swift; sourceTree = "<group>"; };
+		F8A8D26820C559810062DD24 /* NoAckCmdEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoAckCmdEncoder.swift; sourceTree = "<group>"; };
+		F8B240311FE2EB520092974F /* BlackBoxCircularArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxCircularArrayTests.swift; sourceTree = "<group>"; };
+		F8B941FD1CC615570099CBBC /* SdkCoreTesting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SdkCoreTesting.framework; path = "../Debug-iphonesimulator/SdkCoreTesting.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8BFCDBD1FE95FFE0060D6A0 /* UpdateRestApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRestApi.swift; sourceTree = "<group>"; };
+		F8BFCDBF1FE984B10060D6A0 /* HttpFirmwareUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpFirmwareUploader.swift; sourceTree = "<group>"; };
+		F8BFCDC11FEA5D0F0060D6A0 /* MockHttpSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHttpSession.swift; sourceTree = "<group>"; };
+		F8C7DF111F04F37A00A781D8 /* StringSettingMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringSettingMatcher.swift; sourceTree = "<group>"; };
+		F8C7DF121F04F37A00A781D8 /* WifiAccessPointMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WifiAccessPointMatcher.swift; sourceTree = "<group>"; };
+		F8C9C42E1D18216200DB1647 /* AnafiGpsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiGpsTests.swift; sourceTree = "<group>"; };
+		F8C9C4301D18287F00DB1647 /* AnafiCompassTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiCompassTests.swift; sourceTree = "<group>"; };
+		F8C9C4321D182C4300DB1647 /* AnafiAltimeterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiAltimeterTests.swift; sourceTree = "<group>"; };
+		F8C9C4341D182F8400DB1647 /* AnafiSpeedometerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiSpeedometerTests.swift; sourceTree = "<group>"; };
+		F8C9C4361D18309F00DB1647 /* AnafiAttitudeIndicatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiAttitudeIndicatorTests.swift; sourceTree = "<group>"; };
+		F8D007881DDE1A41002D478A /* ArsdkStreamTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkStreamTests.swift; sourceTree = "<group>"; };
+		F8D0078A1DDE1B07002D478A /* LiveStreamMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveStreamMatcher.swift; sourceTree = "<group>"; };
+		F8D32CB41EF017A900074795 /* CommonBatteryInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonBatteryInfo.swift; sourceTree = "<group>"; };
+		F8D32CB61EF01BE600074795 /* SkyControllerBatteryInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkyControllerBatteryInfo.swift; sourceTree = "<group>"; };
+		F8D32CBC1EF025AC00074795 /* CommonBatteryInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonBatteryInfoTests.swift; sourceTree = "<group>"; };
+		F8D32CBE1EF02E0D00074795 /* SkyControllerBatteryInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkyControllerBatteryInfoTests.swift; sourceTree = "<group>"; };
+		F8D32CCA1EF12CE800074795 /* AnafiCopterMotors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnafiCopterMotors.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F8D32CD41EF1802A00074795 /* AnafiMotors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiMotors.swift; sourceTree = "<group>"; };
+		F8D32CD61EF1856600074795 /* AnafiCopterMotorsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnafiCopterMotorsTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F8D32CD81EF1877400074795 /* CopterMotorsMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopterMotorsMatcher.swift; sourceTree = "<group>"; };
+		F8D82B541E00628D0047ABF1 /* MapperVirtualGamepad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MapperVirtualGamepad.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F8D878491F1CAD2E00991465 /* Bitfield.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bitfield.swift; sourceTree = "<group>"; };
+		F8D9B4A61CC7CFE7006DEDF8 /* SdkCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SdkCore.framework; path = "../Debug-iphonesimulator/SdkCore.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8DB46401D33EA7000297E15 /* AnafiMagnetometerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiMagnetometerTests.swift; sourceTree = "<group>"; };
+		F8DB46421D33ECCB00297E15 /* MagnetometerCalibrationProcessStateMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagnetometerCalibrationProcessStateMatcher.swift; sourceTree = "<group>"; };
+		F8E011241FD98A16005A9520 /* BlackBoxRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxRecorder.swift; sourceTree = "<group>"; };
+		F8E011261FD99996005A9520 /* BlackBoxContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxContext.swift; sourceTree = "<group>"; };
+		F8E011281FD99E1B005A9520 /* BlackBoxDroneSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxDroneSession.swift; sourceTree = "<group>"; };
+		F8E0112A1FD99E29005A9520 /* BlackBoxRcSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxRcSession.swift; sourceTree = "<group>"; };
+		F8E0112C1FD99FA3005A9520 /* BlackBoxData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxData.swift; sourceTree = "<group>"; };
+		F8E0112E1FD9A4B7005A9520 /* BlackBoxSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxSession.swift; sourceTree = "<group>"; };
+		F8E011351FDAF75E005A9520 /* BlackBoxEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxEvent.swift; sourceTree = "<group>"; };
+		F8E1F1EF20DA8CC5009379D6 /* AppDefaultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDefaultsTests.swift; sourceTree = "<group>"; };
+		F8E1F1F120DAA1E2009379D6 /* app_defaults_tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = app_defaults_tests.plist; sourceTree = "<group>"; };
+		F8E1F1F320DAABD3009379D6 /* PersistentStoreMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentStoreMatcher.swift; sourceTree = "<group>"; };
+		F8E2B3001F8FB4AC004AC24D /* AnimationFeaturePilotingItfTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationFeaturePilotingItfTests.swift; sourceTree = "<group>"; };
+		F8E2B3021F8FCB92004AC24D /* AnimationMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationMatcher.swift; sourceTree = "<group>"; };
+		F8E9E7881EF4240D00A5BE86 /* WifiChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WifiChannel.swift; sourceTree = "<group>"; };
+		F8ED48B51E81320100C0FFC0 /* FtpFirmwareUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FtpFirmwareUploader.swift; sourceTree = "<group>"; };
+		F8ED8B012040745B005D9D57 /* ArsdkMediaStoreHttpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArsdkMediaStoreHttpTests.swift; sourceTree = "<group>"; };
+		F8ED954F1FDEB2C1004300DE /* BlackBoxCircularArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxCircularArray.swift; sourceTree = "<group>"; };
+		F8ED95511FDEB9D5004300DE /* BlackBoxFlightData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxFlightData.swift; sourceTree = "<group>"; };
+		F8ED95531FDEDDE9004300DE /* BlackBoxEnvironmentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxEnvironmentData.swift; sourceTree = "<group>"; };
+		F8ED95551FDEDE17004300DE /* BlackBoxLocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxLocationData.swift; sourceTree = "<group>"; };
+		F8ED95571FDEE741004300DE /* BlackBoxHeaderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxHeaderData.swift; sourceTree = "<group>"; };
+		F8ED95591FDEF3A4004300DE /* BlackBoxRemoteControlData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxRemoteControlData.swift; sourceTree = "<group>"; };
+		F8EE9F632084EBDE001A2860 /* AnafiAlarms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnafiAlarms.swift; sourceTree = "<group>"; };
+		F8EE9F652085D847001A2860 /* AnafiAlarmsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnafiAlarmsTests.swift; sourceTree = "<group>"; };
+		F8F2B19C20E3914200A1A802 /* CameraFeatureExposureValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFeatureExposureValues.swift; sourceTree = "<group>"; };
+		F8F2B1A220E3AE6E00A1A802 /* CameraFeatureExposureValuesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFeatureExposureValuesTests.swift; sourceTree = "<group>"; };
+		F8F974A61CD3837B0060318C /* AnafiCopterManualPilotingItf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnafiCopterManualPilotingItf.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F8FB2E651FEBF3FC0037B930 /* ReportRestApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRestApi.swift; sourceTree = "<group>"; };
+		F8FF144D1D2A627800A87DA6 /* CLLocationMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLLocationMatcher.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7CA1C9691C807AC200FE9ED4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F83497F51CA2F90B009E3A2D /* GroundSdk.framework in Frameworks */,
+				F8D9B4A71CC7CFE7006DEDF8 /* SdkCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CA1C9741C807AC200FE9ED4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8D9B45B1CC615B2006DEDF8 /* SdkCoreTesting.framework in Frameworks */,
+				7CA1C9781C807AC200FE9ED4 /* ArsdkEngine.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0226198D2069340E005587B2 /* WifiAccessPointController */ = {
+			isa = PBXGroup;
+			children = (
+				F82722CF1F17732C00D4C398 /* WifiFeatureWifiAccessPoint.swift */,
+			);
+			path = WifiAccessPointController;
+			sourceTree = "<group>";
+		};
+		022637BD205FBB6F00D390B3 /* FlightPlanUploader */ = {
+			isa = PBXGroup;
+			children = (
+				022637BE205FBB6F00D390B3 /* FtpFlightPlanUploader.swift */,
+				022637C0205FD2AA00D390B3 /* HttpFlightPlanUploader.swift */,
+			);
+			path = FlightPlanUploader;
+			sourceTree = "<group>";
+		};
+		025FB9F920AC8AED00D84597 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				025FB9FA20AC8AED00D84597 /* ArsdkEngineUtil.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		02ADCD2A209C4D20008AF7D6 /* ArsdkFlightDataDownloader */ = {
+			isa = PBXGroup;
+			children = (
+				02ADCD2B209C4D20008AF7D6 /* HttpFlightDataDownloaderDelegate.swift */,
+			);
+			path = ArsdkFlightDataDownloader;
+			sourceTree = "<group>";
+		};
+		02CB17A92080F6B1006478DA /* tracking */ = {
+			isa = PBXGroup;
+			children = (
+				026B64D22085FF7900FE5C86 /* FollowFeatureFollowMePilotingItf.swift */,
+				0271AF1E207BA71600EE56F1 /* FollowFeatureLookAtPilotingItf.swift */,
+				02CB17AA2080F7AE006478DA /* FollowFeatureTrackingPilotingItf.swift */,
+				020B17192089D0EA00CB64A8 /* FollowFeatureTrackingSharing.swift */,
+			);
+			path = tracking;
+			sourceTree = "<group>";
+		};
+		70F73FD72136A7D1006E27BB /* ArsdkFlightLogDownloader */ = {
+			isa = PBXGroup;
+			children = (
+				70F73FD82136A81F006E27BB /* FtpFlightLogDownloaderDelegate.swift */,
+				70F73FD92136A81F006E27BB /* HttpFlightLogDownloaderDelegate.swift */,
+			);
+			path = ArsdkFlightLogDownloader;
+			sourceTree = "<group>";
+		};
+		71D766012182FC5900517136 /* Stream */ = {
+			isa = PBXGroup;
+			children = (
+				71D766042182FD7000517136 /* StreamServerController.swift */,
+			);
+			path = Stream;
+			sourceTree = "<group>";
+		};
+		7C088AC41C886C7600CA2B80 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F82449AE1DDE272D0063FCC7 /* AVFoundation.framework */,
+				F8B941FD1CC615570099CBBC /* SdkCoreTesting.framework */,
+				F83497F41CA2F90B009E3A2D /* GroundSdk.framework */,
+				F8D9B4A61CC7CFE7006DEDF8 /* SdkCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7C5049C11E0C0640000FC1FE /* ArsdkMediaStore */ = {
+			isa = PBXGroup;
+			children = (
+				F821EA1A203B316E0091C186 /* HttpMediaStoreDelegate.swift */,
+			);
+			path = ArsdkMediaStore;
+			sourceTree = "<group>";
+		};
+		7C6947B71CD8F90C001FE253 /* Instrument */ = {
+			isa = PBXGroup;
+			children = (
+				F8EE9F632084EBDE001A2860 /* AnafiAlarms.swift */,
+				F88C31F31D06BF7300A3A814 /* AnafiAltimeter.swift */,
+				F87C037A1D1303A0007B2391 /* AnafiAttitudeIndicator.swift */,
+				F88C31EB1D05C78800A3A814 /* AnafiCompass.swift */,
+				02FC4C7C2024AE2A00D76490 /* AnafiFlightMeter.swift */,
+				7C6947B81CD8F92B001FE253 /* AnafiFlyingIndicators.swift */,
+				F88C31E31D05B81E00A3A814 /* AnafiGps.swift */,
+				F88C31FB1D06FEC400A3A814 /* AnafiSpeedometer.swift */,
+				F8F2B19C20E3914200A1A802 /* CameraFeatureExposureValues.swift */,
+				F8D32CB41EF017A900074795 /* CommonBatteryInfo.swift */,
+				7CA8BDB81ECC7E0A00B79CCC /* CommonRadio.swift */,
+				9BBD4150222EAF700006CBAF /* PhotoProgressIndicatorController.swift */,
+				F8D32CB61EF01BE600074795 /* SkyControllerBatteryInfo.swift */,
+				F877E4E020220048006B0929 /* SkyControllerCompass.swift */,
+			);
+			path = Instrument;
+			sourceTree = "<group>";
+		};
+		7C76AB451C8D75BF00FC213E /* unittest-tools */ = {
+			isa = PBXGroup;
+			children = (
+				F870055C1FC88477003114D9 /* Mocks */,
+				F868F8C11CAD658F0045DBD1 /* matchers */,
+				7C76AB461C8D75BF00FC213E /* hamcrest */,
+			);
+			name = "unittest-tools";
+			path = "../../unittest-tools";
+			sourceTree = "<group>";
+		};
+		7C76AB461C8D75BF00FC213E /* hamcrest */ = {
+			isa = PBXGroup;
+			children = (
+				7C76AB471C8D75BF00FC213E /* ArithmeticMatchers.swift */,
+				7C76AB481C8D75BF00FC213E /* BasicMatchers.swift */,
+				7C76AB491C8D75BF00FC213E /* Descriptions.swift */,
+				7C76AB4A1C8D75BF00FC213E /* DictionaryMatchers.swift */,
+				7C76AB4B1C8D75BF00FC213E /* Hamcrest.swift */,
+				7C76AB4C1C8D75BF00FC213E /* LICENSE */,
+				7C76AB4D1C8D75BF00FC213E /* Matcher.swift */,
+				7C76AB4E1C8D75BF00FC213E /* MatchResult.swift */,
+				7C76AB4F1C8D75BF00FC213E /* MetaMatchers.swift */,
+				7C76AB501C8D75BF00FC213E /* OperatorMatchers.swift */,
+				7C76AB511C8D75BF00FC213E /* README */,
+				7C76AB521C8D75BF00FC213E /* ReflectionMatchers.swift */,
+				7C76AB531C8D75BF00FC213E /* SequenceMatchers.swift */,
+				7C76AB541C8D75BF00FC213E /* StringMatchers.swift */,
+			);
+			path = hamcrest;
+			sourceTree = "<group>";
+		};
+		7CA1C9631C807AC200FE9ED4 = {
+			isa = PBXGroup;
+			children = (
+				7C29CB561D58E056006BF0BE /* .swiftlint.yml */,
+				7CA1C9871C807C8300FE9ED4 /* config.xcconfig */,
+				7CB698EF20583C67004B3008 /* testConfig.xcconfig */,
+				7CA1C96F1C807AC200FE9ED4 /* ArsdkEngine */,
+				7CA1C97B1C807AC200FE9ED4 /* ArsdkEngineTests */,
+				7CA1C96E1C807AC200FE9ED4 /* Products */,
+				7C088AC41C886C7600CA2B80 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7CA1C96E1C807AC200FE9ED4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7CA1C96D1C807AC200FE9ED4 /* ArsdkEngine.framework */,
+				7CA1C9771C807AC200FE9ED4 /* ArsdkEngineTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7CA1C96F1C807AC200FE9ED4 /* ArsdkEngine */ = {
+			isa = PBXGroup;
+			children = (
+				F804B01820D979FB00BE2CF7 /* AppDefaults.swift */,
+				7CB1CF621D92D69A00E1CDE7 /* Arsdk.swift */,
+				7C5413971C80A96300CE922E /* ArsdkEngine.swift */,
+				7CA52AA31FDEEF7E00C118FB /* ArsdkMapper.swift */,
+				7C812AF81D9C20380004149C /* ArsdkProxy.swift */,
+				F8D878491F1CAD2E00991465 /* Bitfield.swift */,
+				7C52A8E520056530004B5749 /* Mapper.swift */,
+				F85909AF1CAAC3C800B08530 /* PersistentStore.swift */,
+				7C1A874A1D7F0CC300C9E113 /* SettingsStore.swift */,
+				7C44B8962005381B005CA536 /* Storable.swift */,
+				F88415D51F9DEF7C000A1FAF /* TimeProvider.swift */,
+				7C214EC21CE3967F00A40253 /* ULogTag.swift */,
+				F8E011231FD989C2005A9520 /* BlackBox */,
+				F868F8AE1CAD0ADF0045DBD1 /* DeviceControllers */,
+				9B4E7174214AB436007D4DA7 /* Ephemeris */,
+				7C6947B71CD8F90C001FE253 /* Instrument */,
+				F8034F961D33CD43003A3CFD /* Peripheral */,
+				F8F974A51CD3837B0060318C /* PilotingItf */,
+				F8BFCDBC1FE95ED80060D6A0 /* RestApi */,
+				025FB9F920AC8AED00D84597 /* Util */,
+				7CCBC75F2099C52A006C3378 /* WebSocket */,
+				7CA1C9701C807AC200FE9ED4 /* ArsdkEngine.h */,
+				7CA1C9721C807AC200FE9ED4 /* Info.plist */,
+			);
+			path = ArsdkEngine;
+			sourceTree = "<group>";
+		};
+		7CA1C97B1C807AC200FE9ED4 /* ArsdkEngineTests */ = {
+			isa = PBXGroup;
+			children = (
+				7C29CB5C1D58E0EB006BF0BE /* .swiftlint.yml */,
+				F8B240301FE2EB350092974F /* BlackBox */,
+				9B2B789821426BDC0045ED0F /* Ephemeris */,
+				7CE1371A1CFC88EA0041E197 /* PilotingItf */,
+				7CE1371B1CFC89000041E197 /* Instrument */,
+				F8DB463F1D33E97600297E15 /* Peripheral */,
+				F8E1F1EF20DA8CC5009379D6 /* AppDefaultsTests.swift */,
+				7C9CFB231DABB72400F3915B /* ArsdkEngineAddRemoveDevicesTests.swift */,
+				7CA1C97C1C807AC200FE9ED4 /* ArsdkEngineConnectTests.swift */,
+				7CE137221CFCA06A0041E197 /* ArsdkEngineTestBase.swift */,
+				7C9CFB271DABE00900F3915B /* DroneManagerFeatureTests.swift */,
+				7C2C7ABF1D3F7AC3009D47C7 /* PersistentStoreTests.swift */,
+				7C73110F200609AD0048BA89 /* SettingsStoreTests.swift */,
+				7C76AB451C8D75BF00FC213E /* unittest-tools */,
+				7C25FB261DFEDA880028585B /* Asserts.xcassets */,
+				7CA1C97E1C807AC200FE9ED4 /* Info.plist */,
+				F8E1F1F120DAA1E2009379D6 /* app_defaults_tests.plist */,
+			);
+			path = ArsdkEngineTests;
+			sourceTree = "<group>";
+		};
+		7CCBC75F2099C52A006C3378 /* WebSocket */ = {
+			isa = PBXGroup;
+			children = (
+				7CCBC7602099C52A006C3378 /* StreamSocketConnection.swift */,
+				7CCBC7612099C52A006C3378 /* Websocket.swift */,
+			);
+			path = WebSocket;
+			sourceTree = "<group>";
+		};
+		7CE1371A1CFC88EA0041E197 /* PilotingItf */ = {
+			isa = PBXGroup;
+			children = (
+				7C2045F41D2FD0BD007E0405 /* AnafiManualPilotingItfTests.swift */,
+				7C9138CB1E39E9F80064A5FD /* AnafiManualPilotingItfNoOfflineSettingsTests.swift */,
+				7C9F73481CFDA963004DE672 /* AnafiReturnHomePilotingItfTests.swift */,
+				02C5D00F1FD83BD10028DFEE /* GuidedPilotingItfTests.swift */,
+				02CA284420512F60005AB316 /* PoiPilotingItfTests.swift */,
+				02706250207E5F7F00FB072F /* FollowFeatureLookAtPilotingItfTests.swift */,
+				026B64D4208628AB00FE5C86 /* FollowFeatureFollowMePilotingItfTests.swift */,
+				7C0366E51E3B88A20041D71E /* AnafiReturnHomePilotingItfNoOfflineSettingsTests.swift */,
+				F89D8FA01EE6EE400094C524 /* CommonFlightPlanPilotingItfTests.swift */,
+				0253D60620601DA300FA5029 /* HttpFlightPlanPilotingItfTests.swift */,
+				F89D8FA41EE8344E0094C524 /* CommonFlightPlanPilotingItfNoOfflineSettingsTests.swift */,
+				F89D8FA61EE836C50094C524 /* PilotingItfActivationControllerTests.swift */,
+				F8E2B3001F8FB4AC004AC24D /* AnimationFeaturePilotingItfTests.swift */,
+			);
+			path = PilotingItf;
+			sourceTree = "<group>";
+		};
+		7CE1371B1CFC89000041E197 /* Instrument */ = {
+			isa = PBXGroup;
+			children = (
+				F8EE9F652085D847001A2860 /* AnafiAlarmsTests.swift */,
+				F8C9C4321D182C4300DB1647 /* AnafiAltimeterTests.swift */,
+				F8C9C4361D18309F00DB1647 /* AnafiAttitudeIndicatorTests.swift */,
+				F8C9C4301D18287F00DB1647 /* AnafiCompassTests.swift */,
+				7CE1371C1CFC891E0041E197 /* AnafiFlyingIndicatorsTests.swift */,
+				F8C9C42E1D18216200DB1647 /* AnafiGpsTests.swift */,
+				02FC4C8020285F7900D76490 /* AnafiFlightMeterTests.swift */,
+				F8C9C4341D182F8400DB1647 /* AnafiSpeedometerTests.swift */,
+				7CA8BDBC1ECC880100B79CCC /* CommonRadioTests.swift */,
+				F8D32CBC1EF025AC00074795 /* CommonBatteryInfoTests.swift */,
+				F8D32CBE1EF02E0D00074795 /* SkyControllerBatteryInfoTests.swift */,
+				F877E4E220220B28006B0929 /* SkyControllerCompassTests.swift */,
+				9BBD4158222ED5CD0006CBAF /* PhotoProgressIndicatorControllerTests.swift */,
+				F8F2B1A220E3AE6E00A1A802 /* CameraFeatureExposureValuesTests.swift */,
+			);
+			path = Instrument;
+			sourceTree = "<group>";
+		};
+		9B2B789821426BDC0045ED0F /* Ephemeris */ = {
+			isa = PBXGroup;
+			children = (
+				9B2B789921426BF50045ED0F /* EphemerisUploaderEphemerisDisabledTests.swift */,
+				9B2B789A21426BF50045ED0F /* EphemerisUploaderTests.swift */,
+			);
+			path = Ephemeris;
+			sourceTree = "<group>";
+		};
+		9B4E7174214AB436007D4DA7 /* Ephemeris */ = {
+			isa = PBXGroup;
+			children = (
+				9B4E7176214AB451007D4DA7 /* EphemerisConfig.swift */,
+				9B4E7175214AB451007D4DA7 /* EphemerisUploader.swift */,
+			);
+			path = Ephemeris;
+			sourceTree = "<group>";
+		};
+		9BD67C6F21CCF4A100CA1568 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				9BD67C7021CCF4B600CA1568 /* Model.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		F8034F961D33CD43003A3CFD /* Peripheral */ = {
+			isa = PBXGroup;
+			children = (
+				02D12B27202899A1002C00BB /* AnafiBeeper.swift */,
+				F8D32CCA1EF12CE800074795 /* AnafiCopterMotors.swift */,
+				021D82232093219500C53EC3 /* AnafiGeofence.swift */,
+				F8034F971D33CD6F003A3CFD /* AnafiMagnetometer.swift */,
+				F8D32CD41EF1802A00074795 /* AnafiMotors.swift */,
+				F857E0841DF71CA70026CAF2 /* AnafiSystemInfo.swift */,
+				7C74069B204EE24F00D1CD78 /* AntiflickerController.swift */,
+				F8D993101FFF76520061579B /* ArsdkCrashmlDownloader */,
+				1D2194E11EE6D479005A6883 /* ArsdkCrashmlDownloader.swift */,
+				02ADCD2A209C4D20008AF7D6 /* ArsdkFlightDataDownloader */,
+				02ADCD28209C4D15008AF7D6 /* ArsdkFlightDataDownloader.swift */,
+				70F73FD72136A7D1006E27BB /* ArsdkFlightLogDownloader */,
+				70F73FD52136A6B4006E27BB /* ArsdkFlightLogDownloader.swift */,
+				7C5049C11E0C0640000FC1FE /* ArsdkMediaStore */,
+				7C33AF151DE5C5A00097BAC9 /* ArsdkMediaStore.swift */,
+				F822E3501E43307A0037DB0F /* ArsdkSystemInfo.swift */,
+				9BD67C6F21CCF4A100CA1568 /* Camera */,
+				7C6D3B5B2007B2A300E698A5 /* CameraControllerBase.swift */,
+				7C74069D204EE9D500D1CD78 /* CameraFeatureAntiflicker.swift */,
+				7CA52A9C1FDEB70900C118FB /* CameraFeatureCameraRouter.swift */,
+				7C5FA4E61DAF8BEB001B68A3 /* DroneManagerDroneFinder.swift */,
+				F8A3D0CC2049866B00AF0126 /* GimbalFeatureGimbal.swift */,
+				9BBAAFC12215B48B00E1E5BF /* LedsController.swift */,
+				F828CB3E1E081B6400270F73 /* Mappers */,
+				F8D82B541E00628D0047ABF1 /* MapperVirtualGamepad.swift */,
+				9B40FAD0215E557300CF6690 /* PreciseHomeController.swift */,
+				02CE4466208E0038007B9F9F /* Sc3Gamepad.swift */,
+				F87D5A3E1FFFEA24005AF079 /* SkyControllerMagnetometer.swift */,
+				F88468761DEC7AFE00ACE941 /* SkyControllerSystemInfo.swift */,
+				71D766012182FC5900517136 /* Stream */,
+				0235EDC82076530C006E7C9C /* TargetTrackerController.swift */,
+				9B31E00321C93572006F389E /* ThermalController.swift */,
+				F89D609D1FFE9F6200263CBC /* UpdaterController */,
+				F88E246E1FEAB8D400D7AAC7 /* UpdaterController.swift */,
+				F8123B53200CFA9B0071672B /* UserStorageRemovableUserStorage.swift */,
+				F8E9E7871EF423ED00A5BE86 /* Wifi */,
+				0226198D2069340E005587B2 /* WifiAccessPointController */,
+				0226198B206933F8005587B2 /* WifiAccessPointController.swift */,
+			);
+			path = Peripheral;
+			sourceTree = "<group>";
+		};
+		F828CB3E1E081B6400270F73 /* Mappers */ = {
+			isa = PBXGroup;
+			children = (
+				02CE4468208E0074007B9F9F /* Sc3MapperTranslator.swift */,
+			);
+			path = Mappers;
+			sourceTree = "<group>";
+		};
+		F868F8AE1CAD0ADF0045DBD1 /* DeviceControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F85CF08F1E9E6B2200C82969 /* AnafiFamilyDroneController.swift */,
+				7C6947BA1CD9037B001FE253 /* DeviceComponentController.swift */,
+				F868F8AF1CAD0B000045DBD1 /* DeviceController.swift */,
+				F868F8B11CAD20560045DBD1 /* DroneController.swift */,
+				7C9CFB251DABC07100F3915B /* DroneManagerFeature.swift */,
+				F8A8D26820C559810062DD24 /* NoAckCmdEncoder.swift */,
+				F89A063A1EDD6C9B0069ACD4 /* PilotingItfActivationController.swift */,
+				7CE5B8D51DA261E500C7D688 /* ProxyDeviceController.swift */,
+				7C372EB21D77107C00B8727C /* RCController.swift */,
+				025EF0312057E26F00768014 /* SkyControllerFamilyController.swift */,
+			);
+			path = DeviceControllers;
+			sourceTree = "<group>";
+		};
+		F868F8C11CAD658F0045DBD1 /* matchers */ = {
+			isa = PBXGroup;
+			children = (
+				9B31E00121C93545006F389E /* ThermalControlMatcher.swift */,
+				9BDDF1AC2147A050008252BA /* FlightLogDownloaderMatcher.swift */,
+				F86BA98A21231DFC004DFAB2 /* FirmwareInfoMatcher.swift */,
+				F8123B5B200D12650071672B /* RemovableUserStorageMediaInfoMatcher.swift */,
+				F8E2B3021F8FCB92004AC24D /* AnimationMatcher.swift */,
+				F8C7DF111F04F37A00A781D8 /* StringSettingMatcher.swift */,
+				F8C7DF121F04F37A00A781D8 /* WifiAccessPointMatcher.swift */,
+				F8D32CD81EF1877400074795 /* CopterMotorsMatcher.swift */,
+				F832FA4A1E48BC580019AC08 /* UpdaterMatcher.swift */,
+				0235EDCC20766244006E7C9C /* TargetFramingSettingMatcher.swift */,
+				02D96EFE2084B23D004A3553 /* TargetTrajectoryMatcher.swift */,
+				1DA626EC1EF8137E0031AA69 /* CrashReportDownloaderMatcher.swift */,
+				02108836209B021500F013E4 /* FlightDataDownloaderMatcher.swift */,
+				F88468971DEF253300ACE941 /* SystemVersionMatcher.swift */,
+				7C32FF781F868DDF0099A750 /* CameraMatcher.swift */,
+				7C7406A72050144400D1CD78 /* AntiflickerMatcher.swift */,
+				F8D0078A1DDE1B07002D478A /* LiveStreamMatcher.swift */,
+				7C06715A1DBE42D000C90162 /* DiscoveredDroneMatcher.swift */,
+				F8441DAE1D47B8CC0062DC77 /* EnumSettingMatcher.swift */,
+				F8DB46421D33ECCB00297E15 /* MagnetometerCalibrationProcessStateMatcher.swift */,
+				F8FF144D1D2A627800A87DA6 /* CLLocationMatcher.swift */,
+				02155D8020470E290078B498 /* CLPlacemarkMatcher.swift */,
+				F868F8C21CAD658F0045DBD1 /* DroneListEntryMatcher.swift */,
+				F868F8C31CAD658F0045DBD1 /* DroneMatchers.swift */,
+				7C2F62D61DA69CCC007FB22A /* RemoteControlMatchers.swift */,
+				F868F8C41CAD658F0045DBD1 /* DeviceStateMatcher.swift */,
+				7CE1371E1CFC8C0C0041E197 /* DoubleSettingMatcher.swift */,
+				7C2045F81D2FD91B007E0405 /* IntSettingMatcher.swift */,
+				7C9B8FE51D48ACAC00366ADD /* BoolSettingMatcher.swift */,
+				7CE1371F1CFC8C0C0041E197 /* FlyingIndicatorsMatcher.swift */,
+				7C2045F61D2FD792007E0405 /* ReturnHomePreferredTargetMatcher.swift */,
+				7CCFFA941E1260D50029D35A /* MediaItemMatcher.swift */,
+				7CCFFA961E1278FD0029D35A /* MediaDownloaderMatcher.swift */,
+				7CCFFA9A1E12A5FA0029D35A /* MediaDeleterMatcher.swift */,
+				9B40FADE2163633500CF6690 /* PreciseHomeMatcher.swift */,
+				020F1DB720907F7200CCEB5E /* SkyCtrl3MappingEntryMatcher.swift */,
+				02C5D0111FD860040028DFEE /* GuidedDirectiveMatcher.swift */,
+				02CA284620513274005AB316 /* PointOfInterestMatcher.swift */,
+				020C8E77202863BE0003B0CD /* FlightMeterMatcher.swift */,
+				F88E246C1FEAA81D00D7AAC7 /* MockUrlSessionTaskMatcher.swift */,
+				025FB9FC20AC8B6400D84597 /* UserAccountInfoMatcher.swift */,
+				F8E1F1F320DAABD3009379D6 /* PersistentStoreMatcher.swift */,
+				718552A5219D837100E4A881 /* MockArsdkStreamMatcher.swift */,
+			);
+			path = matchers;
+			sourceTree = "<group>";
+		};
+		F870055C1FC88477003114D9 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				9B2B78A121426DD00045ED0F /* MockEphemerisUtility.swift */,
+				F86BA98421230488004DFAB2 /* MockInternetConnectivity.swift */,
+				F8369C8E20A1DB81008010AE /* MockUserDefaults.swift */,
+				F87005691FC885E0003114D9 /* MockEnginesController.swift */,
+				F870055E1FC88477003114D9 /* MockTimeProvider.swift */,
+				F870055F1FC88477003114D9 /* MockArsdkEngine.swift */,
+				F86BA986212308E9004DFAB2 /* MockFirmwareDownloader.swift */,
+				F87005621FC88477003114D9 /* MockPersistentStore.swift */,
+				F870057A1FC88C66003114D9 /* MockCrashReportStorage.swift */,
+				9BDDF1AE2147A5C6008252BA /* MockFlightLogStorage.swift */,
+				0237580C209C92CD0077F63C /* MockFlightDataStorage.swift */,
+				7CA47F9F2057E44400A5843A /* MockReverseGeocoder.swift */,
+				025FB9FE20AC8C1A00D84597 /* MockUserAccountUtilityCore.swift */,
+				0235EDCE207671A6006E7C9C /* MockSystemLocation.swift */,
+				F8BFCDC11FEA5D0F0060D6A0 /* MockHttpSession.swift */,
+				7C06D2D3209C58E800A01588 /* MockWebSocket.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		F89D609D1FFE9F6200263CBC /* UpdaterController */ = {
+			isa = PBXGroup;
+			children = (
+				F8A11A9520AC619D0062253D /* DroneUpdaterEventReceiver.swift */,
+				F8ED48B51E81320100C0FFC0 /* FtpFirmwareUploader.swift */,
+				F8BFCDBF1FE984B10060D6A0 /* HttpFirmwareUploader.swift */,
+				F8A11A9620AC619D0062253D /* RcUpdaterEventReceiver.swift */,
+			);
+			path = UpdaterController;
+			sourceTree = "<group>";
+		};
+		F8B240301FE2EB350092974F /* BlackBox */ = {
+			isa = PBXGroup;
+			children = (
+				F8B240311FE2EB520092974F /* BlackBoxCircularArrayTests.swift */,
+			);
+			path = BlackBox;
+			sourceTree = "<group>";
+		};
+		F8BFCDBC1FE95ED80060D6A0 /* RestApi */ = {
+			isa = PBXGroup;
+			children = (
+				F877E4ED20246BE0006B0929 /* DroneServer.swift */,
+				9B2B789621426B940045ED0F /* EphemerisRestApi.swift */,
+				9BDDF1A42146920E008252BA /* FlightLogRestApi.swift */,
+				022637C2205FD52C00D390B3 /* FlightPlanRestApi.swift */,
+				F821EA1C203B33C30091C186 /* MediaRestApi.swift */,
+				7CCBC7642099F4C3006C3378 /* MediaWsApi.swift */,
+				02ADCD2D209C5D98008AF7D6 /* PudRestApi.swift */,
+				0237586120A08B340077F63C /* PudStreamDecoder.swift */,
+				F8FB2E651FEBF3FC0037B930 /* ReportRestApi.swift */,
+				F8BFCDBD1FE95FFE0060D6A0 /* UpdateRestApi.swift */,
+			);
+			path = RestApi;
+			sourceTree = "<group>";
+		};
+		F8D993101FFF76520061579B /* ArsdkCrashmlDownloader */ = {
+			isa = PBXGroup;
+			children = (
+				F862C5B61FFB92A2009662CC /* FtpCrashmlDownloaderDelegate.swift */,
+				F862C5B81FFB9512009662CC /* HttpCrashmlDownloaderDelegate.swift */,
+			);
+			path = ArsdkCrashmlDownloader;
+			sourceTree = "<group>";
+		};
+		F8DB463F1D33E97600297E15 /* Peripheral */ = {
+			isa = PBXGroup;
+			children = (
+				02D12B2B2028A3CD002C00BB /* AnafiBeeperControllerTests.swift */,
+				1DA626EE1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift */,
+				02375855209C9C8A0077F63C /* ArsdkFlightDataDownloaderTests.swift */,
+				F8DB46401D33EA7000297E15 /* AnafiMagnetometerTests.swift */,
+				F87D5A46200387FC005AF079 /* SkyControllerMagnetometerTests.swift */,
+				7C44FF6F1DBE2B9C003E59D3 /* DroneManagerDroneFinderTests.swift */,
+				F8D007881DDE1A41002D478A /* ArsdkStreamTests.swift */,
+				021D8225209367D500C53EC3 /* AnafiGeofenceTests.swift */,
+				7C7406A92050250700D1CD78 /* CameraFeatureAntiflickerTests.swift */,
+				7CA52AA51FDFDD1400C118FB /* CameraStorableEmumTests.swift */,
+				7C895B08207798F900DD689C /* CameraFeatureCameraTests.swift */,
+				9B6ACC7521F0CBBF0024B837 /* CameraFeatureCameraRouterTests.swift */,
+				F88468941DEF23CC00ACE941 /* AnafiSystemInfoTests.swift */,
+				F884689A1DEF3FAC00ACE941 /* SkyControllerSystemInfoTests.swift */,
+				F8ED8B012040745B005D9D57 /* ArsdkMediaStoreHttpTests.swift */,
+				020F1DB920907FE100CCEB5E /* Sc3GamepadTests.swift */,
+				F809C23E1E851CEF008B8153 /* UpdaterControllerTests.swift */,
+				F86BA98C2125A68F004DFAB2 /* DroneFirmwareUpdaterTests.swift */,
+				F86BA98E2125B129004DFAB2 /* RcFirmwareUpdaterTests.swift */,
+				F88E246A1FEA79D200D7AAC7 /* HttpFirmwareUpdaterTests.swift */,
+				F8D32CD61EF1856600074795 /* AnafiCopterMotorsTests.swift */,
+				F80F2CFC1F179F950008CAC2 /* WifiFeatureWifiAccessPointTests.swift */,
+				0235EDCA20765F67006E7C9C /* TargetTrackerControllerTests.swift */,
+				F862C5BA1FFBD92C009662CC /* FtpCrashmlDownloaderTests.swift */,
+				F862C5BC1FFBE0A6009662CC /* HttpCrashmlDownloaderTests.swift */,
+				02ADCD2F209C8820008AF7D6 /* HttpFlightDataDownloaderTests.swift */,
+				022C387820A34B7000B4E319 /* anafi_binary_pud_1 */,
+				022C387C20A4D94400B4E319 /* expected_result.pud */,
+				022C387A20A34B8200B4E319 /* FlightDataDecoderTests.swift */,
+				F8123B59200D0A670071672B /* UserStorageRemovableUserStorageTests.swift */,
+				F8A3D0CE204ED61A00AF0126 /* GimbalFeatureGimbalTests.swift */,
+				9BDDF1A62146A83F008252BA /* ArsdkFlightLogDownloaderTests.swift */,
+				9BDDF1A82146A85A008252BA /* HttpFlightLogDownloaderTests.swift */,
+				9BDDF1AA21479D60008252BA /* FtpFlightLogDownloaderTests.swift */,
+				9B40FADC2162741600CF6690 /* PreciseHomeControllerTests.swift */,
+				9B31E00521C93E9A006F389E /* ThermalControllerTests.swift */,
+				9B73BDC7221707C2008DA1F7 /* LedsControllerTests.swift */,
+			);
+			path = Peripheral;
+			sourceTree = "<group>";
+		};
+		F8E011231FD989C2005A9520 /* BlackBox */ = {
+			isa = PBXGroup;
+			children = (
+				F8ED954F1FDEB2C1004300DE /* BlackBoxCircularArray.swift */,
+				F8E011261FD99996005A9520 /* BlackBoxContext.swift */,
+				F8E0112C1FD99FA3005A9520 /* BlackBoxData.swift */,
+				F8E011281FD99E1B005A9520 /* BlackBoxDroneSession.swift */,
+				F8E0112A1FD99E29005A9520 /* BlackBoxRcSession.swift */,
+				F8E011241FD98A16005A9520 /* BlackBoxRecorder.swift */,
+				F8E0112E1FD9A4B7005A9520 /* BlackBoxSession.swift */,
+				F8E011341FDAF72D005A9520 /* Data */,
+			);
+			path = BlackBox;
+			sourceTree = "<group>";
+		};
+		F8E011341FDAF72D005A9520 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				F8ED95531FDEDDE9004300DE /* BlackBoxEnvironmentData.swift */,
+				F8E011351FDAF75E005A9520 /* BlackBoxEvent.swift */,
+				F8ED95511FDEB9D5004300DE /* BlackBoxFlightData.swift */,
+				F8ED95571FDEE741004300DE /* BlackBoxHeaderData.swift */,
+				F8ED95551FDEDE17004300DE /* BlackBoxLocationData.swift */,
+				F8ED95591FDEF3A4004300DE /* BlackBoxRemoteControlData.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		F8E9E7871EF423ED00A5BE86 /* Wifi */ = {
+			isa = PBXGroup;
+			children = (
+				F8E9E7881EF4240D00A5BE86 /* WifiChannel.swift */,
+			);
+			path = Wifi;
+			sourceTree = "<group>";
+		};
+		F8F974A51CD3837B0060318C /* PilotingItf */ = {
+			isa = PBXGroup;
+			children = (
+				7CB53B761D2D002100D695CC /* ActivablePilotingItfController.swift */,
+				F8F974A61CD3837B0060318C /* AnafiCopterManualPilotingItf.swift */,
+				0216F7BE1FD002FB00841577 /* AnafiGuidedPilotingItf.swift */,
+				02156A3320502F00002F3F7D /* AnafiPoiPilotingItf.swift */,
+				7C30D99B1D26886D0099E07F /* AnafiReturnHomePilotingItf.swift */,
+				F86A81631F8BC83700F7EE60 /* AnimFeaturePilotingItfController.swift */,
+				F89A06361EDC75470069ACD4 /* FlightPlanPilotingItfController.swift */,
+				022637BD205FBB6F00D390B3 /* FlightPlanUploader */,
+				0216F7BC1FCF1D3900841577 /* GuidedPilotingItfController.swift */,
+				7CAF16311D47A3580014F2E4 /* ManualCopterPilotingItfController.swift */,
+				F857F5321EE166B100324343 /* ManualPilotingItfController.swift */,
+				F88415D31F98E842000A1FAF /* PilotingCommand.swift */,
+				7CD624A81D588E7A00307BCD /* ReturnHomePilotingItfController.swift */,
+				02CB17A92080F6B1006478DA /* tracking */,
+			);
+			path = PilotingItf;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		7CA1C96A1C807AC200FE9ED4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CA1C9711C807AC200FE9ED4 /* ArsdkEngine.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7CA1C96C1C807AC200FE9ED4 /* ArsdkEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CA1C9811C807AC200FE9ED4 /* Build configuration list for PBXNativeTarget "ArsdkEngine" */;
+			buildPhases = (
+				7CA1C9681C807AC200FE9ED4 /* Sources */,
+				7CA1C9691C807AC200FE9ED4 /* Frameworks */,
+				7CA1C96A1C807AC200FE9ED4 /* Headers */,
+				7CA1C96B1C807AC200FE9ED4 /* Resources */,
+				7CF707261C89E67C00FAC3EC /* SwiftLint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ArsdkEngine;
+			productName = ArsdkEngine;
+			productReference = 7CA1C96D1C807AC200FE9ED4 /* ArsdkEngine.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		7CA1C9761C807AC200FE9ED4 /* ArsdkEngineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CA1C9841C807AC200FE9ED4 /* Build configuration list for PBXNativeTarget "ArsdkEngineTests" */;
+			buildPhases = (
+				7CA1C9731C807AC200FE9ED4 /* Sources */,
+				7CA1C9741C807AC200FE9ED4 /* Frameworks */,
+				7CA1C9751C807AC200FE9ED4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7CA1C97A1C807AC200FE9ED4 /* PBXTargetDependency */,
+			);
+			name = ArsdkEngineTests;
+			productName = ArsdkEngineTests;
+			productReference = 7CA1C9771C807AC200FE9ED4 /* ArsdkEngineTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7CA1C9641C807AC200FE9ED4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "Parrot SA";
+				TargetAttributes = {
+					7CA1C96C1C807AC200FE9ED4 = {
+						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 1020;
+						ProvisioningStyle = Automatic;
+					};
+					7CA1C9761C807AC200FE9ED4 = {
+						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = EA523KQ2D9;
+						LastSwiftMigration = 1020;
+					};
+				};
+			};
+			buildConfigurationList = 7CA1C9671C807AC200FE9ED4 /* Build configuration list for PBXProject "ArsdkEngine" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7CA1C9631C807AC200FE9ED4;
+			productRefGroup = 7CA1C96E1C807AC200FE9ED4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7CA1C96C1C807AC200FE9ED4 /* ArsdkEngine */,
+				7CA1C9761C807AC200FE9ED4 /* ArsdkEngineTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7CA1C96B1C807AC200FE9ED4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CA1C9751C807AC200FE9ED4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8E1F1F220DAA1E2009379D6 /* app_defaults_tests.plist in Resources */,
+				022C387920A34B7000B4E319 /* anafi_binary_pud_1 in Resources */,
+				7C25FB271DFEDA880028585B /* Asserts.xcassets in Resources */,
+				7C76AB5F1C8D75BF00FC213E /* README in Resources */,
+				022C387D20A4D94400B4E319 /* expected_result.pud in Resources */,
+				7C76AB5A1C8D75BF00FC213E /* LICENSE in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7CF707261C89E67C00FAC3EC /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, install it with 'brew install swiftlint'\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7CA1C9681C807AC200FE9ED4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F88415D61F9DEF7C000A1FAF /* TimeProvider.swift in Sources */,
+				7C812AF91D9C20380004149C /* ArsdkProxy.swift in Sources */,
+				7CB1CF631D92D69A00E1CDE7 /* Arsdk.swift in Sources */,
+				7CB53B771D2D002100D695CC /* ActivablePilotingItfController.swift in Sources */,
+				F8E011251FD98A16005A9520 /* BlackBoxRecorder.swift in Sources */,
+				022637C1205FD2AA00D390B3 /* HttpFlightPlanUploader.swift in Sources */,
+				F8ED955A1FDEF3A4004300DE /* BlackBoxRemoteControlData.swift in Sources */,
+				F8A11A9720AC619D0062253D /* DroneUpdaterEventReceiver.swift in Sources */,
+				022637BF205FBB6F00D390B3 /* FtpFlightPlanUploader.swift in Sources */,
+				02ADCD2E209C5D98008AF7D6 /* PudRestApi.swift in Sources */,
+				9BD67C7121CCF4B600CA1568 /* Model.swift in Sources */,
+				02CE4469208E0074007B9F9F /* Sc3MapperTranslator.swift in Sources */,
+				71D766052182FD7000517136 /* StreamServerController.swift in Sources */,
+				F89A06371EDC75470069ACD4 /* FlightPlanPilotingItfController.swift in Sources */,
+				7C52A8E620056530004B5749 /* Mapper.swift in Sources */,
+				F88468771DEC7AFE00ACE941 /* SkyControllerSystemInfo.swift in Sources */,
+				9B4E7178214AB451007D4DA7 /* EphemerisConfig.swift in Sources */,
+				F822E3511E43307A0037DB0F /* ArsdkSystemInfo.swift in Sources */,
+				F88415D41F98E842000A1FAF /* PilotingCommand.swift in Sources */,
+				F85909B01CAAC3C800B08530 /* PersistentStore.swift in Sources */,
+				F8E011361FDAF75E005A9520 /* BlackBoxEvent.swift in Sources */,
+				7C74069E204EE9D500D1CD78 /* CameraFeatureAntiflicker.swift in Sources */,
+				F862C5B91FFB9512009662CC /* HttpCrashmlDownloaderDelegate.swift in Sources */,
+				F857E0851DF71CA70026CAF2 /* AnafiSystemInfo.swift in Sources */,
+				F821EA1D203B33C30091C186 /* MediaRestApi.swift in Sources */,
+				7CCBC7632099C52A006C3378 /* Websocket.swift in Sources */,
+				F88C31E41D05B81E00A3A814 /* AnafiGps.swift in Sources */,
+				70F73FDB2136A820006E27BB /* HttpFlightLogDownloaderDelegate.swift in Sources */,
+				70F73FDA2136A820006E27BB /* FtpFlightLogDownloaderDelegate.swift in Sources */,
+				9B40FAD1215E557400CF6690 /* PreciseHomeController.swift in Sources */,
+				F87C037B1D1303A0007B2391 /* AnafiAttitudeIndicator.swift in Sources */,
+				7C9005191E0C0A8D00B9EE2B /* ArsdkMediaStore.swift in Sources */,
+				7C5FA4E71DAF8BEB001B68A3 /* DroneManagerDroneFinder.swift in Sources */,
+				7CE5B8D61DA261E500C7D688 /* ProxyDeviceController.swift in Sources */,
+				F8F2B19D20E3914200A1A802 /* CameraFeatureExposureValues.swift in Sources */,
+				022637C3205FD52D00D390B3 /* FlightPlanRestApi.swift in Sources */,
+				F8ED95541FDEDDE9004300DE /* BlackBoxEnvironmentData.swift in Sources */,
+				0216F7BD1FCF1D3900841577 /* GuidedPilotingItfController.swift in Sources */,
+				70F73FD62136A6B4006E27BB /* ArsdkFlightLogDownloader.swift in Sources */,
+				7C9CFB261DABC07100F3915B /* DroneManagerFeature.swift in Sources */,
+				7C372EB31D77107C00B8727C /* RCController.swift in Sources */,
+				020B171A2089D0EA00CB64A8 /* FollowFeatureTrackingSharing.swift in Sources */,
+				F8E011291FD99E1B005A9520 /* BlackBoxDroneSession.swift in Sources */,
+				7C6947BB1CD9037B001FE253 /* DeviceComponentController.swift in Sources */,
+				7C30D99C1D26886D0099E07F /* AnafiReturnHomePilotingItf.swift in Sources */,
+				02ADCD2C209C4D20008AF7D6 /* HttpFlightDataDownloaderDelegate.swift in Sources */,
+				F8A8D26920C559810062DD24 /* NoAckCmdEncoder.swift in Sources */,
+				7CAF16321D47A3580014F2E4 /* ManualCopterPilotingItfController.swift in Sources */,
+				F821EA1B203B316E0091C186 /* HttpMediaStoreDelegate.swift in Sources */,
+				F877E4E120220048006B0929 /* SkyControllerCompass.swift in Sources */,
+				9B31E00421C93572006F389E /* ThermalController.swift in Sources */,
+				7CA52AA41FDEEF7E00C118FB /* ArsdkMapper.swift in Sources */,
+				1D2194E21EE6D479005A6883 /* ArsdkCrashmlDownloader.swift in Sources */,
+				F82722D01F17732C00D4C398 /* WifiFeatureWifiAccessPoint.swift in Sources */,
+				7C1A874B1D7F0CC300C9E113 /* SettingsStore.swift in Sources */,
+				02ADCD29209C4D15008AF7D6 /* ArsdkFlightDataDownloader.swift in Sources */,
+				F8ED95581FDEE741004300DE /* BlackBoxHeaderData.swift in Sources */,
+				F8034F981D33CD6F003A3CFD /* AnafiMagnetometer.swift in Sources */,
+				F88C31FC1D06FEC400A3A814 /* AnafiSpeedometer.swift in Sources */,
+				9B4E7177214AB451007D4DA7 /* EphemerisUploader.swift in Sources */,
+				7CA8BDB91ECC7E0A00B79CCC /* CommonRadio.swift in Sources */,
+				7C6D3B5C2007B2A300E698A5 /* CameraControllerBase.swift in Sources */,
+				0226198C206933F9005587B2 /* WifiAccessPointController.swift in Sources */,
+				7C214EC31CE3967F00A40253 /* ULogTag.swift in Sources */,
+				0237586220A08B340077F63C /* PudStreamDecoder.swift in Sources */,
+				F8E011271FD99996005A9520 /* BlackBoxContext.swift in Sources */,
+				7CA52A9D1FDEB70900C118FB /* CameraFeatureCameraRouter.swift in Sources */,
+				7CD624A91D588E7A00307BCD /* ReturnHomePilotingItfController.swift in Sources */,
+				025FB9FB20AC8AED00D84597 /* ArsdkEngineUtil.swift in Sources */,
+				0235EDC92076530C006E7C9C /* TargetTrackerController.swift in Sources */,
+				F8D32CD51EF1802A00074795 /* AnafiMotors.swift in Sources */,
+				F8ED95521FDEB9D5004300DE /* BlackBoxFlightData.swift in Sources */,
+				F86A81641F8BC83700F7EE60 /* AnimFeaturePilotingItfController.swift in Sources */,
+				F8E9E7891EF4240D00A5BE86 /* WifiChannel.swift in Sources */,
+				F8ED95501FDEB2C2004300DE /* BlackBoxCircularArray.swift in Sources */,
+				F8ED95561FDEDE17004300DE /* BlackBoxLocationData.swift in Sources */,
+				7C6947B91CD8F92B001FE253 /* AnafiFlyingIndicators.swift in Sources */,
+				9B2B789721426B940045ED0F /* EphemerisRestApi.swift in Sources */,
+				F8D32CB51EF017A900074795 /* CommonBatteryInfo.swift in Sources */,
+				026B64D32085FF7900FE5C86 /* FollowFeatureFollowMePilotingItf.swift in Sources */,
+				F8E0112D1FD99FA3005A9520 /* BlackBoxData.swift in Sources */,
+				F862C5B71FFB92A2009662CC /* FtpCrashmlDownloaderDelegate.swift in Sources */,
+				02FC4C7D2024AE2A00D76490 /* AnafiFlightMeter.swift in Sources */,
+				F868F8B21CAD20560045DBD1 /* DroneController.swift in Sources */,
+				F857F5331EE166B100324343 /* ManualPilotingItfController.swift in Sources */,
+				9BDDF1A52146920E008252BA /* FlightLogRestApi.swift in Sources */,
+				F8A3D0CD2049866B00AF0126 /* GimbalFeatureGimbal.swift in Sources */,
+				F8D82B551E00628D0047ABF1 /* MapperVirtualGamepad.swift in Sources */,
+				02CB17AB2080F7AF006478DA /* FollowFeatureTrackingPilotingItf.swift in Sources */,
+				0271AF1F207BA71600EE56F1 /* FollowFeatureLookAtPilotingItf.swift in Sources */,
+				F8D8784A1F1CAD2E00991465 /* Bitfield.swift in Sources */,
+				F8D32CCB1EF12CE800074795 /* AnafiCopterMotors.swift in Sources */,
+				F88C31EC1D05C78800A3A814 /* AnafiCompass.swift in Sources */,
+				F877E4EE20246BE0006B0929 /* DroneServer.swift in Sources */,
+				0216F7BF1FD002FC00841577 /* AnafiGuidedPilotingItf.swift in Sources */,
+				9BBAAFC22215B48B00E1E5BF /* LedsController.swift in Sources */,
+				02CE4467208E0039007B9F9F /* Sc3Gamepad.swift in Sources */,
+				7C74069C204EE24F00D1CD78 /* AntiflickerController.swift in Sources */,
+				F868F8B01CAD0B000045DBD1 /* DeviceController.swift in Sources */,
+				025EF0322057E26F00768014 /* SkyControllerFamilyController.swift in Sources */,
+				7C44B8972005381C005CA536 /* Storable.swift in Sources */,
+				F89A063B1EDD6C9B0069ACD4 /* PilotingItfActivationController.swift in Sources */,
+				F804B01920D979FC00BE2CF7 /* AppDefaults.swift in Sources */,
+				F8F974A71CD3837B0060318C /* AnafiCopterManualPilotingItf.swift in Sources */,
+				F87D5A3F1FFFEA24005AF079 /* SkyControllerMagnetometer.swift in Sources */,
+				F8A11A9820AC619D0062253D /* RcUpdaterEventReceiver.swift in Sources */,
+				02D12B28202899A1002C00BB /* AnafiBeeper.swift in Sources */,
+				F8EE9F642084EBDE001A2860 /* AnafiAlarms.swift in Sources */,
+				F8ED48B61E81320100C0FFC0 /* FtpFirmwareUploader.swift in Sources */,
+				F8FB2E661FEBF3FC0037B930 /* ReportRestApi.swift in Sources */,
+				F8123B54200CFA9B0071672B /* UserStorageRemovableUserStorage.swift in Sources */,
+				F88C31F41D06BF7300A3A814 /* AnafiAltimeter.swift in Sources */,
+				F85CF0901E9E6B2200C82969 /* AnafiFamilyDroneController.swift in Sources */,
+				7CCBC7622099C52A006C3378 /* StreamSocketConnection.swift in Sources */,
+				F8D32CB71EF01BE600074795 /* SkyControllerBatteryInfo.swift in Sources */,
+				F8E0112B1FD99E29005A9520 /* BlackBoxRcSession.swift in Sources */,
+				7C5413981C80A96300CE922E /* ArsdkEngine.swift in Sources */,
+				F8E0112F1FD9A4B7005A9520 /* BlackBoxSession.swift in Sources */,
+				F88E246F1FEAB8D400D7AAC7 /* UpdaterController.swift in Sources */,
+				F8BFCDC01FE984B10060D6A0 /* HttpFirmwareUploader.swift in Sources */,
+				9BBD4151222EAF700006CBAF /* PhotoProgressIndicatorController.swift in Sources */,
+				02156A3420502F01002F3F7D /* AnafiPoiPilotingItf.swift in Sources */,
+				021D82242093219500C53EC3 /* AnafiGeofence.swift in Sources */,
+				F8BFCDBE1FE95FFE0060D6A0 /* UpdateRestApi.swift in Sources */,
+				7CCBC7652099F4C3006C3378 /* MediaWsApi.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CA1C9731C807AC200FE9ED4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C895B09207798F900DD689C /* CameraFeatureCameraTests.swift in Sources */,
+				7C7406A82050144400D1CD78 /* AntiflickerMatcher.swift in Sources */,
+				F8EE9F662085D847001A2860 /* AnafiAlarmsTests.swift in Sources */,
+				9BDDF1AD2147A050008252BA /* FlightLogDownloaderMatcher.swift in Sources */,
+				F86BA987212308E9004DFAB2 /* MockFirmwareDownloader.swift in Sources */,
+				7CA47FA02057E44400A5843A /* MockReverseGeocoder.swift in Sources */,
+				F89D8FA51EE8344E0094C524 /* CommonFlightPlanPilotingItfNoOfflineSettingsTests.swift in Sources */,
+				1DA626EF1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift in Sources */,
+				02375856209C9C8A0077F63C /* ArsdkFlightDataDownloaderTests.swift in Sources */,
+				F87D5A47200387FC005AF079 /* SkyControllerMagnetometerTests.swift in Sources */,
+				7C76AB5C1C8D75BF00FC213E /* MatchResult.swift in Sources */,
+				7C0366E61E3B88A20041D71E /* AnafiReturnHomePilotingItfNoOfflineSettingsTests.swift in Sources */,
+				9B40FADF2163633500CF6690 /* PreciseHomeMatcher.swift in Sources */,
+				F8C7DF131F04F37A00A781D8 /* StringSettingMatcher.swift in Sources */,
+				7C9CFB241DABB72400F3915B /* ArsdkEngineAddRemoveDevicesTests.swift in Sources */,
+				9B40FADD2162741600CF6690 /* PreciseHomeControllerTests.swift in Sources */,
+				7C76AB571C8D75BF00FC213E /* Descriptions.swift in Sources */,
+				718552A6219D837100E4A881 /* MockArsdkStreamMatcher.swift in Sources */,
+				7CCFFA971E1278FD0029D35A /* MediaDownloaderMatcher.swift in Sources */,
+				7C76AB561C8D75BF00FC213E /* BasicMatchers.swift in Sources */,
+				F8D007891DDE1A41002D478A /* ArsdkStreamTests.swift in Sources */,
+				F8D32CD91EF1877400074795 /* CopterMotorsMatcher.swift in Sources */,
+				F862C5BB1FFBD92C009662CC /* FtpCrashmlDownloaderTests.swift in Sources */,
+				F8D32CBF1EF02E0D00074795 /* SkyControllerBatteryInfoTests.swift in Sources */,
+				F8D0078B1DDE1B07002D478A /* LiveStreamMatcher.swift in Sources */,
+				F870056A1FC885E0003114D9 /* MockEnginesController.swift in Sources */,
+				F884689B1DEF3FAC00ACE941 /* SkyControllerSystemInfoTests.swift in Sources */,
+				020F1DBA20907FE100CCEB5E /* Sc3GamepadTests.swift in Sources */,
+				F8D32CBD1EF025AC00074795 /* CommonBatteryInfoTests.swift in Sources */,
+				F832FA4B1E48BC580019AC08 /* UpdaterMatcher.swift in Sources */,
+				9B31E00621C93E9A006F389E /* ThermalControllerTests.swift in Sources */,
+				F87005651FC88477003114D9 /* MockArsdkEngine.swift in Sources */,
+				025FB9FF20AC8C1A00D84597 /* MockUserAccountUtilityCore.swift in Sources */,
+				F87005681FC88477003114D9 /* MockPersistentStore.swift in Sources */,
+				9BDDF1A92146A85A008252BA /* HttpFlightLogDownloaderTests.swift in Sources */,
+				7C76AB551C8D75BF00FC213E /* ArithmeticMatchers.swift in Sources */,
+				F88E246B1FEA79D200D7AAC7 /* HttpFirmwareUpdaterTests.swift in Sources */,
+				F8123B5A200D0A670071672B /* UserStorageRemovableUserStorageTests.swift in Sources */,
+				F8D32CD71EF1856600074795 /* AnafiCopterMotorsTests.swift in Sources */,
+				9BBD4159222ED5CD0006CBAF /* PhotoProgressIndicatorControllerTests.swift in Sources */,
+				02C5D0101FD83BD20028DFEE /* GuidedPilotingItfTests.swift in Sources */,
+				7C06715B1DBE42D000C90162 /* DiscoveredDroneMatcher.swift in Sources */,
+				F8F2B1A320E3AE6E00A1A802 /* CameraFeatureExposureValuesTests.swift in Sources */,
+				7C9CFB281DABE00900F3915B /* DroneManagerFeatureTests.swift in Sources */,
+				7C76AB601C8D75BF00FC213E /* ReflectionMatchers.swift in Sources */,
+				7C76AB611C8D75BF00FC213E /* SequenceMatchers.swift in Sources */,
+				7CCFFA9B1E12A5FA0029D35A /* MediaDeleterMatcher.swift in Sources */,
+				02D96EFF2084B23D004A3553 /* TargetTrajectoryMatcher.swift in Sources */,
+				F8C9C4371D18309F00DB1647 /* AnafiAttitudeIndicatorTests.swift in Sources */,
+				021D8226209367D500C53EC3 /* AnafiGeofenceTests.swift in Sources */,
+				F809C23F1E851CEF008B8153 /* UpdaterControllerTests.swift in Sources */,
+				02D12B2C2028A3CD002C00BB /* AnafiBeeperControllerTests.swift in Sources */,
+				7C9B8FE61D48ACAC00366ADD /* BoolSettingMatcher.swift in Sources */,
+				F80F2CFD1F179F950008CAC2 /* WifiFeatureWifiAccessPointTests.swift in Sources */,
+				7C76AB5D1C8D75BF00FC213E /* MetaMatchers.swift in Sources */,
+				F870057B1FC88C66003114D9 /* MockCrashReportStorage.swift in Sources */,
+				0235EDCD20766245006E7C9C /* TargetFramingSettingMatcher.swift in Sources */,
+				9B2B78A221426DD00045ED0F /* MockEphemerisUtility.swift in Sources */,
+				9B2B789B21426BF60045ED0F /* EphemerisUploaderEphemerisDisabledTests.swift in Sources */,
+				F8C7DF141F04F37A00A781D8 /* WifiAccessPointMatcher.swift in Sources */,
+				025FB9FD20AC8B6400D84597 /* UserAccountInfoMatcher.swift in Sources */,
+				F87005641FC88477003114D9 /* MockTimeProvider.swift in Sources */,
+				020C8E78202863BF0003B0CD /* FlightMeterMatcher.swift in Sources */,
+				F8A3D0CF204ED61A00AF0126 /* GimbalFeatureGimbalTests.swift in Sources */,
+				F8ED8B022040745B005D9D57 /* ArsdkMediaStoreHttpTests.swift in Sources */,
+				7C76AB581C8D75BF00FC213E /* DictionaryMatchers.swift in Sources */,
+				F862C5BD1FFBE0A6009662CC /* HttpCrashmlDownloaderTests.swift in Sources */,
+				9BDDF1AF2147A5C6008252BA /* MockFlightLogStorage.swift in Sources */,
+				7C731110200609AD0048BA89 /* SettingsStoreTests.swift in Sources */,
+				F8123B5C200D12650071672B /* RemovableUserStorageMediaInfoMatcher.swift in Sources */,
+				9B73BDC8221707C2008DA1F7 /* LedsControllerTests.swift in Sources */,
+				020F1DB820907F7200CCEB5E /* SkyCtrl3MappingEntryMatcher.swift in Sources */,
+				F8DB46431D33ECCB00297E15 /* MagnetometerCalibrationProcessStateMatcher.swift in Sources */,
+				7C9F73491CFDA963004DE672 /* AnafiReturnHomePilotingItfTests.swift in Sources */,
+				F86BA98F2125B129004DFAB2 /* RcFirmwareUpdaterTests.swift in Sources */,
+				02FC4C8120285F7A00D76490 /* AnafiFlightMeterTests.swift in Sources */,
+				02108837209B021500F013E4 /* FlightDataDownloaderMatcher.swift in Sources */,
+				7C76AB621C8D75BF00FC213E /* StringMatchers.swift in Sources */,
+				7C2045F71D2FD792007E0405 /* ReturnHomePreferredTargetMatcher.swift in Sources */,
+				7C9138CC1E39E9F80064A5FD /* AnafiManualPilotingItfNoOfflineSettingsTests.swift in Sources */,
+				0237580D209C92CD0077F63C /* MockFlightDataStorage.swift in Sources */,
+				F88468951DEF23CC00ACE941 /* AnafiSystemInfoTests.swift in Sources */,
+				F8C9C4351D182F8400DB1647 /* AnafiSpeedometerTests.swift in Sources */,
+				0235EDCF207671A6006E7C9C /* MockSystemLocation.swift in Sources */,
+				F86BA98521230489004DFAB2 /* MockInternetConnectivity.swift in Sources */,
+				022C387B20A34B8200B4E319 /* FlightDataDecoderTests.swift in Sources */,
+				02C5D0121FD860040028DFEE /* GuidedDirectiveMatcher.swift in Sources */,
+				7C76AB5E1C8D75BF00FC213E /* OperatorMatchers.swift in Sources */,
+				F8C9C4311D18287F00DB1647 /* AnafiCompassTests.swift in Sources */,
+				02CA284720513274005AB316 /* PointOfInterestMatcher.swift in Sources */,
+				7C2F62D81DA69CCC007FB22A /* RemoteControlMatchers.swift in Sources */,
+				F8B240321FE2EB520092974F /* BlackBoxCircularArrayTests.swift in Sources */,
+				9B6ACC7621F0CBBF0024B837 /* CameraFeatureCameraRouterTests.swift in Sources */,
+				026B64D5208628AB00FE5C86 /* FollowFeatureFollowMePilotingItfTests.swift in Sources */,
+				F8BFCDC21FEA5D0F0060D6A0 /* MockHttpSession.swift in Sources */,
+				9B31E00221C93545006F389E /* ThermalControlMatcher.swift in Sources */,
+				7C06D2D4209C58E800A01588 /* MockWebSocket.swift in Sources */,
+				7C32FF791F868DDF0099A750 /* CameraMatcher.swift in Sources */,
+				0235EDCB20765F67006E7C9C /* TargetTrackerControllerTests.swift in Sources */,
+				F86BA98B21231DFC004DFAB2 /* FirmwareInfoMatcher.swift in Sources */,
+				9BDDF1AB21479D60008252BA /* FtpFlightLogDownloaderTests.swift in Sources */,
+				F86BA98D2125A68F004DFAB2 /* DroneFirmwareUpdaterTests.swift in Sources */,
+				F88468991DEF253300ACE941 /* SystemVersionMatcher.swift in Sources */,
+				F8C9C42F1D18216200DB1647 /* AnafiGpsTests.swift in Sources */,
+				7CE1371D1CFC891E0041E197 /* AnafiFlyingIndicatorsTests.swift in Sources */,
+				02706251207E5F8000FB072F /* FollowFeatureLookAtPilotingItfTests.swift in Sources */,
+				02CA284520512F60005AB316 /* PoiPilotingItfTests.swift in Sources */,
+				F88E246D1FEAA81D00D7AAC7 /* MockUrlSessionTaskMatcher.swift in Sources */,
+				F8369C8F20A1DB81008010AE /* MockUserDefaults.swift in Sources */,
+				7CE137211CFC8C0C0041E197 /* FlyingIndicatorsMatcher.swift in Sources */,
+				9B2B789C21426BF60045ED0F /* EphemerisUploaderTests.swift in Sources */,
+				F868F8C81CAD658F0045DBD1 /* DroneListEntryMatcher.swift in Sources */,
+				F8C9C4331D182C4300DB1647 /* AnafiAltimeterTests.swift in Sources */,
+				7C76AB5B1C8D75BF00FC213E /* Matcher.swift in Sources */,
+				F8E2B3011F8FB4AC004AC24D /* AnimationFeaturePilotingItfTests.swift in Sources */,
+				7CCFFA951E1260D50029D35A /* MediaItemMatcher.swift in Sources */,
+				7C76AB591C8D75BF00FC213E /* Hamcrest.swift in Sources */,
+				7CE137201CFC8C0C0041E197 /* DoubleSettingMatcher.swift in Sources */,
+				7C44FF701DBE2B9C003E59D3 /* DroneManagerDroneFinderTests.swift in Sources */,
+				F8E1F1F420DAABD3009379D6 /* PersistentStoreMatcher.swift in Sources */,
+				02ADCD30209C8820008AF7D6 /* HttpFlightDataDownloaderTests.swift in Sources */,
+				7C2C7AC01D3F7AC3009D47C7 /* PersistentStoreTests.swift in Sources */,
+				F8E2B3031F8FCB92004AC24D /* AnimationMatcher.swift in Sources */,
+				7CE137231CFCA06A0041E197 /* ArsdkEngineTestBase.swift in Sources */,
+				7CA8BDBD1ECC880100B79CCC /* CommonRadioTests.swift in Sources */,
+				F8E1F1F020DA8CC5009379D6 /* AppDefaultsTests.swift in Sources */,
+				7CA52AA61FDFDD1400C118FB /* CameraStorableEmumTests.swift in Sources */,
+				7C2045F91D2FD91B007E0405 /* IntSettingMatcher.swift in Sources */,
+				7C7406AA2050250700D1CD78 /* CameraFeatureAntiflickerTests.swift in Sources */,
+				F868F8C91CAD658F0045DBD1 /* DroneMatchers.swift in Sources */,
+				0253D60720601DA400FA5029 /* HttpFlightPlanPilotingItfTests.swift in Sources */,
+				F877E4E320220B29006B0929 /* SkyControllerCompassTests.swift in Sources */,
+				F8441DAF1D47B8CC0062DC77 /* EnumSettingMatcher.swift in Sources */,
+				7CA1C97D1C807AC200FE9ED4 /* ArsdkEngineConnectTests.swift in Sources */,
+				1DA626ED1EF8137E0031AA69 /* CrashReportDownloaderMatcher.swift in Sources */,
+				F8DB46411D33EA7000297E15 /* AnafiMagnetometerTests.swift in Sources */,
+				7C2045F51D2FD0BD007E0405 /* AnafiManualPilotingItfTests.swift in Sources */,
+				F89D8FA11EE6EE400094C524 /* CommonFlightPlanPilotingItfTests.swift in Sources */,
+				F8FF144E1D2A627800A87DA6 /* CLLocationMatcher.swift in Sources */,
+				9BDDF1A72146A83F008252BA /* ArsdkFlightLogDownloaderTests.swift in Sources */,
+				F868F8CA1CAD658F0045DBD1 /* DeviceStateMatcher.swift in Sources */,
+				F89D8FA71EE836C50094C524 /* PilotingItfActivationControllerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7CA1C97A1C807AC200FE9ED4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7CA1C96C1C807AC200FE9ED4 /* ArsdkEngine */;
+			targetProxy = 7CA1C9791C807AC200FE9ED4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		7CA1C97F1C807AC200FE9ED4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CA1C9871C807C8300FE9ED4 /* config.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7CA1C9801C807AC200FE9ED4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CA1C9871C807C8300FE9ED4 /* config.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		7CA1C9821C807AC200FE9ED4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ArsdkEngine/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.ArsdkEngine;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		7CA1C9831C807AC200FE9ED4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ArsdkEngine/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.ArsdkEngine;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+		7CA1C9851C807AC200FE9ED4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CB698EF20583C67004B3008 /* testConfig.xcconfig */;
+			buildSettings = {
+				DEVELOPMENT_TEAM = EA523KQ2D9;
+				INFOPLIST_FILE = ArsdkEngineTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.ArsdkEngineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		7CA1C9861C807AC200FE9ED4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CB698EF20583C67004B3008 /* testConfig.xcconfig */;
+			buildSettings = {
+				DEVELOPMENT_TEAM = EA523KQ2D9;
+				INFOPLIST_FILE = ArsdkEngineTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.ArsdkEngineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7CA1C9671C807AC200FE9ED4 /* Build configuration list for PBXProject "ArsdkEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CA1C97F1C807AC200FE9ED4 /* Debug */,
+				7CA1C9801C807AC200FE9ED4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CA1C9811C807AC200FE9ED4 /* Build configuration list for PBXNativeTarget "ArsdkEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CA1C9821C807AC200FE9ED4 /* Debug */,
+				7CA1C9831C807AC200FE9ED4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CA1C9841C807AC200FE9ED4 /* Build configuration list for PBXNativeTarget "ArsdkEngineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CA1C9851C807AC200FE9ED4 /* Debug */,
+				7CA1C9861C807AC200FE9ED4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7CA1C9641C807AC200FE9ED4 /* Project object */;
+}

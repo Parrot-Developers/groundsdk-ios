@@ -1,0 +1,1289 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		020B171C208A0CCC00CB64A8 /* TargetTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020B171B208A0CCC00CB64A8 /* TargetTrackerViewController.swift */; };
+		020B171F208A0E6900CB64A8 /* TargetTracker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 020B171D208A0E6900CB64A8 /* TargetTracker.storyboard */; };
+		0237585C209D9F390077F63C /* FlightDataDownloaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237585B209D9F390077F63C /* FlightDataDownloaderCell.swift */; };
+		0237585E209DD6500077F63C /* FlightDataManagerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237585D209DD6500077F63C /* FlightDataManagerCell.swift */; };
+		0244B4DA2056D0A300B701B1 /* PointOfInterestPilotingItfCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0244B4D92056D0A300B701B1 /* PointOfInterestPilotingItfCell.swift */; };
+		026B64D72087387200FE5C86 /* FollowMePilotingItfCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026B64D62087387100FE5C86 /* FollowMePilotingItfCell.swift */; };
+		027364A7209748B400C16142 /* GeofenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027364A6209748B300C16142 /* GeofenceCell.swift */; };
+		027364AA209753AA00C16142 /* Geofence.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027364A8209753AA00C16142 /* Geofence.storyboard */; };
+		027364AC209753E900C16142 /* GeofenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027364AB209753E900C16142 /* GeofenceViewController.swift */; };
+		02893A06204D9D790025E127 /* ReverseGeocoderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02893A05204D9D790025E127 /* ReverseGeocoderCell.swift */; };
+		029075FA1FE2950900DED655 /* GuidedPilotingItfCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029075F91FE2950800DED655 /* GuidedPilotingItfCell.swift */; };
+		029075FD1FE2E43A00DED655 /* GuidedPiloting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 029075FB1FE2E43A00DED655 /* GuidedPiloting.storyboard */; };
+		029075FF1FE2E49500DED655 /* GuidedPilotingItfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029075FE1FE2E49500DED655 /* GuidedPilotingItfViewController.swift */; };
+		02BBE9C72051745300476F93 /* PoiPiloting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02BBE9C52051745300476F93 /* PoiPiloting.storyboard */; };
+		02BBE9C9205174B600476F93 /* PoiPilotingItfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BBE9C8205174B600476F93 /* PoiPilotingItfViewController.swift */; };
+		02BFAFDF2010D20D00150146 /* UserLocationHeadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BFAFDE2010D20D00150146 /* UserLocationHeadingCell.swift */; };
+		02C1D55A200E2DFB0057FA06 /* UserLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1D559200E2DFB0057FA06 /* UserLocationCell.swift */; };
+		02CE446B208E17CF007B9F9F /* SkyCtrl3GamepadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE446A208E17CE007B9F9F /* SkyCtrl3GamepadCell.swift */; };
+		02CE4470208E1900007B9F9F /* SkyCtrl3AxisSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE446C208E18FF007B9F9F /* SkyCtrl3AxisSetupViewController.swift */; };
+		02CE4471208E1900007B9F9F /* SkyCtrl3GrabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE446D208E18FF007B9F9F /* SkyCtrl3GrabViewController.swift */; };
+		02CE4472208E1900007B9F9F /* SkyCtrl3MappingEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE446E208E18FF007B9F9F /* SkyCtrl3MappingEditViewController.swift */; };
+		02CE4473208E1900007B9F9F /* SkyCtrl3MappingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE446F208E1900007B9F9F /* SkyCtrl3MappingListViewController.swift */; };
+		02CE4476208E1A2B007B9F9F /* SkyCtrl3AxesSetup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02CE4474208E1A2B007B9F9F /* SkyCtrl3AxesSetup.storyboard */; };
+		02CE4479208E1A32007B9F9F /* SkyCtrl3GrabList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02CE4477208E1A32007B9F9F /* SkyCtrl3GrabList.storyboard */; };
+		02CE447C208E1A3A007B9F9F /* SkyCtrl3MappingList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02CE447A208E1A3A007B9F9F /* SkyCtrl3MappingList.storyboard */; };
+		02D12B2E2028AAAB002C00BB /* BeeperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D12B2D2028AAAB002C00BB /* BeeperCell.swift */; };
+		02D39E1C207D03B200494EC4 /* TargetTrackerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D39E1B207D03B200494EC4 /* TargetTrackerCell.swift */; };
+		02D39E1E207E0DD200494EC4 /* LookAtPilotingItfCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D39E1D207E0DD200494EC4 /* LookAtPilotingItfCell.swift */; };
+		02DDAB2E1FE41B7500B9150B /* AnnotationMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DDAB2D1FE41B7500B9150B /* AnnotationMapViewController.swift */; };
+		02F39FF620AB46900058890D /* UserAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F39FF520AB46900058890D /* UserAccountCell.swift */; };
+		02F39FF920AC22900058890D /* UserAccount.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02F39FF720AC22900058890D /* UserAccount.storyboard */; };
+		02F39FFB20AC22DA0058890D /* UserAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F39FFA20AC22DA0058890D /* UserAccountViewController.swift */; };
+		02FC4C7F2024C40100D76490 /* FlightMeterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC4C7E2024C40100D76490 /* FlightMeterCell.swift */; };
+		1D2194E81EE83883005A6883 /* CrashReportDownloaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2194E71EE83883005A6883 /* CrashReportDownloaderCell.swift */; };
+		37CCBE331C8A2A2300AEC30E /* ArsdkEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37CCBE2D1C8A2A0800AEC30E /* ArsdkEngine.framework */; };
+		37CCBE341C8A2A2300AEC30E /* ArsdkEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37CCBE2D1C8A2A0800AEC30E /* ArsdkEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		37CCBE351C8A2A2300AEC30E /* GroundSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37CCBE2E1C8A2A0800AEC30E /* GroundSdk.framework */; };
+		37CCBE361C8A2A2300AEC30E /* GroundSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37CCBE2E1C8A2A0800AEC30E /* GroundSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		37CCBE371C8A2A2300AEC30E /* SdkCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37CCBE2F1C8A2A0800AEC30E /* SdkCore.framework */; };
+		37CCBE381C8A2A2300AEC30E /* SdkCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37CCBE2F1C8A2A0800AEC30E /* SdkCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4D13ED292113324600454E01 /* GimbalCalibrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D13ED282113324600454E01 /* GimbalCalibrationViewController.swift */; };
+		681A967522147CFF00172594 /* ThermalStreamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681A967422147CFF00172594 /* ThermalStreamCell.swift */; };
+		681A967722147E4400172594 /* ThermalStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681A967622147E4400172594 /* ThermalStreamViewController.swift */; };
+		68ED066422159FC2007DAECE /* ThermalStream.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68ED066222159FC2007DAECE /* ThermalStream.storyboard */; };
+		708D7D6E213E87E1009DBD12 /* FlightLogDownloaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7D6D213E87E1009DBD12 /* FlightLogDownloaderCell.swift */; };
+		708D7D70213E87E9009DBD12 /* FlightLogReporterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7D6F213E87E9009DBD12 /* FlightLogReporterCell.swift */; };
+		71044D1921524409006BAF88 /* CameraExposureLockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71044D1821524409006BAF88 /* CameraExposureLockViewController.swift */; };
+		712A9F55220447B900BD4DFC /* FileReplay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 712A9F54220447B900BD4DFC /* FileReplay.storyboard */; };
+		712A9F5722044D2300BD4DFC /* FileReplayListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712A9F5622044D2300BD4DFC /* FileReplayListViewController.swift */; };
+		712A9F5A22045EEB00BD4DFC /* FileReplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712A9F5922045EEB00BD4DFC /* FileReplayViewController.swift */; };
+		71349A4C21AEE0280033C9C2 /* MediaReplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71349A4B21AEE0280033C9C2 /* MediaReplayViewController.swift */; };
+		7C015ACE1E07DFFE004828A8 /* MediaStoreDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C015ACD1E07DFFE004828A8 /* MediaStoreDownloadViewController.swift */; };
+		7C19FE091CE0EC2E002452E8 /* CopterHudViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C19FE081CE0EC2E002452E8 /* CopterHudViewController.swift */; };
+		7C1EBC1C1DB0FF41002B4724 /* DroneFinderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1EBC1B1DB0FF41002B4724 /* DroneFinderCell.swift */; };
+		7C1EBC1E1DB10AC0002B4724 /* DroneFinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1EBC1D1DB10AC0002B4724 /* DroneFinderViewController.swift */; };
+		7C32DDE01F03AE8300B9E8F9 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C32DDDF1F03AE8300B9E8F9 /* Camera.storyboard */; };
+		7C32DDE21F03B1C700B9E8F9 /* LiveStreamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C32DDE11F03B1C700B9E8F9 /* LiveStreamController.swift */; };
+		7C4487611CF5FEAB0056F5AC /* FlightIndicatorsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4487601CF5FEAB0056F5AC /* FlightIndicatorsCell.swift */; };
+		7C4487631CF60C9A0056F5AC /* ManualCopterPilotingItfCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4487621CF60C9A0056F5AC /* ManualCopterPilotingItfCell.swift */; };
+		7C59BAF41FAB8BC400AB8A6C /* CameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59BAF31FAB8BC400AB8A6C /* CameraCell.swift */; };
+		7C5C42F91E00583A00B8829C /* HudCopter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C42F71E00583A00B8829C /* HudCopter.storyboard */; };
+		7C5C42FC1E0058C000B8829C /* ManualCopterPilotingItf.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C42FA1E0058C000B8829C /* ManualCopterPilotingItf.storyboard */; };
+		7C5C433C1E014E3900B8829C /* ReturnHomePilotingItf.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C433A1E014E3900B8829C /* ReturnHomePilotingItf.storyboard */; };
+		7C5C433F1E01513100B8829C /* MagnetometerWith3StepCalib.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C433D1E01513100B8829C /* MagnetometerWith3StepCalib.storyboard */; };
+		7C5C43421E0151C400B8829C /* LiveStream.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C43401E0151C400B8829C /* LiveStream.storyboard */; };
+		7C5C43451E01561500B8829C /* MediaStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C43431E01561500B8829C /* MediaStore.storyboard */; };
+		7C5C43481E0156C100B8829C /* DroneFinder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C43461E0156C100B8829C /* DroneFinder.storyboard */; };
+		7C5F9D251DEC3BDF00E846D8 /* MediaStoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5F9D241DEC3BDF00E846D8 /* MediaStoreCell.swift */; };
+		7C5F9D271DEC420200E846D8 /* MediaStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5F9D261DEC420200E846D8 /* MediaStoreViewController.swift */; };
+		7C6903201D1933C000A8D570 /* SpeedometerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C69031F1D1933C000A8D570 /* SpeedometerCell.swift */; };
+		7C69F8271FC88C9D00838162 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7C69F8261FC88C9D00838162 /* Podfile */; };
+		7C6BD8791D476158005D415A /* BoolSettingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C6BD8781D476158005D415A /* BoolSettingView.xib */; };
+		7C6BD87B1D47626A005D415A /* BoolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6BD87A1D47626A005D415A /* BoolSettingView.swift */; };
+		7C7406AD2051926300D1CD78 /* Antiflicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C7406AB2051926300D1CD78 /* Antiflicker.storyboard */; };
+		7C7406AF2051939200D1CD78 /* AntiflickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7406AE2051939200D1CD78 /* AntiflickerViewController.swift */; };
+		7C7425051F5ED0AA003A396E /* ChooseEnumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7425041F5ED0AA003A396E /* ChooseEnumViewController.swift */; };
+		7C7CF4DE1D18288D000BB8FC /* AlarmsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7CF4DD1D18288D000BB8FC /* AlarmsCell.swift */; };
+		7C7CF4E01D183717000BB8FC /* AltimeterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7CF4DF1D183717000BB8FC /* AltimeterCell.swift */; };
+		7C7CF4E21D184163000BB8FC /* AttitudeIndicatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7CF4E11D184163000BB8FC /* AttitudeIndicatorCell.swift */; };
+		7C7CF4E41D1846DB000BB8FC /* CompassCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7CF4E31D1846DB000BB8FC /* CompassCell.swift */; };
+		7C7CF4E61D184C4C000BB8FC /* GpsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7CF4E51D184C4C000BB8FC /* GpsCell.swift */; };
+		7C816A851CF82CB300393534 /* NumSettingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C816A841CF82CB300393534 /* NumSettingView.xib */; };
+		7C816A871CF82E9400393534 /* NumSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C816A861CF82E9400393534 /* NumSettingView.swift */; };
+		7C8A61CB1CF7253500CB9392 /* ManualCopterPilotingItfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8A61CA1CF7253500CB9392 /* ManualCopterPilotingItfViewController.swift */; };
+		7C8A61CF1CF7272200CB9392 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8A61CE1CF7272200CB9392 /* DeviceViewController.swift */; };
+		7C8E47A31DA7D86500D72B6D /* RcInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8E47A21DA7D86500D72B6D /* RcInfoViewController.swift */; };
+		7C92BF331D2BD81A00C1C486 /* ReturnHomePilotingItfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C92BF321D2BD81A00C1C486 /* ReturnHomePilotingItfViewController.swift */; };
+		7CA1C9951C807D5000FE9ED4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA1C9941C807D5000FE9ED4 /* AppDelegate.swift */; };
+		7CA1C9971C807D5000FE9ED4 /* DevicesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA1C9961C807D5000FE9ED4 /* DevicesListViewController.swift */; };
+		7CA1C99A1C807D5000FE9ED4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CA1C9981C807D5000FE9ED4 /* Main.storyboard */; };
+		7CA1C99C1C807D5000FE9ED4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CA1C99B1C807D5000FE9ED4 /* Assets.xcassets */; };
+		7CA1C99F1C807D5000FE9ED4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CA1C99D1C807D5000FE9ED4 /* LaunchScreen.storyboard */; };
+		7CA8BDBB1ECC847200B79CCC /* RadioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA8BDBA1ECC847200B79CCC /* RadioCell.swift */; };
+		7CAF65BA1E65C2C8009AF6ED /* SettingsFomatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF65B91E65C2C8009AF6ED /* SettingsFomatter.swift */; };
+		7CC44D1D1CE1FBE20052E10C /* JoystickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC44D1C1CE1FBE20052E10C /* JoystickView.swift */; };
+		7CD6766F1DEEE7BF005BFA68 /* MediaStoreDeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD6766E1DEEE7BF005BFA68 /* MediaStoreDeleteViewController.swift */; };
+		7CE609E82062C217008E338E /* CameraStyleParametresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE609E72062C217008E338E /* CameraStyleParametresViewController.swift */; };
+		7CECF2871D2A8E1A00BF5C84 /* ReturnHomePilotingItfCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CECF2861D2A8E1A00BF5C84 /* ReturnHomePilotingItfCell.swift */; };
+		7CF4E8BA20597FC100B5373B /* AntiflickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF4E8B920597FC100B5373B /* AntiflickerCell.swift */; };
+		9B044EA421FEFDFF00672794 /* ThermalBackgrountTemperatureVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B044EA321FEFDFF00672794 /* ThermalBackgrountTemperatureVC.swift */; };
+		9B211A7121F8611000187592 /* ThermalPaletteAddColorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B211A7021F8611000187592 /* ThermalPaletteAddColorVC.swift */; };
+		9B31E00821C947A7006F389E /* ThermalControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B31E00721C947A7006F389E /* ThermalControlCell.swift */; };
+		9B31E00A21C947CE006F389E /* ThermalControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B31E00921C947CE006F389E /* ThermalControlViewController.swift */; };
+		9B31E00C21C947E9006F389E /* ThermalControl.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B31E00B21C947E9006F389E /* ThermalControl.storyboard */; };
+		9B40FAD3215E5CFA00CF6690 /* PreciseHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B40FAD2215E5CFA00CF6690 /* PreciseHomeCell.swift */; };
+		9B40FAD521620D3400CF6690 /* PreciseHome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B40FAD421620D3400CF6690 /* PreciseHome.storyboard */; };
+		9B40FAD721620F5F00CF6690 /* PreciseHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B40FAD621620F5F00CF6690 /* PreciseHomeViewController.swift */; };
+		9B48547C217F60B6007D1CFC /* RemovableUserStorage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B48547A217F60B6007D1CFC /* RemovableUserStorage.storyboard */; };
+		9B48547E21809977007D1CFC /* RemovableUserStorageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B48547D21809977007D1CFC /* RemovableUserStorageViewController.swift */; };
+		9B56C2B521F764150002EC1C /* ThermalPaletteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B56C2B421F764150002EC1C /* ThermalPaletteViewController.swift */; };
+		9B56C2B721F84EBA0002EC1C /* ThermalChoosePaletteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B56C2B621F84EBA0002EC1C /* ThermalChoosePaletteViewController.swift */; };
+		9B6ACC7421F0C23F0024B837 /* ThermalEmissivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6ACC7321F0C23F0024B837 /* ThermalEmissivityViewController.swift */; };
+		9B73BDC62216FFF8008DA1F7 /* LedsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B73BDC52216FFF8008DA1F7 /* LedsCell.swift */; };
+		9B9C7E142200442800FB312D /* ThermalRenderingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9C7E132200442700FB312D /* ThermalRenderingViewController.swift */; };
+		9B9EDA62220AE18C009CC3F9 /* ThermalCameraCaptureIntervalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9EDA61220AE18C009CC3F9 /* ThermalCameraCaptureIntervalVC.swift */; };
+		9BB4FBBC21E88A45005E2E58 /* ThermalCameraStyleParametersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB4FBBB21E88A45005E2E58 /* ThermalCameraStyleParametersViewController.swift */; };
+		9BB4FBBE21E88A73005E2E58 /* ThermalCameraExposureLockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB4FBBD21E88A73005E2E58 /* ThermalCameraExposureLockViewController.swift */; };
+		9BB4FBC021E88AA9005E2E58 /* ThermalCameraChangeZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB4FBBF21E88AA9005E2E58 /* ThermalCameraChangeZoomViewController.swift */; };
+		9BBB951021DF9DED00CE4322 /* ThermalCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB950F21DF9DED00CE4322 /* ThermalCameraCell.swift */; };
+		9BBB951221E76D0E00CE4322 /* ThermalLiveStreamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB951121E76D0E00CE4322 /* ThermalLiveStreamController.swift */; };
+		9BBB951421E7786100CE4322 /* ThermalCamera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BBB951321E7786100CE4322 /* ThermalCamera.storyboard */; };
+		9BBD415B222FBEA20006CBAF /* PhotoProgressIndicatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBD415A222FBEA20006CBAF /* PhotoProgressIndicatorCell.swift */; };
+		9BDE349F22033B1D008A214B /* CameraCaptureIntervalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE349E22033B1D008A214B /* CameraCaptureIntervalViewController.swift */; };
+		F80065442003A506006669BD /* MagnetometerWith1StepCalib.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F80065422003A506006669BD /* MagnetometerWith1StepCalib.storyboard */; };
+		F803489020935254001F14BD /* MediaStoreDeleteAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F803488F20935254001F14BD /* MediaStoreDeleteAllViewController.swift */; };
+		F804B01B20D9879800BE2CF7 /* anafi4k_app_defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = F804B01A20D9879800BE2CF7 /* anafi4k_app_defaults.plist */; };
+		F8123B5E200DFC380071672B /* RemovableUserStorageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8123B5D200DFC380071672B /* RemovableUserStorageCell.swift */; };
+		F821EA17203448A00091C186 /* CameraChangeZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F821EA16203448A00091C186 /* CameraChangeZoomViewController.swift */; };
+		F82318731D13F4620058A047 /* AttitudeIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82318721D13F4620058A047 /* AttitudeIndicatorView.swift */; };
+		F828A4B11F01508E00431860 /* WifiAccessPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F828A4B01F01508C00431860 /* WifiAccessPoint.swift */; };
+		F828A4B41F01591E00431860 /* WifiAccessPoint.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F828A4B21F01591E00431860 /* WifiAccessPoint.storyboard */; };
+		F828A4B61F0162FA00431860 /* WifiAccessPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F828A4B51F0162FA00431860 /* WifiAccessPointViewController.swift */; };
+		F828A4B81F0241A600431860 /* WifiAccessPointSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F828A4B71F0241A500431860 /* WifiAccessPointSettingViewController.swift */; };
+		F82C3E9F1DDC6975000804C5 /* StreamServerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82C3E9E1DDC6975000804C5 /* StreamServerCell.swift */; };
+		F82C3EA11DDC6B6F000804C5 /* VideoStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82C3EA01DDC6B6F000804C5 /* VideoStreamViewController.swift */; };
+		F82D0ACB1D5DFA2400D957CD /* CopterGpControllerBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82D0ACA1D5DFA2400D957CD /* CopterGpControllerBackend.swift */; };
+		F83EE16C1D10516F0099A5D0 /* AltimeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83EE16B1D10516F0099A5D0 /* AltimeterView.swift */; };
+		F845CCE41FBF39E700F71BDA /* FacilityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F845CCE31FBF39E700F71BDA /* FacilityCell.swift */; };
+		F845CCE61FBF3CCE00F71BDA /* AutoConnectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F845CCE51FBF3CCE00F71BDA /* AutoConnectionCell.swift */; };
+		F8468C581FBF354500B534FD /* FacilitiesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8468C571FBF354500B534FD /* FacilitiesListViewController.swift */; };
+		F86866CB208A52DD00A4EAF7 /* MediaStoreResourceThumbnailList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86866CA208A52DD00A4EAF7 /* MediaStoreResourceThumbnailList.swift */; };
+		F86A81711F8D0E2500F7EE60 /* AnimationPilotingItfCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86A81701F8D0E2500F7EE60 /* AnimationPilotingItfCell.swift */; };
+		F878C5F3203356B90090B7C2 /* ChooseNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F878C5F2203356B90090B7C2 /* ChooseNumberViewController.swift */; };
+		F878C5F5203357ED0090B7C2 /* ChooseBoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F878C5F4203357ED0090B7C2 /* ChooseBoolViewController.swift */; };
+		F87C03731D12E0C2007B2391 /* CompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87C03721D12E0C2007B2391 /* CompassView.swift */; };
+		F87C03751D12EB0F007B2391 /* VerticalSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87C03741D12EB0F007B2391 /* VerticalSlider.swift */; };
+		F87CC52B1FC73E76007A9AD6 /* CrashReporterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87CC52A1FC73E76007A9AD6 /* CrashReporterCell.swift */; };
+		F87D5A431FFFF353005AF079 /* MagnetometerWith1StepCalibrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87D5A421FFFF353005AF079 /* MagnetometerWith1StepCalibrationVC.swift */; };
+		F884687D1DEC974200ACE941 /* SystemInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F884687C1DEC974200ACE941 /* SystemInfoCell.swift */; };
+		F88468811DED8AC900ACE941 /* DeviceContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88468801DED8AC900ACE941 /* DeviceContentCell.swift */; };
+		F88CD0C31CA43BCA00B4E8FB /* DroneInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88CD0C21CA43BCA00B4E8FB /* DroneInfoViewController.swift */; };
+		F89A06451EDEC4E40069ACD4 /* FlightPlanPilotingItfCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89A06441EDEC4E40069ACD4 /* FlightPlanPilotingItfCell.swift */; };
+		F8A158EA1D1C2958006E7589 /* GamepadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A158E91D1C2958006E7589 /* GamepadController.swift */; };
+		F8A2E0CF1D7487C6001E391E /* ReturnHomeGpControllerBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A2E0CE1D7487C6001E391E /* ReturnHomeGpControllerBackend.swift */; };
+		F8A3D0D32051977600AF0126 /* GimbalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3D0D22051977600AF0126 /* GimbalCell.swift */; };
+		F8A3D0D82051A06D00AF0126 /* GimbalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3D0D72051A06D00AF0126 /* GimbalViewController.swift */; };
+		F8A3D0DB2052C52100AF0126 /* Gimbal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8A3D0D92052C52100AF0126 /* Gimbal.storyboard */; };
+		F8A437C81D4F34A6009873EB /* VerticalJoystickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A437C71D4F34A6009873EB /* VerticalJoystickView.swift */; };
+		F8B2402F1FE27EE60092974F /* BlackBoxReporterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B2402E1FE27EE60092974F /* BlackBoxReporterCell.swift */; };
+		F8C252F21FD017FD00A87B5F /* FirmwareManagerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C252F11FD017FD00A87B5F /* FirmwareManagerCell.swift */; };
+		F8C252F41FD043B400A87B5F /* FirmwareManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C252F31FD043B400A87B5F /* FirmwareManagerViewController.swift */; };
+		F8C252F71FD04CCE00A87B5F /* FirmwareManager.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8C252F51FD04CCE00A87B5F /* FirmwareManager.storyboard */; };
+		F8D32CB91EF01DD800074795 /* BatteryInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D32CB81EF01DD800074795 /* BatteryInfoCell.swift */; };
+		F8D32CDB1EF1955600074795 /* CopterMotorsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D32CDA1EF1955600074795 /* CopterMotorsCell.swift */; };
+		F8DB46451D33F25E00297E15 /* MagnetometerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DB46441D33F25E00297E15 /* MagnetometerCell.swift */; };
+		F8DB46471D33F6EA00297E15 /* MagnetometerWith3StepCalibrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DB46461D33F6EA00297E15 /* MagnetometerWith3StepCalibrationVC.swift */; };
+		F8E9E78B1EF4319700A5BE86 /* WifiScannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E9E78A1EF4319700A5BE86 /* WifiScannerCell.swift */; };
+		F8ED48BA1E828D4100C0FFC0 /* UpdaterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ED48B91E828D4100C0FFC0 /* UpdaterCell.swift */; };
+		F8F1556F1E24ECB700C71718 /* VirtualGamepadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1556E1E24ECB700C71718 /* VirtualGamepadCell.swift */; };
+		F8F2B19F20E3A8D700A1A802 /* CameraExposureValuesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F2B19E20E3A8D700A1A802 /* CameraExposureValuesCell.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		37CCBE391C8A2A2300AEC30E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				37CCBE361C8A2A2300AEC30E /* GroundSdk.framework in Embed Frameworks */,
+				37CCBE341C8A2A2300AEC30E /* ArsdkEngine.framework in Embed Frameworks */,
+				37CCBE381C8A2A2300AEC30E /* SdkCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		020B171B208A0CCC00CB64A8 /* TargetTrackerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetTrackerViewController.swift; sourceTree = "<group>"; };
+		020B171E208A0E6900CB64A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TargetTracker.storyboard; sourceTree = "<group>"; };
+		0237585B209D9F390077F63C /* FlightDataDownloaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightDataDownloaderCell.swift; sourceTree = "<group>"; };
+		0237585D209DD6500077F63C /* FlightDataManagerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightDataManagerCell.swift; sourceTree = "<group>"; };
+		0244B4D92056D0A300B701B1 /* PointOfInterestPilotingItfCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointOfInterestPilotingItfCell.swift; sourceTree = "<group>"; };
+		026B64D62087387100FE5C86 /* FollowMePilotingItfCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowMePilotingItfCell.swift; sourceTree = "<group>"; };
+		027364A6209748B300C16142 /* GeofenceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeofenceCell.swift; sourceTree = "<group>"; };
+		027364A9209753AA00C16142 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Geofence.storyboard; sourceTree = "<group>"; };
+		027364AB209753E900C16142 /* GeofenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeofenceViewController.swift; sourceTree = "<group>"; };
+		02893A05204D9D790025E127 /* ReverseGeocoderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReverseGeocoderCell.swift; sourceTree = "<group>"; };
+		029075F91FE2950800DED655 /* GuidedPilotingItfCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuidedPilotingItfCell.swift; sourceTree = "<group>"; };
+		029075FC1FE2E43A00DED655 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/GuidedPiloting.storyboard; sourceTree = "<group>"; };
+		029075FE1FE2E49500DED655 /* GuidedPilotingItfViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuidedPilotingItfViewController.swift; sourceTree = "<group>"; };
+		02BBE9C62051745300476F93 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PoiPiloting.storyboard; sourceTree = "<group>"; };
+		02BBE9C8205174B600476F93 /* PoiPilotingItfViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoiPilotingItfViewController.swift; sourceTree = "<group>"; };
+		02BFAFDE2010D20D00150146 /* UserLocationHeadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationHeadingCell.swift; sourceTree = "<group>"; };
+		02C1D559200E2DFB0057FA06 /* UserLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationCell.swift; sourceTree = "<group>"; };
+		02CE446A208E17CE007B9F9F /* SkyCtrl3GamepadCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkyCtrl3GamepadCell.swift; sourceTree = "<group>"; };
+		02CE446C208E18FF007B9F9F /* SkyCtrl3AxisSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkyCtrl3AxisSetupViewController.swift; sourceTree = "<group>"; };
+		02CE446D208E18FF007B9F9F /* SkyCtrl3GrabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkyCtrl3GrabViewController.swift; sourceTree = "<group>"; };
+		02CE446E208E18FF007B9F9F /* SkyCtrl3MappingEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkyCtrl3MappingEditViewController.swift; sourceTree = "<group>"; };
+		02CE446F208E1900007B9F9F /* SkyCtrl3MappingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkyCtrl3MappingListViewController.swift; sourceTree = "<group>"; };
+		02CE4475208E1A2B007B9F9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SkyCtrl3AxesSetup.storyboard; sourceTree = "<group>"; };
+		02CE4478208E1A32007B9F9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SkyCtrl3GrabList.storyboard; sourceTree = "<group>"; };
+		02CE447B208E1A3A007B9F9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SkyCtrl3MappingList.storyboard; sourceTree = "<group>"; };
+		02D12B2D2028AAAB002C00BB /* BeeperCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeeperCell.swift; sourceTree = "<group>"; };
+		02D39E1B207D03B200494EC4 /* TargetTrackerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetTrackerCell.swift; sourceTree = "<group>"; };
+		02D39E1D207E0DD200494EC4 /* LookAtPilotingItfCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LookAtPilotingItfCell.swift; sourceTree = "<group>"; };
+		02DDAB2D1FE41B7500B9150B /* AnnotationMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationMapViewController.swift; sourceTree = "<group>"; };
+		02F39FF520AB46900058890D /* UserAccountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAccountCell.swift; sourceTree = "<group>"; };
+		02F39FF820AC22900058890D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/UserAccount.storyboard; sourceTree = "<group>"; };
+		02F39FFA20AC22DA0058890D /* UserAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAccountViewController.swift; sourceTree = "<group>"; };
+		02FC4C7E2024C40100D76490 /* FlightMeterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightMeterCell.swift; sourceTree = "<group>"; };
+		1D2194E71EE83883005A6883 /* CrashReportDownloaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashReportDownloaderCell.swift; sourceTree = "<group>"; };
+		37CCBE2D1C8A2A0800AEC30E /* ArsdkEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArsdkEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		37CCBE2E1C8A2A0800AEC30E /* GroundSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GroundSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		37CCBE2F1C8A2A0800AEC30E /* SdkCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D13ED282113324600454E01 /* GimbalCalibrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GimbalCalibrationViewController.swift; sourceTree = "<group>"; };
+		681A967422147CFF00172594 /* ThermalStreamCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalStreamCell.swift; sourceTree = "<group>"; };
+		681A967622147E4400172594 /* ThermalStreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalStreamViewController.swift; sourceTree = "<group>"; };
+		68ED066322159FC2007DAECE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ThermalStream.storyboard; sourceTree = "<group>"; };
+		708D7D6D213E87E1009DBD12 /* FlightLogDownloaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogDownloaderCell.swift; sourceTree = "<group>"; };
+		708D7D6F213E87E9009DBD12 /* FlightLogReporterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogReporterCell.swift; sourceTree = "<group>"; };
+		71044D1821524409006BAF88 /* CameraExposureLockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraExposureLockViewController.swift; sourceTree = "<group>"; };
+		712A9F54220447B900BD4DFC /* FileReplay.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FileReplay.storyboard; sourceTree = "<group>"; };
+		712A9F5622044D2300BD4DFC /* FileReplayListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileReplayListViewController.swift; path = GroundSdkDemo/Replay/FileReplayListViewController.swift; sourceTree = SOURCE_ROOT; };
+		712A9F5922045EEB00BD4DFC /* FileReplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileReplayViewController.swift; path = GroundSdkDemo/Replay/FileReplayViewController.swift; sourceTree = SOURCE_ROOT; };
+		71349A4B21AEE0280033C9C2 /* MediaReplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaReplayViewController.swift; sourceTree = "<group>"; };
+		7C015ACD1E07DFFE004828A8 /* MediaStoreDownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaStoreDownloadViewController.swift; sourceTree = "<group>"; };
+		7C19FE081CE0EC2E002452E8 /* CopterHudViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopterHudViewController.swift; sourceTree = "<group>"; };
+		7C1EBC1B1DB0FF41002B4724 /* DroneFinderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroneFinderCell.swift; sourceTree = "<group>"; };
+		7C1EBC1D1DB10AC0002B4724 /* DroneFinderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroneFinderViewController.swift; sourceTree = "<group>"; };
+		7C29CB5A1D58E09E006BF0BE /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		7C32DDDF1F03AE8300B9E8F9 /* Camera.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Camera.storyboard; path = Base.lproj/Camera.storyboard; sourceTree = "<group>"; };
+		7C32DDE11F03B1C700B9E8F9 /* LiveStreamController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveStreamController.swift; sourceTree = "<group>"; };
+		7C4487601CF5FEAB0056F5AC /* FlightIndicatorsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightIndicatorsCell.swift; sourceTree = "<group>"; };
+		7C4487621CF60C9A0056F5AC /* ManualCopterPilotingItfCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualCopterPilotingItfCell.swift; sourceTree = "<group>"; };
+		7C59BAF31FAB8BC400AB8A6C /* CameraCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraCell.swift; sourceTree = "<group>"; };
+		7C5C42F81E00583A00B8829C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/HudCopter.storyboard; sourceTree = "<group>"; };
+		7C5C42FB1E0058C000B8829C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ManualCopterPilotingItf.storyboard; sourceTree = "<group>"; };
+		7C5C433B1E014E3900B8829C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ReturnHomePilotingItf.storyboard; sourceTree = "<group>"; };
+		7C5C433E1E01513100B8829C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MagnetometerWith3StepCalib.storyboard; sourceTree = "<group>"; };
+		7C5C43411E0151C400B8829C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LiveStream.storyboard; sourceTree = "<group>"; };
+		7C5C43441E01561500B8829C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MediaStore.storyboard; sourceTree = "<group>"; };
+		7C5C43471E0156C100B8829C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/DroneFinder.storyboard; sourceTree = "<group>"; };
+		7C5F9D241DEC3BDF00E846D8 /* MediaStoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaStoreCell.swift; sourceTree = "<group>"; };
+		7C5F9D261DEC420200E846D8 /* MediaStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaStoreViewController.swift; sourceTree = "<group>"; };
+		7C69031F1D1933C000A8D570 /* SpeedometerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeedometerCell.swift; sourceTree = "<group>"; };
+		7C69F8261FC88C9D00838162 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		7C6BD8781D476158005D415A /* BoolSettingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BoolSettingView.xib; path = Base.lproj/BoolSettingView.xib; sourceTree = "<group>"; };
+		7C6BD87A1D47626A005D415A /* BoolSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolSettingView.swift; sourceTree = "<group>"; };
+		7C7406AC2051926300D1CD78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Antiflicker.storyboard; sourceTree = "<group>"; };
+		7C7406AE2051939200D1CD78 /* AntiflickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AntiflickerViewController.swift; sourceTree = "<group>"; };
+		7C7425041F5ED0AA003A396E /* ChooseEnumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseEnumViewController.swift; sourceTree = "<group>"; };
+		7C7CF4DD1D18288D000BB8FC /* AlarmsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmsCell.swift; sourceTree = "<group>"; };
+		7C7CF4DF1D183717000BB8FC /* AltimeterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AltimeterCell.swift; sourceTree = "<group>"; };
+		7C7CF4E11D184163000BB8FC /* AttitudeIndicatorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttitudeIndicatorCell.swift; sourceTree = "<group>"; };
+		7C7CF4E31D1846DB000BB8FC /* CompassCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassCell.swift; sourceTree = "<group>"; };
+		7C7CF4E51D184C4C000BB8FC /* GpsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpsCell.swift; sourceTree = "<group>"; };
+		7C816A841CF82CB300393534 /* NumSettingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NumSettingView.xib; path = Base.lproj/NumSettingView.xib; sourceTree = "<group>"; };
+		7C816A861CF82E9400393534 /* NumSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumSettingView.swift; sourceTree = "<group>"; };
+		7C8A61CA1CF7253500CB9392 /* ManualCopterPilotingItfViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualCopterPilotingItfViewController.swift; sourceTree = "<group>"; };
+		7C8A61CE1CF7272200CB9392 /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
+		7C8E47A21DA7D86500D72B6D /* RcInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RcInfoViewController.swift; sourceTree = "<group>"; };
+		7C92BF321D2BD81A00C1C486 /* ReturnHomePilotingItfViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnHomePilotingItfViewController.swift; sourceTree = "<group>"; };
+		7CA1C9911C807D5000FE9ED4 /* GroundSdkDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroundSdkDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CA1C9941C807D5000FE9ED4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7CA1C9961C807D5000FE9ED4 /* DevicesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesListViewController.swift; sourceTree = "<group>"; };
+		7CA1C9991C807D5000FE9ED4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7CA1C99B1C807D5000FE9ED4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7CA1C99E1C807D5000FE9ED4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7CA1C9A01C807D5000FE9ED4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7CA1C9BD1C807DD700FE9ED4 /* config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = config.xcconfig; sourceTree = "<group>"; };
+		7CA8BDBA1ECC847200B79CCC /* RadioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioCell.swift; sourceTree = "<group>"; };
+		7CAF65B91E65C2C8009AF6ED /* SettingsFomatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsFomatter.swift; sourceTree = "<group>"; };
+		7CC44D1C1CE1FBE20052E10C /* JoystickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoystickView.swift; sourceTree = "<group>"; };
+		7CD6766E1DEEE7BF005BFA68 /* MediaStoreDeleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaStoreDeleteViewController.swift; sourceTree = "<group>"; };
+		7CE609E72062C217008E338E /* CameraStyleParametresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraStyleParametresViewController.swift; sourceTree = "<group>"; };
+		7CECF2861D2A8E1A00BF5C84 /* ReturnHomePilotingItfCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnHomePilotingItfCell.swift; sourceTree = "<group>"; };
+		7CF4E8B920597FC100B5373B /* AntiflickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AntiflickerCell.swift; sourceTree = "<group>"; };
+		9B044EA321FEFDFF00672794 /* ThermalBackgrountTemperatureVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalBackgrountTemperatureVC.swift; sourceTree = "<group>"; };
+		9B211A7021F8611000187592 /* ThermalPaletteAddColorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalPaletteAddColorVC.swift; sourceTree = "<group>"; };
+		9B31E00721C947A7006F389E /* ThermalControlCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalControlCell.swift; sourceTree = "<group>"; };
+		9B31E00921C947CE006F389E /* ThermalControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalControlViewController.swift; sourceTree = "<group>"; };
+		9B31E00B21C947E9006F389E /* ThermalControl.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThermalControl.storyboard; sourceTree = "<group>"; };
+		9B40FAD2215E5CFA00CF6690 /* PreciseHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreciseHomeCell.swift; sourceTree = "<group>"; };
+		9B40FAD421620D3400CF6690 /* PreciseHome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PreciseHome.storyboard; path = Base.lproj/PreciseHome.storyboard; sourceTree = "<group>"; };
+		9B40FAD621620F5F00CF6690 /* PreciseHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreciseHomeViewController.swift; sourceTree = "<group>"; };
+		9B48547B217F60B6007D1CFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/RemovableUserStorage.storyboard; sourceTree = "<group>"; };
+		9B48547D21809977007D1CFC /* RemovableUserStorageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovableUserStorageViewController.swift; sourceTree = "<group>"; };
+		9B56C2B421F764150002EC1C /* ThermalPaletteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalPaletteViewController.swift; sourceTree = "<group>"; };
+		9B56C2B621F84EBA0002EC1C /* ThermalChoosePaletteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalChoosePaletteViewController.swift; sourceTree = "<group>"; };
+		9B6ACC7321F0C23F0024B837 /* ThermalEmissivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalEmissivityViewController.swift; sourceTree = "<group>"; };
+		9B73BDC52216FFF8008DA1F7 /* LedsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedsCell.swift; sourceTree = "<group>"; };
+		9B9C7E132200442700FB312D /* ThermalRenderingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalRenderingViewController.swift; sourceTree = "<group>"; };
+		9B9EDA61220AE18C009CC3F9 /* ThermalCameraCaptureIntervalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalCameraCaptureIntervalVC.swift; sourceTree = "<group>"; };
+		9BB4FBBB21E88A45005E2E58 /* ThermalCameraStyleParametersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalCameraStyleParametersViewController.swift; sourceTree = "<group>"; };
+		9BB4FBBD21E88A73005E2E58 /* ThermalCameraExposureLockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalCameraExposureLockViewController.swift; sourceTree = "<group>"; };
+		9BB4FBBF21E88AA9005E2E58 /* ThermalCameraChangeZoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalCameraChangeZoomViewController.swift; sourceTree = "<group>"; };
+		9BBB950F21DF9DED00CE4322 /* ThermalCameraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalCameraCell.swift; sourceTree = "<group>"; };
+		9BBB951121E76D0E00CE4322 /* ThermalLiveStreamController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalLiveStreamController.swift; sourceTree = "<group>"; };
+		9BBB951321E7786100CE4322 /* ThermalCamera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThermalCamera.storyboard; sourceTree = "<group>"; };
+		9BBD415A222FBEA20006CBAF /* PhotoProgressIndicatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProgressIndicatorCell.swift; sourceTree = "<group>"; };
+		9BDE349E22033B1D008A214B /* CameraCaptureIntervalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCaptureIntervalViewController.swift; sourceTree = "<group>"; };
+		F80065432003A506006669BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MagnetometerWith1StepCalib.storyboard; sourceTree = "<group>"; };
+		F803488F20935254001F14BD /* MediaStoreDeleteAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStoreDeleteAllViewController.swift; sourceTree = "<group>"; };
+		F804B01A20D9879800BE2CF7 /* anafi4k_app_defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = anafi4k_app_defaults.plist; sourceTree = "<group>"; };
+		F8123B5D200DFC380071672B /* RemovableUserStorageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovableUserStorageCell.swift; sourceTree = "<group>"; };
+		F821EA16203448A00091C186 /* CameraChangeZoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraChangeZoomViewController.swift; sourceTree = "<group>"; };
+		F82318721D13F4620058A047 /* AttitudeIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttitudeIndicatorView.swift; sourceTree = "<group>"; };
+		F828A4B01F01508C00431860 /* WifiAccessPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WifiAccessPoint.swift; sourceTree = "<group>"; };
+		F828A4B31F01591E00431860 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WifiAccessPoint.storyboard; sourceTree = "<group>"; };
+		F828A4B51F0162FA00431860 /* WifiAccessPointViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WifiAccessPointViewController.swift; sourceTree = "<group>"; };
+		F828A4B71F0241A500431860 /* WifiAccessPointSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WifiAccessPointSettingViewController.swift; sourceTree = "<group>"; };
+		F82C3E9E1DDC6975000804C5 /* StreamServerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamServerCell.swift; sourceTree = "<group>"; };
+		F82C3EA01DDC6B6F000804C5 /* VideoStreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoStreamViewController.swift; sourceTree = "<group>"; };
+		F82D0ACA1D5DFA2400D957CD /* CopterGpControllerBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopterGpControllerBackend.swift; sourceTree = "<group>"; };
+		F83EE16B1D10516F0099A5D0 /* AltimeterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AltimeterView.swift; sourceTree = "<group>"; };
+		F845CCE31FBF39E700F71BDA /* FacilityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacilityCell.swift; sourceTree = "<group>"; };
+		F845CCE51FBF3CCE00F71BDA /* AutoConnectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectionCell.swift; sourceTree = "<group>"; };
+		F8468C571FBF354500B534FD /* FacilitiesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacilitiesListViewController.swift; sourceTree = "<group>"; };
+		F86866CA208A52DD00A4EAF7 /* MediaStoreResourceThumbnailList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStoreResourceThumbnailList.swift; sourceTree = "<group>"; };
+		F86A81701F8D0E2500F7EE60 /* AnimationPilotingItfCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationPilotingItfCell.swift; sourceTree = "<group>"; };
+		F878C5F2203356B90090B7C2 /* ChooseNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseNumberViewController.swift; sourceTree = "<group>"; };
+		F878C5F4203357ED0090B7C2 /* ChooseBoolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseBoolViewController.swift; sourceTree = "<group>"; };
+		F87C03721D12E0C2007B2391 /* CompassView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassView.swift; sourceTree = "<group>"; };
+		F87C03741D12EB0F007B2391 /* VerticalSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalSlider.swift; sourceTree = "<group>"; };
+		F87CC52A1FC73E76007A9AD6 /* CrashReporterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReporterCell.swift; sourceTree = "<group>"; };
+		F87D5A421FFFF353005AF079 /* MagnetometerWith1StepCalibrationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnetometerWith1StepCalibrationVC.swift; sourceTree = "<group>"; };
+		F884687C1DEC974200ACE941 /* SystemInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemInfoCell.swift; sourceTree = "<group>"; };
+		F88468801DED8AC900ACE941 /* DeviceContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceContentCell.swift; sourceTree = "<group>"; };
+		F88CD0C21CA43BCA00B4E8FB /* DroneInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DroneInfoViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F89A06441EDEC4E40069ACD4 /* FlightPlanPilotingItfCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightPlanPilotingItfCell.swift; sourceTree = "<group>"; };
+		F8A158E91D1C2958006E7589 /* GamepadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamepadController.swift; sourceTree = "<group>"; };
+		F8A2E0CE1D7487C6001E391E /* ReturnHomeGpControllerBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnHomeGpControllerBackend.swift; sourceTree = "<group>"; };
+		F8A3D0D22051977600AF0126 /* GimbalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GimbalCell.swift; sourceTree = "<group>"; };
+		F8A3D0D72051A06D00AF0126 /* GimbalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GimbalViewController.swift; sourceTree = "<group>"; };
+		F8A3D0DA2052C52100AF0126 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Gimbal.storyboard; sourceTree = "<group>"; };
+		F8A437C71D4F34A6009873EB /* VerticalJoystickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalJoystickView.swift; sourceTree = "<group>"; };
+		F8B2402E1FE27EE60092974F /* BlackBoxReporterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxReporterCell.swift; sourceTree = "<group>"; };
+		F8C252F11FD017FD00A87B5F /* FirmwareManagerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareManagerCell.swift; sourceTree = "<group>"; };
+		F8C252F31FD043B400A87B5F /* FirmwareManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareManagerViewController.swift; sourceTree = "<group>"; };
+		F8C252F61FD04CCE00A87B5F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/FirmwareManager.storyboard; sourceTree = "<group>"; };
+		F8D32CB81EF01DD800074795 /* BatteryInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryInfoCell.swift; sourceTree = "<group>"; };
+		F8D32CDA1EF1955600074795 /* CopterMotorsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopterMotorsCell.swift; sourceTree = "<group>"; };
+		F8DB46441D33F25E00297E15 /* MagnetometerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagnetometerCell.swift; sourceTree = "<group>"; };
+		F8DB46461D33F6EA00297E15 /* MagnetometerWith3StepCalibrationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagnetometerWith3StepCalibrationVC.swift; sourceTree = "<group>"; };
+		F8E9E78A1EF4319700A5BE86 /* WifiScannerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WifiScannerCell.swift; sourceTree = "<group>"; };
+		F8ED48B91E828D4100C0FFC0 /* UpdaterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdaterCell.swift; sourceTree = "<group>"; };
+		F8F1556E1E24ECB700C71718 /* VirtualGamepadCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtualGamepadCell.swift; sourceTree = "<group>"; };
+		F8F2B19E20E3A8D700A1A802 /* CameraExposureValuesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraExposureValuesCell.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7CA1C98E1C807D5000FE9ED4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37CCBE351C8A2A2300AEC30E /* GroundSdk.framework in Frameworks */,
+				37CCBE331C8A2A2300AEC30E /* ArsdkEngine.framework in Frameworks */,
+				37CCBE371C8A2A2300AEC30E /* SdkCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		712A9F5822045EC000BD4DFC /* Replay */ = {
+			isa = PBXGroup;
+			children = (
+				712A9F5622044D2300BD4DFC /* FileReplayListViewController.swift */,
+				712A9F5922045EEB00BD4DFC /* FileReplayViewController.swift */,
+			);
+			path = Replay;
+			sourceTree = "<group>";
+		};
+		7C088AC51C886CA400CA2B80 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				37CCBE2D1C8A2A0800AEC30E /* ArsdkEngine.framework */,
+				37CCBE2E1C8A2A0800AEC30E /* GroundSdk.framework */,
+				37CCBE2F1C8A2A0800AEC30E /* SdkCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7C5C42F31E00576700B8829C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7CA1C99B1C807D5000FE9ED4 /* Assets.xcassets */,
+				7C7406AB2051926300D1CD78 /* Antiflicker.storyboard */,
+				7C6BD8781D476158005D415A /* BoolSettingView.xib */,
+				7C32DDDF1F03AE8300B9E8F9 /* Camera.storyboard */,
+				7C5C43461E0156C100B8829C /* DroneFinder.storyboard */,
+				712A9F54220447B900BD4DFC /* FileReplay.storyboard */,
+				F8C252F51FD04CCE00A87B5F /* FirmwareManager.storyboard */,
+				027364A8209753AA00C16142 /* Geofence.storyboard */,
+				F8A3D0D92052C52100AF0126 /* Gimbal.storyboard */,
+				029075FB1FE2E43A00DED655 /* GuidedPiloting.storyboard */,
+				7C5C42F71E00583A00B8829C /* HudCopter.storyboard */,
+				7CA1C99D1C807D5000FE9ED4 /* LaunchScreen.storyboard */,
+				7C5C43401E0151C400B8829C /* LiveStream.storyboard */,
+				F80065422003A506006669BD /* MagnetometerWith1StepCalib.storyboard */,
+				7C5C433D1E01513100B8829C /* MagnetometerWith3StepCalib.storyboard */,
+				7CA1C9981C807D5000FE9ED4 /* Main.storyboard */,
+				7C5C42FA1E0058C000B8829C /* ManualCopterPilotingItf.storyboard */,
+				7C5C43431E01561500B8829C /* MediaStore.storyboard */,
+				7C816A841CF82CB300393534 /* NumSettingView.xib */,
+				02BBE9C52051745300476F93 /* PoiPiloting.storyboard */,
+				9B40FAD421620D3400CF6690 /* PreciseHome.storyboard */,
+				9B48547A217F60B6007D1CFC /* RemovableUserStorage.storyboard */,
+				7C5C433A1E014E3900B8829C /* ReturnHomePilotingItf.storyboard */,
+				02CE4474208E1A2B007B9F9F /* SkyCtrl3AxesSetup.storyboard */,
+				02CE4477208E1A32007B9F9F /* SkyCtrl3GrabList.storyboard */,
+				02CE447A208E1A3A007B9F9F /* SkyCtrl3MappingList.storyboard */,
+				020B171D208A0E6900CB64A8 /* TargetTracker.storyboard */,
+				9BBB951321E7786100CE4322 /* ThermalCamera.storyboard */,
+				9B31E00B21C947E9006F389E /* ThermalControl.storyboard */,
+				68ED066222159FC2007DAECE /* ThermalStream.storyboard */,
+				02F39FF720AC22900058890D /* UserAccount.storyboard */,
+				F828A4B21F01591E00431860 /* WifiAccessPoint.storyboard */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		7C5C43491E01588000B8829C /* DeviceInfoCells */ = {
+			isa = PBXGroup;
+			children = (
+				7C7CF4DD1D18288D000BB8FC /* AlarmsCell.swift */,
+				7C7CF4DF1D183717000BB8FC /* AltimeterCell.swift */,
+				F86A81701F8D0E2500F7EE60 /* AnimationPilotingItfCell.swift */,
+				7CF4E8B920597FC100B5373B /* AntiflickerCell.swift */,
+				7C7CF4E11D184163000BB8FC /* AttitudeIndicatorCell.swift */,
+				F8D32CB81EF01DD800074795 /* BatteryInfoCell.swift */,
+				02D12B2D2028AAAB002C00BB /* BeeperCell.swift */,
+				7C59BAF31FAB8BC400AB8A6C /* CameraCell.swift */,
+				F8F2B19E20E3A8D700A1A802 /* CameraExposureValuesCell.swift */,
+				7C7CF4E31D1846DB000BB8FC /* CompassCell.swift */,
+				F8D32CDA1EF1955600074795 /* CopterMotorsCell.swift */,
+				1D2194E71EE83883005A6883 /* CrashReportDownloaderCell.swift */,
+				F88468801DED8AC900ACE941 /* DeviceContentCell.swift */,
+				7C1EBC1B1DB0FF41002B4724 /* DroneFinderCell.swift */,
+				0237585B209D9F390077F63C /* FlightDataDownloaderCell.swift */,
+				7C4487601CF5FEAB0056F5AC /* FlightIndicatorsCell.swift */,
+				708D7D6D213E87E1009DBD12 /* FlightLogDownloaderCell.swift */,
+				02FC4C7E2024C40100D76490 /* FlightMeterCell.swift */,
+				F89A06441EDEC4E40069ACD4 /* FlightPlanPilotingItfCell.swift */,
+				026B64D62087387100FE5C86 /* FollowMePilotingItfCell.swift */,
+				027364A6209748B300C16142 /* GeofenceCell.swift */,
+				F8A3D0D22051977600AF0126 /* GimbalCell.swift */,
+				7C7CF4E51D184C4C000BB8FC /* GpsCell.swift */,
+				029075F91FE2950800DED655 /* GuidedPilotingItfCell.swift */,
+				9B73BDC52216FFF8008DA1F7 /* LedsCell.swift */,
+				02D39E1D207E0DD200494EC4 /* LookAtPilotingItfCell.swift */,
+				F8DB46441D33F25E00297E15 /* MagnetometerCell.swift */,
+				7C4487621CF60C9A0056F5AC /* ManualCopterPilotingItfCell.swift */,
+				7C5F9D241DEC3BDF00E846D8 /* MediaStoreCell.swift */,
+				9BBD415A222FBEA20006CBAF /* PhotoProgressIndicatorCell.swift */,
+				0244B4D92056D0A300B701B1 /* PointOfInterestPilotingItfCell.swift */,
+				9B40FAD2215E5CFA00CF6690 /* PreciseHomeCell.swift */,
+				7CA8BDBA1ECC847200B79CCC /* RadioCell.swift */,
+				F8123B5D200DFC380071672B /* RemovableUserStorageCell.swift */,
+				7CECF2861D2A8E1A00BF5C84 /* ReturnHomePilotingItfCell.swift */,
+				02CE446A208E17CE007B9F9F /* SkyCtrl3GamepadCell.swift */,
+				7C69031F1D1933C000A8D570 /* SpeedometerCell.swift */,
+				F82C3E9E1DDC6975000804C5 /* StreamServerCell.swift */,
+				F884687C1DEC974200ACE941 /* SystemInfoCell.swift */,
+				02D39E1B207D03B200494EC4 /* TargetTrackerCell.swift */,
+				9BBB950F21DF9DED00CE4322 /* ThermalCameraCell.swift */,
+				9B31E00721C947A7006F389E /* ThermalControlCell.swift */,
+				681A967422147CFF00172594 /* ThermalStreamCell.swift */,
+				F8ED48B91E828D4100C0FFC0 /* UpdaterCell.swift */,
+				F8F1556E1E24ECB700C71718 /* VirtualGamepadCell.swift */,
+				F828A4B01F01508C00431860 /* WifiAccessPoint.swift */,
+				F8E9E78A1EF4319700A5BE86 /* WifiScannerCell.swift */,
+			);
+			path = DeviceInfoCells;
+			sourceTree = "<group>";
+		};
+		7C5C434A1E0158D300B8829C /* ComponentDetails */ = {
+			isa = PBXGroup;
+			children = (
+				02DDAB2D1FE41B7500B9150B /* AnnotationMapViewController.swift */,
+				7C7406AE2051939200D1CD78 /* AntiflickerViewController.swift */,
+				9BDE349E22033B1D008A214B /* CameraCaptureIntervalViewController.swift */,
+				F821EA16203448A00091C186 /* CameraChangeZoomViewController.swift */,
+				71044D1821524409006BAF88 /* CameraExposureLockViewController.swift */,
+				7CE609E72062C217008E338E /* CameraStyleParametresViewController.swift */,
+				F878C5F4203357ED0090B7C2 /* ChooseBoolViewController.swift */,
+				7C7425041F5ED0AA003A396E /* ChooseEnumViewController.swift */,
+				F878C5F2203356B90090B7C2 /* ChooseNumberViewController.swift */,
+				7C1EBC1D1DB10AC0002B4724 /* DroneFinderViewController.swift */,
+				F8C252F31FD043B400A87B5F /* FirmwareManagerViewController.swift */,
+				027364AB209753E900C16142 /* GeofenceViewController.swift */,
+				4D13ED282113324600454E01 /* GimbalCalibrationViewController.swift */,
+				F8A3D0D72051A06D00AF0126 /* GimbalViewController.swift */,
+				029075FE1FE2E49500DED655 /* GuidedPilotingItfViewController.swift */,
+				7C32DDE11F03B1C700B9E8F9 /* LiveStreamController.swift */,
+				F87D5A421FFFF353005AF079 /* MagnetometerWith1StepCalibrationVC.swift */,
+				F8DB46461D33F6EA00297E15 /* MagnetometerWith3StepCalibrationVC.swift */,
+				7C8A61CA1CF7253500CB9392 /* ManualCopterPilotingItfViewController.swift */,
+				71349A4B21AEE0280033C9C2 /* MediaReplayViewController.swift */,
+				F803488F20935254001F14BD /* MediaStoreDeleteAllViewController.swift */,
+				7CD6766E1DEEE7BF005BFA68 /* MediaStoreDeleteViewController.swift */,
+				7C015ACD1E07DFFE004828A8 /* MediaStoreDownloadViewController.swift */,
+				F86866CA208A52DD00A4EAF7 /* MediaStoreResourceThumbnailList.swift */,
+				7C5F9D261DEC420200E846D8 /* MediaStoreViewController.swift */,
+				02BBE9C8205174B600476F93 /* PoiPilotingItfViewController.swift */,
+				9B40FAD621620F5F00CF6690 /* PreciseHomeViewController.swift */,
+				9B48547D21809977007D1CFC /* RemovableUserStorageViewController.swift */,
+				7C92BF321D2BD81A00C1C486 /* ReturnHomePilotingItfViewController.swift */,
+				02CE446C208E18FF007B9F9F /* SkyCtrl3AxisSetupViewController.swift */,
+				02CE446D208E18FF007B9F9F /* SkyCtrl3GrabViewController.swift */,
+				02CE446E208E18FF007B9F9F /* SkyCtrl3MappingEditViewController.swift */,
+				02CE446F208E1900007B9F9F /* SkyCtrl3MappingListViewController.swift */,
+				020B171B208A0CCC00CB64A8 /* TargetTrackerViewController.swift */,
+				9B044EA321FEFDFF00672794 /* ThermalBackgrountTemperatureVC.swift */,
+				9B9EDA61220AE18C009CC3F9 /* ThermalCameraCaptureIntervalVC.swift */,
+				9BB4FBBF21E88AA9005E2E58 /* ThermalCameraChangeZoomViewController.swift */,
+				9BB4FBBD21E88A73005E2E58 /* ThermalCameraExposureLockViewController.swift */,
+				9BB4FBBB21E88A45005E2E58 /* ThermalCameraStyleParametersViewController.swift */,
+				9B56C2B621F84EBA0002EC1C /* ThermalChoosePaletteViewController.swift */,
+				9B31E00921C947CE006F389E /* ThermalControlViewController.swift */,
+				9B6ACC7321F0C23F0024B837 /* ThermalEmissivityViewController.swift */,
+				9BBB951121E76D0E00CE4322 /* ThermalLiveStreamController.swift */,
+				9B211A7021F8611000187592 /* ThermalPaletteAddColorVC.swift */,
+				9B56C2B421F764150002EC1C /* ThermalPaletteViewController.swift */,
+				9B9C7E132200442700FB312D /* ThermalRenderingViewController.swift */,
+				681A967622147E4400172594 /* ThermalStreamViewController.swift */,
+				02F39FFA20AC22DA0058890D /* UserAccountViewController.swift */,
+				F82C3EA01DDC6B6F000804C5 /* VideoStreamViewController.swift */,
+				F828A4B71F0241A500431860 /* WifiAccessPointSettingViewController.swift */,
+				F828A4B51F0162FA00431860 /* WifiAccessPointViewController.swift */,
+			);
+			path = ComponentDetails;
+			sourceTree = "<group>";
+		};
+		7C5C434B1E01591800B8829C /* Hud */ = {
+			isa = PBXGroup;
+			children = (
+				F83EE16B1D10516F0099A5D0 /* AltimeterView.swift */,
+				F82318721D13F4620058A047 /* AttitudeIndicatorView.swift */,
+				F87C03721D12E0C2007B2391 /* CompassView.swift */,
+				7C19FE081CE0EC2E002452E8 /* CopterHudViewController.swift */,
+				7CC44D1C1CE1FBE20052E10C /* JoystickView.swift */,
+				F8A437C71D4F34A6009873EB /* VerticalJoystickView.swift */,
+				F87C03741D12EB0F007B2391 /* VerticalSlider.swift */,
+			);
+			path = Hud;
+			sourceTree = "<group>";
+		};
+		7CA1C9881C807D5000FE9ED4 = {
+			isa = PBXGroup;
+			children = (
+				7C69F8261FC88C9D00838162 /* Podfile */,
+				7C29CB5A1D58E09E006BF0BE /* .swiftlint.yml */,
+				7CA1C9BD1C807DD700FE9ED4 /* config.xcconfig */,
+				7CA1C9931C807D5000FE9ED4 /* GroundSdkDemo */,
+				7CA1C9921C807D5000FE9ED4 /* Products */,
+				7C088AC51C886CA400CA2B80 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7CA1C9921C807D5000FE9ED4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7CA1C9911C807D5000FE9ED4 /* GroundSdkDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7CA1C9931C807D5000FE9ED4 /* GroundSdkDemo */ = {
+			isa = PBXGroup;
+			children = (
+				7CA1C9A01C807D5000FE9ED4 /* Info.plist */,
+				7CA1C9941C807D5000FE9ED4 /* AppDelegate.swift */,
+				7C6BD87A1D47626A005D415A /* BoolSettingView.swift */,
+				7CA1C9961C807D5000FE9ED4 /* DevicesListViewController.swift */,
+				7C8A61CE1CF7272200CB9392 /* DeviceViewController.swift */,
+				F88CD0C21CA43BCA00B4E8FB /* DroneInfoViewController.swift */,
+				F8468C571FBF354500B534FD /* FacilitiesListViewController.swift */,
+				7C816A861CF82E9400393534 /* NumSettingView.swift */,
+				7C8E47A21DA7D86500D72B6D /* RcInfoViewController.swift */,
+				7CAF65B91E65C2C8009AF6ED /* SettingsFomatter.swift */,
+				F8BAD6AE2016425C0017B8F6 /* AppDefaults */,
+				7C5C434A1E0158D300B8829C /* ComponentDetails */,
+				7C5C43491E01588000B8829C /* DeviceInfoCells */,
+				F845CCE21FBF39D700F71BDA /* FacilityCells */,
+				F82D0AC91D5DF84600D957CD /* GamepadController */,
+				7C5C434B1E01591800B8829C /* Hud */,
+				712A9F5822045EC000BD4DFC /* Replay */,
+				7C5C42F31E00576700B8829C /* Resources */,
+			);
+			path = GroundSdkDemo;
+			sourceTree = "<group>";
+		};
+		F82D0AC91D5DF84600D957CD /* GamepadController */ = {
+			isa = PBXGroup;
+			children = (
+				F82D0ACA1D5DFA2400D957CD /* CopterGpControllerBackend.swift */,
+				F8A158E91D1C2958006E7589 /* GamepadController.swift */,
+				F8A2E0CE1D7487C6001E391E /* ReturnHomeGpControllerBackend.swift */,
+			);
+			path = GamepadController;
+			sourceTree = "<group>";
+		};
+		F845CCE21FBF39D700F71BDA /* FacilityCells */ = {
+			isa = PBXGroup;
+			children = (
+				F845CCE51FBF3CCE00F71BDA /* AutoConnectionCell.swift */,
+				F8B2402E1FE27EE60092974F /* BlackBoxReporterCell.swift */,
+				F87CC52A1FC73E76007A9AD6 /* CrashReporterCell.swift */,
+				F845CCE31FBF39E700F71BDA /* FacilityCell.swift */,
+				F8C252F11FD017FD00A87B5F /* FirmwareManagerCell.swift */,
+				0237585D209DD6500077F63C /* FlightDataManagerCell.swift */,
+				708D7D6F213E87E9009DBD12 /* FlightLogReporterCell.swift */,
+				02893A05204D9D790025E127 /* ReverseGeocoderCell.swift */,
+				02F39FF520AB46900058890D /* UserAccountCell.swift */,
+				02C1D559200E2DFB0057FA06 /* UserLocationCell.swift */,
+				02BFAFDE2010D20D00150146 /* UserLocationHeadingCell.swift */,
+			);
+			path = FacilityCells;
+			sourceTree = "<group>";
+		};
+		F8BAD6AE2016425C0017B8F6 /* AppDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				F804B01A20D9879800BE2CF7 /* anafi4k_app_defaults.plist */,
+			);
+			path = AppDefaults;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7CA1C9901C807D5000FE9ED4 /* GroundSdkDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CA1C9AE1C807D5000FE9ED4 /* Build configuration list for PBXNativeTarget "GroundSdkDemo" */;
+			buildPhases = (
+				7CA1C98D1C807D5000FE9ED4 /* Sources */,
+				7CA1C98E1C807D5000FE9ED4 /* Frameworks */,
+				7CA1C98F1C807D5000FE9ED4 /* Resources */,
+				7CF707251C89E66900FAC3EC /* SwiftLint */,
+				37CCBE391C8A2A2300AEC30E /* Embed Frameworks */,
+				7C2080DF20289AD300CB3CAC /* Export for CocoaPods */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GroundSdkDemo;
+			productName = GroundSdkDemo;
+			productReference = 7CA1C9911C807D5000FE9ED4 /* GroundSdkDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7CA1C9891C807D5000FE9ED4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "Parrot SA";
+				TargetAttributes = {
+					7CA1C9901C807D5000FE9ED4 = {
+						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = EA523KQ2D9;
+						LastSwiftMigration = 1020;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 7CA1C98C1C807D5000FE9ED4 /* Build configuration list for PBXProject "GroundSdkDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+				Base,
+			);
+			mainGroup = 7CA1C9881C807D5000FE9ED4;
+			productRefGroup = 7CA1C9921C807D5000FE9ED4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7CA1C9901C807D5000FE9ED4 /* GroundSdkDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7CA1C98F1C807D5000FE9ED4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				020B171F208A0E6900CB64A8 /* TargetTracker.storyboard in Resources */,
+				02CE447C208E1A3A007B9F9F /* SkyCtrl3MappingList.storyboard in Resources */,
+				027364AA209753AA00C16142 /* Geofence.storyboard in Resources */,
+				029075FD1FE2E43A00DED655 /* GuidedPiloting.storyboard in Resources */,
+				7C5C42F91E00583A00B8829C /* HudCopter.storyboard in Resources */,
+				7C816A851CF82CB300393534 /* NumSettingView.xib in Resources */,
+				02CE4476208E1A2B007B9F9F /* SkyCtrl3AxesSetup.storyboard in Resources */,
+				7C5C43451E01561500B8829C /* MediaStore.storyboard in Resources */,
+				7C69F8271FC88C9D00838162 /* Podfile in Resources */,
+				7CA1C99F1C807D5000FE9ED4 /* LaunchScreen.storyboard in Resources */,
+				9BBB951421E7786100CE4322 /* ThermalCamera.storyboard in Resources */,
+				F8C252F71FD04CCE00A87B5F /* FirmwareManager.storyboard in Resources */,
+				02CE4479208E1A32007B9F9F /* SkyCtrl3GrabList.storyboard in Resources */,
+				7C5C43421E0151C400B8829C /* LiveStream.storyboard in Resources */,
+				7C5C43481E0156C100B8829C /* DroneFinder.storyboard in Resources */,
+				712A9F55220447B900BD4DFC /* FileReplay.storyboard in Resources */,
+				7CA1C99C1C807D5000FE9ED4 /* Assets.xcassets in Resources */,
+				7C32DDE01F03AE8300B9E8F9 /* Camera.storyboard in Resources */,
+				02BBE9C72051745300476F93 /* PoiPiloting.storyboard in Resources */,
+				02F39FF920AC22900058890D /* UserAccount.storyboard in Resources */,
+				9B31E00C21C947E9006F389E /* ThermalControl.storyboard in Resources */,
+				F80065442003A506006669BD /* MagnetometerWith1StepCalib.storyboard in Resources */,
+				9B48547C217F60B6007D1CFC /* RemovableUserStorage.storyboard in Resources */,
+				7CA1C99A1C807D5000FE9ED4 /* Main.storyboard in Resources */,
+				F804B01B20D9879800BE2CF7 /* anafi4k_app_defaults.plist in Resources */,
+				F8A3D0DB2052C52100AF0126 /* Gimbal.storyboard in Resources */,
+				7C7406AD2051926300D1CD78 /* Antiflicker.storyboard in Resources */,
+				7C5C433C1E014E3900B8829C /* ReturnHomePilotingItf.storyboard in Resources */,
+				7C5C42FC1E0058C000B8829C /* ManualCopterPilotingItf.storyboard in Resources */,
+				F828A4B41F01591E00431860 /* WifiAccessPoint.storyboard in Resources */,
+				9B40FAD521620D3400CF6690 /* PreciseHome.storyboard in Resources */,
+				68ED066422159FC2007DAECE /* ThermalStream.storyboard in Resources */,
+				7C5C433F1E01513100B8829C /* MagnetometerWith3StepCalib.storyboard in Resources */,
+				7C6BD8791D476158005D415A /* BoolSettingView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7C2080DF20289AD300CB3CAC /* Export for CocoaPods */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Export for CocoaPods";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "EXPORT_DIR=$ALCHEMY_PRODUCT_DIR/export\nrm -rf $EXPORT_DIR\n# export sdkcore framework\nditto $BUILT_PRODUCTS_DIR/SdkCore.framework $EXPORT_DIR/SdkCore/SdkCore.framework\n# export arsdk engine sources\nditto $SRCROOT/../arsdkengine/ArsdkEngine $EXPORT_DIR/ArsdkEngine/ArsdkEngine\nditto $BUILT_PRODUCTS_DIR/../ff4CompatGenerated $EXPORT_DIR/ArsdkEngine/ArsdkEngine/ff4CompatGenerated\n# export groundsdk sources\nditto $SRCROOT/../groundsdk/GroundSdk $EXPORT_DIR/GroundSdk/GroundSdk\n# export demo app\nditto $SRCROOT/../demo $EXPORT_DIR/demo\n# regenerate demo xcconfig file\nCONFIG_FILE=$EXPORT_DIR/demo/config.xcconfig\nrm $CONFIG_FILE\necho \"PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.GroundSdkDemo\" >> $CONFIG_FILE\necho \"IPHONEOS_DEPLOYMENT_TARGET = ${IPHONEOS_DEPLOYMENT_TARGET}\" >> $CONFIG_FILE\necho \"SWIFT_VERSION = ${SWIFT_VERSION}\" >> $CONFIG_FILE\necho \"APP_VERSION = ${APP_VERSION}\" >> $CONFIG_FILE";
+			showEnvVarsInLog = 0;
+		};
+		7CF707251C89E66900FAC3EC /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, install it with 'brew install swiftlint'\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7CA1C98D1C807D5000FE9ED4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02CE4470208E1900007B9F9F /* SkyCtrl3AxisSetupViewController.swift in Sources */,
+				9B044EA421FEFDFF00672794 /* ThermalBackgrountTemperatureVC.swift in Sources */,
+				7CE609E82062C217008E338E /* CameraStyleParametresViewController.swift in Sources */,
+				F878C5F3203356B90090B7C2 /* ChooseNumberViewController.swift in Sources */,
+				F8F1556F1E24ECB700C71718 /* VirtualGamepadCell.swift in Sources */,
+				712A9F5722044D2300BD4DFC /* FileReplayListViewController.swift in Sources */,
+				7CA1C9971C807D5000FE9ED4 /* DevicesListViewController.swift in Sources */,
+				9BB4FBBC21E88A45005E2E58 /* ThermalCameraStyleParametersViewController.swift in Sources */,
+				7C1EBC1E1DB10AC0002B4724 /* DroneFinderViewController.swift in Sources */,
+				7C7CF4E21D184163000BB8FC /* AttitudeIndicatorCell.swift in Sources */,
+				9B9C7E142200442800FB312D /* ThermalRenderingViewController.swift in Sources */,
+				02BBE9C9205174B600476F93 /* PoiPilotingItfViewController.swift in Sources */,
+				F88CD0C31CA43BCA00B4E8FB /* DroneInfoViewController.swift in Sources */,
+				F845CCE41FBF39E700F71BDA /* FacilityCell.swift in Sources */,
+				7C4487611CF5FEAB0056F5AC /* FlightIndicatorsCell.swift in Sources */,
+				F8DB46451D33F25E00297E15 /* MagnetometerCell.swift in Sources */,
+				0237585E209DD6500077F63C /* FlightDataManagerCell.swift in Sources */,
+				F83EE16C1D10516F0099A5D0 /* AltimeterView.swift in Sources */,
+				9BBB951221E76D0E00CE4322 /* ThermalLiveStreamController.swift in Sources */,
+				9B9EDA62220AE18C009CC3F9 /* ThermalCameraCaptureIntervalVC.swift in Sources */,
+				0244B4DA2056D0A300B701B1 /* PointOfInterestPilotingItfCell.swift in Sources */,
+				7C7CF4E01D183717000BB8FC /* AltimeterCell.swift in Sources */,
+				F8B2402F1FE27EE60092974F /* BlackBoxReporterCell.swift in Sources */,
+				0237585C209D9F390077F63C /* FlightDataDownloaderCell.swift in Sources */,
+				02F39FF620AB46900058890D /* UserAccountCell.swift in Sources */,
+				F8E9E78B1EF4319700A5BE86 /* WifiScannerCell.swift in Sources */,
+				02CE4473208E1900007B9F9F /* SkyCtrl3MappingListViewController.swift in Sources */,
+				7C6903201D1933C000A8D570 /* SpeedometerCell.swift in Sources */,
+				7C7CF4E61D184C4C000BB8FC /* GpsCell.swift in Sources */,
+				7CC44D1D1CE1FBE20052E10C /* JoystickView.swift in Sources */,
+				7C4487631CF60C9A0056F5AC /* ManualCopterPilotingItfCell.swift in Sources */,
+				7C8A61CB1CF7253500CB9392 /* ManualCopterPilotingItfViewController.swift in Sources */,
+				1D2194E81EE83883005A6883 /* CrashReportDownloaderCell.swift in Sources */,
+				F87D5A431FFFF353005AF079 /* MagnetometerWith1StepCalibrationVC.swift in Sources */,
+				7CF4E8BA20597FC100B5373B /* AntiflickerCell.swift in Sources */,
+				9B31E00821C947A7006F389E /* ThermalControlCell.swift in Sources */,
+				7C8A61CF1CF7272200CB9392 /* DeviceViewController.swift in Sources */,
+				F828A4B81F0241A600431860 /* WifiAccessPointSettingViewController.swift in Sources */,
+				7C7425051F5ED0AA003A396E /* ChooseEnumViewController.swift in Sources */,
+				9B48547E21809977007D1CFC /* RemovableUserStorageViewController.swift in Sources */,
+				F82318731D13F4620058A047 /* AttitudeIndicatorView.swift in Sources */,
+				F82C3EA11DDC6B6F000804C5 /* VideoStreamViewController.swift in Sources */,
+				F8C252F21FD017FD00A87B5F /* FirmwareManagerCell.swift in Sources */,
+				027364AC209753E900C16142 /* GeofenceViewController.swift in Sources */,
+				7C92BF331D2BD81A00C1C486 /* ReturnHomePilotingItfViewController.swift in Sources */,
+				9B6ACC7421F0C23F0024B837 /* ThermalEmissivityViewController.swift in Sources */,
+				7CAF65BA1E65C2C8009AF6ED /* SettingsFomatter.swift in Sources */,
+				71044D1921524409006BAF88 /* CameraExposureLockViewController.swift in Sources */,
+				F82D0ACB1D5DFA2400D957CD /* CopterGpControllerBackend.swift in Sources */,
+				7C1EBC1C1DB0FF41002B4724 /* DroneFinderCell.swift in Sources */,
+				9B211A7121F8611000187592 /* ThermalPaletteAddColorVC.swift in Sources */,
+				7CECF2871D2A8E1A00BF5C84 /* ReturnHomePilotingItfCell.swift in Sources */,
+				7CD6766F1DEEE7BF005BFA68 /* MediaStoreDeleteViewController.swift in Sources */,
+				02FC4C7F2024C40100D76490 /* FlightMeterCell.swift in Sources */,
+				F87C03751D12EB0F007B2391 /* VerticalSlider.swift in Sources */,
+				F8A2E0CF1D7487C6001E391E /* ReturnHomeGpControllerBackend.swift in Sources */,
+				7C7CF4DE1D18288D000BB8FC /* AlarmsCell.swift in Sources */,
+				F87C03731D12E0C2007B2391 /* CompassView.swift in Sources */,
+				02CE446B208E17CF007B9F9F /* SkyCtrl3GamepadCell.swift in Sources */,
+				712A9F5A22045EEB00BD4DFC /* FileReplayViewController.swift in Sources */,
+				9B31E00A21C947CE006F389E /* ThermalControlViewController.swift in Sources */,
+				029075FF1FE2E49500DED655 /* GuidedPilotingItfViewController.swift in Sources */,
+				F8F2B19F20E3A8D700A1A802 /* CameraExposureValuesCell.swift in Sources */,
+				9B56C2B721F84EBA0002EC1C /* ThermalChoosePaletteViewController.swift in Sources */,
+				F8D32CDB1EF1955600074795 /* CopterMotorsCell.swift in Sources */,
+				7C015ACE1E07DFFE004828A8 /* MediaStoreDownloadViewController.swift in Sources */,
+				708D7D6E213E87E1009DBD12 /* FlightLogDownloaderCell.swift in Sources */,
+				F87CC52B1FC73E76007A9AD6 /* CrashReporterCell.swift in Sources */,
+				9BDE349F22033B1D008A214B /* CameraCaptureIntervalViewController.swift in Sources */,
+				F88468811DED8AC900ACE941 /* DeviceContentCell.swift in Sources */,
+				02893A06204D9D790025E127 /* ReverseGeocoderCell.swift in Sources */,
+				02BFAFDF2010D20D00150146 /* UserLocationHeadingCell.swift in Sources */,
+				02D12B2E2028AAAB002C00BB /* BeeperCell.swift in Sources */,
+				7C8E47A31DA7D86500D72B6D /* RcInfoViewController.swift in Sources */,
+				F828A4B61F0162FA00431860 /* WifiAccessPointViewController.swift in Sources */,
+				681A967522147CFF00172594 /* ThermalStreamCell.swift in Sources */,
+				02D39E1E207E0DD200494EC4 /* LookAtPilotingItfCell.swift in Sources */,
+				7CA1C9951C807D5000FE9ED4 /* AppDelegate.swift in Sources */,
+				F845CCE61FBF3CCE00F71BDA /* AutoConnectionCell.swift in Sources */,
+				F8DB46471D33F6EA00297E15 /* MagnetometerWith3StepCalibrationVC.swift in Sources */,
+				02F39FFB20AC22DA0058890D /* UserAccountViewController.swift in Sources */,
+				9B56C2B521F764150002EC1C /* ThermalPaletteViewController.swift in Sources */,
+				02C1D55A200E2DFB0057FA06 /* UserLocationCell.swift in Sources */,
+				9BB4FBC021E88AA9005E2E58 /* ThermalCameraChangeZoomViewController.swift in Sources */,
+				681A967722147E4400172594 /* ThermalStreamViewController.swift in Sources */,
+				02CE4472208E1900007B9F9F /* SkyCtrl3MappingEditViewController.swift in Sources */,
+				027364A7209748B400C16142 /* GeofenceCell.swift in Sources */,
+				7CA8BDBB1ECC847200B79CCC /* RadioCell.swift in Sources */,
+				02DDAB2E1FE41B7500B9150B /* AnnotationMapViewController.swift in Sources */,
+				708D7D70213E87E9009DBD12 /* FlightLogReporterCell.swift in Sources */,
+				02D39E1C207D03B200494EC4 /* TargetTrackerCell.swift in Sources */,
+				F803489020935254001F14BD /* MediaStoreDeleteAllViewController.swift in Sources */,
+				9BB4FBBE21E88A73005E2E58 /* ThermalCameraExposureLockViewController.swift in Sources */,
+				F821EA17203448A00091C186 /* CameraChangeZoomViewController.swift in Sources */,
+				F82C3E9F1DDC6975000804C5 /* StreamServerCell.swift in Sources */,
+				F8A437C81D4F34A6009873EB /* VerticalJoystickView.swift in Sources */,
+				9B73BDC62216FFF8008DA1F7 /* LedsCell.swift in Sources */,
+				7C5F9D251DEC3BDF00E846D8 /* MediaStoreCell.swift in Sources */,
+				F8ED48BA1E828D4100C0FFC0 /* UpdaterCell.swift in Sources */,
+				9BBD415B222FBEA20006CBAF /* PhotoProgressIndicatorCell.swift in Sources */,
+				7C816A871CF82E9400393534 /* NumSettingView.swift in Sources */,
+				F89A06451EDEC4E40069ACD4 /* FlightPlanPilotingItfCell.swift in Sources */,
+				9B40FAD721620F5F00CF6690 /* PreciseHomeViewController.swift in Sources */,
+				7C5F9D271DEC420200E846D8 /* MediaStoreViewController.swift in Sources */,
+				7C32DDE21F03B1C700B9E8F9 /* LiveStreamController.swift in Sources */,
+				029075FA1FE2950900DED655 /* GuidedPilotingItfCell.swift in Sources */,
+				9BBB951021DF9DED00CE4322 /* ThermalCameraCell.swift in Sources */,
+				02CE4471208E1900007B9F9F /* SkyCtrl3GrabViewController.swift in Sources */,
+				F8A3D0D82051A06D00AF0126 /* GimbalViewController.swift in Sources */,
+				F86A81711F8D0E2500F7EE60 /* AnimationPilotingItfCell.swift in Sources */,
+				71349A4C21AEE0280033C9C2 /* MediaReplayViewController.swift in Sources */,
+				9B40FAD3215E5CFA00CF6690 /* PreciseHomeCell.swift in Sources */,
+				F8123B5E200DFC380071672B /* RemovableUserStorageCell.swift in Sources */,
+				F8D32CB91EF01DD800074795 /* BatteryInfoCell.swift in Sources */,
+				F8A3D0D32051977600AF0126 /* GimbalCell.swift in Sources */,
+				F828A4B11F01508E00431860 /* WifiAccessPoint.swift in Sources */,
+				F86866CB208A52DD00A4EAF7 /* MediaStoreResourceThumbnailList.swift in Sources */,
+				020B171C208A0CCC00CB64A8 /* TargetTrackerViewController.swift in Sources */,
+				7C19FE091CE0EC2E002452E8 /* CopterHudViewController.swift in Sources */,
+				7C7406AF2051939200D1CD78 /* AntiflickerViewController.swift in Sources */,
+				7C7CF4E41D1846DB000BB8FC /* CompassCell.swift in Sources */,
+				F8468C581FBF354500B534FD /* FacilitiesListViewController.swift in Sources */,
+				F8A158EA1D1C2958006E7589 /* GamepadController.swift in Sources */,
+				4D13ED292113324600454E01 /* GimbalCalibrationViewController.swift in Sources */,
+				F884687D1DEC974200ACE941 /* SystemInfoCell.swift in Sources */,
+				026B64D72087387200FE5C86 /* FollowMePilotingItfCell.swift in Sources */,
+				7C59BAF41FAB8BC400AB8A6C /* CameraCell.swift in Sources */,
+				F8C252F41FD043B400A87B5F /* FirmwareManagerViewController.swift in Sources */,
+				7C6BD87B1D47626A005D415A /* BoolSettingView.swift in Sources */,
+				F878C5F5203357ED0090B7C2 /* ChooseBoolViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		020B171D208A0E6900CB64A8 /* TargetTracker.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				020B171E208A0E6900CB64A8 /* Base */,
+			);
+			name = TargetTracker.storyboard;
+			sourceTree = "<group>";
+		};
+		027364A8209753AA00C16142 /* Geofence.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				027364A9209753AA00C16142 /* Base */,
+			);
+			name = Geofence.storyboard;
+			sourceTree = "<group>";
+		};
+		029075FB1FE2E43A00DED655 /* GuidedPiloting.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				029075FC1FE2E43A00DED655 /* Base */,
+			);
+			name = GuidedPiloting.storyboard;
+			sourceTree = "<group>";
+		};
+		02BBE9C52051745300476F93 /* PoiPiloting.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				02BBE9C62051745300476F93 /* Base */,
+			);
+			name = PoiPiloting.storyboard;
+			sourceTree = "<group>";
+		};
+		02CE4474208E1A2B007B9F9F /* SkyCtrl3AxesSetup.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				02CE4475208E1A2B007B9F9F /* Base */,
+			);
+			name = SkyCtrl3AxesSetup.storyboard;
+			sourceTree = "<group>";
+		};
+		02CE4477208E1A32007B9F9F /* SkyCtrl3GrabList.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				02CE4478208E1A32007B9F9F /* Base */,
+			);
+			name = SkyCtrl3GrabList.storyboard;
+			sourceTree = "<group>";
+		};
+		02CE447A208E1A3A007B9F9F /* SkyCtrl3MappingList.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				02CE447B208E1A3A007B9F9F /* Base */,
+			);
+			name = SkyCtrl3MappingList.storyboard;
+			sourceTree = "<group>";
+		};
+		02F39FF720AC22900058890D /* UserAccount.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				02F39FF820AC22900058890D /* Base */,
+			);
+			name = UserAccount.storyboard;
+			sourceTree = "<group>";
+		};
+		68ED066222159FC2007DAECE /* ThermalStream.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				68ED066322159FC2007DAECE /* Base */,
+			);
+			name = ThermalStream.storyboard;
+			sourceTree = "<group>";
+		};
+		7C5C42F71E00583A00B8829C /* HudCopter.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7C5C42F81E00583A00B8829C /* Base */,
+			);
+			name = HudCopter.storyboard;
+			sourceTree = "<group>";
+		};
+		7C5C42FA1E0058C000B8829C /* ManualCopterPilotingItf.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7C5C42FB1E0058C000B8829C /* Base */,
+			);
+			name = ManualCopterPilotingItf.storyboard;
+			sourceTree = "<group>";
+		};
+		7C5C433A1E014E3900B8829C /* ReturnHomePilotingItf.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7C5C433B1E014E3900B8829C /* Base */,
+			);
+			name = ReturnHomePilotingItf.storyboard;
+			sourceTree = "<group>";
+		};
+		7C5C433D1E01513100B8829C /* MagnetometerWith3StepCalib.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7C5C433E1E01513100B8829C /* Base */,
+			);
+			name = MagnetometerWith3StepCalib.storyboard;
+			sourceTree = "<group>";
+		};
+		7C5C43401E0151C400B8829C /* LiveStream.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7C5C43411E0151C400B8829C /* Base */,
+			);
+			name = LiveStream.storyboard;
+			sourceTree = "<group>";
+		};
+		7C5C43431E01561500B8829C /* MediaStore.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7C5C43441E01561500B8829C /* Base */,
+			);
+			name = MediaStore.storyboard;
+			sourceTree = "<group>";
+		};
+		7C5C43461E0156C100B8829C /* DroneFinder.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7C5C43471E0156C100B8829C /* Base */,
+			);
+			name = DroneFinder.storyboard;
+			sourceTree = "<group>";
+		};
+		7C7406AB2051926300D1CD78 /* Antiflicker.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7C7406AC2051926300D1CD78 /* Base */,
+			);
+			name = Antiflicker.storyboard;
+			sourceTree = "<group>";
+		};
+		7CA1C9981C807D5000FE9ED4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7CA1C9991C807D5000FE9ED4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7CA1C99D1C807D5000FE9ED4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7CA1C99E1C807D5000FE9ED4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		9B48547A217F60B6007D1CFC /* RemovableUserStorage.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9B48547B217F60B6007D1CFC /* Base */,
+			);
+			name = RemovableUserStorage.storyboard;
+			sourceTree = "<group>";
+		};
+		F80065422003A506006669BD /* MagnetometerWith1StepCalib.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F80065432003A506006669BD /* Base */,
+			);
+			name = MagnetometerWith1StepCalib.storyboard;
+			sourceTree = "<group>";
+		};
+		F828A4B21F01591E00431860 /* WifiAccessPoint.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F828A4B31F01591E00431860 /* Base */,
+			);
+			name = WifiAccessPoint.storyboard;
+			sourceTree = "<group>";
+		};
+		F8A3D0D92052C52100AF0126 /* Gimbal.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F8A3D0DA2052C52100AF0126 /* Base */,
+			);
+			name = Gimbal.storyboard;
+			sourceTree = "<group>";
+		};
+		F8C252F51FD04CCE00A87B5F /* FirmwareManager.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F8C252F61FD04CCE00A87B5F /* Base */,
+			);
+			name = FirmwareManager.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7CA1C9AC1C807D5000FE9ED4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CA1C9BD1C807DD700FE9ED4 /* config.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7CA1C9AD1C807D5000FE9ED4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CA1C9BD1C807DD700FE9ED4 /* config.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7CA1C9AF1C807D5000FE9ED4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EA523KQ2D9;
+				INFOPLIST_FILE = GroundSdkDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		7CA1C9B01C807D5000FE9ED4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EA523KQ2D9;
+				INFOPLIST_FILE = GroundSdkDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7CA1C98C1C807D5000FE9ED4 /* Build configuration list for PBXProject "GroundSdkDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CA1C9AC1C807D5000FE9ED4 /* Debug */,
+				7CA1C9AD1C807D5000FE9ED4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CA1C9AE1C807D5000FE9ED4 /* Build configuration list for PBXNativeTarget "GroundSdkDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CA1C9AF1C807D5000FE9ED4 /* Debug */,
+				7CA1C9B01C807D5000FE9ED4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7CA1C9891C807D5000FE9ED4 /* Project object */;
+}

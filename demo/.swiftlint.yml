@@ -1,0 +1,19 @@
+line_length: 120
+
+trailing_whitespace:
+  ignores_comments: false
+
+disabled_rules:
+  - todo
+  - function_parameter_count
+  - type_body_length
+  - file_length
+  - function_body_length
+  - cyclomatic_complexity
+  - identifier_name
+  - force_cast
+  - large_tuple
+  - vertical_parameter_alignment
+  - fallthrough
+  - nesting
+  - redundant_string_enum_value

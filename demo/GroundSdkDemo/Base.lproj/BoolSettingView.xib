@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BoolSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
+            <connections>
+                <outlet property="labelView" destination="SAQ-Bq-sNi" id="w19-ay-e9x"/>
+                <outlet property="switchView" destination="9xC-Yh-g0r" id="1Wz-aX-C9k"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="449" height="40"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9xC-Yh-g0r">
+                    <rect key="frame" x="398" y="4" width="51" height="31"/>
+                    <connections>
+                        <action selector="valueChanged:" destination="-1" eventType="valueChanged" id="td8-Mh-FzB"/>
+                    </connections>
+                </switch>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setting Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SAQ-Bq-sNi">
+                    <rect key="frame" x="0.0" y="9.5" width="398" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="SAQ-Bq-sNi" firstAttribute="centerY" secondItem="9xC-Yh-g0r" secondAttribute="centerY" id="3PM-aB-6Cm"/>
+                <constraint firstItem="9xC-Yh-g0r" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="PzH-a2-qUB"/>
+                <constraint firstItem="9xC-Yh-g0r" firstAttribute="leading" secondItem="SAQ-Bq-sNi" secondAttribute="trailing" id="S8l-mS-XUP"/>
+                <constraint firstAttribute="trailing" secondItem="9xC-Yh-g0r" secondAttribute="trailing" constant="2" id="SDe-NN-0VL"/>
+                <constraint firstItem="SAQ-Bq-sNi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ye6-yF-yca"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="39.5" y="222.5"/>
+        </view>
+    </objects>
+</document>

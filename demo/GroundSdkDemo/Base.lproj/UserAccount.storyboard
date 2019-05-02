@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bVC-yV-1Qs">
+    <device id="retina4_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--User Account-->
+        <scene sceneID="sqX-79-axt">
+            <objects>
+                <viewController id="mKM-oK-Vvb" userLabel="User Account" customClass="UserAccountViewController" customModule="GroundSdkDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jEw-5T-cg1">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="1000"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3mn-Vp-m2c">
+                                <rect key="frame" x="0.0" y="52" width="667" height="948"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="cPJ-lc-e5V" userLabel="Account Fields">
+                                        <rect key="frame" x="8" y="48" width="651" height="390.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="249" text="Note: this utility only allows to define the data related to the user account, the current values are not displayed." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ong-LE-OXY">
+                                                <rect key="frame" x="0.0" y="0.0" width="651" height="33.5"/>
+                                                <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="55F-ME-UwU" userLabel="Provider">
+                                                <rect key="frame" x="0.0" y="63.5" width="651" height="30"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Provider:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIa-nh-b0I">
+                                                        <rect key="frame" x="0.0" y="5" width="136.5" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GyS-9G-ub6">
+                                                        <rect key="frame" x="156.5" y="0.0" width="494.5" height="30"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" textContentType="username"/>
+                                                        <connections>
+                                                            <action selector="editingChanged:" destination="mKM-oK-Vvb" eventType="editingChanged" id="az8-a9-i1I"/>
+                                                            <outlet property="delegate" destination="mKM-oK-Vvb" id="BlZ-KC-ERP"/>
+                                                        </connections>
+                                                    </textField>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="kOX-l7-ciA" userLabel="Id">
+                                                <rect key="frame" x="0.0" y="123.5" width="651" height="30"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Id:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GsZ-VW-Lo0">
+                                                        <rect key="frame" x="0.0" y="5" width="136.5" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wYv-eb-qfe">
+                                                        <rect key="frame" x="156.5" y="0.0" width="494.5" height="30"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" textContentType="username"/>
+                                                        <connections>
+                                                            <action selector="editingChanged:" destination="mKM-oK-Vvb" eventType="editingChanged" id="M4a-jH-5GH"/>
+                                                            <outlet property="delegate" destination="mKM-oK-Vvb" id="GtE-wU-jfm"/>
+                                                        </connections>
+                                                    </textField>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Jen-9X-IGU">
+                                                <rect key="frame" x="0.0" y="183.5" width="651" height="40"/>
+                                                <subviews>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="GHi-Sn-pFG">
+                                                        <rect key="frame" x="0.0" y="0.0" width="651" height="41"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="xwi-eW-prt"/>
+                                                        </constraints>
+                                                        <segments>
+                                                            <segment title="Deny Accountless Personal Data"/>
+                                                            <segment title="Allow Accountless Personal Data"/>
+                                                        </segments>
+                                                    </segmentedControl>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hJY-W6-uMy">
+                                                <rect key="frame" x="0.0" y="253.5" width="651" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Az-xA-Mib">
+                                                        <rect key="frame" x="0.0" y="0.0" width="325.5" height="30"/>
+                                                        <state key="normal" title="Set User Account"/>
+                                                        <connections>
+                                                            <action selector="setUserAccount:" destination="mKM-oK-Vvb" eventType="touchUpInside" id="OnJ-9W-Xlp"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fhG-1z-WsK">
+                                                        <rect key="frame" x="325.5" y="0.0" width="325.5" height="30"/>
+                                                        <state key="normal" title="Clear"/>
+                                                        <connections>
+                                                            <action selector="clearUser:" destination="mKM-oK-Vvb" eventType="touchUpInside" id="mim-rg-yeZ"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="gzo-Wd-dol">
+                                                <rect key="frame" x="0.0" y="313.5" width="651" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCR-zO-LyR">
+                                                        <rect key="frame" x="0.0" y="0.0" width="325.5" height="30"/>
+                                                        <state key="normal" title="Allow Anonymous Data"/>
+                                                        <connections>
+                                                            <action selector="AllowAnonymousAction:" destination="mKM-oK-Vvb" eventType="touchUpInside" id="Xn6-HC-IcF"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fb4-oi-sXU">
+                                                        <rect key="frame" x="325.5" y="0.0" width="325.5" height="30"/>
+                                                        <state key="normal" title="Refuse Anonymous Data"/>
+                                                        <connections>
+                                                            <action selector="ResuseAnonymousAction:" destination="mKM-oK-Vvb" eventType="touchUpInside" id="O3R-pC-MJs"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="iDl-Va-3ap" userLabel="Id">
+                                                <rect key="frame" x="0.0" y="373.5" width="651" height="17"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="last action: none" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NxW-nc-5fk">
+                                                        <rect key="frame" x="0.0" y="0.0" width="651" height="17"/>
+                                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
+                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="wYv-eb-qfe" firstAttribute="width" secondItem="GyS-9G-ub6" secondAttribute="width" id="2wh-AI-mIs"/>
+                                            <constraint firstAttribute="trailing" secondItem="kOX-l7-ciA" secondAttribute="trailing" id="Gdz-YM-Dah"/>
+                                            <constraint firstAttribute="trailing" secondItem="55F-ME-UwU" secondAttribute="trailing" id="JkO-aR-BLE"/>
+                                            <constraint firstAttribute="trailing" secondItem="hJY-W6-uMy" secondAttribute="trailing" id="KZl-PZ-1am"/>
+                                            <constraint firstItem="kOX-l7-ciA" firstAttribute="leading" secondItem="cPJ-lc-e5V" secondAttribute="leading" id="Qr8-fw-7Gb"/>
+                                            <constraint firstItem="55F-ME-UwU" firstAttribute="leading" secondItem="cPJ-lc-e5V" secondAttribute="leading" id="Tgp-Yr-VaS"/>
+                                            <constraint firstItem="hJY-W6-uMy" firstAttribute="leading" secondItem="cPJ-lc-e5V" secondAttribute="leading" id="WGv-e3-lmz"/>
+                                            <constraint firstItem="iDl-Va-3ap" firstAttribute="leading" secondItem="cPJ-lc-e5V" secondAttribute="leading" id="akm-wt-vmd"/>
+                                            <constraint firstAttribute="trailing" secondItem="iDl-Va-3ap" secondAttribute="trailing" id="uoY-N2-qmm"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="cPJ-lc-e5V" firstAttribute="leading" secondItem="3mn-Vp-m2c" secondAttribute="leadingMargin" id="Trn-3E-A4N"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="cPJ-lc-e5V" secondAttribute="trailing" id="flT-Uh-UtH"/>
+                                    <constraint firstItem="cPJ-lc-e5V" firstAttribute="top" secondItem="3mn-Vp-m2c" secondAttribute="topMargin" constant="40" id="r7X-xy-jbE"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="i7l-AY-tA6" firstAttribute="trailing" secondItem="3mn-Vp-m2c" secondAttribute="trailing" id="CTj-HJ-vM7"/>
+                            <constraint firstItem="i7l-AY-tA6" firstAttribute="bottom" secondItem="3mn-Vp-m2c" secondAttribute="bottom" id="FOj-Tr-iZH"/>
+                            <constraint firstItem="3mn-Vp-m2c" firstAttribute="top" secondItem="i7l-AY-tA6" secondAttribute="top" id="HGA-J5-w74"/>
+                            <constraint firstItem="3mn-Vp-m2c" firstAttribute="leading" secondItem="i7l-AY-tA6" secondAttribute="leading" id="iK3-kw-AAj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="i7l-AY-tA6"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="User Account" id="Wbt-9g-c0a" userLabel="User Account"/>
+                    <splitViewDetailSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="667" height="1000"/>
+                    <connections>
+                        <outlet property="accountProviderTextField" destination="GyS-9G-ub6" id="xrn-CK-j8w"/>
+                        <outlet property="clearButton" destination="fhG-1z-WsK" id="Ueb-j2-WLk"/>
+                        <outlet property="lastAction" destination="NxW-nc-5fk" id="hhz-9g-nbE"/>
+                        <outlet property="segmentedCollectedPolicy" destination="GHi-Sn-pFG" id="B24-hI-2tX"/>
+                        <outlet property="setUserButton" destination="9Az-xA-Mib" id="j3P-aA-2xI"/>
+                        <outlet property="userIdTextField" destination="wYv-eb-qfe" id="Jh8-R7-5Wl"/>
+                        <segue destination="5sE-fd-8R5" kind="unwind" identifier="exit" unwindAction="showDefaultDetailWithUnwindSegue:" id="zZC-v4-RCD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4B8-81-pvn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="5sE-fd-8R5" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2972.5637181409297" y="-222.40000000000001"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="F8y-ut-nVF">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bVC-yV-1Qs" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="m9I-i9-1pt">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="mKM-oK-Vvb" kind="relationship" relationship="rootViewController" id="Sat-WJ-aFS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zyf-9E-jdz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2029.5999999999999" y="-120.08995502248877"/>
+        </scene>
+    </scenes>
+</document>

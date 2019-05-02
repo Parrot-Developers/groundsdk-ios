@@ -1,0 +1,7 @@
+#include "../base.xcconfig"
+APP_BUNDLE_IDENTIFIER = com.parrot.drone.GroundSdkDemo
+PRODUCT_BUNDLE_IDENTIFIER = $(APP_BUNDLE_IDENTIFIER)
+IPHONEOS_DEPLOYMENT_TARGET = 10.0
+
+// include private config
+#include? "../../../products/groundsdk/private/ios/groundsdkdemo.xcconfig"

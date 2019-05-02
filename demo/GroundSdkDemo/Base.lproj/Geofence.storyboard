@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jbH-Qs-Onc">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Geofence-->
+        <scene sceneID="PiA-e6-KaP">
+            <objects>
+                <viewController id="oZA-m7-uve" customClass="GeofenceViewController" customModule="GroundSdkDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TyK-77-Wyg"/>
+                        <viewControllerLayoutGuide type="bottom" id="ohT-O3-eND"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rX7-FP-vP5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wwD-yj-pQa">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U6W-2i-E3y" userLabel="content view">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h1b-7Z-UHn" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
+                                                <rect key="frame" x="8" y="20" width="398" height="64"/>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="64" id="46i-aX-mtd"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="label" value="Max Altitude"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="maxAltitudeDidChange:" destination="oZA-m7-uve" eventType="valueChanged" id="vmD-Qk-Q0f"/>
+                                                </connections>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ew9-OT-4pp" userLabel="Max Distance View" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
+                                                <rect key="frame" x="8" y="94" width="398" height="64"/>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="64" id="n4A-fR-plq"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="label" value="Max Distance"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="maxDistanceDidChange:" destination="oZA-m7-uve" eventType="valueChanged" id="Q2u-zH-pLG"/>
+                                                </connections>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u1F-yV-9e0" userLabel="Geofence Mode">
+                                                <rect key="frame" x="8" y="178" width="398" height="64"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHe-Yq-H7G">
+                                                        <rect key="frame" x="0.0" y="0.0" width="398" height="24"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="24" id="qqo-zm-yXB"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fbA-6m-gNg">
+                                                        <rect key="frame" x="0.0" y="32" width="398" height="29"/>
+                                                        <segments>
+                                                            <segment title="Altitude"/>
+                                                            <segment title="Cylinder"/>
+                                                        </segments>
+                                                        <connections>
+                                                            <action selector="modeDidChange:" destination="oZA-m7-uve" eventType="valueChanged" id="VFA-RQ-QFS"/>
+                                                        </connections>
+                                                    </segmentedControl>
+                                                </subviews>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstItem="fbA-6m-gNg" firstAttribute="top" secondItem="hHe-Yq-H7G" secondAttribute="bottom" constant="8" id="17J-c7-wtl"/>
+                                                    <constraint firstAttribute="bottom" secondItem="fbA-6m-gNg" secondAttribute="bottom" constant="4" id="3qj-s0-qqk"/>
+                                                    <constraint firstAttribute="trailing" secondItem="hHe-Yq-H7G" secondAttribute="trailing" id="I4q-WT-Clp"/>
+                                                    <constraint firstItem="fbA-6m-gNg" firstAttribute="leading" secondItem="u1F-yV-9e0" secondAttribute="leading" id="Ibm-K5-aBf"/>
+                                                    <constraint firstAttribute="height" constant="64" id="NoA-Iw-q8t"/>
+                                                    <constraint firstItem="hHe-Yq-H7G" firstAttribute="leading" secondItem="u1F-yV-9e0" secondAttribute="leading" id="PPD-wb-NA7"/>
+                                                    <constraint firstAttribute="trailing" secondItem="fbA-6m-gNg" secondAttribute="trailing" id="bMl-SW-PuX"/>
+                                                    <constraint firstItem="hHe-Yq-H7G" firstAttribute="top" secondItem="u1F-yV-9e0" secondAttribute="top" id="p3p-GA-rur"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="ew9-OT-4pp" firstAttribute="centerX" secondItem="h1b-7Z-UHn" secondAttribute="centerX" id="51G-kV-pWO"/>
+                                            <constraint firstItem="u1F-yV-9e0" firstAttribute="top" secondItem="ew9-OT-4pp" secondAttribute="bottom" constant="20" id="hNY-vf-ehl"/>
+                                            <constraint firstItem="ew9-OT-4pp" firstAttribute="width" secondItem="h1b-7Z-UHn" secondAttribute="width" id="jFn-h7-CfX"/>
+                                            <constraint firstItem="ew9-OT-4pp" firstAttribute="top" secondItem="h1b-7Z-UHn" secondAttribute="bottom" constant="10" id="oV6-Oe-gyq"/>
+                                            <constraint firstItem="h1b-7Z-UHn" firstAttribute="top" secondItem="U6W-2i-E3y" secondAttribute="top" constant="20" id="pSX-cD-23R"/>
+                                            <constraint firstItem="u1F-yV-9e0" firstAttribute="leading" secondItem="U6W-2i-E3y" secondAttribute="leading" constant="8" id="sDl-O3-eeu"/>
+                                            <constraint firstAttribute="trailing" secondItem="h1b-7Z-UHn" secondAttribute="trailing" constant="8" id="tBU-gP-Mpo"/>
+                                            <constraint firstItem="h1b-7Z-UHn" firstAttribute="leading" secondItem="U6W-2i-E3y" secondAttribute="leading" constant="8" id="xLj-vQ-kRB"/>
+                                            <constraint firstAttribute="trailing" secondItem="u1F-yV-9e0" secondAttribute="trailing" constant="8" id="zi2-B0-P7I"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="U6W-2i-E3y" firstAttribute="top" secondItem="wwD-yj-pQa" secondAttribute="top" id="36l-7O-rLG"/>
+                                    <constraint firstItem="U6W-2i-E3y" firstAttribute="centerY" secondItem="wwD-yj-pQa" secondAttribute="centerY" id="5oA-mF-lmI"/>
+                                    <constraint firstItem="U6W-2i-E3y" firstAttribute="leading" secondItem="wwD-yj-pQa" secondAttribute="leading" id="AxP-09-3Jm"/>
+                                    <constraint firstAttribute="bottom" secondItem="U6W-2i-E3y" secondAttribute="bottom" id="TOP-el-WEt"/>
+                                    <constraint firstAttribute="trailing" secondItem="U6W-2i-E3y" secondAttribute="trailing" id="kAe-p4-Cun"/>
+                                    <constraint firstItem="U6W-2i-E3y" firstAttribute="centerX" secondItem="wwD-yj-pQa" secondAttribute="centerX" id="z9N-Is-x2C"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wwD-yj-pQa" firstAttribute="height" secondItem="rX7-FP-vP5" secondAttribute="height" id="753-W7-9Yl"/>
+                            <constraint firstItem="wwD-yj-pQa" firstAttribute="centerY" secondItem="rX7-FP-vP5" secondAttribute="centerY" id="TH9-UK-hag"/>
+                            <constraint firstItem="wwD-yj-pQa" firstAttribute="centerX" secondItem="rX7-FP-vP5" secondAttribute="centerX" id="puP-Nt-OSo"/>
+                            <constraint firstItem="wwD-yj-pQa" firstAttribute="width" secondItem="rX7-FP-vP5" secondAttribute="width" id="vbj-8U-B9f"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Geofence" id="1aH-y5-AF8"/>
+                    <splitViewDetailSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="maxAltitudeView" destination="h1b-7Z-UHn" id="jYs-qs-D5k"/>
+                        <outlet property="maxDistanceView" destination="ew9-OT-4pp" id="FAD-pg-j9f"/>
+                        <outlet property="modeView" destination="fbA-6m-gNg" id="kyI-PF-fC5"/>
+                        <segue destination="QCi-Ma-vbN" kind="unwind" identifier="exit" unwindAction="showDefaultDetailWithUnwindSegue:" id="bdG-v0-UVz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="203-EH-a1u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="QCi-Ma-vbN" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2700" y="1518"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="3VN-hT-sF6">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jbH-Qs-Onc" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="uAF-D5-ywy">
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="oZA-m7-uve" kind="relationship" relationship="rootViewController" id="unO-ry-0Sq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d4Y-Dg-CdF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1901.5999999999999" y="1517.9910044977512"/>
+        </scene>
+    </scenes>
+</document>

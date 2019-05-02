@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iKH-oJ-KpC">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Return Home Piloting Interface-->
+        <scene sceneID="et2-Qw-jms">
+            <objects>
+                <viewController id="Yee-S6-zI2" customClass="ReturnHomePilotingItfViewController" customModule="GroundSdkDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HxO-e0-IEE"/>
+                        <viewControllerLayoutGuide type="bottom" id="mtP-xh-asA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fgp-MH-Xa7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="e5t-wZ-cgl">
+                                <rect key="frame" x="16" y="72" width="343" height="172"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VDU-4a-Tnh" userLabel="minAltitude" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="64"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="BHW-Wa-Mb1"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="label" value="Minimum Altitude"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="minAltitudeDidChange:" destination="Yee-S6-zI2" eventType="valueChanged" id="Yhv-Qf-Ean"/>
+                                        </connections>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U6q-Az-UeP" userLabel="Autostart delay" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="343" height="64"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="JLp-yC-YUg"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="label" value="Auto-start delay"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="autoStartDisconnectDelayDidChange:" destination="Yee-S6-zI2" eventType="valueChanged" id="fJi-Mh-YEG"/>
+                                        </connections>
+                                    </view>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="dMD-xV-V2H">
+                                        <rect key="frame" x="0.0" y="144" width="343" height="29"/>
+                                        <segments>
+                                            <segment title="Take Off"/>
+                                            <segment title="Controller"/>
+                                            <segment title="Target Tracker"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="preferredTargetDidChange:" destination="Yee-S6-zI2" eventType="valueChanged" id="iYc-Uy-QjC"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="e5t-wZ-cgl" firstAttribute="top" secondItem="fgp-MH-Xa7" secondAttribute="topMargin" constant="8" id="9Va-4d-n3x"/>
+                            <constraint firstItem="e5t-wZ-cgl" firstAttribute="leading" secondItem="fgp-MH-Xa7" secondAttribute="leadingMargin" id="Bym-XF-Als"/>
+                            <constraint firstItem="e5t-wZ-cgl" firstAttribute="trailing" secondItem="fgp-MH-Xa7" secondAttribute="trailingMargin" id="Mff-WO-rGa"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Return Home Piloting Interface" id="saE-0J-LAq"/>
+                    <splitViewDetailSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="autoStartDisconnectDelay" destination="U6q-Az-UeP" id="zxs-ta-0rD"/>
+                        <outlet property="minAltitude" destination="VDU-4a-Tnh" id="mYz-lH-AYt"/>
+                        <outlet property="preferredTarget" destination="dMD-xV-V2H" id="uTo-4w-qd2"/>
+                        <segue destination="ozF-wx-7a2" kind="unwind" identifier="exit" unwindAction="showDefaultDetailWithUnwindSegue:" id="CeJ-TG-iVu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6jm-4w-Uov" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ozF-wx-7a2" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1028" y="1517.9910044977512"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="I0c-I1-uNr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iKH-oJ-KpC" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kAJ-ay-ke4">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Yee-S6-zI2" kind="relationship" relationship="rootViewController" id="LIC-ya-flF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="be2-Kr-Hc9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="272.80000000000001" y="1517.9910044977512"/>
+        </scene>
+    </scenes>
+</document>

@@ -1,0 +1,8 @@
+platform :ios, '10.0'
+
+target 'GroundSdkDemo' do
+    use_frameworks!
+    pod 'GroundSdk', :path => '../GroundSdk'
+    pod 'ArsdkEngine', :path => '../ArsdkEngine'
+    pod 'SdkCore', :path => '../SdkCore'
+end

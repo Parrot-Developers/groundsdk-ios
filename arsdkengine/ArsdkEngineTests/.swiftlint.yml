@@ -1,0 +1,13 @@
+line_length: 120
+
+trailing_whitespace:
+  ignores_comments: false
+
+disabled_rules:
+  - todo
+  - function_parameter_count
+  - type_body_length
+  - function_body_length
+  - type_name
+  - file_length
+  - cyclomatic_complexity

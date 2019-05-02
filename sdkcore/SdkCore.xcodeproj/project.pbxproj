@@ -1,0 +1,1088 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0214338F202B156A0054DE99 /* NoAckCommandLoop.h in Headers */ = {isa = PBXBuildFile; fileRef = 0214338D202B156A0054DE99 /* NoAckCommandLoop.h */; };
+		02143390202B156A0054DE99 /* NoAckCommandLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 0214338E202B156A0054DE99 /* NoAckCommandLoop.m */; };
+		02619F4A2032DFD600EE30AA /* NoAckStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 02619F492032DFD600EE30AA /* NoAckStorage.m */; };
+		02619F4C2032DFDF00EE30AA /* NoAckStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 02619F4B2032DFDF00EE30AA /* NoAckStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D04BC9B2036F0C00036B906 /* empty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D04BC9A2036F0C00036B906 /* empty.cpp */; };
+		1D2194DF1EE69F29005A6883 /* ArsdkCore+Crashml.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D2194DD1EE69F29005A6883 /* ArsdkCore+Crashml.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D2194E01EE69F29005A6883 /* ArsdkCore+Crashml.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2194DE1EE69F29005A6883 /* ArsdkCore+Crashml.m */; };
+		1D2560121EF039F8000C11FA /* NSData+zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D2560101EF039F8000C11FA /* NSData+zlib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D2560131EF039F8000C11FA /* NSData+zlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2560111EF039F8000C11FA /* NSData+zlib.m */; };
+		1D60A9FF2049BDBD0028828D /* libARMavlink_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D60A9FE2049BDBD0028828D /* libARMavlink_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DA7BAB4202A04EC006FA9A9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA7BAB3202A04EC006FA9A9 /* CoreMedia.framework */; };
+		1DA7BAB6202A04FE006FA9A9 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA7BAB5202A04FE006FA9A9 /* VideoToolbox.framework */; };
+		68ED066A22280C05007DAECE /* SdkCore+MediaInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 68ED066922280C05007DAECE /* SdkCore+MediaInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		68ED066C222812C9007DAECE /* SdkCore+MediaInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 68ED066B222812C9007DAECE /* SdkCore+MediaInfo.m */; };
+		70569A0F21F8B4AC000FE1C2 /* PompLoopUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 70569A0E21F8B4AC000FE1C2 /* PompLoopUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		70569A1121F8B4B7000FE1C2 /* PompLoopUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 70569A1021F8B4B7000FE1C2 /* PompLoopUtil.m */; };
+		710CAB8321F8B93900C6199B /* SdkCore+Stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 710CAB8221F8B93900C6199B /* SdkCore+Stream.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		710CAB8521F8B94F00C6199B /* SdkCore+Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 710CAB8421F8B94F00C6199B /* SdkCore+Stream.m */; };
+		710CAB8721F8B96200C6199B /* SdkCore+Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 710CAB8621F8B96200C6199B /* SdkCore+Renderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		710CAB8921F8B96B00C6199B /* SdkCore+Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 710CAB8821F8B96B00C6199B /* SdkCore+Renderer.m */; };
+		712A9F4B22034F0600BD4DFC /* SdkCore+FileSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 712A9F4A22034F0600BD4DFC /* SdkCore+FileSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		712A9F4D22034F1E00BD4DFC /* SdkCore+FileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 712A9F4C22034F1E00BD4DFC /* SdkCore+FileSource.m */; };
+		717246AF21F9FEE000AB82E5 /* ArsdkCore+Source.h in Headers */ = {isa = PBXBuildFile; fileRef = 717246AE21F9FEE000AB82E5 /* ArsdkCore+Source.h */; };
+		717246B121F9FF4200AB82E5 /* ArsdkCore+Source.m in Sources */ = {isa = PBXBuildFile; fileRef = 717246B021F9FF4200AB82E5 /* ArsdkCore+Source.m */; };
+		717246B421FA0D7300AB82E5 /* SdkCore+Source.h in Headers */ = {isa = PBXBuildFile; fileRef = 710CAB8A21F9F13E00C6199B /* SdkCore+Source.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7C00F4841D6F292000CE1621 /* ArsdkMux.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C00F4831D6F292000CE1621 /* ArsdkMux.h */; };
+		7C00F4861D6F293100CE1621 /* ArsdkMux.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C00F4851D6F293100CE1621 /* ArsdkMux.m */; };
+		7C088AC11C886BA100CA2B80 /* SdkCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C088ABF1C886BA100CA2B80 /* SdkCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7C1F09551CEC8BF700398B92 /* ArsdkBleBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C1F09531CEC8BF700398B92 /* ArsdkBleBackend.h */; };
+		7C1F09561CEC8BF700398B92 /* ArsdkBleBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F09541CEC8BF700398B92 /* ArsdkBleBackend.m */; };
+		7C30C1D31CD2125E00FB80B6 /* Logger.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C30C1D11CD2125E00FB80B6 /* Logger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7C30C1D41CD2125E00FB80B6 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C30C1D21CD2125E00FB80B6 /* Logger.m */; };
+		7C49BB6B1C8840A300B1F1E1 /* Arsdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C49BB661C8840A300B1F1E1 /* Arsdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7C634F751DE757380006F23F /* ArsdkCore+Devices.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C634F741DE757380006F23F /* ArsdkCore+Devices.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7C634F771DE758000006F23F /* ArsdkCore+Devices.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C634F761DE758000006F23F /* ArsdkCore+Devices.m */; };
+		7C634F791DE759990006F23F /* ArsdkCore+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C634F781DE759990006F23F /* ArsdkCore+Internal.h */; };
+		7C634F7B1DE82FFF0006F23F /* ArsdkCore+Stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C634F7A1DE82FFF0006F23F /* ArsdkCore+Stream.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7C634F7D1DE8309C0006F23F /* ArsdkCore+Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C634F7C1DE8309C0006F23F /* ArsdkCore+Stream.m */; };
+		7C73334E1D6F256B00189075 /* ArsdkMuxBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C73334C1D6F256B00189075 /* ArsdkMuxBackend.h */; };
+		7C73334F1D6F256B00189075 /* ArsdkMuxBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C73334D1D6F256B00189075 /* ArsdkMuxBackend.m */; };
+		7C7ACB421D782B7F00A04F30 /* ArsdkMuxIpBackendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CD9C0D81D7457580074ABB7 /* ArsdkMuxIpBackendController.m */; };
+		7C7ACB431D782BB800A04F30 /* ArsdkMuxEaBackendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CE4FEF41D77348000A543C2 /* ArsdkMuxEaBackendController.m */; };
+		7C7C27821E5C54960084B4BD /* ArsdkBackendType.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7C27811E5C54960084B4BD /* ArsdkBackendType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7C7D7CA31DE853430097346F /* ArsdkCore+Media.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7D7CA21DE853430097346F /* ArsdkCore+Media.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7C7D7CA51DE853560097346F /* ArsdkCore+Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C7D7CA41DE853560097346F /* ArsdkCore+Media.m */; };
+		7C97E63B1CEC6CA600BBACD5 /* ArsdkBleBackendController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C97E6391CEC6CA600BBACD5 /* ArsdkBleBackendController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7C97E63C1CEC6CA600BBACD5 /* ArsdkBleBackendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C97E63A1CEC6CA600BBACD5 /* ArsdkBleBackendController.m */; };
+		7CA04A171CEC637F00A6015A /* ArsdkBleDiscovery.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CA04A151CEC637F00A6015A /* ArsdkBleDiscovery.h */; };
+		7CA04A181CEC637F00A6015A /* ArsdkBleDiscovery.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA04A161CEC637F00A6015A /* ArsdkBleDiscovery.m */; };
+		7CD9C0D91D7457580074ABB7 /* ArsdkMuxIpBackendController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CD9C0D71D7457580074ABB7 /* ArsdkMuxIpBackendController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7CD9C0DD1D756CE10074ABB7 /* ArsdkMuxDiscovery.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CD9C0DB1D756CE10074ABB7 /* ArsdkMuxDiscovery.h */; };
+		7CD9C0DE1D756CE10074ABB7 /* ArsdkMuxDiscovery.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CD9C0DC1D756CE10074ABB7 /* ArsdkMuxDiscovery.m */; };
+		7CE4FEF51D77348000A543C2 /* ArsdkMuxEaBackendController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CE4FEF31D77348000A543C2 /* ArsdkMuxEaBackendController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7CEC4AEF1CEDB511000EEF80 /* ArsdkBle.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CEC4AED1CEDB511000EEF80 /* ArsdkBle.h */; };
+		7CEC4AF01CEDB511000EEF80 /* ArsdkBle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CEC4AEE1CEDB511000EEF80 /* ArsdkBle.m */; };
+		7CEC4AF31CEDE63A000EEF80 /* ArsdkBleDeviceConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CEC4AF11CEDE63A000EEF80 /* ArsdkBleDeviceConnection.h */; };
+		7CEC4AF41CEDE63A000EEF80 /* ArsdkBleDeviceConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CEC4AF21CEDE63A000EEF80 /* ArsdkBleDeviceConnection.m */; };
+		7CF074001DE8454600C75ACD /* PompBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CF073FD1DE8454600C75ACD /* PompBuffer.h */; };
+		7CF074011DE8454600C75ACD /* PompBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CF073FE1DE8454600C75ACD /* PompBuffer.m */; };
+		9B11B49B22243BED00C5408E /* SdkCore+Sink.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B11B49922243BED00C5408E /* SdkCore+Sink.m */; };
+		9B11B49C22243BED00C5408E /* SdkCore+Sink.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B11B49A22243BED00C5408E /* SdkCore+Sink.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9B3AD49622256F9000955E85 /* SdkCore+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3AD49422256F9000955E85 /* SdkCore+Frame.m */; };
+		9B3AD49722256F9000955E85 /* SdkCore+Frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B3AD49522256F9000955E85 /* SdkCore+Frame.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BB12FBF214A84730051A0F2 /* ArsdkCore+FlightLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9BB12FBD214A84730051A0F2 /* ArsdkCore+FlightLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BB12FC0214A84730051A0F2 /* ArsdkCore+FlightLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB12FBE214A84730051A0F2 /* ArsdkCore+FlightLog.m */; };
+		F8140E941C98684500712C50 /* ArsdkNetBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = F8140E921C98684500712C50 /* ArsdkNetBackend.h */; };
+		F8140E951C98684500712C50 /* ArsdkNetBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = F8140E931C98684500712C50 /* ArsdkNetBackend.m */; };
+		F822E34C1E42488B0037DB0F /* ArsdkFirmwareInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = F822E34A1E42488B0037DB0F /* ArsdkFirmwareInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F822E34D1E42488B0037DB0F /* ArsdkFirmwareInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F822E34B1E42488B0037DB0F /* ArsdkFirmwareInfo.m */; };
+		F83BFC751CBBE32A00513169 /* ArsdkCore.h in Headers */ = {isa = PBXBuildFile; fileRef = F83BFC731CBBE32A00513169 /* ArsdkCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F83BFC761CBBE32A00513169 /* ArsdkCore.m in Sources */ = {isa = PBXBuildFile; fileRef = F83BFC741CBBE32A00513169 /* ArsdkCore.m */; };
+		F83BFC8F1CBCF80100513169 /* ArsdkWifiBackendController.h in Headers */ = {isa = PBXBuildFile; fileRef = F83BFC8D1CBCF80100513169 /* ArsdkWifiBackendController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F83BFC901CBCF80100513169 /* ArsdkWifiBackendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F83BFC8E1CBCF80100513169 /* ArsdkWifiBackendController.m */; };
+		F83BFC931CBCFB4D00513169 /* ArsdkNetDiscovery.h in Headers */ = {isa = PBXBuildFile; fileRef = F83BFC911CBCFB4D00513169 /* ArsdkNetDiscovery.h */; };
+		F83BFC941CBCFB4D00513169 /* ArsdkNetDiscovery.m in Sources */ = {isa = PBXBuildFile; fileRef = F83BFC921CBCFB4D00513169 /* ArsdkNetDiscovery.m */; };
+		F83BFC981CBCFBD300513169 /* ArsdkDiscovery.h in Headers */ = {isa = PBXBuildFile; fileRef = F83BFC961CBCFBD300513169 /* ArsdkDiscovery.h */; };
+		F83BFC991CBCFBD300513169 /* ArsdkDiscovery.m in Sources */ = {isa = PBXBuildFile; fileRef = F83BFC971CBCFBD300513169 /* ArsdkDiscovery.m */; };
+		F83BFC9C1CBD331300513169 /* ArsdkNetDiscoveryBonjour.h in Headers */ = {isa = PBXBuildFile; fileRef = F83BFC9A1CBD331300513169 /* ArsdkNetDiscoveryBonjour.h */; };
+		F83BFC9D1CBD331300513169 /* ArsdkNetDiscoveryBonjour.m in Sources */ = {isa = PBXBuildFile; fileRef = F83BFC9B1CBD331300513169 /* ArsdkNetDiscoveryBonjour.m */; };
+		F85909C81CAC22DF00B08530 /* ArsdkBackendController.h in Headers */ = {isa = PBXBuildFile; fileRef = F85909C61CAC22DF00B08530 /* ArsdkBackendController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F85909C91CAC22DF00B08530 /* ArsdkBackendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F85909C71CAC22DF00B08530 /* ArsdkBackendController.m */; };
+		F892D6C31FD8576200B80041 /* NSData+Crypto.h in Headers */ = {isa = PBXBuildFile; fileRef = F892D6C11FD8576200B80041 /* NSData+Crypto.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F892D6C41FD8576200B80041 /* NSData+Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = F892D6C21FD8576200B80041 /* NSData+Crypto.m */; };
+		F89A06421EDDB77A0069ACD4 /* ArsdkCore+FtpRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F89A06401EDDB77A0069ACD4 /* ArsdkCore+FtpRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F89A06431EDDB77A0069ACD4 /* ArsdkCore+FtpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F89A06411EDDB77A0069ACD4 /* ArsdkCore+FtpRequest.m */; };
+		F8B536881CC1293800277331 /* ArsdkFeatures.h in Headers */ = {isa = PBXBuildFile; fileRef = F8B536861CC1293800277331 /* ArsdkFeatures.h */; };
+		F8B536891CC1293800277331 /* ArsdkFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B536871CC1293800277331 /* ArsdkFeatures.m */; };
+		F8B5369D1CC147E800277331 /* ArsdkCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = F8B5369B1CC147E800277331 /* ArsdkCommand.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8B5369E1CC147E800277331 /* ArsdkCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B5369C1CC147E800277331 /* ArsdkCommand.m */; };
+		F8D425671E3FA352004D04BB /* ArsdkCore+Update.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D425651E3FA352004D04BB /* ArsdkCore+Update.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8D425681E3FA352004D04BB /* ArsdkCore+Update.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D425661E3FA352004D04BB /* ArsdkCore+Update.m */; };
+		F8D4256C1E3FAE81004D04BB /* ArsdkRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D4256A1E3FAE81004D04BB /* ArsdkRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8D4256D1E3FAE81004D04BB /* ArsdkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D4256B1E3FAE81004D04BB /* ArsdkRequest.m */; };
+		F8D9B45F1CC6170A006DEDF8 /* SdkCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C68F9651C86F8DD000722CA /* SdkCore.framework */; };
+		F8D9B4781CC634A8006DEDF8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D9B4771CC634A8006DEDF8 /* XCTest.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		F8D9B4791CC63589006DEDF8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D9B4711CC633D0006DEDF8 /* XCTest.framework */; };
+		F8D9B4881CC69592006DEDF8 /* Expectation.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D9B47F1CC69592006DEDF8 /* Expectation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8D9B4891CC69592006DEDF8 /* Expectation.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D9B4801CC69592006DEDF8 /* Expectation.m */; };
+		F8D9B48D1CC69592006DEDF8 /* MockArsdkCore.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D9B4841CC69592006DEDF8 /* MockArsdkCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8D9B48E1CC69592006DEDF8 /* MockArsdkCore.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D9B4851CC69592006DEDF8 /* MockArsdkCore.m */; };
+		F8D9B48F1CC69592006DEDF8 /* SdkCoreTesting.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D9B4861CC69592006DEDF8 /* SdkCoreTesting.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8D9B4901CC69592006DEDF8 /* SdkCoreTestingUmbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D9B4871CC69592006DEDF8 /* SdkCoreTestingUmbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8D9B4931CC7854B006DEDF8 /* ExpectedCmd.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D9B4911CC7854B006DEDF8 /* ExpectedCmd.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8D9B4941CC7854B006DEDF8 /* ExpectedCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D9B4921CC7854B006DEDF8 /* ExpectedCmd.m */; };
+		F8E011321FDA8A38005A9520 /* ArsdkCore+RcBlackBox.h in Headers */ = {isa = PBXBuildFile; fileRef = F8E011301FDA8A38005A9520 /* ArsdkCore+RcBlackBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8E011331FDA8A38005A9520 /* ArsdkCore+RcBlackBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F8E011311FDA8A38005A9520 /* ArsdkCore+RcBlackBox.m */; };
+		F8F9749C1CCFB8B90060318C /* CmdEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = F8F9749A1CCFB8B90060318C /* CmdEncoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8F9749D1CCFB8B90060318C /* CmdEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F9749B1CCFB8B90060318C /* CmdEncoder.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7CCBC8DC1CC8F8DE00F71098 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7C68F95C1C86F8DD000722CA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7C68F9641C86F8DD000722CA;
+			remoteInfo = SdkCore;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0214338D202B156A0054DE99 /* NoAckCommandLoop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoAckCommandLoop.h; sourceTree = "<group>"; };
+		0214338E202B156A0054DE99 /* NoAckCommandLoop.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoAckCommandLoop.m; sourceTree = "<group>"; };
+		02619F492032DFD600EE30AA /* NoAckStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoAckStorage.m; sourceTree = "<group>"; };
+		02619F4B2032DFDF00EE30AA /* NoAckStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoAckStorage.h; sourceTree = "<group>"; };
+		1D04BC9A2036F0C00036B906 /* empty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = empty.cpp; sourceTree = "<group>"; };
+		1D2194DD1EE69F29005A6883 /* ArsdkCore+Crashml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ArsdkCore+Crashml.h"; sourceTree = "<group>"; };
+		1D2194DE1EE69F29005A6883 /* ArsdkCore+Crashml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ArsdkCore+Crashml.m"; sourceTree = "<group>"; };
+		1D2560101EF039F8000C11FA /* NSData+zlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+zlib.h"; sourceTree = "<group>"; };
+		1D2560111EF039F8000C11FA /* NSData+zlib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+zlib.m"; sourceTree = "<group>"; };
+		1D60A9FE2049BDBD0028828D /* libARMavlink_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libARMavlink_ios.h; path = ../../common/libARMavlink/Includes/libARMavlink/libARMavlink_ios.h; sourceTree = "<group>"; };
+		1DA7BAB3202A04EC006FA9A9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		1DA7BAB5202A04FE006FA9A9 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		68ED066922280C05007DAECE /* SdkCore+MediaInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SdkCore+MediaInfo.h"; sourceTree = "<group>"; };
+		68ED066B222812C9007DAECE /* SdkCore+MediaInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SdkCore+MediaInfo.m"; sourceTree = "<group>"; };
+		70569A0E21F8B4AC000FE1C2 /* PompLoopUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PompLoopUtil.h; sourceTree = "<group>"; };
+		70569A1021F8B4B7000FE1C2 /* PompLoopUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PompLoopUtil.m; sourceTree = "<group>"; };
+		710CAB8221F8B93900C6199B /* SdkCore+Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SdkCore+Stream.h"; sourceTree = "<group>"; };
+		710CAB8421F8B94F00C6199B /* SdkCore+Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SdkCore+Stream.m"; sourceTree = "<group>"; };
+		710CAB8621F8B96200C6199B /* SdkCore+Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SdkCore+Renderer.h"; sourceTree = "<group>"; };
+		710CAB8821F8B96B00C6199B /* SdkCore+Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SdkCore+Renderer.m"; sourceTree = "<group>"; };
+		710CAB8A21F9F13E00C6199B /* SdkCore+Source.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SdkCore+Source.h"; sourceTree = "<group>"; };
+		712A9F4A22034F0600BD4DFC /* SdkCore+FileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SdkCore+FileSource.h"; sourceTree = "<group>"; };
+		712A9F4C22034F1E00BD4DFC /* SdkCore+FileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SdkCore+FileSource.m"; sourceTree = "<group>"; };
+		717246AE21F9FEE000AB82E5 /* ArsdkCore+Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ArsdkCore+Source.h"; sourceTree = "<group>"; };
+		717246B021F9FF4200AB82E5 /* ArsdkCore+Source.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ArsdkCore+Source.m"; sourceTree = "<group>"; };
+		7C00F4831D6F292000CE1621 /* ArsdkMux.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkMux.h; sourceTree = "<group>"; };
+		7C00F4851D6F293100CE1621 /* ArsdkMux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkMux.m; sourceTree = "<group>"; };
+		7C088ABE1C886BA100CA2B80 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7C088ABF1C886BA100CA2B80 /* SdkCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SdkCore.h; sourceTree = "<group>"; };
+		7C1F09531CEC8BF700398B92 /* ArsdkBleBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkBleBackend.h; sourceTree = "<group>"; };
+		7C1F09541CEC8BF700398B92 /* ArsdkBleBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkBleBackend.m; sourceTree = "<group>"; };
+		7C30C1D11CD2125E00FB80B6 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
+		7C30C1D21CD2125E00FB80B6 /* Logger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Logger.m; sourceTree = "<group>"; };
+		7C49BB661C8840A300B1F1E1 /* Arsdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Arsdk.h; sourceTree = "<group>"; };
+		7C634F741DE757380006F23F /* ArsdkCore+Devices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ArsdkCore+Devices.h"; sourceTree = "<group>"; };
+		7C634F761DE758000006F23F /* ArsdkCore+Devices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ArsdkCore+Devices.m"; sourceTree = "<group>"; };
+		7C634F781DE759990006F23F /* ArsdkCore+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ArsdkCore+Internal.h"; sourceTree = "<group>"; };
+		7C634F7A1DE82FFF0006F23F /* ArsdkCore+Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ArsdkCore+Stream.h"; sourceTree = "<group>"; };
+		7C634F7C1DE8309C0006F23F /* ArsdkCore+Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ArsdkCore+Stream.m"; sourceTree = "<group>"; };
+		7C68F9651C86F8DD000722CA /* SdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C73334C1D6F256B00189075 /* ArsdkMuxBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkMuxBackend.h; sourceTree = "<group>"; };
+		7C73334D1D6F256B00189075 /* ArsdkMuxBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkMuxBackend.m; sourceTree = "<group>"; };
+		7C7C27811E5C54960084B4BD /* ArsdkBackendType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkBackendType.h; sourceTree = "<group>"; };
+		7C7D7CA21DE853430097346F /* ArsdkCore+Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ArsdkCore+Media.h"; sourceTree = "<group>"; };
+		7C7D7CA41DE853560097346F /* ArsdkCore+Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ArsdkCore+Media.m"; sourceTree = "<group>"; };
+		7C8390781C8727CF0035C94B /* config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = config.xcconfig; sourceTree = "<group>"; };
+		7C97E6391CEC6CA600BBACD5 /* ArsdkBleBackendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkBleBackendController.h; sourceTree = "<group>"; };
+		7C97E63A1CEC6CA600BBACD5 /* ArsdkBleBackendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkBleBackendController.m; sourceTree = "<group>"; };
+		7CA04A151CEC637F00A6015A /* ArsdkBleDiscovery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkBleDiscovery.h; sourceTree = "<group>"; };
+		7CA04A161CEC637F00A6015A /* ArsdkBleDiscovery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkBleDiscovery.m; sourceTree = "<group>"; };
+		7CD9C0D71D7457580074ABB7 /* ArsdkMuxIpBackendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkMuxIpBackendController.h; sourceTree = "<group>"; };
+		7CD9C0D81D7457580074ABB7 /* ArsdkMuxIpBackendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkMuxIpBackendController.m; sourceTree = "<group>"; };
+		7CD9C0DB1D756CE10074ABB7 /* ArsdkMuxDiscovery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkMuxDiscovery.h; sourceTree = "<group>"; };
+		7CD9C0DC1D756CE10074ABB7 /* ArsdkMuxDiscovery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkMuxDiscovery.m; sourceTree = "<group>"; };
+		7CE4FEF31D77348000A543C2 /* ArsdkMuxEaBackendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkMuxEaBackendController.h; sourceTree = "<group>"; };
+		7CE4FEF41D77348000A543C2 /* ArsdkMuxEaBackendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkMuxEaBackendController.m; sourceTree = "<group>"; };
+		7CEC4AED1CEDB511000EEF80 /* ArsdkBle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkBle.h; sourceTree = "<group>"; };
+		7CEC4AEE1CEDB511000EEF80 /* ArsdkBle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkBle.m; sourceTree = "<group>"; };
+		7CEC4AF11CEDE63A000EEF80 /* ArsdkBleDeviceConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkBleDeviceConnection.h; sourceTree = "<group>"; };
+		7CEC4AF21CEDE63A000EEF80 /* ArsdkBleDeviceConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkBleDeviceConnection.m; sourceTree = "<group>"; };
+		7CF073FD1DE8454600C75ACD /* PompBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PompBuffer.h; sourceTree = "<group>"; };
+		7CF073FE1DE8454600C75ACD /* PompBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PompBuffer.m; sourceTree = "<group>"; };
+		9B11B49922243BED00C5408E /* SdkCore+Sink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SdkCore+Sink.m"; path = "Stream/SdkCore+Sink.m"; sourceTree = SOURCE_ROOT; };
+		9B11B49A22243BED00C5408E /* SdkCore+Sink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SdkCore+Sink.h"; path = "Stream/SdkCore+Sink.h"; sourceTree = SOURCE_ROOT; };
+		9B3AD49422256F9000955E85 /* SdkCore+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SdkCore+Frame.m"; sourceTree = "<group>"; };
+		9B3AD49522256F9000955E85 /* SdkCore+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SdkCore+Frame.h"; sourceTree = "<group>"; };
+		9BB12FBD214A84730051A0F2 /* ArsdkCore+FlightLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ArsdkCore+FlightLog.h"; sourceTree = "<group>"; };
+		9BB12FBE214A84730051A0F2 /* ArsdkCore+FlightLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ArsdkCore+FlightLog.m"; sourceTree = "<group>"; };
+		F8140E921C98684500712C50 /* ArsdkNetBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkNetBackend.h; sourceTree = "<group>"; };
+		F8140E931C98684500712C50 /* ArsdkNetBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkNetBackend.m; sourceTree = "<group>"; };
+		F822E34A1E42488B0037DB0F /* ArsdkFirmwareInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkFirmwareInfo.h; sourceTree = "<group>"; };
+		F822E34B1E42488B0037DB0F /* ArsdkFirmwareInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkFirmwareInfo.m; sourceTree = "<group>"; };
+		F83BFC731CBBE32A00513169 /* ArsdkCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkCore.h; sourceTree = "<group>"; };
+		F83BFC741CBBE32A00513169 /* ArsdkCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkCore.m; sourceTree = "<group>"; };
+		F83BFC8D1CBCF80100513169 /* ArsdkWifiBackendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkWifiBackendController.h; sourceTree = "<group>"; };
+		F83BFC8E1CBCF80100513169 /* ArsdkWifiBackendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkWifiBackendController.m; sourceTree = "<group>"; };
+		F83BFC911CBCFB4D00513169 /* ArsdkNetDiscovery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkNetDiscovery.h; sourceTree = "<group>"; };
+		F83BFC921CBCFB4D00513169 /* ArsdkNetDiscovery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkNetDiscovery.m; sourceTree = "<group>"; };
+		F83BFC961CBCFBD300513169 /* ArsdkDiscovery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkDiscovery.h; sourceTree = "<group>"; };
+		F83BFC971CBCFBD300513169 /* ArsdkDiscovery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkDiscovery.m; sourceTree = "<group>"; };
+		F83BFC9A1CBD331300513169 /* ArsdkNetDiscoveryBonjour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkNetDiscoveryBonjour.h; sourceTree = "<group>"; };
+		F83BFC9B1CBD331300513169 /* ArsdkNetDiscoveryBonjour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkNetDiscoveryBonjour.m; sourceTree = "<group>"; };
+		F83BFC9E1CBD4CDE00513169 /* ArsdkDiscovery+Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ArsdkDiscovery+Protected.h"; sourceTree = "<group>"; };
+		F85909C61CAC22DF00B08530 /* ArsdkBackendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkBackendController.h; sourceTree = "<group>"; };
+		F85909C71CAC22DF00B08530 /* ArsdkBackendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkBackendController.m; sourceTree = "<group>"; };
+		F892D6C11FD8576200B80041 /* NSData+Crypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Crypto.h"; sourceTree = "<group>"; };
+		F892D6C21FD8576200B80041 /* NSData+Crypto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Crypto.m"; sourceTree = "<group>"; };
+		F89A06401EDDB77A0069ACD4 /* ArsdkCore+FtpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ArsdkCore+FtpRequest.h"; sourceTree = "<group>"; };
+		F89A06411EDDB77A0069ACD4 /* ArsdkCore+FtpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ArsdkCore+FtpRequest.m"; sourceTree = "<group>"; };
+		F8B536861CC1293800277331 /* ArsdkFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArsdkFeatures.h; path = ../features_generated/ArsdkFeatures.h; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8B536871CC1293800277331 /* ArsdkFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArsdkFeatures.m; path = ../features_generated/ArsdkFeatures.m; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8B5369B1CC147E800277331 /* ArsdkCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkCommand.h; sourceTree = "<group>"; };
+		F8B5369C1CC147E800277331 /* ArsdkCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkCommand.m; sourceTree = "<group>"; };
+		F8B941B41CC50C2E0099CBBC /* SdkCoreTesting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SdkCoreTesting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8D425651E3FA352004D04BB /* ArsdkCore+Update.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ArsdkCore+Update.h"; sourceTree = "<group>"; };
+		F8D425661E3FA352004D04BB /* ArsdkCore+Update.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ArsdkCore+Update.m"; sourceTree = "<group>"; };
+		F8D4256A1E3FAE81004D04BB /* ArsdkRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkRequest.h; sourceTree = "<group>"; };
+		F8D4256B1E3FAE81004D04BB /* ArsdkRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkRequest.m; sourceTree = "<group>"; };
+		F8D9B4711CC633D0006DEDF8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		F8D9B4771CC634A8006DEDF8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		F8D9B47F1CC69592006DEDF8 /* Expectation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Expectation.h; path = SdkCoreTesting/Expectation.h; sourceTree = SOURCE_ROOT; };
+		F8D9B4801CC69592006DEDF8 /* Expectation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Expectation.m; path = SdkCoreTesting/Expectation.m; sourceTree = SOURCE_ROOT; };
+		F8D9B4831CC69592006DEDF8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SdkCoreTesting/Info.plist; sourceTree = SOURCE_ROOT; };
+		F8D9B4841CC69592006DEDF8 /* MockArsdkCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MockArsdkCore.h; path = SdkCoreTesting/MockArsdkCore.h; sourceTree = SOURCE_ROOT; };
+		F8D9B4851CC69592006DEDF8 /* MockArsdkCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MockArsdkCore.m; path = SdkCoreTesting/MockArsdkCore.m; sourceTree = SOURCE_ROOT; };
+		F8D9B4861CC69592006DEDF8 /* SdkCoreTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SdkCoreTesting.h; path = SdkCoreTesting/SdkCoreTesting.h; sourceTree = SOURCE_ROOT; };
+		F8D9B4871CC69592006DEDF8 /* SdkCoreTestingUmbrella.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SdkCoreTestingUmbrella.h; path = SdkCoreTesting/SdkCoreTestingUmbrella.h; sourceTree = SOURCE_ROOT; };
+		F8D9B4911CC7854B006DEDF8 /* ExpectedCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExpectedCmd.h; path = ../features_testing/ExpectedCmd.h; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8D9B4921CC7854B006DEDF8 /* ExpectedCmd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExpectedCmd.m; path = ../features_testing/ExpectedCmd.m; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8E011301FDA8A38005A9520 /* ArsdkCore+RcBlackBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ArsdkCore+RcBlackBox.h"; sourceTree = "<group>"; };
+		F8E011311FDA8A38005A9520 /* ArsdkCore+RcBlackBox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ArsdkCore+RcBlackBox.m"; sourceTree = "<group>"; };
+		F8F9749A1CCFB8B90060318C /* CmdEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CmdEncoder.h; path = ../features_testing/CmdEncoder.h; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8F9749B1CCFB8B90060318C /* CmdEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CmdEncoder.m; path = ../features_testing/CmdEncoder.m; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7C68F9611C86F8DD000722CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DA7BAB6202A04FE006FA9A9 /* VideoToolbox.framework in Frameworks */,
+				1DA7BAB4202A04EC006FA9A9 /* CoreMedia.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8B941B01CC50C2E0099CBBC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8D9B45F1CC6170A006DEDF8 /* SdkCore.framework in Frameworks */,
+				F8D9B4791CC63589006DEDF8 /* XCTest.framework in Frameworks */,
+				F8D9B4781CC634A8006DEDF8 /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1D60A9FD2049BAB30028828D /* mavlink */ = {
+			isa = PBXGroup;
+			children = (
+				1D60A9FE2049BDBD0028828D /* libARMavlink_ios.h */,
+			);
+			name = mavlink;
+			sourceTree = "<group>";
+		};
+		1DA7BAB2202A04EC006FA9A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DA7BAB5202A04FE006FA9A9 /* VideoToolbox.framework */,
+				1DA7BAB3202A04EC006FA9A9 /* CoreMedia.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		710CAB8121F8B86F00C6199B /* Stream */ = {
+			isa = PBXGroup;
+			children = (
+				712A9F4C22034F1E00BD4DFC /* SdkCore+FileSource.m */,
+				68ED066B222812C9007DAECE /* SdkCore+MediaInfo.m */,
+				712A9F4A22034F0600BD4DFC /* SdkCore+FileSource.h */,
+				68ED066922280C05007DAECE /* SdkCore+MediaInfo.h */,
+				710CAB8821F8B96B00C6199B /* SdkCore+Renderer.m */,
+				710CAB8621F8B96200C6199B /* SdkCore+Renderer.h */,
+				710CAB8421F8B94F00C6199B /* SdkCore+Stream.m */,
+				710CAB8221F8B93900C6199B /* SdkCore+Stream.h */,
+				710CAB8A21F9F13E00C6199B /* SdkCore+Source.h */,
+				9B11B49A22243BED00C5408E /* SdkCore+Sink.h */,
+				9B11B49922243BED00C5408E /* SdkCore+Sink.m */,
+				9B3AD49522256F9000955E85 /* SdkCore+Frame.h */,
+				9B3AD49422256F9000955E85 /* SdkCore+Frame.m */,
+			);
+			path = Stream;
+			sourceTree = "<group>";
+		};
+		7C088ABD1C886BA100CA2B80 /* SdkCore */ = {
+			isa = PBXGroup;
+			children = (
+				7C088ABE1C886BA100CA2B80 /* Info.plist */,
+				7C088ABF1C886BA100CA2B80 /* SdkCore.h */,
+			);
+			path = SdkCore;
+			sourceTree = SOURCE_ROOT;
+		};
+		7C30C1C61CD20E6E00FB80B6 /* ULog */ = {
+			isa = PBXGroup;
+			children = (
+				7C30C1D11CD2125E00FB80B6 /* Logger.h */,
+				7C30C1D21CD2125E00FB80B6 /* Logger.m */,
+			);
+			path = ULog;
+			sourceTree = "<group>";
+		};
+		7C49BB651C8840A300B1F1E1 /* Arsdk */ = {
+			isa = PBXGroup;
+			children = (
+				7C634F711DE750D10006F23F /* backends */,
+				7C49BB661C8840A300B1F1E1 /* Arsdk.h */,
+				7C7C27811E5C54960084B4BD /* ArsdkBackendType.h */,
+				F8B5369B1CC147E800277331 /* ArsdkCommand.h */,
+				F8B5369C1CC147E800277331 /* ArsdkCommand.m */,
+				F83BFC731CBBE32A00513169 /* ArsdkCore.h */,
+				F83BFC741CBBE32A00513169 /* ArsdkCore.m */,
+				1D2194DD1EE69F29005A6883 /* ArsdkCore+Crashml.h */,
+				1D2194DE1EE69F29005A6883 /* ArsdkCore+Crashml.m */,
+				7C634F741DE757380006F23F /* ArsdkCore+Devices.h */,
+				7C634F761DE758000006F23F /* ArsdkCore+Devices.m */,
+				9BB12FBD214A84730051A0F2 /* ArsdkCore+FlightLog.h */,
+				9BB12FBE214A84730051A0F2 /* ArsdkCore+FlightLog.m */,
+				F89A06401EDDB77A0069ACD4 /* ArsdkCore+FtpRequest.h */,
+				F89A06411EDDB77A0069ACD4 /* ArsdkCore+FtpRequest.m */,
+				7C634F781DE759990006F23F /* ArsdkCore+Internal.h */,
+				7C7D7CA21DE853430097346F /* ArsdkCore+Media.h */,
+				7C7D7CA41DE853560097346F /* ArsdkCore+Media.m */,
+				F8E011301FDA8A38005A9520 /* ArsdkCore+RcBlackBox.h */,
+				F8E011311FDA8A38005A9520 /* ArsdkCore+RcBlackBox.m */,
+				717246AE21F9FEE000AB82E5 /* ArsdkCore+Source.h */,
+				717246B021F9FF4200AB82E5 /* ArsdkCore+Source.m */,
+				7C634F7A1DE82FFF0006F23F /* ArsdkCore+Stream.h */,
+				7C634F7C1DE8309C0006F23F /* ArsdkCore+Stream.m */,
+				F8D425651E3FA352004D04BB /* ArsdkCore+Update.h */,
+				F8D425661E3FA352004D04BB /* ArsdkCore+Update.m */,
+				F822E34A1E42488B0037DB0F /* ArsdkFirmwareInfo.h */,
+				F822E34B1E42488B0037DB0F /* ArsdkFirmwareInfo.m */,
+				F8D4256A1E3FAE81004D04BB /* ArsdkRequest.h */,
+				F8D4256B1E3FAE81004D04BB /* ArsdkRequest.m */,
+				0214338D202B156A0054DE99 /* NoAckCommandLoop.h */,
+				0214338E202B156A0054DE99 /* NoAckCommandLoop.m */,
+				02619F4B2032DFDF00EE30AA /* NoAckStorage.h */,
+				02619F492032DFD600EE30AA /* NoAckStorage.m */,
+				F892D6C11FD8576200B80041 /* NSData+Crypto.h */,
+				F892D6C21FD8576200B80041 /* NSData+Crypto.m */,
+				1D2560101EF039F8000C11FA /* NSData+zlib.h */,
+				1D2560111EF039F8000C11FA /* NSData+zlib.m */,
+				70569A0E21F8B4AC000FE1C2 /* PompLoopUtil.h */,
+				70569A1021F8B4B7000FE1C2 /* PompLoopUtil.m */,
+				F8F9749E1CCFBBC10060318C /* generated */,
+				1D04BC9A2036F0C00036B906 /* empty.cpp */,
+			);
+			path = Arsdk;
+			sourceTree = "<group>";
+		};
+		7C634F711DE750D10006F23F /* backends */ = {
+			isa = PBXGroup;
+			children = (
+				F85909C61CAC22DF00B08530 /* ArsdkBackendController.h */,
+				F83BFC961CBCFBD300513169 /* ArsdkDiscovery.h */,
+				F83BFC9E1CBD4CDE00513169 /* ArsdkDiscovery+Protected.h */,
+				F85909C71CAC22DF00B08530 /* ArsdkBackendController.m */,
+				F83BFC971CBCFBD300513169 /* ArsdkDiscovery.m */,
+				7CA04A141CEC634100A6015A /* Ble */,
+				7C73334B1D6F251300189075 /* Mux */,
+				F83BFC951CBCFB5800513169 /* Net */,
+			);
+			path = backends;
+			sourceTree = "<group>";
+		};
+		7C68F95B1C86F8DD000722CA = {
+			isa = PBXGroup;
+			children = (
+				710CAB8121F8B86F00C6199B /* Stream */,
+				7C8390781C8727CF0035C94B /* config.xcconfig */,
+				7C49BB651C8840A300B1F1E1 /* Arsdk */,
+				7CF073FF1DE8454600C75ACD /* Pomp */,
+				7C30C1C61CD20E6E00FB80B6 /* ULog */,
+				7C088ABD1C886BA100CA2B80 /* SdkCore */,
+				1D60A9FD2049BAB30028828D /* mavlink */,
+				F8B941B51CC50C2F0099CBBC /* SdkCoreTesting */,
+				7C68F9661C86F8DD000722CA /* Products */,
+				1DA7BAB2202A04EC006FA9A9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7C68F9661C86F8DD000722CA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7C68F9651C86F8DD000722CA /* SdkCore.framework */,
+				F8B941B41CC50C2E0099CBBC /* SdkCoreTesting.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7C73334B1D6F251300189075 /* Mux */ = {
+			isa = PBXGroup;
+			children = (
+				7C00F4831D6F292000CE1621 /* ArsdkMux.h */,
+				7C00F4851D6F293100CE1621 /* ArsdkMux.m */,
+				7C73334C1D6F256B00189075 /* ArsdkMuxBackend.h */,
+				7C73334D1D6F256B00189075 /* ArsdkMuxBackend.m */,
+				7CD9C0DB1D756CE10074ABB7 /* ArsdkMuxDiscovery.h */,
+				7CD9C0DC1D756CE10074ABB7 /* ArsdkMuxDiscovery.m */,
+				7CE4FEF31D77348000A543C2 /* ArsdkMuxEaBackendController.h */,
+				7CE4FEF41D77348000A543C2 /* ArsdkMuxEaBackendController.m */,
+				7CD9C0D71D7457580074ABB7 /* ArsdkMuxIpBackendController.h */,
+				7CD9C0D81D7457580074ABB7 /* ArsdkMuxIpBackendController.m */,
+			);
+			path = Mux;
+			sourceTree = "<group>";
+		};
+		7CA04A141CEC634100A6015A /* Ble */ = {
+			isa = PBXGroup;
+			children = (
+				7CEC4AED1CEDB511000EEF80 /* ArsdkBle.h */,
+				7CEC4AEE1CEDB511000EEF80 /* ArsdkBle.m */,
+				7C1F09531CEC8BF700398B92 /* ArsdkBleBackend.h */,
+				7C1F09541CEC8BF700398B92 /* ArsdkBleBackend.m */,
+				7C97E6391CEC6CA600BBACD5 /* ArsdkBleBackendController.h */,
+				7C97E63A1CEC6CA600BBACD5 /* ArsdkBleBackendController.m */,
+				7CEC4AF11CEDE63A000EEF80 /* ArsdkBleDeviceConnection.h */,
+				7CEC4AF21CEDE63A000EEF80 /* ArsdkBleDeviceConnection.m */,
+				7CA04A151CEC637F00A6015A /* ArsdkBleDiscovery.h */,
+				7CA04A161CEC637F00A6015A /* ArsdkBleDiscovery.m */,
+			);
+			path = Ble;
+			sourceTree = "<group>";
+		};
+		7CF073FF1DE8454600C75ACD /* Pomp */ = {
+			isa = PBXGroup;
+			children = (
+				7CF073FD1DE8454600C75ACD /* PompBuffer.h */,
+				7CF073FE1DE8454600C75ACD /* PompBuffer.m */,
+			);
+			path = Pomp;
+			sourceTree = "<group>";
+		};
+		F83BFC951CBCFB5800513169 /* Net */ = {
+			isa = PBXGroup;
+			children = (
+				F8140E921C98684500712C50 /* ArsdkNetBackend.h */,
+				F8140E931C98684500712C50 /* ArsdkNetBackend.m */,
+				F83BFC911CBCFB4D00513169 /* ArsdkNetDiscovery.h */,
+				F83BFC921CBCFB4D00513169 /* ArsdkNetDiscovery.m */,
+				F83BFC9A1CBD331300513169 /* ArsdkNetDiscoveryBonjour.h */,
+				F83BFC9B1CBD331300513169 /* ArsdkNetDiscoveryBonjour.m */,
+				F83BFC8D1CBCF80100513169 /* ArsdkWifiBackendController.h */,
+				F83BFC8E1CBCF80100513169 /* ArsdkWifiBackendController.m */,
+			);
+			path = Net;
+			sourceTree = "<group>";
+		};
+		F8B941B51CC50C2F0099CBBC /* SdkCoreTesting */ = {
+			isa = PBXGroup;
+			children = (
+				F8F974951CCFB7F60060318C /* generated */,
+				F8D9B47F1CC69592006DEDF8 /* Expectation.h */,
+				F8D9B4801CC69592006DEDF8 /* Expectation.m */,
+				F8D9B4841CC69592006DEDF8 /* MockArsdkCore.h */,
+				F8D9B4851CC69592006DEDF8 /* MockArsdkCore.m */,
+				F8D9B4861CC69592006DEDF8 /* SdkCoreTesting.h */,
+				F8D9B4871CC69592006DEDF8 /* SdkCoreTestingUmbrella.h */,
+				F8D9B4831CC69592006DEDF8 /* Info.plist */,
+				F8D9B4771CC634A8006DEDF8 /* XCTest.framework */,
+				F8D9B4711CC633D0006DEDF8 /* XCTest.framework */,
+			);
+			name = SdkCoreTesting;
+			path = "SdkCore-testing";
+			sourceTree = "<group>";
+		};
+		F8F974951CCFB7F60060318C /* generated */ = {
+			isa = PBXGroup;
+			children = (
+				F8F9749A1CCFB8B90060318C /* CmdEncoder.h */,
+				F8F9749B1CCFB8B90060318C /* CmdEncoder.m */,
+				F8D9B4911CC7854B006DEDF8 /* ExpectedCmd.h */,
+				F8D9B4921CC7854B006DEDF8 /* ExpectedCmd.m */,
+			);
+			name = generated;
+			sourceTree = "<group>";
+		};
+		F8F9749E1CCFBBC10060318C /* generated */ = {
+			isa = PBXGroup;
+			children = (
+				F8B536861CC1293800277331 /* ArsdkFeatures.h */,
+				F8B536871CC1293800277331 /* ArsdkFeatures.m */,
+			);
+			name = generated;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		7C68F9621C86F8DD000722CA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				68ED066A22280C05007DAECE /* SdkCore+MediaInfo.h in Headers */,
+				712A9F4B22034F0600BD4DFC /* SdkCore+FileSource.h in Headers */,
+				710CAB8321F8B93900C6199B /* SdkCore+Stream.h in Headers */,
+				717246B421FA0D7300AB82E5 /* SdkCore+Source.h in Headers */,
+				710CAB8721F8B96200C6199B /* SdkCore+Renderer.h in Headers */,
+				70569A0F21F8B4AC000FE1C2 /* PompLoopUtil.h in Headers */,
+				F83BFC751CBBE32A00513169 /* ArsdkCore.h in Headers */,
+				9B3AD49722256F9000955E85 /* SdkCore+Frame.h in Headers */,
+				7C634F751DE757380006F23F /* ArsdkCore+Devices.h in Headers */,
+				7C634F7B1DE82FFF0006F23F /* ArsdkCore+Stream.h in Headers */,
+				7C7D7CA31DE853430097346F /* ArsdkCore+Media.h in Headers */,
+				7CF074001DE8454600C75ACD /* PompBuffer.h in Headers */,
+				1D2194DF1EE69F29005A6883 /* ArsdkCore+Crashml.h in Headers */,
+				7C7C27821E5C54960084B4BD /* ArsdkBackendType.h in Headers */,
+				02619F4C2032DFDF00EE30AA /* NoAckStorage.h in Headers */,
+				F8D4256C1E3FAE81004D04BB /* ArsdkRequest.h in Headers */,
+				F822E34C1E42488B0037DB0F /* ArsdkFirmwareInfo.h in Headers */,
+				0214338F202B156A0054DE99 /* NoAckCommandLoop.h in Headers */,
+				F85909C81CAC22DF00B08530 /* ArsdkBackendController.h in Headers */,
+				7CE4FEF51D77348000A543C2 /* ArsdkMuxEaBackendController.h in Headers */,
+				F8D425671E3FA352004D04BB /* ArsdkCore+Update.h in Headers */,
+				7CD9C0D91D7457580074ABB7 /* ArsdkMuxIpBackendController.h in Headers */,
+				7C97E63B1CEC6CA600BBACD5 /* ArsdkBleBackendController.h in Headers */,
+				F83BFC8F1CBCF80100513169 /* ArsdkWifiBackendController.h in Headers */,
+				7C088AC11C886BA100CA2B80 /* SdkCore.h in Headers */,
+				7C49BB6B1C8840A300B1F1E1 /* Arsdk.h in Headers */,
+				F8B5369D1CC147E800277331 /* ArsdkCommand.h in Headers */,
+				7C634F791DE759990006F23F /* ArsdkCore+Internal.h in Headers */,
+				9B11B49C22243BED00C5408E /* SdkCore+Sink.h in Headers */,
+				7CA04A171CEC637F00A6015A /* ArsdkBleDiscovery.h in Headers */,
+				7C1F09551CEC8BF700398B92 /* ArsdkBleBackend.h in Headers */,
+				F8E011321FDA8A38005A9520 /* ArsdkCore+RcBlackBox.h in Headers */,
+				1D60A9FF2049BDBD0028828D /* libARMavlink_ios.h in Headers */,
+				F8B536881CC1293800277331 /* ArsdkFeatures.h in Headers */,
+				7CEC4AEF1CEDB511000EEF80 /* ArsdkBle.h in Headers */,
+				7CD9C0DD1D756CE10074ABB7 /* ArsdkMuxDiscovery.h in Headers */,
+				7C73334E1D6F256B00189075 /* ArsdkMuxBackend.h in Headers */,
+				F892D6C31FD8576200B80041 /* NSData+Crypto.h in Headers */,
+				9BB12FBF214A84730051A0F2 /* ArsdkCore+FlightLog.h in Headers */,
+				7C00F4841D6F292000CE1621 /* ArsdkMux.h in Headers */,
+				7CEC4AF31CEDE63A000EEF80 /* ArsdkBleDeviceConnection.h in Headers */,
+				F8140E941C98684500712C50 /* ArsdkNetBackend.h in Headers */,
+				1D2560121EF039F8000C11FA /* NSData+zlib.h in Headers */,
+				F83BFC981CBCFBD300513169 /* ArsdkDiscovery.h in Headers */,
+				717246AF21F9FEE000AB82E5 /* ArsdkCore+Source.h in Headers */,
+				F89A06421EDDB77A0069ACD4 /* ArsdkCore+FtpRequest.h in Headers */,
+				F83BFC9C1CBD331300513169 /* ArsdkNetDiscoveryBonjour.h in Headers */,
+				F83BFC931CBCFB4D00513169 /* ArsdkNetDiscovery.h in Headers */,
+				7C30C1D31CD2125E00FB80B6 /* Logger.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8B941B11CC50C2E0099CBBC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8D9B48F1CC69592006DEDF8 /* SdkCoreTesting.h in Headers */,
+				F8D9B48D1CC69592006DEDF8 /* MockArsdkCore.h in Headers */,
+				F8D9B4931CC7854B006DEDF8 /* ExpectedCmd.h in Headers */,
+				F8D9B4881CC69592006DEDF8 /* Expectation.h in Headers */,
+				F8F9749C1CCFB8B90060318C /* CmdEncoder.h in Headers */,
+				F8D9B4901CC69592006DEDF8 /* SdkCoreTestingUmbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7C68F9641C86F8DD000722CA /* SdkCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7C68F96D1C86F8DD000722CA /* Build configuration list for PBXNativeTarget "SdkCore" */;
+			buildPhases = (
+				7C45A8291CF879F10030552A /* Simlink prebuilt */,
+				F89BA1201CB6C2CE001DAD94 /* Generate Features files script */,
+				7C68F9601C86F8DD000722CA /* Sources */,
+				7C68F9611C86F8DD000722CA /* Frameworks */,
+				7C68F9621C86F8DD000722CA /* Headers */,
+				F870409E1F4DBED3004E829C /* Copy consts file header in framework */,
+				1D60A9F72049A38A0028828D /* Copy mavlink headers in framework */,
+				7C68F9631C86F8DD000722CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SdkCore;
+			productName = CoreFramework;
+			productReference = 7C68F9651C86F8DD000722CA /* SdkCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F8B941B31CC50C2E0099CBBC /* SdkCoreTesting */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8B941BB1CC50C2F0099CBBC /* Build configuration list for PBXNativeTarget "SdkCoreTesting" */;
+			buildPhases = (
+				F8D9B47E1CC69434006DEDF8 /* Generate test features */,
+				F8B941AF1CC50C2E0099CBBC /* Sources */,
+				F8B941B01CC50C2E0099CBBC /* Frameworks */,
+				F8B941B11CC50C2E0099CBBC /* Headers */,
+				F8B941B21CC50C2E0099CBBC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7CCBC8DD1CC8F8DE00F71098 /* PBXTargetDependency */,
+			);
+			name = SdkCoreTesting;
+			productName = "SdkCore-testing";
+			productReference = F8B941B41CC50C2E0099CBBC /* SdkCoreTesting.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7C68F95C1C86F8DD000722CA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "Parrot SA";
+				TargetAttributes = {
+					7C68F9641C86F8DD000722CA = {
+						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0920;
+						ProvisioningStyle = Automatic;
+					};
+					F8B941B31CC50C2E0099CBBC = {
+						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 7C68F95F1C86F8DD000722CA /* Build configuration list for PBXProject "SdkCore" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7C68F95B1C86F8DD000722CA;
+			productRefGroup = 7C68F9661C86F8DD000722CA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7C68F9641C86F8DD000722CA /* SdkCore */,
+				F8B941B31CC50C2E0099CBBC /* SdkCoreTesting */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7C68F9631C86F8DD000722CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8B941B21CC50C2E0099CBBC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1D60A9F72049A38A0028828D /* Copy mavlink headers in framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy mavlink headers in framework";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -av --exclude='**/testsuite.h' --exclude='common/version.h' --exclude='common/mavlink.h' ${PREBUILT_DIR}/include/mavlink/ ${BUILT_PRODUCTS_DIR}/SDKCore.framework/Headers/mavlink\n\n";
+			showEnvVarsInLog = 0;
+		};
+		7C45A8291CF879F10030552A /* Simlink prebuilt */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Simlink prebuilt";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "/usr/bin/env python3";
+			shellScript = "# Symlink alchemy sdk to xcode workspace build directory\nimport shutil, os\n\nPREBUILT_DIR = os.environ[\"PREBUILT_DIR\"]\nALCHEMY_PRODUCT_DIR = os.path.realpath(os.environ[\"ALCHEMY_PRODUCT_DIR\"])\nALCHEMY_SDK_DIR = os.path.join(ALCHEMY_PRODUCT_DIR, \"sdk\", \"usr\")\nALCHEMY_RES_DIR = os.path.join(ALCHEMY_PRODUCT_DIR, \"staging\")\n\nos.makedirs(PREBUILT_DIR, exist_ok=True)\n\ndef link(d, sdk=True):\n    src = os.path.join(ALCHEMY_SDK_DIR if sdk else ALCHEMY_RES_DIR, d)\n    dest = os.path.join(PREBUILT_DIR, d)\n    if os.path.exists(dest) and not os.path.islink(dest):\n        shutil.rmtree(dest)\n    if not os.path.islink(dest):\n        print(\"Symlinking {} to {}\".format(src, dest))\n        os.symlink(src, dest)\n\nlink(\"include\")\nlink(\"lib\")\nlink(\"etc\", sdk=False)";
+			showEnvVarsInLog = 0;
+		};
+		F870409E1F4DBED3004E829C /* Copy consts file header in framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy consts file header in framework";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp -p ${BUILT_PRODUCTS_DIR}/../features_generated/*.h ${BUILT_PRODUCTS_DIR}/SDKCore.framework/Headers\n";
+			showEnvVarsInLog = 0;
+		};
+		F89BA1201CB6C2CE001DAD94 /* Generate Features files script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/../../common/arsdk-xml/arsdkgen.py",
+				"${SRCROOT}/../../common/arsdk-xml/arsdkparser.py",
+				"${SRCROOT}/../../common/arsdk-xml/xml/",
+				"$(SRCROOT)/SdkCore/scripts/arsdkgenobjc.py",
+			);
+			name = "Generate Features files script";
+			outputPaths = (
+				"${BUILT_PRODUCTS_DIR}/../features_generated/ArsdkFeatures.m",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -f ${BUILT_PRODUCTS_DIR}/../features_generated/*\n${SRCROOT}/../../common/arsdk-xml/arsdkgen.py ${SRCROOT}/SdkCore/scripts/arsdkgenobjc.py -o ${BUILT_PRODUCTS_DIR}/../features_generated/";
+			showEnvVarsInLog = 0;
+		};
+		F8D9B47E1CC69434006DEDF8 /* Generate test features */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/../../common/arsdk-xml/arsdkgen.py",
+				"${SRCROOT}/../../common/arsdk-xml/arsdkparser.py",
+				"${SRCROOT}/../../common/arsdk-xml/xml/",
+				"$(SRCROOT)/SdkCoreTesting/scripts/arsdkgenobjc.py",
+			);
+			name = "Generate test features";
+			outputPaths = (
+				"${BUILT_PRODUCTS_DIR}/../features_testing/",
+				"${BUILT_PRODUCTS_DIR}/../features_testing/CmdEncoder.h",
+				"${BUILT_PRODUCTS_DIR}/../features_testing/CmdEncoder.m",
+				"${BUILT_PRODUCTS_DIR}/../features_testing/ExpectedCmd.h",
+				"${BUILT_PRODUCTS_DIR}/../features_testing/ExpectedCmd.m",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/../../common/arsdk-xml/arsdkgen.py ${SRCROOT}/SdkCoreTesting/scripts/arsdkgenobjc.py -o ${BUILT_PRODUCTS_DIR}/../features_testing/\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7C68F9601C86F8DD000722CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8B5369E1CC147E800277331 /* ArsdkCommand.m in Sources */,
+				7C634F7D1DE8309C0006F23F /* ArsdkCore+Stream.m in Sources */,
+				7C97E63C1CEC6CA600BBACD5 /* ArsdkBleBackendController.m in Sources */,
+				F8E011331FDA8A38005A9520 /* ArsdkCore+RcBlackBox.m in Sources */,
+				7C1F09561CEC8BF700398B92 /* ArsdkBleBackend.m in Sources */,
+				712A9F4D22034F1E00BD4DFC /* SdkCore+FileSource.m in Sources */,
+				1D04BC9B2036F0C00036B906 /* empty.cpp in Sources */,
+				F89A06431EDDB77A0069ACD4 /* ArsdkCore+FtpRequest.m in Sources */,
+				710CAB8521F8B94F00C6199B /* SdkCore+Stream.m in Sources */,
+				7CF074011DE8454600C75ACD /* PompBuffer.m in Sources */,
+				7C73334F1D6F256B00189075 /* ArsdkMuxBackend.m in Sources */,
+				9B11B49B22243BED00C5408E /* SdkCore+Sink.m in Sources */,
+				7C7ACB431D782BB800A04F30 /* ArsdkMuxEaBackendController.m in Sources */,
+				9BB12FC0214A84730051A0F2 /* ArsdkCore+FlightLog.m in Sources */,
+				7C634F771DE758000006F23F /* ArsdkCore+Devices.m in Sources */,
+				F8D4256D1E3FAE81004D04BB /* ArsdkRequest.m in Sources */,
+				F83BFC991CBCFBD300513169 /* ArsdkDiscovery.m in Sources */,
+				F8140E951C98684500712C50 /* ArsdkNetBackend.m in Sources */,
+				F822E34D1E42488B0037DB0F /* ArsdkFirmwareInfo.m in Sources */,
+				710CAB8921F8B96B00C6199B /* SdkCore+Renderer.m in Sources */,
+				7C7D7CA51DE853560097346F /* ArsdkCore+Media.m in Sources */,
+				7CA04A181CEC637F00A6015A /* ArsdkBleDiscovery.m in Sources */,
+				F85909C91CAC22DF00B08530 /* ArsdkBackendController.m in Sources */,
+				F8B536891CC1293800277331 /* ArsdkFeatures.m in Sources */,
+				F83BFC9D1CBD331300513169 /* ArsdkNetDiscoveryBonjour.m in Sources */,
+				02143390202B156A0054DE99 /* NoAckCommandLoop.m in Sources */,
+				7C7ACB421D782B7F00A04F30 /* ArsdkMuxIpBackendController.m in Sources */,
+				68ED066C222812C9007DAECE /* SdkCore+MediaInfo.m in Sources */,
+				F83BFC941CBCFB4D00513169 /* ArsdkNetDiscovery.m in Sources */,
+				7CD9C0DE1D756CE10074ABB7 /* ArsdkMuxDiscovery.m in Sources */,
+				70569A1121F8B4B7000FE1C2 /* PompLoopUtil.m in Sources */,
+				02619F4A2032DFD600EE30AA /* NoAckStorage.m in Sources */,
+				7CEC4AF01CEDB511000EEF80 /* ArsdkBle.m in Sources */,
+				F83BFC761CBBE32A00513169 /* ArsdkCore.m in Sources */,
+				F83BFC901CBCF80100513169 /* ArsdkWifiBackendController.m in Sources */,
+				717246B121F9FF4200AB82E5 /* ArsdkCore+Source.m in Sources */,
+				7C30C1D41CD2125E00FB80B6 /* Logger.m in Sources */,
+				1D2560131EF039F8000C11FA /* NSData+zlib.m in Sources */,
+				7C00F4861D6F293100CE1621 /* ArsdkMux.m in Sources */,
+				F892D6C41FD8576200B80041 /* NSData+Crypto.m in Sources */,
+				7CEC4AF41CEDE63A000EEF80 /* ArsdkBleDeviceConnection.m in Sources */,
+				9B3AD49622256F9000955E85 /* SdkCore+Frame.m in Sources */,
+				1D2194E01EE69F29005A6883 /* ArsdkCore+Crashml.m in Sources */,
+				F8D425681E3FA352004D04BB /* ArsdkCore+Update.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8B941AF1CC50C2E0099CBBC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8D9B4941CC7854B006DEDF8 /* ExpectedCmd.m in Sources */,
+				F8F9749D1CCFB8B90060318C /* CmdEncoder.m in Sources */,
+				F8D9B4891CC69592006DEDF8 /* Expectation.m in Sources */,
+				F8D9B48E1CC69592006DEDF8 /* MockArsdkCore.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7CCBC8DD1CC8F8DE00F71098 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7C68F9641C86F8DD000722CA /* SdkCore */;
+			targetProxy = 7CCBC8DC1CC8F8DE00F71098 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		7C68F96B1C86F8DD000722CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C8390781C8727CF0035C94B /* config.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7C68F96C1C86F8DD000722CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C8390781C8727CF0035C94B /* config.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		7C68F96E1C86F8DD000722CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = SdkCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.SdkCore;
+				PRODUCT_NAME = SdkCore;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		7C68F96F1C86F8DD000722CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = SdkCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.SdkCore;
+				PRODUCT_NAME = SdkCore;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+		F8B941B91CC50C2F0099CBBC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = SdkCoreTesting/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.SdkCoreTesting;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		F8B941BA1CC50C2F0099CBBC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = SdkCoreTesting/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.SdkCoreTesting;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7C68F95F1C86F8DD000722CA /* Build configuration list for PBXProject "SdkCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7C68F96B1C86F8DD000722CA /* Debug */,
+				7C68F96C1C86F8DD000722CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7C68F96D1C86F8DD000722CA /* Build configuration list for PBXNativeTarget "SdkCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7C68F96E1C86F8DD000722CA /* Debug */,
+				7C68F96F1C86F8DD000722CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F8B941BB1CC50C2F0099CBBC /* Build configuration list for PBXNativeTarget "SdkCoreTesting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8B941B91CC50C2F0099CBBC /* Debug */,
+				F8B941BA1CC50C2F0099CBBC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7C68F95C1C86F8DD000722CA /* Project object */;
+}

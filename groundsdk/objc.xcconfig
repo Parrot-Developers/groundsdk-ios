@@ -1,0 +1,4 @@
+// Configuration for ObjC tests
+
+// required for objc executable using swift framework (GroundSdkObjCTests)
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;

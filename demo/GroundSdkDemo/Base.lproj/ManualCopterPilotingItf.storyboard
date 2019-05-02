@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tel-le-ofv">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Manual Copter Piloting Interface-->
+        <scene sceneID="GNo-fE-2vw">
+            <objects>
+                <viewController id="ocR-UD-kmI" customClass="ManualCopterPilotingItfViewController" customModule="GroundSdkDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0xJ-If-9T4"/>
+                        <viewControllerLayoutGuide type="bottom" id="qCL-c1-CGW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TKr-z4-Bna">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="itH-eU-yvP">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NBA-n0-Dzc" userLabel="content view">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-ib-tt0" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
+                                                <rect key="frame" x="8" y="32" width="359" height="64"/>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="64" id="YDo-QY-FMK"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="label" value="Max Pitch Roll"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="maxPitchRollDidChange:" destination="ocR-UD-kmI" eventType="valueChanged" id="jUM-Re-cJQ"/>
+                                                </connections>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HUW-hb-IvO" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
+                                                <rect key="frame" x="8" y="104" width="359" height="64"/>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="64" id="Gnj-Ro-NvR"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="label" value="Max Pitch Roll Velocity"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="maxPitchRollVelocityDidChange:" destination="ocR-UD-kmI" eventType="valueChanged" id="NHS-iM-pWa"/>
+                                                </connections>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BDb-Ja-S83" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
+                                                <rect key="frame" x="8" y="248" width="359" height="64"/>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="64" id="Bpg-7m-SRf"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="label" value="Max Yaw Speed"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="maxYawSpeedDidChange:" destination="ocR-UD-kmI" eventType="valueChanged" id="hxk-ur-oQm"/>
+                                                </connections>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BjI-zc-gec" customClass="BoolSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
+                                                <rect key="frame" x="8" y="320" width="359" height="32"/>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="32" id="2Ju-Zj-mSe"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="label" value="Banked Turn Mode"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="bankedTurnModeDidChange:" destination="ocR-UD-kmI" eventType="valueChanged" id="VQS-3l-upl"/>
+                                                </connections>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NQ1-Wo-k0Z" userLabel="Thrown TakeOff" customClass="BoolSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
+                                                <rect key="frame" x="8" y="360" width="359" height="32"/>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="32" id="Cco-VQ-Nai"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="label" value="Thrown Take Off"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="thrownTakeOffDidChange:" destination="ocR-UD-kmI" eventType="valueChanged" id="ggj-lq-S6f"/>
+                                                </connections>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VXe-jq-R4h" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
+                                                <rect key="frame" x="8" y="176" width="359" height="64"/>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="64" id="oe8-3S-tYq"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="label" value="Max Vertical Speed"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="maxMaxVerticalSpeedDidChange:" destination="ocR-UD-kmI" eventType="valueChanged" id="Vzw-rS-Eha"/>
+                                                </connections>
+                                            </view>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="NQ1-Wo-k0Z" firstAttribute="top" secondItem="BjI-zc-gec" secondAttribute="bottom" constant="8" id="17v-kQ-CGf"/>
+                                            <constraint firstAttribute="trailing" secondItem="BjI-zc-gec" secondAttribute="trailing" constant="8" id="47m-wQ-miV"/>
+                                            <constraint firstItem="U6d-ib-tt0" firstAttribute="leading" secondItem="NBA-n0-Dzc" secondAttribute="leading" constant="8" id="7qV-6f-c7D"/>
+                                            <constraint firstAttribute="trailing" secondItem="U6d-ib-tt0" secondAttribute="trailing" constant="8" id="8FP-WZ-fWl"/>
+                                            <constraint firstItem="U6d-ib-tt0" firstAttribute="top" secondItem="NBA-n0-Dzc" secondAttribute="top" constant="32" id="IKC-x0-vQa"/>
+                                            <constraint firstAttribute="bottom" secondItem="NQ1-Wo-k0Z" secondAttribute="bottom" constant="8" id="RRl-SB-exe"/>
+                                            <constraint firstAttribute="trailing" secondItem="NQ1-Wo-k0Z" secondAttribute="trailing" constant="8" id="T6u-5N-aB5"/>
+                                            <constraint firstItem="BjI-zc-gec" firstAttribute="top" secondItem="BDb-Ja-S83" secondAttribute="bottom" constant="8" id="Tka-kW-ntA"/>
+                                            <constraint firstItem="NQ1-Wo-k0Z" firstAttribute="leading" secondItem="NBA-n0-Dzc" secondAttribute="leading" constant="8" id="XUs-y4-hiT"/>
+                                            <constraint firstItem="BDb-Ja-S83" firstAttribute="leading" secondItem="NBA-n0-Dzc" secondAttribute="leading" constant="8" id="ZZZ-Ks-I80"/>
+                                            <constraint firstAttribute="trailing" secondItem="BDb-Ja-S83" secondAttribute="trailing" constant="8" id="d5b-UV-AT9"/>
+                                            <constraint firstItem="VXe-jq-R4h" firstAttribute="top" secondItem="HUW-hb-IvO" secondAttribute="bottom" constant="8" id="gvM-Y0-Qci"/>
+                                            <constraint firstItem="HUW-hb-IvO" firstAttribute="leading" secondItem="NBA-n0-Dzc" secondAttribute="leading" constant="8" id="lbl-IP-Qcv"/>
+                                            <constraint firstItem="VXe-jq-R4h" firstAttribute="leading" secondItem="NBA-n0-Dzc" secondAttribute="leading" constant="8" id="m2B-N2-89n"/>
+                                            <constraint firstAttribute="trailing" secondItem="HUW-hb-IvO" secondAttribute="trailing" constant="8" id="nlG-gP-1Qb"/>
+                                            <constraint firstItem="HUW-hb-IvO" firstAttribute="top" secondItem="U6d-ib-tt0" secondAttribute="bottom" constant="8" id="oPc-QR-oWy"/>
+                                            <constraint firstAttribute="trailing" secondItem="VXe-jq-R4h" secondAttribute="trailing" constant="8" id="tRE-UU-0fv"/>
+                                            <constraint firstItem="BjI-zc-gec" firstAttribute="leading" secondItem="NBA-n0-Dzc" secondAttribute="leading" constant="8" id="w7x-ok-BhJ"/>
+                                            <constraint firstItem="BDb-Ja-S83" firstAttribute="top" secondItem="VXe-jq-R4h" secondAttribute="bottom" constant="8" id="wMK-qE-6cO"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="NBA-n0-Dzc" firstAttribute="leading" secondItem="itH-eU-yvP" secondAttribute="leading" id="Gtz-pT-Lrd"/>
+                                    <constraint firstItem="NBA-n0-Dzc" firstAttribute="width" secondItem="itH-eU-yvP" secondAttribute="width" id="KlN-my-lKj"/>
+                                    <constraint firstItem="NBA-n0-Dzc" firstAttribute="top" secondItem="itH-eU-yvP" secondAttribute="top" id="L8J-xX-B3l"/>
+                                    <constraint firstAttribute="trailing" secondItem="NBA-n0-Dzc" secondAttribute="trailing" id="VAG-6Z-uAF"/>
+                                    <constraint firstAttribute="bottom" secondItem="NBA-n0-Dzc" secondAttribute="bottom" id="cIF-8a-qPF"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="itH-eU-yvP" secondAttribute="trailing" id="GzJ-pT-B0y"/>
+                            <constraint firstItem="qCL-c1-CGW" firstAttribute="top" secondItem="itH-eU-yvP" secondAttribute="bottom" id="IGK-uW-xeo"/>
+                            <constraint firstItem="itH-eU-yvP" firstAttribute="centerY" secondItem="TKr-z4-Bna" secondAttribute="centerY" id="MCL-v1-UQD"/>
+                            <constraint firstItem="itH-eU-yvP" firstAttribute="centerX" secondItem="TKr-z4-Bna" secondAttribute="centerX" id="Yie-cg-DKp"/>
+                            <constraint firstItem="itH-eU-yvP" firstAttribute="top" secondItem="TKr-z4-Bna" secondAttribute="top" id="emO-kQ-K40"/>
+                            <constraint firstItem="itH-eU-yvP" firstAttribute="leading" secondItem="TKr-z4-Bna" secondAttribute="leading" id="iXg-Dq-izG"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Manual Copter Piloting Interface" id="NTH-yb-v5Z"/>
+                    <splitViewDetailSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="bankedTurnMode" destination="BjI-zc-gec" id="ZcH-eQ-I09"/>
+                        <outlet property="maxPitchRollVelocityView" destination="HUW-hb-IvO" id="RgC-Mv-coY"/>
+                        <outlet property="maxPitchRollView" destination="U6d-ib-tt0" id="Vto-df-SbE"/>
+                        <outlet property="maxVerticalSpeedView" destination="VXe-jq-R4h" id="nNX-cF-ari"/>
+                        <outlet property="maxYawSpeed" destination="BDb-Ja-S83" id="ldq-Bn-P4w"/>
+                        <outlet property="thrownTakeoffSetting" destination="NQ1-Wo-k0Z" id="XnF-Bi-LX6"/>
+                        <segue destination="WAh-OO-No8" kind="unwind" identifier="exit" unwindAction="showDefaultDetailWithUnwindSegue:" id="MSY-SL-W1o"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="38E-0k-kfs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="WAh-OO-No8" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="178.40000000000001" y="1517.0914542728638"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="w33-Jg-s5I">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tel-le-ofv" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ctq-XD-A8z">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ocR-UD-kmI" kind="relationship" relationship="rootViewController" id="cjJ-Aq-1hv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a3H-ck-PlK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-543.20000000000005" y="1517.9910044977512"/>
+        </scene>
+    </scenes>
+</document>

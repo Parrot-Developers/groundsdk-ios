@@ -1,0 +1,2 @@
+#include "../base.xcconfig"
+IPHONEOS_DEPLOYMENT_TARGET = $(IPHONEOS_TEST_TARGET)
