@@ -130,6 +130,9 @@
 		9BBB951421E7786100CE4322 /* ThermalCamera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BBB951321E7786100CE4322 /* ThermalCamera.storyboard */; };
 		9BBD415B222FBEA20006CBAF /* PhotoProgressIndicatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBD415A222FBEA20006CBAF /* PhotoProgressIndicatorCell.swift */; };
 		9BDE349F22033B1D008A214B /* CameraCaptureIntervalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE349E22033B1D008A214B /* CameraCaptureIntervalViewController.swift */; };
+		9BF5448922BA2D7C00452895 /* CopilotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF5448822BA2D7C00452895 /* CopilotCell.swift */; };
+		9BF5448B22BA3C3900452895 /* Copilot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BF5448A22BA3C3900452895 /* Copilot.storyboard */; };
+		9BF5448D22BA3D1D00452895 /* CopilotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF5448C22BA3D1D00452895 /* CopilotViewController.swift */; };
 		F80065442003A506006669BD /* MagnetometerWith1StepCalib.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F80065422003A506006669BD /* MagnetometerWith1StepCalib.storyboard */; };
 		F803489020935254001F14BD /* MediaStoreDeleteAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F803488F20935254001F14BD /* MediaStoreDeleteAllViewController.swift */; };
 		F804B01B20D9879800BE2CF7 /* anafi4k_app_defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = F804B01A20D9879800BE2CF7 /* anafi4k_app_defaults.plist */; };
@@ -320,6 +323,9 @@
 		9BBB951321E7786100CE4322 /* ThermalCamera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThermalCamera.storyboard; sourceTree = "<group>"; };
 		9BBD415A222FBEA20006CBAF /* PhotoProgressIndicatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProgressIndicatorCell.swift; sourceTree = "<group>"; };
 		9BDE349E22033B1D008A214B /* CameraCaptureIntervalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCaptureIntervalViewController.swift; sourceTree = "<group>"; };
+		9BF5448822BA2D7C00452895 /* CopilotCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopilotCell.swift; sourceTree = "<group>"; };
+		9BF5448A22BA3C3900452895 /* Copilot.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Copilot.storyboard; sourceTree = "<group>"; };
+		9BF5448C22BA3D1D00452895 /* CopilotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopilotViewController.swift; sourceTree = "<group>"; };
 		F80065432003A506006669BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MagnetometerWith1StepCalib.storyboard; sourceTree = "<group>"; };
 		F803488F20935254001F14BD /* MediaStoreDeleteAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStoreDeleteAllViewController.swift; sourceTree = "<group>"; };
 		F804B01A20D9879800BE2CF7 /* anafi4k_app_defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = anafi4k_app_defaults.plist; sourceTree = "<group>"; };
@@ -437,6 +443,7 @@
 				68ED066222159FC2007DAECE /* ThermalStream.storyboard */,
 				02F39FF720AC22900058890D /* UserAccount.storyboard */,
 				F828A4B21F01591E00431860 /* WifiAccessPoint.storyboard */,
+				9BF5448A22BA3C3900452895 /* Copilot.storyboard */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -454,6 +461,7 @@
 				7C59BAF31FAB8BC400AB8A6C /* CameraCell.swift */,
 				F8F2B19E20E3A8D700A1A802 /* CameraExposureValuesCell.swift */,
 				7C7CF4E31D1846DB000BB8FC /* CompassCell.swift */,
+				9BF5448822BA2D7C00452895 /* CopilotCell.swift */,
 				F8D32CDA1EF1955600074795 /* CopterMotorsCell.swift */,
 				1D2194E71EE83883005A6883 /* CrashReportDownloaderCell.swift */,
 				F88468801DED8AC900ACE941 /* DeviceContentCell.swift */,
@@ -507,6 +515,7 @@
 				F878C5F4203357ED0090B7C2 /* ChooseBoolViewController.swift */,
 				7C7425041F5ED0AA003A396E /* ChooseEnumViewController.swift */,
 				F878C5F2203356B90090B7C2 /* ChooseNumberViewController.swift */,
+				9BF5448C22BA3D1D00452895 /* CopilotViewController.swift */,
 				7C1EBC1D1DB10AC0002B4724 /* DroneFinderViewController.swift */,
 				F8C252F31FD043B400A87B5F /* FirmwareManagerViewController.swift */,
 				027364AB209753E900C16142 /* GeofenceViewController.swift */,
@@ -738,6 +747,7 @@
 				9B48547C217F60B6007D1CFC /* RemovableUserStorage.storyboard in Resources */,
 				7CA1C99A1C807D5000FE9ED4 /* Main.storyboard in Resources */,
 				F804B01B20D9879800BE2CF7 /* anafi4k_app_defaults.plist in Resources */,
+				9BF5448B22BA3C3900452895 /* Copilot.storyboard in Resources */,
 				F8A3D0DB2052C52100AF0126 /* Gimbal.storyboard in Resources */,
 				7C7406AD2051926300D1CD78 /* Antiflicker.storyboard in Resources */,
 				7C5C433C1E014E3900B8829C /* ReturnHomePilotingItf.storyboard in Resources */,
@@ -797,6 +807,7 @@
 				712A9F5722044D2300BD4DFC /* FileReplayListViewController.swift in Sources */,
 				7CA1C9971C807D5000FE9ED4 /* DevicesListViewController.swift in Sources */,
 				9BB4FBBC21E88A45005E2E58 /* ThermalCameraStyleParametersViewController.swift in Sources */,
+				9BF5448922BA2D7C00452895 /* CopilotCell.swift in Sources */,
 				7C1EBC1E1DB10AC0002B4724 /* DroneFinderViewController.swift in Sources */,
 				7C7CF4E21D184163000BB8FC /* AttitudeIndicatorCell.swift in Sources */,
 				9B9C7E142200442800FB312D /* ThermalRenderingViewController.swift in Sources */,
@@ -864,6 +875,7 @@
 				02D12B2E2028AAAB002C00BB /* BeeperCell.swift in Sources */,
 				7C8E47A31DA7D86500D72B6D /* RcInfoViewController.swift in Sources */,
 				F828A4B61F0162FA00431860 /* WifiAccessPointViewController.swift in Sources */,
+				9BF5448D22BA3D1D00452895 /* CopilotViewController.swift in Sources */,
 				681A967522147CFF00172594 /* ThermalStreamCell.swift in Sources */,
 				02D39E1E207E0DD200494EC4 /* LookAtPilotingItfCell.swift in Sources */,
 				7CA1C9951C807D5000FE9ED4 /* AppDelegate.swift in Sources */,

@@ -30,23 +30,35 @@
 import UIKit
 import GroundSdk
 
-class ThermalControlCell: PeripheralProviderContentCell {
+class CopilotViewController: UIViewController, DeviceViewController {
+    private let groundSdk = GroundSdk()
+    private var rcUid: String?
+    private var copilot: Ref<Copilot>?
 
-    private var thermalControl: Ref<ThermalControl>?
+    @IBOutlet weak var sourceLabel: UILabel!
+    @IBOutlet weak var sourceSegmented: UISegmentedControl!
 
-    @IBOutlet weak var modeLabel: UILabel!
-    @IBOutlet weak var calibrationLabel: UILabel!
+    func setDeviceUid(_ uid: String) {
+        rcUid = uid
+    }
 
-    override func set(peripheralProvider provider: PeripheralProvider) {
-        super.set(peripheralProvider: provider)
-        thermalControl = provider.getPeripheral(Peripherals.thermalControl) { [unowned self] thermalControl in
-            if let thermalControl = thermalControl {
-                self.modeLabel.text = thermalControl.setting.mode.description
-                self.calibrationLabel.text = thermalControl.calibration?.mode.description ?? "-"
-                self.show()
-            } else {
-                self.hide()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let remoteControl = groundSdk.getRemoteControl(uid: rcUid!) {
+            copilot =
+                remoteControl.getPeripheral(Peripherals.copilot) { [weak self] copilot in
+                if let copilot = copilot, let `self` = self {
+                    self.sourceSegmented.selectedSegmentIndex = copilot.setting.source.rawValue
+                } else {
+                    self?.performSegue(withIdentifier: "exit", sender: self)
+                }
             }
+        }
+    }
+
+    @IBAction func valueChanged(_ sender: UISwitch) {
+        if let copilot = copilot?.value {
+            copilot.setting.source = sourceSegmented.selectedSegmentIndex == 0 ? .remoteControl : .application
         }
     }
 }

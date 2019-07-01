@@ -36,6 +36,12 @@
 /** common loging tag */
 extern ULogTag *TAG;
 
+/** Static transition flags setup. */
+#define TRANSITION_FLAGS \
+PDRAW_VIDEO_RENDERER_TRANSITION_FLAG_RECONFIGURE \
+| PDRAW_VIDEO_RENDERER_TRANSITION_FLAG_TIMEOUT \
+| PDRAW_VIDEO_RENDERER_TRANSITION_FLAG_PHOTO_TRIGGER
+
 /** Data relative to texture loading. */
 @interface SdkCoreTextureLoaderFrame()
 /** Handle on the frame. */
@@ -206,7 +212,7 @@ static void render_overlay_cb(struct pdraw *pdraw,
             .enable_overexposure_zebras = zebrasEnabled ? 1 : 0,
             .overexposure_zebras_threshold = zebrasThreshold,
             .enable_histograms = histogramsEnabled ? 1 : 0,
-            .enable_transition_flags = 0xFFFFFFFF,
+            .enable_transition_flags = TRANSITION_FLAGS,
         };
 
         struct pdraw_video_renderer_cbs pdrawCbs = {

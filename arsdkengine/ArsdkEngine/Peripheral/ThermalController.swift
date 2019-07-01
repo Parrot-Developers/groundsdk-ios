@@ -64,21 +64,24 @@ class ThermalController: DeviceComponentController, ThermalControlBackend {
     enum SettingKey: String, StoreKey {
         case modeKey = "mode"
         case sensitivityRangeKey = "sensitivityRange"
+        case calibrationModeKey = "calibrationMode"
     }
 
     /// Stored settings
     enum Setting: Hashable {
         case mode(ThermalControlMode)
         case sensitivityRange(ThermalSensitivityRange)
+        case calibrationMode(ThermalCalibrationMode)
         /// Setting storage key
         var key: SettingKey {
             switch self {
             case .mode: return .modeKey
             case .sensitivityRange: return .sensitivityRangeKey
+            case .calibrationMode: return .calibrationModeKey
             }
         }
         /// All values to allow enumerating settings
-        static let allCases: [Setting] = [.mode(.disabled), .sensitivityRange(.high)]
+        static let allCases: [Setting] = [.mode(.disabled), .sensitivityRange(.high), .calibrationMode(.automatic)]
 
         func hash(into hasher: inout Hasher) {
             hasher.combine(key)
@@ -149,6 +152,31 @@ class ThermalController: DeviceComponentController, ThermalControlBackend {
         if connected, emissivity != currentEmissivity {
             currentEmissivity = emissivity
             sendEmissivityCommand(emissivity)
+        }
+    }
+
+    /// Sets thermal camera calibration mode.
+    ///
+    /// - Parameter calibrationMode: the new calibration mode
+    /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
+    func set(calibrationMode: ThermalCalibrationMode) -> Bool {
+        presetStore?.write(key: SettingKey.calibrationModeKey, value: calibrationMode).commit()
+        if connected {
+            return sendCalibrationModeCommand(calibrationMode)
+        } else {
+            thermalControl.update(mode: calibrationMode).notifyUpdated()
+            return false
+        }
+    }
+
+    /// Triggers a calibration of the thermal camera.
+    ///
+    /// - Returns: true if the command has been sent, false otherwise
+    func calibrate() -> Bool {
+        if connected {
+            return sendCalibrateCommand()
+        } else {
+            return false
         }
     }
 
@@ -294,7 +322,11 @@ class ThermalController: DeviceComponentController, ThermalControlBackend {
                     }
                 case .sensitivityRange:
                     if let range: ThermalSensitivityRange = presetStore.read(key: setting.key) {
-                         thermalControl.update(range: range)
+                        thermalControl.update(range: range)
+                    }
+                case .calibrationMode:
+                    if let calibrationMode: ThermalCalibrationMode = presetStore.read(key: setting.key) {
+                        thermalControl.update(mode: calibrationMode)
                     }
                 }
                 thermalControl.notifyUpdated()
@@ -332,6 +364,15 @@ class ThermalController: DeviceComponentController, ThermalControlBackend {
                 } else {
                     thermalControl.update(range: sensitivityRange).notifyUpdated()
                 }
+            case .calibrationMode(let mode):
+                if let preset: ThermalCalibrationMode = presetStore?.read(key: setting.key) {
+                    if preset != mode {
+                        _ = sendCalibrationModeCommand(preset)
+                    }
+                    thermalControl.update(mode: preset).notifyUpdated()
+                } else {
+                    thermalControl.update(mode: mode).notifyUpdated()
+                }
             }
         }
     }
@@ -340,14 +381,14 @@ class ThermalController: DeviceComponentController, ThermalControlBackend {
     /// - Parameter setting: setting that changed
     func settingDidChange(_ setting: Setting) {
         droneSettings.insert(setting)
-        switch setting {
-        case .mode(let mode):
-            if connected {
-                thermalControl.update(mode: mode).notifyUpdated()
-            }
-        case .sensitivityRange(let sensitivityRange):
-            if connected {
-                thermalControl.update(range: sensitivityRange).notifyUpdated()
+        if connected {
+            switch setting {
+            case .mode(let mode):
+                thermalControl.update(mode: mode)
+            case .sensitivityRange(let sensitivityRange):
+                thermalControl.update(range: sensitivityRange)
+            case .calibrationMode(let mode):
+                thermalControl.update(mode: mode)
             }
         }
         thermalControl.notifyUpdated()
@@ -397,6 +438,31 @@ class ThermalController: DeviceComponentController, ThermalControlBackend {
     /// - Parameter emissivity: requested emissivity.
     func sendEmissivityCommand(_ emissivity: Float) {
         sendCommand(ArsdkFeatureThermal.setEmissivityEncoder(emissivity: emissivity))
+    }
+
+    /// Send calibration mode command.
+    ///
+    /// - Parameter mode: requested mode.
+    /// - Returns: true if the command has been sent
+    func sendCalibrationModeCommand(_ mode: ThermalCalibrationMode) -> Bool {
+        var commandSent = false
+        switch mode {
+        case .automatic:
+            sendCommand(ArsdkFeatureThermal.setShutterModeEncoder(trigger: .auto))
+            commandSent = true
+        case .manual:
+            sendCommand(ArsdkFeatureThermal.setShutterModeEncoder(trigger: .manual))
+            commandSent = true
+        }
+        return commandSent
+    }
+
+    /// Send calibrate mode command.
+    ///
+    /// - Returns: true if the command has been sent
+    func sendCalibrateCommand() -> Bool {
+        sendCommand(ArsdkFeatureThermal.triggShutterEncoder())
+        return true
     }
 
     /// Send palette colors.
@@ -525,6 +591,13 @@ extension ThermalSensitivityRange: StorableEnum {
         .low: "low"])
 }
 
+// Extension to make ThermalCalibrationMode storable
+extension ThermalCalibrationMode: StorableEnum {
+    static var storableMapper = Mapper<ThermalCalibrationMode, String>([
+        .automatic: "automatic",
+        .manual: "manual"])
+}
+
 /// Thermal feature decode callback implementation
 extension ThermalController: ArsdkFeatureThermalCallback {
 
@@ -606,6 +679,18 @@ extension ThermalController: ArsdkFeatureThermalCallback {
         case .sdkCoreUnknown:
             // don't change the range of sensitivity
             ULog.w(.tag, "Unknown thermal range, skipping this event.")
+        }
+    }
+
+    func onShutterMode(currentTrigger: ArsdkFeatureThermalShutterTrigger) {
+        switch currentTrigger {
+        case .auto:
+            settingDidChange(.calibrationMode(.automatic))
+        case .manual:
+            settingDidChange(.calibrationMode(.manual))
+        case .sdkCoreUnknown:
+            // don't change the thermal calibration modes
+            ULog.w(.tag, "Unknown thermal shutter mode, skipping this event.")
         }
     }
 }

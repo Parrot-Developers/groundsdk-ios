@@ -60,7 +60,7 @@ class SkyControllerFamilyController: RCController {
                                                              crashReportStorage: crashReportStorage))
         }
         componentControllers.append(SkyControllerMagnetometer(deviceController: self))
-
+        componentControllers.append(SkyControllerCopilot(deviceController: self))
         sendDateAndTime = { [weak self] in
             let dateFormatter = DateFormatter()
             dateFormatter.timeZone = NSTimeZone.system

@@ -110,6 +110,7 @@ class RcInfoViewController: UIViewController, UITableViewDelegate, UITableViewDa
             addCell("flightLogDownloader", section: peripheralSection)
             addCell("wifiAccessPoint", section: peripheralSection)
             addCell("magnetometer", section: peripheralSection)
+            addCell("copilot", section: peripheralSection)
         }
     }
 

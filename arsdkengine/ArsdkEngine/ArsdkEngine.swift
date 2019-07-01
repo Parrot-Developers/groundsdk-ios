@@ -65,7 +65,10 @@ public class ArsdkEngine: EngineBaseCore {
     public override func startEngine() {
 
         if let blackBoxStorage = utilities.getUtility(Utilities.blackBoxStorage) {
+            ULog.d(.myparrot, "BLACKBOX Start Recorder")
             blackBoxRecoder = BlackBoxRecorder(engine: self, blackBoxStorage: blackBoxStorage)
+        } else {
+            ULog.e(.myparrot, "BLACKBOX no Utilities.blackBoxStorage ?")
         }
 
         // create all known devices

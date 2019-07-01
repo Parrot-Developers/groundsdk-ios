@@ -402,8 +402,8 @@ class CameraFeatureCameraTests: ArsdkEngineTestBase {
                 maxIsoSensitivity: .iso320))
         }
 
-        // 1 for capabilities and Updating
-        assertThat(changeCnt, `is`(1))
+        // 2 for capabilities and Updating
+        assertThat(changeCnt, `is`(2))
 
         assertThat(camera!.exposureSettings, `is`(
             mode: .automatic, shutterSpeed: .oneOver100, isoSensitivity: .iso100, maximumIsoSensitivity: .iso320,
@@ -423,12 +423,12 @@ class CameraFeatureCameraTests: ArsdkEngineTestBase {
         assertThat(camera!.exposureSettings, `is`(
             mode: .automatic, shutterSpeed: .oneOver100, isoSensitivity: .iso100, maximumIsoSensitivity: .iso320,
             updating: false))
-        assertThat(changeCnt, `is`(1))
+        assertThat(changeCnt, `is`(2))
         // disconnect
         disconnect(drone: drone, handle: 1)
 
         // exposure settings is available offline. WhiteBalance Lock is now nil
-        assertThat(changeCnt, `is`(2))
+        assertThat(changeCnt, `is`(3))
     }
 
     func testExposureLock() {
@@ -604,7 +604,7 @@ class CameraFeatureCameraTests: ArsdkEngineTestBase {
             self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetEvCompensation(camId: 0, value: .ev0_33))
         }
 
-        assertThat(changeCnt, `is`(10))
+        assertThat(changeCnt, `is`(11))
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.cameraEvCompensationEncoder(camId: 0, value: .ev0_33))
         assertThat(camera!.exposureCompensationSetting,
                    allOf(
@@ -778,7 +778,7 @@ class CameraFeatureCameraTests: ArsdkEngineTestBase {
                                                           customTemperatures: [.k3000, .k5000, .k7000]))
 
         assertThat(camera!.whiteBalanceSettings, `is`(mode: .automatic, customTemperature: .k3000, updating: false))
-        assertThat(changeCnt, `is`(1))
+        assertThat(changeCnt, `is`(2))
     }
 
     func testHdrSetting() {
@@ -1383,6 +1383,12 @@ class CameraFeatureCameraTests: ArsdkEngineTestBase {
                 camId: 0, mode: .single, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over4s,
                 bracketing: .preset1ev, captureInterval: 0.0))
         }
+
+        self.mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraPhotoModeEncoder(
+                camId: 0, mode: .single, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over4s,
+                bracketing: .preset1ev, captureInterval: 0.0))
+
         // expect single mode
         assertThat(camera!.photoSettings, `is`(
             mode: .single, format: .rectilinear, fileFormat: .jpeg, updating: false))
@@ -1682,7 +1688,7 @@ class CameraFeatureCameraTests: ArsdkEngineTestBase {
             maxLossyLevel: 1.0)))
         assertThat(camera!.zoom?.velocityQualityDegradationAllowance, presentAnd(`is`(false)))
         assertThat(camera?.zoom?.maxSpeed, presentAnd(`is`(1.0, 1.0, 25.0)))
-        assertThat(changeCnt, `is`(3))
+        assertThat(changeCnt, `is`(5))
 
         // mock zoom available
         mockArsdkCore.onCommandReceived(
@@ -1692,7 +1698,7 @@ class CameraFeatureCameraTests: ArsdkEngineTestBase {
         assertThat(camera!.zoom, presentAnd(`is`(
             available: true, currentLevel: 1.0, maxLossLessLevel: 2.0,
             maxLossyLevel: 3.0)))
-        assertThat(changeCnt, `is`(4))
+        assertThat(changeCnt, `is`(6))
 
         // check zoom control
         camera!.zoom?.control(mode: .level, target: 4.0)
@@ -1711,7 +1717,7 @@ class CameraFeatureCameraTests: ArsdkEngineTestBase {
                 camId: 0, available: .notAvailable, highQualityMaximumLevel: 9.0, maximumLevel: 10.0))
         assertThat(camera!.zoom, presentAnd(`is`(
             available: false, currentLevel: 1.0, maxLossLessLevel: 2.0, maxLossyLevel: 3.0)))
-        assertThat(changeCnt, `is`(5))
+        assertThat(changeCnt, `is`(7))
 
         // mock zoom available with bounds < 1.0: event should be skipped
         mockArsdkCore.onCommandReceived(
@@ -1719,7 +1725,7 @@ class CameraFeatureCameraTests: ArsdkEngineTestBase {
                 camId: 0, available: .available, highQualityMaximumLevel: 0.0, maximumLevel: 10.0))
         assertThat(camera!.zoom, presentAnd(`is`(
             available: false, currentLevel: 1.0, maxLossLessLevel: 2.0, maxLossyLevel: 3.0)))
-        assertThat(changeCnt, `is`(5))
+        assertThat(changeCnt, `is`(7))
     }
 
     func testZoomControlSendingTimes() {

@@ -97,6 +97,43 @@ class ThermalControlTests: XCTestCase {
         assertThat(backend.emissivity, `is`(1.0))
     }
 
+    func testCalibration() {
+        impl.publish()
+        var cnt = 0
+        let thermalControl = store.get(Peripherals.thermalControl)!
+        _ = store.register(desc: Peripherals.thermalControl) {
+            cnt += 1
+        }
+
+        // test initial value
+        assertThat(thermalControl.calibration, nilValue())
+
+        // update mode
+        impl.update(mode: .automatic).notifyUpdated()
+        assertThat(cnt, `is`(1))
+        assertThat(thermalControl.calibration, presentAnd(`is`(mode: .automatic, updating: false)))
+        assertThat(thermalControl.calibration, presentAnd(supports(modes: [.automatic, .manual])))
+
+        // change mode
+        thermalControl.calibration!.mode = .manual
+        assertThat(cnt, `is`(2))
+        assertThat(backend.calibrationMode, presentAnd(`is`(.manual)))
+        assertThat(thermalControl.calibration, presentAnd(`is`(mode: .manual, updating: true)))
+
+        impl.update(mode: .manual).notifyUpdated()
+        assertThat(thermalControl.calibration, presentAnd(`is`(mode: .manual, updating: false)))
+
+        // same mode should not change count
+        impl.update(mode: .manual).notifyUpdated()
+        assertThat(cnt, `is`(3))
+        assertThat(thermalControl.calibration, presentAnd(`is`(mode: .manual, updating: false)))
+
+        // send calibrate command
+        assertThat(backend.calibrateCnt, `is`(0))
+        _ = thermalControl.calibration!.calibrate()
+        assertThat(backend.calibrateCnt, `is`(1))
+    }
+
     func testBackgroundTemperature() {
         impl.publish()
         var cnt = 0
@@ -207,9 +244,11 @@ private class Backend: ThermalControlBackend {
     var emissivity: Double?
     var backgroundTemperature: Double?
     var mode: ThermalControlMode?
+    var calibrationMode: ThermalCalibrationMode?
     var palette: ThermalPalette?
     var rendering: ThermalRendering?
     var range: ThermalSensitivityRange = .high
+    var calibrateCnt = 0
 
     func set(emissivity: Double) {
         self.emissivity = emissivity
@@ -226,6 +265,16 @@ private class Backend: ThermalControlBackend {
 
     func set(range: ThermalSensitivityRange) -> Bool {
         self.range = range
+        return true
+    }
+
+    func set(calibrationMode: ThermalCalibrationMode) -> Bool {
+        self.calibrationMode = calibrationMode
+        return true
+    }
+
+    func calibrate() -> Bool {
+        calibrateCnt += 1
         return true
     }
 

@@ -226,28 +226,26 @@ extension FlightPlanPilotingItfController: FlightPlanPilotingItfBackend {
     }
 
     func uploadFlightPlan(filepath: String) {
-        // if the piloting interface is active, first deactivate it before uploading the file
-        if self.canDeactivate {
+        flightPlanPilotingItf.update(latestUploadState: .uploading)
+            .update(latestMissionItemExecuted: nil)
+            .notifyUpdated()
+        if !isStopped {
+            // stop current flightplan, if any, before uploading the file
             flightPlanPathToUpload = filepath
-            self.requestDeactivation()
+            sendStopFlightPlan()
         } else {
-            flightPlanPilotingItf.update(latestUploadState: .uploading).notifyUpdated()
+            flightPlanPathToUpload = nil
             // uses the ftp or http uploader
             _ = uploader.uploadFlightPlan(filepath: filepath) { [weak self] success, flightPlanUid in
                 if let `self` = self {
-                    // whether the uploaded file is the same as the one that was previously played
-                    var isSameUid = false
                     if success {
-                        if self.remoteFlightPlanUid == flightPlanUid {
-                            isSameUid = true
-                        }
                         self.remoteFlightPlanUid = flightPlanUid
                     } else {
                         self.remoteFlightPlanUid = nil
                     }
 
                     self.flightPlanPilotingItf.update(latestUploadState: success ? .uploaded : .failed)
-                        .update(isPaused: isSameUid)
+                        .update(isPaused: false)
                     self.updateUnavailabilityReasons()
 
                     if self.canDeactivate {
@@ -357,7 +355,6 @@ extension FlightPlanPilotingItfController: ArsdkFeatureCommonMavlinkstateCallbac
             // if a flight plan should be uploaded
             if let flightPlanPathToUpload = flightPlanPathToUpload {
                 uploadFlightPlan(filepath: flightPlanPathToUpload)
-                self.flightPlanPathToUpload = nil
             }
         case .paused:
             isStopped = false
@@ -371,7 +368,6 @@ extension FlightPlanPilotingItfController: ArsdkFeatureCommonMavlinkstateCallbac
             // if a flight plan should be uploaded
             if let flightPlanPathToUpload = flightPlanPathToUpload {
                 uploadFlightPlan(filepath: flightPlanPathToUpload)
-                self.flightPlanPathToUpload = nil
             }
         case .loaded:
             // This case is not handled because it is not supported by Anafi
@@ -384,6 +380,8 @@ extension FlightPlanPilotingItfController: ArsdkFeatureCommonMavlinkstateCallbac
     }
 
     func onMissionItemExecuted(idx: UInt) {
-        flightPlanPilotingItf.update(latestMissionItemExecuted: Int(idx)).notifyUpdated()
+        if flightPlanPilotingItf.latestUploadState != .uploading {
+            flightPlanPilotingItf.update(latestMissionItemExecuted: Int(idx)).notifyUpdated()
+        }
     }
 }

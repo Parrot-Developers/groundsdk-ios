@@ -32,6 +32,14 @@ import GroundSdk
 
 class ThermalControlViewController: UITableViewController, DeviceViewController {
 
+    private let rowMode = 0
+    private let rowSensitivityRange = 1
+    private let rowEmissivity = 2
+    private let rowBackgroundTemperature = 3
+    private let rowColorPalette = 4
+    private let rowRendering = 5
+    private let rowCalibration = 6
+
     private let groundSdk = GroundSdk()
     private var droneUid: String?
     private var thermalControl: Ref<ThermalControl>?
@@ -39,9 +47,15 @@ class ThermalControlViewController: UITableViewController, DeviceViewController 
 
     @IBOutlet weak var mode: UILabel!
     @IBOutlet weak var sensitivityRange: UILabel!
+    @IBOutlet weak var calibrationMode: UILabel!
+    @IBOutlet weak var calibrateBtn: UIBarButtonItem!
 
     func setDeviceUid(_ uid: String) {
         droneUid = uid
+    }
+
+    @IBAction func calibrate(_ sender: Any) {
+        _ = thermalControl?.value?.calibration?.calibrate()
     }
 
     override func viewDidLoad() {
@@ -51,7 +65,17 @@ class ThermalControlViewController: UITableViewController, DeviceViewController 
                 if let thermalControl = thermalControl, let `self` = self {
                     // mode
                     self.mode.text = thermalControl.setting.mode.description
+                    self.tableView.enable(section: 0, row: self.rowMode, on: !thermalControl.setting.updating)
+                    // sensitivity
                     self.sensitivityRange.text = thermalControl.sensitivitySetting.sensitivityRange.description
+                    self.tableView.enable(section: 0, row: self.rowSensitivityRange,
+                                          on: !thermalControl.sensitivitySetting.updating)
+                    // calibration
+                    self.calibrationMode.text = thermalControl.calibration?.mode.description ?? "-"
+                    self.tableView.enable(section: 0, row: self.rowCalibration,
+                                          on: !(thermalControl.calibration?.updating ?? true))
+                    self.calibrateBtn.isEnabled = thermalControl.calibration != nil
+
                     self.stateRef = drone.getState { [unowned self] _ in
                         self.tableView.reloadData()
                     }
@@ -65,7 +89,7 @@ class ThermalControlViewController: UITableViewController, DeviceViewController 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let thermalControl = thermalControl?.value, let target = segue.destination as? ChooseEnumViewController {
             if let indexPath = tableView.indexPathForSelectedRow {
-                if indexPath.row == 0 {
+                if indexPath.row == rowMode {
                     target.initialize(data: ChooseEnumViewController.Data(
                         dataSource: [ThermalControlMode](thermalControl.setting.supportedModes),
                         selectedValue: thermalControl.setting.mode.description,
@@ -73,7 +97,7 @@ class ThermalControlViewController: UITableViewController, DeviceViewController 
                             self.thermalControl?.value?.setting.mode = value as! ThermalControlMode
                         }
                     ))
-                } else if indexPath.row == 1 {
+                } else if indexPath.row == rowSensitivityRange {
                     target.initialize(data: ChooseEnumViewController.Data(
                         dataSource:
                             [ThermalSensitivityRange](thermalControl.sensitivitySetting.supportedSensitivityRanges),
@@ -81,6 +105,14 @@ class ThermalControlViewController: UITableViewController, DeviceViewController 
                         itemDidSelect: { [unowned self] value in
                             self.thermalControl?.value?.sensitivitySetting.sensitivityRange =
                                 value as! ThermalSensitivityRange
+                        }
+                    ))
+                } else if indexPath.row == rowCalibration, let calibration = thermalControl.calibration {
+                    target.initialize(data: ChooseEnumViewController.Data(
+                        dataSource: [ThermalCalibrationMode](calibration.supportedModes),
+                        selectedValue: calibration.mode.description,
+                        itemDidSelect: { [unowned self] value in
+                            self.thermalControl?.value?.calibration?.mode = value as! ThermalCalibrationMode
                         }
                     ))
                 }
@@ -97,21 +129,26 @@ class ThermalControlViewController: UITableViewController, DeviceViewController 
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 && indexPath.row < 2 {
+        if indexPath.section == 0,
+            indexPath.row == rowMode || indexPath.row == rowSensitivityRange || indexPath.row == rowCalibration {
             performSegue(withIdentifier: "selectEnumValue", sender: self)
-        } else if indexPath.section == 0 && indexPath.row == 2 {
+        } else if indexPath.section == 0 && indexPath.row == rowEmissivity {
             performSegue(withIdentifier: "selectEmissivityValue", sender: self)
-        } else if indexPath.section == 0 && indexPath.row == 3 {
+        } else if indexPath.section == 0 && indexPath.row == rowBackgroundTemperature {
             performSegue(withIdentifier: "selectBackgroundTemperature", sender: self)
-        } else if indexPath.section == 0 && indexPath.row == 4 {
+        } else if indexPath.section == 0 && indexPath.row == rowColorPalette {
             performSegue(withIdentifier: "selectColorPalette", sender: self)
-        } else if indexPath.section == 0 && indexPath.row == 5 {
+        } else if indexPath.section == 0 && indexPath.row == rowRendering {
             performSegue(withIdentifier: "selectRendering", sender: self)
         }
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-         var rowHeight: CGFloat = 44.0
+        var rowHeight: CGFloat = 44.0
+
+        if thermalControl?.value?.calibration == nil, indexPath.row == rowCalibration {
+            rowHeight = 0.0
+        }
 
         if let state = stateRef?.value?.connectionState {
             if state == .disconnected {
@@ -125,10 +162,8 @@ class ThermalControlViewController: UITableViewController, DeviceViewController 
 }
 
 private extension UITableView {
-    func enable(section: Int, on: Bool) {
-        for cellIndex in 0..<numberOfRows(inSection: section) {
-            cellForRow(at: IndexPath(item: cellIndex, section: section))?.enable(on: on)
-        }
+    func enable(section: Int, row: Int, on: Bool) {
+        cellForRow(at: IndexPath(item: row, section: section))?.enable(on: on)
     }
 }
 

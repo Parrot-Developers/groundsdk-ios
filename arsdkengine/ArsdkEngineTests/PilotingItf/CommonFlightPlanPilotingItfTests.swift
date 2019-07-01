@@ -74,7 +74,12 @@ class CommonFlightPlanPilotingItfTests: ArsdkEngineTestBase {
     }
 
     func testState() {
-        connect(drone: drone, handle: 1)
+        connect(drone: drone, handle: 1) {
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
+                    state: .stopped, filepath: "", type: .flightplan))
+        }
+
         // should be unavailable by default
         assertThat(flightPlanPilotingItf!.state, `is`(.unavailable))
         assertThat(changeCnt, `is`(1))
@@ -155,7 +160,12 @@ class CommonFlightPlanPilotingItfTests: ArsdkEngineTestBase {
     }
 
     func testUploadState() {
-        connect(drone: drone, handle: 1)
+        connect(drone: drone, handle: 1) {
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
+                    state: .stopped, filepath: "", type: .flightplan))
+        }
+
         // upload state should be none by default
         assertThat(flightPlanPilotingItf!.latestUploadState, `is`(.none))
         assertThat(changeCnt, `is`(1))
@@ -212,7 +222,12 @@ class CommonFlightPlanPilotingItfTests: ArsdkEngineTestBase {
     }
 
     func testUnavailabilityReasons() {
-        connect(drone: drone, handle: 1)
+        connect(drone: drone, handle: 1) {
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
+                    state: .stopped, filepath: "", type: .flightplan))
+        }
+
         // latest mission item executed should be only filled with `.missingFlightPlanFile` reason.
         assertThat(flightPlanPilotingItf!.unavailabilityReasons, containsInAnyOrder(
             .missingFlightPlanFile))
@@ -293,20 +308,33 @@ class CommonFlightPlanPilotingItfTests: ArsdkEngineTestBase {
         assertThat(changeCnt, `is`(12))
 
         // upload a file
+        // expect a stop, to stop previous flightplan
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.commonMavlinkStop())
         flightPlanPilotingItf!.uploadFlightPlan(filepath: "flightPlan1")
-        task = httpSession.popLastTask() as? MockUploadTask
+
+        // mock reception of the stop
+        mockArsdkCore.onCommandReceived(
+            1,
+            encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
+                state: .stopped, filepath: "unknow_flightplan", type: .flightplan))
 
         assertThat(flightPlanPilotingItf!.unavailabilityReasons, containsInAnyOrder(.missingFlightPlanFile))
-        assertThat(changeCnt, `is`(13)) // +1 because upload state changed
+        assertThat(changeCnt, `is`(14)) // state and upload state changed
 
         // mock completion successful
+        task = httpSession.popLastTask() as? MockUploadTask
         task?.mockCompletion(statusCode: 200, data: dataUid)
         assertThat(flightPlanPilotingItf!.unavailabilityReasons, empty())
-        assertThat(changeCnt, `is`(14))
+        assertThat(changeCnt, `is`(15))
     }
 
     func testLatestActivationError() {
-        connect(drone: drone, handle: 1)
+        connect(drone: drone, handle: 1) {
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
+                    state: .stopped, filepath: "", type: .flightplan))
+        }
+
         // should be none by default
         assertThat(flightPlanPilotingItf!.latestActivationError, `is`(.none))
         assertThat(changeCnt, `is`(1))
@@ -367,7 +395,12 @@ class CommonFlightPlanPilotingItfTests: ArsdkEngineTestBase {
     }
 
     func testFightPlanFileIsKnown() {
-        connect(drone: drone, handle: 1)
+        connect(drone: drone, handle: 1) {
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
+                    state: .stopped, filepath: "", type: .flightplan))
+        }
+
         // upload state should be none by default
         assertThat(flightPlanPilotingItf!.flightPlanFileIsKnown, `is`(false))
         assertThat(changeCnt, `is`(1))
@@ -419,7 +452,12 @@ class CommonFlightPlanPilotingItfTests: ArsdkEngineTestBase {
     }
 
     func testPauseResumeRestart() {
-        connect(drone: drone, handle: 1)
+        connect(drone: drone, handle: 1) {
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
+                    state: .stopped, filepath: "", type: .flightplan))
+        }
+
         assertThat(flightPlanPilotingItf!.isPaused, `is`(false))
         assertThat(changeCnt, `is`(1))
 
@@ -560,7 +598,12 @@ class CommonFlightPlanPilotingItfTests: ArsdkEngineTestBase {
     }
 
     func testIsPausedAfterUpload() {
-        connect(drone: drone, handle: 1)
+        connect(drone: drone, handle: 1) {
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
+                    state: .stopped, filepath: "", type: .flightplan))
+        }
+
         assertThat(flightPlanPilotingItf!.isPaused, `is`(false))
         assertThat(changeCnt, `is`(1))
 
@@ -607,8 +650,17 @@ class CommonFlightPlanPilotingItfTests: ArsdkEngineTestBase {
         assertThat(changeCnt, `is`(5))
 
         // upload a new flight plan
+        // expect a stop, to stop previous flightplan
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.commonMavlinkStop())
         flightPlanPilotingItf!.uploadFlightPlan(filepath: "flightPlan2")
-         assertThat(changeCnt, `is`(6)) // latestUploadState has been changed
+
+        // mock reception of the stop
+        mockArsdkCore.onCommandReceived(
+            1,
+            encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
+                state: .stopped, filepath: flightplanUid1, type: .flightplan))
+
+        assertThat(changeCnt, `is`(6)) // latestUploadState has been changed
         task = httpSession.popLastTask() as? MockUploadTask
         assertThat(task, presentAnd(isUploading(fileUrl: URL(fileURLWithPath: "flightPlan2"))))
         assertThat(task, presentAnd(has(api: "/api/v1/upload/flightplan")))
@@ -638,20 +690,23 @@ class CommonFlightPlanPilotingItfTests: ArsdkEngineTestBase {
         assertThat(changeCnt, `is`(8))
 
         // upload a new flight plan
-        // expect a pause since the pitf was active
-        expectCommand(handle: 1, expectedCmd: ExpectedCmd.commonMavlinkPause())
+        // expect a stop, to stop previous flightplan
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.commonMavlinkStop())
         flightPlanPilotingItf!.uploadFlightPlan(filepath: "flightPlan3")
 
-        // mock reception of the pause
+        assertThat(flightPlanPilotingItf!.latestUploadState, `is`(.uploading))
+        assertThat(changeCnt, `is`(9)) // state idle
+
+        // mock reception of the stop
         mockArsdkCore.onCommandReceived(
             1,
             encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
-                state: .paused, filepath: flightplanUid2, type: .flightplan))
+                state: .stopped, filepath: flightplanUid2, type: .flightplan))
 
         assertThat(flightPlanPilotingItf!.state, `is`(.idle))
         assertThat(flightPlanPilotingItf!.isPaused, `is`(false))
         assertThat(flightPlanPilotingItf!.latestUploadState, `is`(.uploading))
-        assertThat(changeCnt, `is`(10)) // state idle and latestUploadState has been changed
+        assertThat(changeCnt, `is`(10)) // latestUploadState has been changed
 
         task = httpSession.popLastTask() as? MockUploadTask
         assertThat(task, presentAnd(isUploading(fileUrl: URL(fileURLWithPath: "flightPlan3"))))
@@ -668,7 +723,12 @@ class CommonFlightPlanPilotingItfTests: ArsdkEngineTestBase {
     }
 
     func testUploadSameFlightplan() {
-        connect(drone: drone, handle: 1)
+        connect(drone: drone, handle: 1) {
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
+                    state: .stopped, filepath: "", type: .flightplan))
+        }
+
         assertThat(flightPlanPilotingItf!.isPaused, `is`(false))
         assertThat(changeCnt, `is`(1))
 
@@ -715,29 +775,42 @@ class CommonFlightPlanPilotingItfTests: ArsdkEngineTestBase {
         assertThat(changeCnt, `is`(5))
 
         // upload the same flight plan
+        // expect a stop, to stop previous flightplan
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.commonMavlinkStop())
         flightPlanPilotingItf!.uploadFlightPlan(filepath: "flightPlan1")
+
+        // mock reception of the stop
+        mockArsdkCore.onCommandReceived(
+            1,
+            encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
+                state: .stopped, filepath: flightplanUid, type: .flightplan))
+
         assertThat(changeCnt, `is`(6)) // latestUploadState has been changed
         task = httpSession.popLastTask() as? MockUploadTask
         assertThat(task, presentAnd(isUploading(fileUrl: URL(fileURLWithPath: "flightPlan1"))))
         assertThat(task, presentAnd(has(api: "/api/v1/upload/flightplan")))
         task?.mockCompletion(statusCode: 200, data: dataUid)
         assertThat(flightPlanPilotingItf!.state, `is`(.idle))
-        assertThat(flightPlanPilotingItf!.isPaused, `is`(true))
+        assertThat(flightPlanPilotingItf!.isPaused, `is`(false))
         assertThat(changeCnt, `is`(7)) // latestUploadState has been changed
 
         // restart the flight plan
-        expectCommand(handle: 1, expectedCmd: ExpectedCmd.commonMavlinkStop())
-        _ = flightPlanPilotingItf?.activate(restart: true)
-
-        assertThat(flightPlanPilotingItf!.isPaused, `is`(true))
-        assertThat(changeCnt, `is`(7))
-
-        // mock reception of stopped state (should trigger a start)
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.commonMavlinkStart(
             filepath: flightplanUid, type: .flightplan))
+        _ = flightPlanPilotingItf?.activate(restart: true)
+
+        assertThat(flightPlanPilotingItf!.state, `is`(.idle))
+        assertThat(flightPlanPilotingItf!.isPaused, `is`(false))
+        assertThat(changeCnt, `is`(7))
+
+        // mock reception of playoing state
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
-                state: .stopped, filepath: flightplanUid, type: .flightplan))
+                state: .playing, filepath: flightplanUid, type: .flightplan))
+
+        assertThat(flightPlanPilotingItf!.state, `is`(.active))
+        assertThat(flightPlanPilotingItf!.isPaused, `is`(false))
+        assertThat(changeCnt, `is`(8))
     }
 
     private func mockComponentReception(

@@ -27,26 +27,64 @@
 //    OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 //    SUCH DAMAGE.
 
-import UIKit
-import GroundSdk
+import XCTest
+@testable import GroundSdk
 
-class ThermalControlCell: PeripheralProviderContentCell {
+/// Test Copilot peripheral
+class CopilotTests: XCTestCase {
+    private var store: ComponentStoreCore!
+    private var impl: CopilotCore!
+    private var backend: Backend!
 
-    private var thermalControl: Ref<ThermalControl>?
-
-    @IBOutlet weak var modeLabel: UILabel!
-    @IBOutlet weak var calibrationLabel: UILabel!
-
-    override func set(peripheralProvider provider: PeripheralProvider) {
-        super.set(peripheralProvider: provider)
-        thermalControl = provider.getPeripheral(Peripherals.thermalControl) { [unowned self] thermalControl in
-            if let thermalControl = thermalControl {
-                self.modeLabel.text = thermalControl.setting.mode.description
-                self.calibrationLabel.text = thermalControl.calibration?.mode.description ?? "-"
-                self.show()
-            } else {
-                self.hide()
-            }
-        }
+    override func setUp() {
+        super.setUp()
+        store = ComponentStoreCore()
+        backend = Backend()
+        impl = CopilotCore(store: store!, backend: backend!)
     }
+
+    func testPublishUnpublish() {
+        impl.publish()
+        assertThat(store!.get(Peripherals.copilot), present())
+        impl.unpublish()
+        assertThat(store!.get(Peripherals.copilot), nilValue())
+    }
+
+    func testCopilotSource() {
+        impl.publish()
+
+        var cnt = 0
+        let copilot = store.get(Peripherals.copilot)!
+        _ = store.register(desc: Peripherals.copilot) {
+            cnt += 1
+        }
+
+        assertThat(store!.get(Peripherals.copilot), present())
+
+        // test initial value
+        assertThat(copilot.setting.source, `is`(.remoteControl))
+        assertThat(cnt, `is`(0))
+
+        copilot.setting.source = .application
+        assertThat(cnt, `is`(1))
+
+        copilot.setting.source = .application
+        assertThat(cnt, `is`(1))
+
+        copilot.setting.source = .remoteControl
+        assertThat(cnt, `is`(2))
+
+        copilot.setting.source = .remoteControl
+        assertThat(cnt, `is`(2))
+    }
+}
+
+private class Backend: CopilotBackend {
+    var source: CopilotSource = .remoteControl
+
+    func set(source: CopilotSource) -> Bool {
+        self.source = source
+        return true
+    }
+
 }

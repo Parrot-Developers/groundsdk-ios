@@ -184,7 +184,6 @@ class DroneController: DeviceController {
 
     /// Device controller did stop
     override func controllerDidStop() {
-        userAccountMonitor = nil
         // unpublish drone
         // Can force unwrap drone store utility because we know it is always available after the engine's start
         engine.utilities.getUtility(Utilities.droneStore)!.remove(drone)
@@ -193,7 +192,7 @@ class DroneController: DeviceController {
     override func protocolWillConnect() {
         super.protocolWillConnect()
 
-        if let blackBoxRecorder = engine.blackBoxRecoder, userHasAuthorizedBlackbox == true {
+        if let blackBoxRecorder = engine.blackBoxRecoder {
             // can force unwrap active provider since we are connecting
             let connectorType = activeProvider!.connector.connectorType
             blackBoxSession = blackBoxRecorder.openDroneSession(

@@ -35,10 +35,15 @@ func supports(modes: Set<ThermalControlMode>) -> Matcher<ThermalControlSetting> 
     }
 }
 
-
 func supports(ranges: Set<ThermalSensitivityRange>) -> Matcher<ThermalSensitivityRangeSetting> {
     return Matcher("ranges = \(ranges) ") {
         $0.supportedSensitivityRanges == ranges
+    }
+}
+
+func supports(modes: Set<ThermalCalibrationMode>) -> Matcher<ThermalCalibration> {
+    return Matcher("modes = \(modes) ") {
+        $0.supportedModes == modes
     }
 }
 
@@ -57,6 +62,17 @@ func `is`(sensitivityRange: ThermalSensitivityRange, updating: Bool) -> Matcher<
     return allOf(
         Matcher("sensitivityRange \(sensitivityRange)") {
             $0.sensitivityRange == sensitivityRange
+        },
+        Matcher("updating \(updating)") {
+            $0.updating == updating
+        }
+    )
+}
+
+func `is`(mode: ThermalCalibrationMode, updating: Bool) -> Matcher<ThermalCalibration> {
+    return allOf(
+        Matcher("mode \(mode)") {
+            $0.mode == mode
         },
         Matcher("updating \(updating)") {
             $0.updating == updating

@@ -623,6 +623,14 @@ public class MockGroundSdk: NSObject {
             return false
         }
 
+        func set(calibrationMode: ThermalCalibrationMode) -> Bool {
+            return false
+        }
+
+        func calibrate() -> Bool {
+            return false
+        }
+
         func set(palette: ThermalPalette) {
         }
 

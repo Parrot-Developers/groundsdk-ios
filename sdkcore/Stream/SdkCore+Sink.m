@@ -64,24 +64,18 @@ extern ULogTag *TAG;
 /**
  Called back when a new frame has been pushed in the sink's queue.
 
- @param fd: fd of the pomp_evt that triggered this callback
- @param revents: events that occurred
+ @param evt: pomp_evt that triggered this callback
  @param userdata: sdkcore_sink instance
  */
-static void pdraw_queue_push(int fd, uint32_t revents, void *userdata)
+static void pdraw_queue_push(struct pomp_evt *evt, void *userdata)
 {
     SdkCoreSink *this = (__bridge SdkCoreSink *)(userdata);
     if (this.psink == NULL) {
         [ULog e:TAG msg:@"SdkCoreSink pdraw_queue_push failed: %d", -EPROTO];
     }
 
-    int res = pomp_evt_clear(this.event);
-    if (res < 0) {
-        [ULog e:TAG msg:@"SdkCoreSink pomp_evt_clear failed: %d", res];
-    }
-
     struct vbuf_buffer *buffer = NULL;
-    res = vbuf_queue_pop(this.queue, 0, &buffer);
+    int res = vbuf_queue_pop(this.queue, 0, &buffer);
     if (res < 0 || buffer == NULL) {
         [ULog e:TAG msg:@"SdkCoreSink vbuf_queue_pop failed: %d", res];
         return;
@@ -218,16 +212,9 @@ static void pdraw_flush(struct pdraw *pdraw, struct pdraw_video_sink *sink,
         goto err_stop_sink;
     }
 
-    intptr_t fd = pomp_evt_get_fd(_event);
-    res = (int)fd;
+    res = pomp_evt_attach_to_loop(_event, [_pompLoopUtil internalPompLoop], pdraw_queue_push, (__bridge void*)self);
     if (res < 0) {
-        [ULog e:TAG msg:@"SdkCoreSink pomp_evt_get_fd failed: %d", res];
-        goto err_stop_sink;
-    }
-
-    res = pomp_loop_add([_pompLoopUtil internalPompLoop], (int)fd, POMP_FD_EVENT_IN, pdraw_queue_push, (__bridge void*)self);
-    if (res < 0) {
-        [ULog e:TAG msg:@"SdkCoreSink pomp_loop_add failed: %d", res];
+        [ULog e:TAG msg:@"SdkCoreSink pomp_evt_attach_to_loop failed: %d", res];
         goto err_stop_sink;
     }
 
@@ -267,15 +254,9 @@ err_cleanup:
 
         self.psink = NULL;
 
-        intptr_t fd = pomp_evt_get_fd(self.event);
-        if (fd >= 0) {
-            int res = (pomp_loop_remove([pompLoopUtil internalPompLoop], (int)fd));
-            if (res < 0) {
-                [ULog e:TAG msg:@"SdkCoreSink pomp_loop_remove failed: %d", res];
-            }
-        } else {
-            [ULog e:TAG msg:@"SdkCoreSink bad fd: %ld", fd];
-            return;
+        res = pomp_evt_detach_from_loop(self.event, [pompLoopUtil internalPompLoop]);
+        if (res < 0) {
+            [ULog e:TAG msg:@"SdkCoreSink pomp_evt_detach_from_loop failed: %d", res];
         }
 
         self.event = NULL;

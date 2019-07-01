@@ -198,6 +198,71 @@ class ThermalControllerTests: ArsdkEngineTestBase {
         assertThat(changeCnt, `is`(1))
     }
 
+    func testCalibration() {
+        connect(drone: drone, handle: 1) {
+            self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.thermalCapabilitiesEncoder(
+                modesBitField: Bitfield<ArsdkFeatureThermalMode>.of(.standard, .disabled)))
+            self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.thermalShutterModeEncoder(
+                currentTrigger: .auto))
+        }
+        assertThat(thermalControl, `is`(present()))
+        assertThat(changeCnt, `is`(1))
+
+        // initial values
+        assertThat(thermalControl!.calibration, presentAnd(`is`(mode: .automatic, updating: false)))
+        assertThat(thermalControl!.calibration, presentAnd(supports(modes: [.automatic, .manual])))
+
+        // change to manual mode
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.thermalSetShutterMode(trigger: .manual))
+        thermalControl!.calibration!.mode = .manual
+        assertThat(changeCnt, `is`(2))
+        assertThat(thermalControl!.calibration, presentAnd(`is`(mode: .manual, updating: true)))
+
+        mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.thermalShutterModeEncoder(currentTrigger: .manual))
+        assertThat(changeCnt, `is`(3))
+        assertThat(thermalControl!.calibration, presentAnd(`is`(mode: .manual, updating: false)))
+
+        // change to automatic mode
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.thermalSetShutterMode(trigger: .auto))
+        thermalControl!.calibration!.mode = .automatic
+        assertThat(changeCnt, `is`(4))
+        assertThat(thermalControl!.calibration, presentAnd(`is`(mode: .automatic, updating: true)))
+
+        mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.thermalShutterModeEncoder(currentTrigger: .auto))
+        assertThat(changeCnt, `is`(5))
+        assertThat(thermalControl!.calibration, presentAnd(`is`(mode: .automatic, updating: false)))
+
+        // change to manual mode
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.thermalSetShutterMode(trigger: .manual))
+        thermalControl!.calibration!.mode = .manual
+        assertThat(changeCnt, `is`(6))
+        assertThat(thermalControl!.calibration, presentAnd(`is`(mode: .manual, updating: true)))
+
+        disconnect(drone: drone, handle: 1)
+
+        // should be updated to user value
+        assertThat(thermalControl!.calibration, presentAnd(`is`(mode: .manual, updating: false)))
+        assertThat(changeCnt, `is`(7))
+
+        resetArsdkEngine()
+
+        assertThat(thermalControl!.calibration, presentAnd(`is`(mode: .manual, updating: false)))
+
+        // apply mode on connection
+        connect(drone: drone, handle: 1) {
+            self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.thermalCapabilitiesEncoder(
+                modesBitField: Bitfield<ArsdkFeatureThermalMode>.of(.standard, .disabled)))
+            self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.thermalShutterModeEncoder(
+                currentTrigger: .auto))
+            self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.thermalSetShutterMode(trigger: .manual))
+        }
+        assertThat(changeCnt, `is`(1))
+
+        mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.thermalShutterModeEncoder(currentTrigger: .auto))
+        assertThat(changeCnt, `is`(2))
+        assertThat(thermalControl!.calibration, presentAnd(`is`(mode: .automatic, updating: false)))
+    }
+
     func testBackgroundTemperature () {
         connect(drone: drone, handle: 1) {
             self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.thermalCapabilitiesEncoder(

@@ -244,6 +244,9 @@
 		9BBD4155222EB19F0006CBAF /* PhotoProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBD4154222EB19F0006CBAF /* PhotoProgressIndicator.swift */; };
 		9BBD4157222EC0330006CBAF /* PhotoProgressIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBD4156222EC0330006CBAF /* PhotoProgressIndicatorTests.swift */; };
 		9BDDF1A3214687F5008252BA /* FlightLogEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDDF1A2214687F5008252BA /* FlightLogEngineTests.swift */; };
+		9BF5447F22B7827100452895 /* CopilotCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF5447E22B7827100452895 /* CopilotCore.swift */; };
+		9BF5448322B8BF2400452895 /* Copilot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF5448222B8BF2400452895 /* Copilot.swift */; };
+		9BF5448722BA144900452895 /* CopilotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF5448622BA144900452895 /* CopilotTests.swift */; };
 		B27C8B112132D9A100E05DB4 /* MockFirmwareDownloaderCoreTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27C8B102132D9A100E05DB4 /* MockFirmwareDownloaderCoreTask.swift */; };
 		B27C8B132132E2BE00E05DB4 /* FirmwareManagerEntryMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27C8B122132E2BE00E05DB4 /* FirmwareManagerEntryMatcher.swift */; };
 		F80221802029EFC000BB8D22 /* MockHttpSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F802217F2029EFC000BB8D22 /* MockHttpSession.swift */; };
@@ -806,6 +809,9 @@
 		9BBD4154222EB19F0006CBAF /* PhotoProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProgressIndicator.swift; sourceTree = "<group>"; };
 		9BBD4156222EC0330006CBAF /* PhotoProgressIndicatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProgressIndicatorTests.swift; sourceTree = "<group>"; };
 		9BDDF1A2214687F5008252BA /* FlightLogEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightLogEngineTests.swift; sourceTree = "<group>"; };
+		9BF5447E22B7827100452895 /* CopilotCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopilotCore.swift; sourceTree = "<group>"; };
+		9BF5448222B8BF2400452895 /* Copilot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Copilot.swift; sourceTree = "<group>"; };
+		9BF5448622BA144900452895 /* CopilotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopilotTests.swift; sourceTree = "<group>"; };
 		B27C8B102132D9A100E05DB4 /* MockFirmwareDownloaderCoreTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFirmwareDownloaderCoreTask.swift; sourceTree = "<group>"; };
 		B27C8B122132E2BE00E05DB4 /* FirmwareManagerEntryMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareManagerEntryMatcher.swift; sourceTree = "<group>"; };
 		F802217F2029EFC000BB8D22 /* MockHttpSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockHttpSession.swift; sourceTree = "<group>"; };
@@ -1533,6 +1539,7 @@
 				9B31DFFD21C931B3006F389E /* ThermalControlTests.swift */,
 				F8123B55200D00CD0071672B /* RemovableUserStorageTests.swift */,
 				02CE447D208E1FA9007B9F9F /* SkyCtrl3GamepadTests.swift */,
+				9BF5448622BA144900452895 /* CopilotTests.swift */,
 				F884688A1DEEE2F900ACE941 /* SystemInfoTests.swift */,
 				0237525520760C2E00825545 /* TargetTrackerTests.swift */,
 				F8ED48B71E81894900C0FFC0 /* UpdaterTests.swift */,
@@ -1904,6 +1911,7 @@
 				9B40FAC9215E29BA00CF6690 /* PreciseHomeCore.swift */,
 				F8123B51200CF0C70071672B /* RemovableUserStorageCore.swift */,
 				02CE4464208DE83E007B9F9F /* SkyCtrl3GamepadCore.swift */,
+				9BF5447E22B7827100452895 /* CopilotCore.swift */,
 				71E16ADF217F298E00CB8D17 /* StreamCore */,
 				F8C04C761FB0A7110020ED18 /* SystemInfoCore.swift */,
 				023752532074F95800825545 /* TargetTrackerCore.swift */,
@@ -2061,6 +2069,7 @@
 				F8C04CBC1FB0A7120020ED18 /* Wifi */,
 				F8C04CC11FB0A7120020ED18 /* WifiAccessPoint.swift */,
 				F8C04CCE1FB0A7120020ED18 /* WifiScanner.swift */,
+				9BF5448222B8BF2400452895 /* Copilot.swift */,
 			);
 			path = Peripheral;
 			sourceTree = "<group>";
@@ -2524,6 +2533,7 @@
 				02CB17A3207F5DF2006478DA /* FollowMePilotingItf.swift in Sources */,
 				712A9F452203493200BD4DFC /* FileReplay.swift in Sources */,
 				F899E73F20777460004763E4 /* FirmwareInfo.swift in Sources */,
+				9BF5448322B8BF2400452895 /* Copilot.swift in Sources */,
 				9BBB950E21DF5A7900CE4322 /* ThermalCamera.swift in Sources */,
 				F892D6BC1FD83FAD00B80041 /* BlackBox.swift in Sources */,
 				0285565520A6DB9400A898BD /* UserAccountUtilityCore.swift in Sources */,
@@ -2585,6 +2595,7 @@
 				F8ED3E0D20B012020032513C /* SettingTimeout.swift in Sources */,
 				F8766ED71FC5D3CC007020CE /* CrashReportStorageCore.swift in Sources */,
 				F8C04D541FB0A7120020ED18 /* PilotingItfProvider.swift in Sources */,
+				9BF5447F22B7827100452895 /* CopilotCore.swift in Sources */,
 				71A85BAE21AD53A70094E8F2 /* TextureLoader.swift in Sources */,
 				7C740696204E8A3900D1CD78 /* AntiflickerCore.swift in Sources */,
 				F8C04CE21FB0A7120020ED18 /* ULogTag.swift in Sources */,
@@ -2829,6 +2840,7 @@
 				0285565720A7119400A898BD /* UserAccountTests.swift in Sources */,
 				F853FD901FBC6A26006692C4 /* AutoConnectionEngineTests.swift in Sources */,
 				7C76AAB31C8D759700FC213E /* ArithmeticMatchers.swift in Sources */,
+				9BF5448722BA144900452895 /* CopilotTests.swift in Sources */,
 				F8884B671FB34A6D00D1E7CC /* CameraMatcher.swift in Sources */,
 				9B6490BF213ED9E1005EBDE7 /* EphemerisEngineTests.swift in Sources */,
 				7C73E39A1DA4E74D0042237E /* GroundSdkRemoteControlListTests.swift in Sources */,

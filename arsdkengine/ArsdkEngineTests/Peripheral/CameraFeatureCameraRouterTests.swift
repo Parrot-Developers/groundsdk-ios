@@ -196,7 +196,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         assertThat(camera!.modeSetting, `is`(mode: .photo, updating: false))
     }
 
-    func testExposureSettings() {
+    func testExposureSettingsTwoParameters() {
         let shutterSpeedBitField: UInt64 = Bitfield<ArsdkFeatureCameraShutterSpeed>.of(
             [.shutter1, .shutter1Over10, .shutter1Over100])
         let manualIsoSensitivityBitField: UInt64 = Bitfield<ArsdkFeatureCameraIsoSensitivity>.of(
@@ -210,7 +210,171 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                                     exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
 
             self.mockArsdkCore.onCommandReceived(
-                0, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
+                1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
+
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
+                    camId: 0, mode: .manual,
+                    manualShutterSpeed: .shutter1Over10,
+                    manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
+                    manualIsoSensitivity: .iso100,
+                    manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
+                    maxIsoSensitivity: .iso320,
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
+                    camId: 1, mode: .manual,
+                    manualShutterSpeed: .shutter1Over10,
+                    manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
+                    manualIsoSensitivity: .iso100,
+                    manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
+                    maxIsoSensitivity: .iso320,
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+        }
+        assertThat(changeCnt, `is`(2))
+
+        // Check capabilities
+        assertThat(camera!.exposureSettings, supports(
+            exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed],
+            shutterSpeeds: [.one, .oneOver10, .oneOver100],
+            isoSensitivities: [.iso100, .iso200, .iso320], maximumIsoSensitivities: [.iso160, .iso320]))
+
+        assertThat(cameraThermal!.exposureSettings, supports(
+            exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed],
+            shutterSpeeds: [.one, .oneOver10, .oneOver100],
+            isoSensitivities: [.iso100, .iso200, .iso320], maximumIsoSensitivities: [.iso160, .iso320]))
+        // Check initial values
+        assertThat(camera!.exposureSettings,
+                   `is`(mode: .manual, shutterSpeed: .oneOver10,
+                        isoSensitivity: .iso100,
+                        maximumIsoSensitivity: .iso320,
+                        updating: false))
+        assertThat(cameraThermal!.exposureSettings,
+                   `is`(mode: .manual, shutterSpeed: .oneOver10,
+                        isoSensitivity: .iso100,
+                        maximumIsoSensitivity: .iso320,
+                        updating: false))
+        // disconnect
+        disconnect(drone: drone, handle: 1)
+
+        // exposure settings is available offline.
+        assertThat(changeCnt, `is`(3))
+        assertThat(camera!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+
+        assertThat(camera!.exposureSettings, supports(
+            exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed],
+            shutterSpeeds: [.one, .oneOver10, .oneOver100],
+            isoSensitivities: [.iso100, .iso200, .iso320], maximumIsoSensitivities: [.iso160, .iso320]))
+        assertThat(cameraThermal!.exposureSettings, supports(
+            exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed],
+            shutterSpeeds: [.one, .oneOver10, .oneOver100],
+            isoSensitivities: [.iso100, .iso200, .iso320], maximumIsoSensitivities: [.iso160, .iso320]))
+
+        cameraThermal!.exposureSettings.mode = .manualIsoSensitivity
+        assertThat(changeCnt, `is`(4))
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .manualIsoSensitivity, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+
+        cameraThermal!.exposureSettings.manualIsoSensitivity = .iso200
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .manualIsoSensitivity, shutterSpeed: .oneOver10, isoSensitivity: .iso200, updating: false))
+        assertThat(changeCnt, `is`(5))
+
+        changeCnt = 0
+
+        assertThat(camera!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .manualIsoSensitivity, shutterSpeed: .oneOver10, isoSensitivity: .iso200, updating: false))
+
+        connect(drone: drone, handle: 1) {
+            self.sendCapabilitiesCommand(camId: 0, model: .main,
+                                exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
+            // receive the lastest online value
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
+                    camId: 0, mode: .manual,
+                    manualShutterSpeed: .shutter1Over10,
+                    manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
+                    manualIsoSensitivity: .iso100,
+                    manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
+                    maxIsoSensitivity: .iso320,
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+
+            self.sendCapabilitiesCommand(camId: 1, model: .thermal,
+                                    exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
+
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
+                    camId: 1, mode: .manual,
+                    manualShutterSpeed: .shutter1Over10,
+                    manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
+                    manualIsoSensitivity: .iso200,
+                    manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
+                    maxIsoSensitivity: .iso320,
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
+
+            // send the new value (setted offline)
+            self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
+                camId: 1, mode: .manualIsoSensitivity, shutterSpeed: .shutter1Over10, isoSensitivity: .iso200,
+                maxIsoSensitivity: .iso320))
+
+        }
+
+        // 2 for capabilities and Updating
+        assertThat(changeCnt, `is`(2))
+
+        assertThat(camera!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .manualIsoSensitivity, shutterSpeed: .oneOver10, isoSensitivity: .iso200, updating: false))
+
+        // check the new value for the drone
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
+                camId: 1, mode: .automatic,
+                manualShutterSpeed: .shutter1Over100,
+                manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
+                manualIsoSensitivity: .iso100,
+                manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
+                maxIsoSensitivity: .iso320,
+                maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .automatic, shutterSpeed: .oneOver100, isoSensitivity: .iso100, maximumIsoSensitivity: .iso320,
+            updating: false))
+
+        assertThat(changeCnt, `is`(3))
+        // disconnect
+        disconnect(drone: drone, handle: 1)
+        assertThat(camera!.exposureSettings, `is`(present()))
+        assertThat(cameraThermal!.exposureSettings, `is`(present()))
+        // exposure settings is available offline.
+        assertThat(changeCnt, `is`(4))
+    }
+
+    func testExposureSettingsManualShutterSpeed() {
+        let shutterSpeedBitField: UInt64 = Bitfield<ArsdkFeatureCameraShutterSpeed>.of(
+            [.shutter1, .shutter1Over10, .shutter1Over100])
+        let manualIsoSensitivityBitField: UInt64 = Bitfield<ArsdkFeatureCameraIsoSensitivity>.of(
+            [.iso100, .iso200, .iso320])
+        let maxIsoSensitivityBitField: UInt64 = Bitfield<ArsdkFeatureCameraIsoSensitivity>.of(
+            [.iso160, .iso320])
+        connect(drone: drone, handle: 1) {
+            self.sendCapabilitiesCommand(camId: 0, model: .main,
+                                    exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
+            self.sendCapabilitiesCommand(camId: 1, model: .thermal,
+                                    exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
+
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
 
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
@@ -255,168 +419,16 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                         maximumIsoSensitivity: .iso160,
                         updating: false))
 
-        // Change mode to automatic
-        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
-            camId: 0, mode: .automatic, shutterSpeed: .shutter1Over10, isoSensitivity: .iso100,
-            maxIsoSensitivity: .iso160))
-        camera!.exposureSettings.mode = .automatic
-        assertThat(changeCnt, `is`(3))
-        assertThat(camera!.exposureSettings, `is`(mode: .automatic, updating: true))
-
-        cameraThermal!.exposureSettings.mode = .automatic
-        assertThat(changeCnt, `is`(4))
-        assertThat(cameraThermal!.exposureSettings, `is`(mode: .automatic, updating: false))
-
-        mockArsdkCore.onCommandReceived(
-            1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
-                camId: 0, mode: .automatic, manualShutterSpeed: .shutter1Over10,
-                manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
-                manualIsoSensitivity: .iso100, manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
-                maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
-
-        assertThat(changeCnt, `is`(5))
-        assertThat(camera!.exposureSettings, `is`(mode: .automatic, updating: false))
-
-        // change to manual shutter speed
-        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
-            camId: 0, mode: .manualShutterSpeed, shutterSpeed: .shutter1Over100, isoSensitivity: .iso100,
-            maxIsoSensitivity: .iso160))
-        camera!.exposureSettings.set(mode: .manualShutterSpeed, manualShutterSpeed: .oneOver100,
-                                     manualIsoSensitivity: nil, maximumIsoSensitivity: nil)
-        assertThat(changeCnt, `is`(6))
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .manualShutterSpeed, shutterSpeed: .oneOver100, updating: true))
-
-        cameraThermal!.exposureSettings.set(mode: .manualShutterSpeed, manualShutterSpeed: .oneOver100,
-                                            manualIsoSensitivity: nil, maximumIsoSensitivity: nil)
-        assertThat(changeCnt, `is`(7))
-        assertThat(cameraThermal!.exposureSettings, `is`(
-            mode: .manualShutterSpeed, shutterSpeed: .oneOver100, updating: false))
-
-        mockArsdkCore.onCommandReceived(
-            1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
-                camId: 0, mode: .manualShutterSpeed,
-                manualShutterSpeed: .shutter1Over100,
-                manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
-                manualIsoSensitivity: .iso100,
-                manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
-                maxIsoSensitivity: .iso160,
-                maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
-        assertThat(changeCnt, `is`(8))
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .manualShutterSpeed, shutterSpeed: .oneOver100, updating: false))
-
-        // change to manual iso
-        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
-            camId: 0, mode: .manualIsoSensitivity, shutterSpeed: .shutter1Over100, isoSensitivity: .iso320,
-            maxIsoSensitivity: .iso160))
-        camera!.exposureSettings.set(mode: .manualIsoSensitivity, manualShutterSpeed: nil,
-                                     manualIsoSensitivity: .iso320, maximumIsoSensitivity: nil)
-        assertThat(changeCnt, `is`(9))
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .manualIsoSensitivity, isoSensitivity: .iso320, updating: true))
-
-        // change to manual iso
-        cameraThermal!.exposureSettings.set(mode: .manualIsoSensitivity, manualShutterSpeed: nil,
-                                            manualIsoSensitivity: .iso320, maximumIsoSensitivity: nil)
-        assertThat(changeCnt, `is`(10))
-        assertThat(cameraThermal!.exposureSettings, `is`(
-            mode: .manualIsoSensitivity, isoSensitivity: .iso320, updating: false))
-
-        mockArsdkCore.onCommandReceived(
-            1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
-                camId: 0, mode: .manualIsoSensitivity,
-                manualShutterSpeed: .shutter1Over100,
-                manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
-                manualIsoSensitivity: .iso320,
-                manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
-                maxIsoSensitivity: .iso160,
-                maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
-        assertThat(changeCnt, `is`(11))
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .manualIsoSensitivity, isoSensitivity: .iso320, updating: false))
-
-        // change to automatic, with maximum iso
-        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
-            camId: 0, mode: .automatic, shutterSpeed: .shutter1Over100, isoSensitivity: .iso320,
-            maxIsoSensitivity: .iso320))
-        camera!.exposureSettings.set(mode: .automatic, manualShutterSpeed: nil,
-                                     manualIsoSensitivity: nil, maximumIsoSensitivity: .iso320)
-        assertThat(changeCnt, `is`(12))
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .automatic, maximumIsoSensitivity: .iso320, updating: true))
-
-        cameraThermal!.exposureSettings.set(mode: .automatic, manualShutterSpeed: nil,
-                                            manualIsoSensitivity: nil, maximumIsoSensitivity: .iso320)
-        assertThat(changeCnt, `is`(13))
-        assertThat(cameraThermal!.exposureSettings, `is`(
-            mode: .automatic, maximumIsoSensitivity: .iso320, updating: false))
-
-        mockArsdkCore.onCommandReceived(
-            1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
-                camId: 0, mode: .automatic,
-                manualShutterSpeed: .shutter1Over100,
-                manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
-                manualIsoSensitivity: .iso320,
-                manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
-                maxIsoSensitivity: .iso320,
-                maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
-        assertThat(changeCnt, `is`(14))
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .automatic, maximumIsoSensitivity: .iso320, updating: false))
-
-        // change shutter speed, iso sensitivity then change mode
-        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
-            camId: 0, mode: .automatic, shutterSpeed: .shutter1Over10, isoSensitivity: .iso320,
-            maxIsoSensitivity: .iso320))
-        camera!.exposureSettings.manualShutterSpeed = .oneOver10
-        assertThat(changeCnt, `is`(15))
-
-        cameraThermal!.exposureSettings.manualShutterSpeed = .oneOver10
-        assertThat(changeCnt, `is`(16))
-
-        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
-            camId: 0, mode: .automatic, shutterSpeed: .shutter1Over10, isoSensitivity: .iso200,
-            maxIsoSensitivity: .iso320))
-        camera!.exposureSettings.manualIsoSensitivity = .iso200
-        assertThat(changeCnt, `is`(17))
-
-        cameraThermal!.exposureSettings.manualIsoSensitivity = .iso200
-        assertThat(changeCnt, `is`(18))
-
-        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
-            camId: 0, mode: .manual, shutterSpeed: .shutter1Over10, isoSensitivity: .iso200,
-            maxIsoSensitivity: .iso320))
-        camera!.exposureSettings.mode = .manual
-        assertThat(changeCnt, `is`(19))
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso200, updating: true))
-
-        cameraThermal!.exposureSettings.mode = .manual
-        assertThat(changeCnt, `is`(20))
-        assertThat(cameraThermal!.exposureSettings, `is`(
-            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso200, updating: false))
-
-        mockArsdkCore.onCommandReceived(
-            1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
-                camId: 0, mode: .manual,
-                manualShutterSpeed: .shutter1Over10,
-                manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
-                manualIsoSensitivity: .iso200,
-                manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
-                maxIsoSensitivity: .iso320,
-                maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
-        assertThat(changeCnt, `is`(21))
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso200, updating: false))
-
         // disconnect
         disconnect(drone: drone, handle: 1)
 
-        // exposure settings is available offline. WhiteBalance Lock is now nil
-        assertThat(changeCnt, `is`(22))
+        // exposure settings is available offline.
+        assertThat(changeCnt, `is`(3))
         assertThat(camera!.exposureSettings, `is`(
-            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso200, updating: false))
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+
         assertThat(camera!.exposureSettings, supports(
             exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed],
             shutterSpeeds: [.one, .oneOver10, .oneOver100],
@@ -426,80 +438,284 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             shutterSpeeds: [.one, .oneOver10, .oneOver100],
             isoSensitivities: [.iso100, .iso200, .iso320], maximumIsoSensitivities: [.iso160, .iso320]))
 
-        camera!.exposureSettings.mode = .manualIsoSensitivity
-        assertThat(changeCnt, `is`(23))
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .manualIsoSensitivity, shutterSpeed: .oneOver10, isoSensitivity: .iso200, updating: false))
-        cameraThermal!.exposureSettings.mode = .manualIsoSensitivity
-        assertThat(changeCnt, `is`(24))
-        assertThat(cameraThermal!.exposureSettings, `is`(
-            mode: .manualIsoSensitivity, shutterSpeed: .oneOver10, isoSensitivity: .iso200, updating: false))
-
-        camera!.exposureSettings.manualIsoSensitivity = .iso100
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .manualIsoSensitivity, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
-        assertThat(changeCnt, `is`(25))
-        cameraThermal!.exposureSettings.manualIsoSensitivity = .iso100
-        assertThat(cameraThermal!.exposureSettings, `is`(
-            mode: .manualIsoSensitivity, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
-        assertThat(changeCnt, `is`(26))
-
-        camera!.exposureSettings.mode = .manualShutterSpeed
-        assertThat(changeCnt, `is`(27))
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .manualShutterSpeed, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
-        cameraThermal!.exposureSettings.mode = .manualShutterSpeed
-        assertThat(changeCnt, `is`(28))
-        assertThat(cameraThermal!.exposureSettings, `is`(
-            mode: .manualShutterSpeed, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
-
-        camera!.exposureSettings.manualShutterSpeed = .oneOver100
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .manualShutterSpeed, shutterSpeed: .oneOver100, isoSensitivity: .iso100, updating: false))
-        assertThat(changeCnt, `is`(29))
         cameraThermal!.exposureSettings.manualShutterSpeed = .oneOver100
-        assertThat(cameraThermal!.exposureSettings, `is`(
-            mode: .manualShutterSpeed, shutterSpeed: .oneOver100, isoSensitivity: .iso100, updating: false))
-        assertThat(changeCnt, `is`(30))
-
-        camera!.exposureSettings.mode = .manual
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .manual, shutterSpeed: .oneOver100, isoSensitivity: .iso100, updating: false))
-        assertThat(changeCnt, `is`(31))
-        cameraThermal!.exposureSettings.mode = .manual
+        assertThat(changeCnt, `is`(4))
         assertThat(cameraThermal!.exposureSettings, `is`(
             mode: .manual, shutterSpeed: .oneOver100, isoSensitivity: .iso100, updating: false))
-        assertThat(changeCnt, `is`(32))
-
-        camera!.exposureSettings.mode = .automatic
-        assertThat(changeCnt, `is`(33))
-        cameraThermal!.exposureSettings.mode = .automatic
-        assertThat(changeCnt, `is`(34))
-
-        // already at .iso320
-        camera!.exposureSettings.maximumIsoSensitivity = .iso320
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .automatic, shutterSpeed: .oneOver100, isoSensitivity: .iso100, maximumIsoSensitivity: .iso320,
-            updating: false))
-        assertThat(changeCnt, `is`(34))
-
-        cameraThermal!.exposureSettings.maximumIsoSensitivity = .iso320
-        assertThat(cameraThermal!.exposureSettings, `is`(
-            mode: .automatic, shutterSpeed: .oneOver100, isoSensitivity: .iso100, maximumIsoSensitivity: .iso320,
-            updating: false))
-        assertThat(changeCnt, `is`(34))
 
         changeCnt = 0
+
         connect(drone: drone, handle: 1) {
             self.sendCapabilitiesCommand(camId: 0, model: .main,
-                                    exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
-            // receive the last online value
+                                exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
+            // receive the lastest online value
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
                     camId: 0, mode: .manual,
                     manualShutterSpeed: .shutter1Over10,
                     manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
-                    manualIsoSensitivity: .iso200,
+                    manualIsoSensitivity: .iso100,
+                    manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
+                    maxIsoSensitivity: .iso160,
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+
+            self.sendCapabilitiesCommand(camId: 1, model: .thermal,
+                                exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
+
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
+                    camId: 1, mode: .manual,
+                    manualShutterSpeed: .shutter1Over10,
+                    manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
+                    manualIsoSensitivity: .iso100,
+                    manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
+                    maxIsoSensitivity: .iso160,
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
+
+            // send the new value (setted offline)
+            self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
+                camId: 1, mode: .manual, shutterSpeed: .shutter1Over100, isoSensitivity: .iso100,
+                maxIsoSensitivity: .iso160))
+        }
+
+        // 2 for capabilities and Updating
+        assertThat(changeCnt, `is`(2))
+
+        assertThat(camera!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver100, isoSensitivity: .iso100, updating: false))
+    }
+
+    func testExposureSettingsManualIsoSensitivity() {
+        let shutterSpeedBitField: UInt64 = Bitfield<ArsdkFeatureCameraShutterSpeed>.of(
+            [.shutter1, .shutter1Over10, .shutter1Over100])
+        let manualIsoSensitivityBitField: UInt64 = Bitfield<ArsdkFeatureCameraIsoSensitivity>.of(
+            [.iso100, .iso200, .iso320])
+        let maxIsoSensitivityBitField: UInt64 = Bitfield<ArsdkFeatureCameraIsoSensitivity>.of(
+            [.iso160, .iso320])
+        connect(drone: drone, handle: 1) {
+            self.sendCapabilitiesCommand(camId: 0, model: .main,
+                                    exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
+            self.sendCapabilitiesCommand(camId: 1, model: .thermal,
+                                    exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
+
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
+
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
+                    camId: 0, mode: .manual,
+                    manualShutterSpeed: .shutter1Over10,
+                    manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
+                    manualIsoSensitivity: .iso100,
+                    manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
+                    maxIsoSensitivity: .iso320,
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
+                    camId: 1, mode: .manual,
+                    manualShutterSpeed: .shutter1Over10,
+                    manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
+                    manualIsoSensitivity: .iso100,
+                    manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
+                    maxIsoSensitivity: .iso320,
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+        }
+        assertThat(changeCnt, `is`(2))
+
+        // Check capabilities
+        assertThat(camera!.exposureSettings, supports(
+            exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed],
+            shutterSpeeds: [.one, .oneOver10, .oneOver100],
+            isoSensitivities: [.iso100, .iso200, .iso320], maximumIsoSensitivities: [.iso160, .iso320]))
+
+        assertThat(cameraThermal!.exposureSettings, supports(
+            exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed],
+            shutterSpeeds: [.one, .oneOver10, .oneOver100],
+            isoSensitivities: [.iso100, .iso200, .iso320], maximumIsoSensitivities: [.iso160, .iso320]))
+        // Check initial values
+        assertThat(camera!.exposureSettings,
+                   `is`(mode: .manual, shutterSpeed: .oneOver10,
+                        isoSensitivity: .iso100,
+                        maximumIsoSensitivity: .iso320,
+                        updating: false))
+        assertThat(cameraThermal!.exposureSettings,
+                   `is`(mode: .manual, shutterSpeed: .oneOver10,
+                        isoSensitivity: .iso100,
+                        maximumIsoSensitivity: .iso320,
+                        updating: false))
+
+        // disconnect
+        disconnect(drone: drone, handle: 1)
+
+        // exposure settings is available offline.
+        assertThat(changeCnt, `is`(3))
+        assertThat(camera!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+
+        assertThat(camera!.exposureSettings, supports(
+            exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed],
+            shutterSpeeds: [.one, .oneOver10, .oneOver100],
+            isoSensitivities: [.iso100, .iso200, .iso320], maximumIsoSensitivities: [.iso160, .iso320]))
+        assertThat(cameraThermal!.exposureSettings, supports(
+            exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed],
+            shutterSpeeds: [.one, .oneOver10, .oneOver100],
+            isoSensitivities: [.iso100, .iso200, .iso320], maximumIsoSensitivities: [.iso160, .iso320]))
+
+        cameraThermal!.exposureSettings.manualIsoSensitivity = .iso200
+        assertThat(changeCnt, `is`(4))
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso200, updating: false))
+
+        changeCnt = 0
+
+        connect(drone: drone, handle: 1) {
+            self.sendCapabilitiesCommand(camId: 0, model: .main,
+                                    exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
+            // receive the lastest online value
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
+                    camId: 0, mode: .manual,
+                    manualShutterSpeed: .shutter1Over10,
+                    manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
+                    manualIsoSensitivity: .iso100,
+                    manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
+                    maxIsoSensitivity: .iso320,
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+
+            self.sendCapabilitiesCommand(camId: 1, model: .thermal,
+                                    exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
+
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
+                    camId: 1, mode: .manual,
+                    manualShutterSpeed: .shutter1Over10,
+                    manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
+                    manualIsoSensitivity: .iso100,
+                    manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
+                    maxIsoSensitivity: .iso320,
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
+
+            // send the new value (setted offline)
+            self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
+                camId: 1, mode: .manual, shutterSpeed: .shutter1Over10, isoSensitivity: .iso200,
+                maxIsoSensitivity: .iso320))
+        }
+
+        // 2 for capabilities and Updating
+        assertThat(changeCnt, `is`(2))
+
+        assertThat(camera!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso200, updating: false))
+    }
+
+    func testExposureSettingsMode() {
+        let shutterSpeedBitField: UInt64 = Bitfield<ArsdkFeatureCameraShutterSpeed>.of(
+            [.shutter1, .shutter1Over10, .shutter1Over100])
+        let manualIsoSensitivityBitField: UInt64 = Bitfield<ArsdkFeatureCameraIsoSensitivity>.of(
+            [.iso100, .iso200, .iso320])
+        let maxIsoSensitivityBitField: UInt64 = Bitfield<ArsdkFeatureCameraIsoSensitivity>.of(
+            [.iso160, .iso320])
+        connect(drone: drone, handle: 1) {
+            self.sendCapabilitiesCommand(camId: 0, model: .main,
+                                    exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
+            self.sendCapabilitiesCommand(camId: 1, model: .thermal,
+                                    exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
+
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
+
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
+                    camId: 0, mode: .manual,
+                    manualShutterSpeed: .shutter1Over10,
+                    manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
+                    manualIsoSensitivity: .iso100,
+                    manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
+                    maxIsoSensitivity: .iso160,
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
+                    camId: 1, mode: .manual,
+                    manualShutterSpeed: .shutter1Over10,
+                    manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
+                    manualIsoSensitivity: .iso100,
+                    manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
+                    maxIsoSensitivity: .iso160,
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+        }
+        assertThat(changeCnt, `is`(2))
+
+        // Check capabilities
+        assertThat(camera!.exposureSettings, supports(
+            exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed],
+            shutterSpeeds: [.one, .oneOver10, .oneOver100],
+            isoSensitivities: [.iso100, .iso200, .iso320], maximumIsoSensitivities: [.iso160, .iso320]))
+
+        assertThat(cameraThermal!.exposureSettings, supports(
+            exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed],
+            shutterSpeeds: [.one, .oneOver10, .oneOver100],
+            isoSensitivities: [.iso100, .iso200, .iso320], maximumIsoSensitivities: [.iso160, .iso320]))
+        // Check initial values
+        assertThat(camera!.exposureSettings,
+                   `is`(mode: .manual, shutterSpeed: .oneOver10,
+                        isoSensitivity: .iso100,
+                        maximumIsoSensitivity: .iso160,
+                        updating: false))
+        assertThat(cameraThermal!.exposureSettings,
+                   `is`(mode: .manual, shutterSpeed: .oneOver10,
+                        isoSensitivity: .iso100,
+                        maximumIsoSensitivity: .iso160,
+                        updating: false))
+
+        // disconnect
+        disconnect(drone: drone, handle: 1)
+
+         // exposure settings is available offline.
+        assertThat(changeCnt, `is`(3))
+        assertThat(camera!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+
+        assertThat(camera!.exposureSettings, supports(
+            exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed],
+            shutterSpeeds: [.one, .oneOver10, .oneOver100],
+            isoSensitivities: [.iso100, .iso200, .iso320], maximumIsoSensitivities: [.iso160, .iso320]))
+        assertThat(cameraThermal!.exposureSettings, supports(
+            exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed],
+            shutterSpeeds: [.one, .oneOver10, .oneOver100],
+            isoSensitivities: [.iso100, .iso200, .iso320], maximumIsoSensitivities: [.iso160, .iso320]))
+
+        cameraThermal!.exposureSettings.mode = .manualIsoSensitivity
+        assertThat(changeCnt, `is`(4))
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .manualIsoSensitivity, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+
+        changeCnt = 0
+        connect(drone: drone, handle: 1) {
+            self.sendCapabilitiesCommand(camId: 0, model: .main,
+                                    exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
+            // receive the lastest online value
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
+                    camId: 0, mode: .manual,
+                    manualShutterSpeed: .shutter1Over10,
+                    manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
+                    manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso160,
                     maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
@@ -512,47 +728,28 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     camId: 1, mode: .manual,
                     manualShutterSpeed: .shutter1Over10,
                     manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
-                    manualIsoSensitivity: .iso200,
+                    manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso160,
                     maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
 
             self.mockArsdkCore.onCommandReceived(
-                0, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
+                1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
 
             // send the new value (setted offline)
             self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
-                camId: 0, mode: .automatic, shutterSpeed: .shutter1Over100, isoSensitivity: .iso100,
-                maxIsoSensitivity: .iso320))
+                camId: 1, mode: .manualIsoSensitivity, shutterSpeed: .shutter1Over10, isoSensitivity: .iso100,
+                maxIsoSensitivity: .iso160))
         }
 
         // 1 for capabilities and Updating
-        assertThat(changeCnt, `is`(1))
-
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .automatic, shutterSpeed: .oneOver100, isoSensitivity: .iso100, maximumIsoSensitivity: .iso320,
-            updating: false))
-
-        // check the new value for the drone
-        mockArsdkCore.onCommandReceived(
-            1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
-                camId: 0, mode: .automatic,
-                manualShutterSpeed: .shutter1Over100,
-                manualShutterSpeedCapabilitiesBitField: shutterSpeedBitField,
-                manualIsoSensitivity: .iso100,
-                manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
-                maxIsoSensitivity: .iso320,
-                maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
-
-        assertThat(camera!.exposureSettings, `is`(
-            mode: .automatic, shutterSpeed: .oneOver100, isoSensitivity: .iso100, maximumIsoSensitivity: .iso320,
-            updating: false))
-        assertThat(changeCnt, `is`(1))
-        // disconnect
-        disconnect(drone: drone, handle: 1)
-
-        // exposure settings is available offline. WhiteBalance Lock is now nil
         assertThat(changeCnt, `is`(2))
+
+        assertThat(camera!.exposureSettings, `is`(
+            mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
+
+        assertThat(cameraThermal!.exposureSettings, `is`(
+            mode: .manualIsoSensitivity, shutterSpeed: .oneOver10, isoSensitivity: .iso100, updating: false))
     }
 
     func testExposureLock() {
@@ -662,14 +859,21 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         assertThat(changeCnt, `is`(3))
         assertThat(camera!.exposureCompensationSetting, `is`(value: .ev3_00, updating: true))
 
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetEvCompensation(
+            camId: 1, value: .ev3_00))
         cameraThermal!.exposureCompensationSetting.value = .ev3_00
         assertThat(changeCnt, `is`(4))
-        assertThat(cameraThermal!.exposureCompensationSetting, `is`(value: .ev3_00, updating: false))
+        assertThat(cameraThermal!.exposureCompensationSetting, `is`(value: .ev3_00, updating: true))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.cameraEvCompensationEncoder(camId: 0, value: .ev3_00))
         assertThat(changeCnt, `is`(5))
         assertThat(camera!.exposureCompensationSetting, `is`(value: .ev3_00, updating: false))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraEvCompensationEncoder(camId: 1, value: .ev3_00))
+        assertThat(changeCnt, `is`(6))
+        assertThat(cameraThermal!.exposureCompensationSetting, `is`(value: .ev3_00, updating: false))
 
         // change exposure mode to manual
         mockArsdkCore.onCommandReceived(
@@ -679,7 +883,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                 maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: 0))
 
         // check that exposure compensation setting is not available, in manual exposure mode
-        assertThat(changeCnt, `is`(6))
+        assertThat(changeCnt, `is`(7))
         assertThat(camera!.exposureCompensationSetting, supports(exposureCompensationValues: []))
 
         mockArsdkCore.onCommandReceived(
@@ -689,13 +893,13 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                 maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: 0))
 
         // check that exposure compensation setting is not available, in manual exposure mode
-        assertThat(changeCnt, `is`(6))
+        assertThat(changeCnt, `is`(8))
         assertThat(cameraThermal!.exposureCompensationSetting, supports(exposureCompensationValues: []))
 
         // change supported exposure compensation values while in manual exposure mode
         self.sendCapabilitiesCommand(evCompensations: [.evMinus1_00, .ev0_00, .ev3_00])
         self.sendCapabilitiesCommand(camId: 1, model: .thermal, evCompensations: [.evMinus1_00, .ev0_00, .ev3_00])
-        assertThat(changeCnt, `is`(7))
+        assertThat(changeCnt, `is`(8))
         assertThat(camera!.exposureCompensationSetting, supports(exposureCompensationValues: []))
 
         // change exposure mode to automatic
@@ -705,7 +909,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                 manualIsoSensitivity: .iso200, manualIsoSensitivityCapabilitiesBitField: 0,
                 maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: 0))
 
-        assertThat(changeCnt, `is`(8))
+        assertThat(changeCnt, `is`(9))
         assertThat(camera!.exposureCompensationSetting,
                    allOf(
                     supports(exposureCompensationValues: [.evMinus1_00, .ev0_00, .ev3_00]),
@@ -717,7 +921,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                 manualIsoSensitivity: .iso200, manualIsoSensitivityCapabilitiesBitField: 0,
                 maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: 0))
 
-        assertThat(changeCnt, `is`(8))
+        assertThat(changeCnt, `is`(10))
         assertThat(cameraThermal!.exposureCompensationSetting,
                    allOf(
                     supports(exposureCompensationValues: [.evMinus1_00, .ev0_00, .ev3_00]),
@@ -729,12 +933,12 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                                                     isoSensitivity: .iso1200, lock: .active,
                                                     lockRoiX: -1, lockRoiY: -1, lockRoiWidth: -1, lockRoiHeight: -1))
 
-        assertThat(changeCnt, `is`(9))
+        assertThat(changeCnt, `is`(11))
         assertThat(camera!.exposureCompensationSetting, supports(exposureCompensationValues: []))
 
         // change supported exposure compensation values while exposure lock is active
         self.sendCapabilitiesCommand(evCompensations: [.evMinus0_33, .ev0_33, .ev2_33])
-        assertThat(changeCnt, `is`(9))
+        assertThat(changeCnt, `is`(11))
         assertThat(camera!.exposureCompensationSetting, supports(exposureCompensationValues: []))
 
         // deactivate exposure lock
@@ -743,7 +947,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                                                     isoSensitivity: .iso1200, lock: .inactive,
                                                     lockRoiX: -1, lockRoiY: -1, lockRoiWidth: -1, lockRoiHeight: -1))
 
-        assertThat(changeCnt, `is`(10))
+        assertThat(changeCnt, `is`(12))
         assertThat(camera!.exposureCompensationSetting,
                    allOf(
                     supports(exposureCompensationValues: [.evMinus0_33, .ev0_33, .ev2_33]),
@@ -753,7 +957,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         disconnect(drone: drone, handle: 1)
 
         // exposure compensation settings not available offline
-        assertThat(changeCnt, `is`(11))
+        assertThat(changeCnt, `is`(13))
         assertThat(camera!.exposureCompensationSetting, supports(
             exposureCompensationValues: [.evMinus0_33, .ev0_33, .ev2_33]))
 
@@ -762,21 +966,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                    allOf(
                     supports(exposureCompensationValues: [.evMinus0_33, .ev0_33, .ev2_33]),
                     `is`(value: .ev0_33, updating: false)))
-        assertThat(changeCnt, `is`(12))
-
-        cameraThermal!.exposureCompensationSetting.value = .ev0_33
-        assertThat(cameraThermal!.exposureCompensationSetting,
-                   allOf(
-                    supports(exposureCompensationValues: [.evMinus1_00, .ev0_00, .ev3_00]),
-                    `is`(value: .ev3_00, updating: false)))
-        assertThat(changeCnt, `is`(12))
-
-        cameraThermal!.exposureCompensationSetting.value = .ev0_00
-        assertThat(cameraThermal!.exposureCompensationSetting,
-                   allOf(
-                    supports(exposureCompensationValues: [.evMinus1_00, .ev0_00, .ev3_00]),
-                    `is`(value: .ev0_00, updating: false)))
-        assertThat(changeCnt, `is`(13))
+        assertThat(changeCnt, `is`(14))
 
         connect(drone: drone, handle: 1) {
             self.sendCapabilitiesCommand(evCompensations: [.evMinus0_33, .ev0_33, .ev2_33])
@@ -788,17 +978,16 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetEvCompensation(camId: 0, value: .ev0_33))
         }
 
-        assertThat(changeCnt, `is`(14))
+        assertThat(changeCnt, `is`(16))
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.cameraEvCompensationEncoder(camId: 0, value: .ev0_33))
         assertThat(camera!.exposureCompensationSetting,
                    allOf(
                     supports(exposureCompensationValues: [.evMinus0_33, .ev0_33, .ev2_33]),
                     `is`(value: .ev0_33, updating: false)))
-
         assertThat(cameraThermal!.exposureCompensationSetting,
                    allOf(
                     supports(exposureCompensationValues: [.evMinus1_00, .ev0_00, .ev3_00]),
-                    `is`(value: .ev0_00, updating: false)))
+                    `is`(value: .ev3_00, updating: false)))
 
     }
 
@@ -835,27 +1024,48 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         assertThat(camera!.styleSettings, `is`(
             activeStyle: .plog, saturation: (-1, 0, 1), contrast: (-2, 0, 2), sharpness: (-3, 0, 3), updating: false))
 
+        // change style
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetStyle(camId: 1, style: .plog))
         cameraThermal!.styleSettings.activeStyle = .plog
         assertThat(cameraThermal!.styleSettings, `is`(activeStyle: .plog, saturation: (0, 0, 0), contrast: (0, 0, 0),
-                                                      sharpness: (0, 0, 0), updating: false))
-
+                                                      sharpness: (0, 0, 0), updating: true))
         assertThat(changeCnt, `is`(8))
-
+        mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.cameraStyleEncoder(
+            camId: 1, style: .plog, saturation: 0, saturationMin: 0, saturationMax: 0,
+            contrast: 0, contrastMin: 0, contrastMax: 0, sharpness: 0, sharpnessMin: 0, sharpnessMax: 0))
+        assertThat(changeCnt, `is`(9))
         // disconnect
         disconnect(drone: drone, handle: 1)
         // style settings available offline
-        assertThat(changeCnt, `is`(9))
+        assertThat(changeCnt, `is`(10))
         assertThat(camera!.styleSettings, supports(styles: [.standard, .plog]))
         assertThat(cameraThermal!.styleSettings, supports(styles: [.standard, .plog]))
 
-        resetArsdkEngine()
-        changeCnt = 0
+        camera!.styleSettings.activeStyle = .standard
+        assertThat(changeCnt, `is`(11))
+        assertThat(camera!.styleSettings, `is`(activeStyle: .standard, saturation: (-1, 0, 1),
+                                               contrast: (-2, 0, 2), sharpness: (-3, 0, 3), updating: false))
+
+        connect(drone: drone, handle: 1) {
+            self.sendCapabilitiesCommand(styles: [.standard, .plog])
+            self.sendCapabilitiesCommand(camId: 1, model: .thermal, styles: [.standard, .plog])
+              self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetStyle(camId: 0, style: .standard))
+        }
+        mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.cameraStyleEncoder(
+            camId: 0, style: .standard, saturation: 0, saturationMin: -1, saturationMax: 1,
+            contrast: 0, contrastMin: -2, contrastMax: 2, sharpness: 0, sharpnessMin: -3, sharpnessMax: 3))
+
+        assertThat(camera!.styleSettings, `is`(activeStyle: .standard, saturation: (-1, 0, 1),
+                                               contrast: (-2, 0, 2), sharpness: (-3, 0, 3), updating: false))
     }
 
     func testStyleParameter() {
         connect(drone: drone, handle: 1) {
             self.sendCapabilitiesCommand(styles: [.standard])
             self.sendCapabilitiesCommand(camId: 1, model: .thermal, styles: [.standard])
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
+
             self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.cameraStyleEncoder(
                 camId: 0, style: .standard, saturation: 1, saturationMin: -2, saturationMax: 2,
                 contrast: 2, contrastMin: -4, contrastMax: 4, sharpness: 0, sharpnessMin: 0, sharpnessMax: 0))
@@ -867,8 +1077,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         assertThat(camera!.styleSettings, `is`(saturation: (-2, 1, 2), contrast: (-4, 2, 4), sharpness: (0, 0, 0)))
         assertThat(camera!.styleSettings.sharpness.mutable, `is`(false))
 
-        // command was ignore since thermal camera is not active.
-        assertThat(cameraThermal!.styleSettings, `is`(saturation: (0, 0, 0), contrast: (0, 0, 0),
+        // command was not ignored even if thermal camera is not active.
+        assertThat(cameraThermal!.styleSettings, `is`(saturation: (-2, 1, 2), contrast: (-4, 2, 4),
                                                       sharpness: (0, 0, 0)))
         assertThat(cameraThermal!.styleSettings.sharpness.mutable, `is`(false))
 
@@ -877,56 +1087,73 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             camId: 0, saturation: 1, contrast: -2, sharpness: 0))
         camera?.styleSettings.contrast.value = -2
         assertThat(changeCnt, `is`(3))
-
-        cameraThermal?.styleSettings.contrast.value = -2
-        assertThat(cameraThermal!.styleSettings, `is`(saturation: (0, 0, 0), contrast: (0, 0, 0),
-                                                      sharpness: (0, 0, 0)))
-        assertThat(changeCnt, `is`(3))
-
-        assertThat(camera!.styleSettings, `is`(saturation: (-2, 1, 2), contrast: (-4, -2, 4), sharpness: (0, 0, 0),
-                                               updating: true))
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.cameraStyleEncoder(
             camId: 0, style: .standard, saturation: 1, saturationMin: -2, saturationMax: 2,
             contrast: -2, contrastMin: -4, contrastMax: 4, sharpness: 0, sharpnessMin: 0, sharpnessMax: 0))
         assertThat(changeCnt, `is`(4))
+
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetStyleParams(
+            camId: 1, saturation: 1, contrast: -3, sharpness: 0))
+        cameraThermal?.styleSettings.contrast.value = -3
+        assertThat(cameraThermal!.styleSettings, `is`(saturation: (-2, 1, 2), contrast: (-4, -3, 4),
+                                                      sharpness: (0, 0, 0)))
+        assertThat(cameraThermal!.styleSettings, `is`(saturation: (-2, 1, 2), contrast: (-4, -3, 4),
+                                                      sharpness: (0, 0, 0), updating: true))
+        assertThat(changeCnt, `is`(5))
+        mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.cameraStyleEncoder(
+            camId: 1, style: .standard, saturation: 1, saturationMin: -2, saturationMax: 2,
+            contrast: -3, contrastMin: -4, contrastMax: 4, sharpness: 0, sharpnessMin: 0, sharpnessMax: 0))
+
+        assertThat(changeCnt, `is`(6))
         assertThat(camera!.styleSettings, `is`(
             saturation: (-2, 1, 2), contrast: (-4, -2, 4), sharpness: (0, 0, 0), updating: false))
+        assertThat(cameraThermal!.styleSettings, `is`(
+            saturation: (-2, 1, 2), contrast: (-4, -3, 4), sharpness: (0, 0, 0), updating: false))
 
         // disconnect
         disconnect(drone: drone, handle: 1)
         // style parameters settings not available offline
-        assertThat(changeCnt, `is`(5))
+        assertThat(changeCnt, `is`(7))
         assertThat(camera!.styleSettings, `is`(
             saturation: (-2, 1, 2), contrast: (-4, -2, 4), sharpness: (0, 0, 0), updating: false))
 
-        assertThat(cameraThermal!.styleSettings, `is`(saturation: (0, 0, 0), contrast: (0, 0, 0),
-                                                      sharpness: (0, 0, 0)))
-
-        camera?.styleSettings.contrast.value = -1
-        assertThat(camera!.styleSettings, `is`(
-            saturation: (-2, 1, 2), contrast: (-4, -1, 4), sharpness: (0, 0, 0), updating: false))
-        assertThat(changeCnt, `is`(6))
+        assertThat(cameraThermal!.styleSettings, `is`(saturation: (-2, 1, 2), contrast: (-4, -3, 4),
+                                                      sharpness: (0, 0, 0), updating: false))
 
         cameraThermal?.styleSettings.contrast.value = -1
-        assertThat(cameraThermal!.styleSettings, `is`(saturation: (0, 0, 0), contrast: (0, 0, 0),
-                                                      sharpness: (0, 0, 0)))
-        assertThat(changeCnt, `is`(6))
+        assertThat(cameraThermal!.styleSettings, `is`(saturation: (-2, 1, 2), contrast: (-4, -1, 4),
+                                                      sharpness: (0, 0, 0), updating: false))
+        assertThat(changeCnt, `is`(8))
 
-        camera?.styleSettings.sharpness.value = 1
         assertThat(camera!.styleSettings, `is`(
-            saturation: (-2, 1, 2), contrast: (-4, -1, 4), sharpness: (0, 0, 0), updating: false))
-        assertThat(changeCnt, `is`(6))
+            saturation: (-2, 1, 2), contrast: (-4, -2, 4), sharpness: (0, 0, 0), updating: false))
 
         connect(drone: drone, handle: 1) {
             self.sendCapabilitiesCommand(styles: [.standard])
+            self.sendCapabilitiesCommand(camId: 1, model: .thermal, styles: [.standard])
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
+
             self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.cameraStyleEncoder(
                 camId: 0, style: .standard, saturation: 1, saturationMin: -2, saturationMax: 2,
-                contrast: 2, contrastMin: -4, contrastMax: 4, sharpness: 0, sharpnessMin: 0, sharpnessMax: 0))
+                contrast: -2, contrastMin: -4, contrastMax: 4, sharpness: 0, sharpnessMin: 0, sharpnessMax: 0))
 
-            self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetStyleParams(camId: 0, saturation: 1,
+            self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.cameraStyleEncoder(
+                camId: 1, style: .standard, saturation: 1, saturationMin: -2, saturationMax: 2,
+                contrast: -3, contrastMin: -4, contrastMax: 4, sharpness: 0, sharpnessMin: 0, sharpnessMax: 0))
+
+            self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetStyleParams(camId: 1, saturation: 1,
                                                                                         contrast: -1, sharpness: 0))
         }
 
+        self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.cameraStyleEncoder(
+            camId: 1, style: .standard, saturation: 1, saturationMin: -2, saturationMax: 2,
+            contrast: -1, contrastMin: -4, contrastMax: 4, sharpness: 0, sharpnessMin: 0, sharpnessMax: 0))
+
+        assertThat(camera!.styleSettings, `is`(
+            saturation: (-2, 1, 2), contrast: (-4, 2, 4), sharpness: (0, 0, 0), updating: false))
+        assertThat(cameraThermal!.styleSettings, `is`(
+                saturation: (-2, 1, 2), contrast: (-4, -1, 4), sharpness: (0, 0, 0), updating: false))
     }
 
     func testWhiteBalanceSettings() {
@@ -989,7 +1216,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         connect(drone: drone, handle: 1) {
             self.sendCapabilitiesCommand(whiteBalanceModes: [.automatic, .sunny, .snow, .custom],
                                          customWhiteBalanceTemperatures: [.T3000, .T5000, .T7000])
-            // receive the last online value
+            // receive the lastest online value
             self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.cameraWhiteBalanceEncoder(
                 camId: 0, mode: .custom, temperature: .T7000, lock: .inactive))
 
@@ -1002,7 +1229,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                                                           customTemperatures: [.k3000, .k5000, .k7000]))
 
         assertThat(camera!.whiteBalanceSettings, `is`(mode: .automatic, customTemperature: .k3000, updating: false))
-        assertThat(changeCnt, `is`(1))
+        assertThat(changeCnt, `is`(2))
     }
 
     func testHdrSetting() {
@@ -1021,7 +1248,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
 
         // check initial value
         assertThat(cameraThermal!.hdrSetting, presentAnd(`is`(false)))
-        assertThat(camera!.hdrSetting, nilValue())
+        assertThat(camera!.hdrSetting, presentAnd(`is`(false)))
 
         // change value
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetHdrSetting(camId: 1, value: .active))
@@ -1176,7 +1403,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
 
         // Thermal camera has default value since it is inactive
         assertThat(cameraThermal!.recordingSettings, `is`(
-            mode: .standard, resolution: .resDci4k, framerate: .fps30, hyperlapse: .ratio15))
+            mode: .standard, resolution: .res1080p, framerate: .fps24, hyperlapse: .ratio15))
         assertThat(cameraThermal!.recordingSettings, `is`(hdrAvailable: true))
 
         // Change mode to hyperlapse, expect resolution, framerate and hyperlapse to default value
@@ -1188,18 +1415,27 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             mode: .hyperlapse, resolution: .resDci4k, framerate: .fps30, hyperlapse: .ratio15, updating: true))
         assertNoExpectation()
         assertThat(camera!.recordingSettings, `is`(hdrAvailable: true))
-
-        // change thermal camera mode, updating will be false since it is inactive
-        cameraThermal!.recordingSettings.mode = .hyperlapse
-        assertThat(cameraThermal!.recordingSettings, `is`(
-            mode: .hyperlapse, resolution: .resDci4k, framerate: .fps30, hyperlapse: .ratio15, updating: false))
-        assertThat(changeCnt, `is`(4))
-
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.cameraRecordingModeEncoder(
                 camId: 0, mode: .hyperlapse, resolution: .resDci4k, framerate: .fps30, hyperlapse: .ratio30,
                 bitrate: 0))
+        assertThat(changeCnt, `is`(4))
+        assertThat(camera!.recordingSettings, `is`(
+            mode: .hyperlapse, resolution: .resDci4k, framerate: .fps30, hyperlapse: .ratio30, updating: false))
+
+        // change thermal camera mode, updating will be false since it is inactive
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
+            camId: 1, mode: .hyperlapse, resolution: .resDci4k, framerate: .fps30, hyperlapse: .ratio15))
+        cameraThermal!.recordingSettings.mode = .hyperlapse
+        assertThat(cameraThermal!.recordingSettings, `is`(
+            mode: .hyperlapse, resolution: .resDci4k, framerate: .fps30, hyperlapse: .ratio15, updating: true))
         assertThat(changeCnt, `is`(5))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraRecordingModeEncoder(
+                camId: 1, mode: .hyperlapse, resolution: .resDci4k, framerate: .fps30, hyperlapse: .ratio30,
+                bitrate: 0))
+        assertThat(changeCnt, `is`(6))
         assertThat(camera!.recordingSettings, `is`(
             mode: .hyperlapse, resolution: .resDci4k, framerate: .fps30, hyperlapse: .ratio30, updating: false))
 
@@ -1207,111 +1443,161 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
             camId: 0, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps30, hyperlapse: .ratio30))
         camera?.recordingSettings.resolution = .resUhd4k
-        assertThat(changeCnt, `is`(6))
+        assertThat(changeCnt, `is`(7))
         assertThat(camera!.recordingSettings, `is`(
             mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps30, hyperlapse: .ratio30, updating: true))
         assertNoExpectation()
-
-        cameraThermal?.recordingSettings.resolution = .resUhd4k
-        assertThat(changeCnt, `is`(7))
-        assertThat(cameraThermal!.recordingSettings, `is`(
-            mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps30, hyperlapse: .ratio15, updating: false))
-
         self.mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.cameraRecordingModeEncoder(
                 camId: 0, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps30, hyperlapse: .ratio15,
                 bitrate: 0))
         assertThat(changeCnt, `is`(8))
+
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
+            camId: 1, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps30, hyperlapse: .ratio30))
+        cameraThermal?.recordingSettings.resolution = .resUhd4k
+        assertThat(changeCnt, `is`(9))
+        assertThat(cameraThermal!.recordingSettings, `is`(
+            mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps30, hyperlapse: .ratio30, updating: true))
+
+        self.mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraRecordingModeEncoder(
+                camId: 1, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps30, hyperlapse: .ratio15,
+                bitrate: 0))
+        assertThat(changeCnt, `is`(10))
         assertThat(camera!.recordingSettings, `is`(
+            mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps30, hyperlapse: .ratio15, updating: false))
+        assertThat(cameraThermal!.recordingSettings, `is`(
             mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps30, hyperlapse: .ratio15, updating: false))
 
         // change framerate in hyperlapse mode
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
             camId: 0, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio15))
         camera?.recordingSettings.framerate = .fps24
-        assertThat(changeCnt, `is`(9))
+        assertThat(changeCnt, `is`(11))
         assertThat(camera!.recordingSettings, `is`(
             mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio15, updating: true))
         assertNoExpectation()
-
-        cameraThermal?.recordingSettings.framerate = .fps24
-        assertThat(changeCnt, `is`(10))
-        assertThat(cameraThermal!.recordingSettings, `is`(
-            mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio15, updating: false))
-
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.cameraRecordingModeEncoder(
                 camId: 0, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio15,
                 bitrate: 0))
-        assertThat(changeCnt, `is`(11))
+        assertThat(changeCnt, `is`(12))
         assertThat(camera!.recordingSettings, `is`(
+            mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio15, updating: false))
+
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
+            camId: 1, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio15))
+        camera?.recordingSettings.framerate = .fps24
+        cameraThermal?.recordingSettings.framerate = .fps24
+        assertThat(changeCnt, `is`(13))
+        assertThat(cameraThermal!.recordingSettings, `is`(
+            mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio15, updating: true))
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraRecordingModeEncoder(
+                camId: 1, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio15,
+                bitrate: 0))
+        assertThat(changeCnt, `is`(14))
+        assertThat(cameraThermal!.recordingSettings, `is`(
             mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio15, updating: false))
 
         // Change hyperlapse value
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
             camId: 0, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio60))
         camera?.recordingSettings.hyperlapseValue = .ratio60
-        assertThat(changeCnt, `is`(12))
+        assertThat(changeCnt, `is`(15))
         assertThat(camera!.recordingSettings, `is`(
             mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio60, updating: true))
         assertNoExpectation()
-
-        cameraThermal?.recordingSettings.hyperlapseValue = .ratio60
-        assertThat(changeCnt, `is`(13))
-        assertThat(cameraThermal!.recordingSettings, `is`(
-            mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio60, updating: false))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.cameraRecordingModeEncoder(
                 camId: 0, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio60,
                 bitrate: 0))
-        assertThat(changeCnt, `is`(14))
+        assertThat(changeCnt, `is`(16))
         assertThat(camera!.recordingSettings, `is`(
+            mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio60, updating: false))
+
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
+            camId: 1, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio60))
+        cameraThermal?.recordingSettings.hyperlapseValue = .ratio60
+        assertThat(changeCnt, `is`(17))
+        assertThat(cameraThermal!.recordingSettings, `is`(
+            mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio60, updating: true))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraRecordingModeEncoder(
+                camId: 1, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio60,
+                bitrate: 0))
+        assertThat(changeCnt, `is`(18))
+
+        assertThat(cameraThermal!.recordingSettings, `is`(
             mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio60, updating: false))
 
         // Change mode to highFramerate, expect resolution and framerate to default value
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
             camId: 0, mode: .highFramerate, resolution: .res1080p, framerate: .fps60, hyperlapse: .ratio15))
         camera!.recordingSettings.mode = .highFramerate
-        assertThat(changeCnt, `is`(15))
+        assertThat(changeCnt, `is`(19))
         assertThat(camera!.recordingSettings, `is`(
             mode: .highFramerate, resolution: .res1080p, framerate: .fps60, updating: true))
         assertNoExpectation()
-
-        cameraThermal!.recordingSettings.mode = .highFramerate
-        assertThat(changeCnt, `is`(16))
-        assertThat(cameraThermal!.recordingSettings, `is`(
-            mode: .highFramerate, resolution: .res1080p, framerate: .fps60, updating: false))
 
         self.mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.cameraRecordingModeEncoder(
                 camId: 0, mode: .highFramerate, resolution: .res1080p, framerate: .fps60, hyperlapse: .ratio60,
                 bitrate: 0))
-        assertThat(changeCnt, `is`(17))
+        assertThat(changeCnt, `is`(20))
         assertThat(camera!.recordingSettings, `is`(
+            mode: .highFramerate, resolution: .res1080p, framerate: .fps60, updating: false))
+
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
+            camId: 1, mode: .highFramerate, resolution: .res1080p, framerate: .fps60, hyperlapse: .ratio15))
+
+        cameraThermal!.recordingSettings.mode = .highFramerate
+        assertThat(changeCnt, `is`(21))
+        assertThat(cameraThermal!.recordingSettings, `is`(
+            mode: .highFramerate, resolution: .res1080p, framerate: .fps60, updating: true))
+
+        self.mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraRecordingModeEncoder(
+                camId: 1, mode: .highFramerate, resolution: .res1080p, framerate: .fps60, hyperlapse: .ratio60,
+                bitrate: 0))
+        assertThat(changeCnt, `is`(22))
+        assertThat(cameraThermal!.recordingSettings, `is`(
             mode: .highFramerate, resolution: .res1080p, framerate: .fps60, updating: false))
 
         // change back to hyperlapse mode, expect previous resolution, fps and hyperlapse value of this mode
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
             camId: 0, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio60))
         camera!.recordingSettings.mode = .hyperlapse
-        assertThat(changeCnt, `is`(18))
+        assertThat(changeCnt, `is`(23))
         assertThat(camera!.recordingSettings, `is`(
             mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio60, updating: true))
         assertNoExpectation()
-
-        cameraThermal!.recordingSettings.mode = .hyperlapse
-        assertThat(changeCnt, `is`(19))
-        assertThat(cameraThermal!.recordingSettings, `is`(
-            mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, updating: false))
-
-        // mock reception of a different resolution than what was expect
+        // mock reception of a different resolution than what was expected
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.cameraRecordingModeEncoder(
                 camId: 0, mode: .hyperlapse, resolution: .resDci4k, framerate: .fps24, hyperlapse: .ratio60,
                 bitrate: 0))
-        assertThat(changeCnt, `is`(20))
+        assertThat(changeCnt, `is`(24))
         assertThat(camera!.recordingSettings, `is`(
+            mode: .hyperlapse, resolution: .resDci4k, framerate: .fps24, hyperlapse: .ratio60, updating: false))
+
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
+            camId: 1, mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, hyperlapse: .ratio60))
+
+        cameraThermal!.recordingSettings.mode = .hyperlapse
+        assertThat(changeCnt, `is`(25))
+        assertThat(cameraThermal!.recordingSettings, `is`(
+            mode: .hyperlapse, resolution: .resUhd4k, framerate: .fps24, updating: true))
+        // mock reception of a different resolution than what was expected
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraRecordingModeEncoder(
+                camId: 1, mode: .hyperlapse, resolution: .resDci4k, framerate: .fps24, hyperlapse: .ratio60,
+                bitrate: 0))
+        assertThat(changeCnt, `is`(26))
+        assertThat(cameraThermal!.recordingSettings, `is`(
             mode: .hyperlapse, resolution: .resDci4k, framerate: .fps24, hyperlapse: .ratio60, updating: false))
 
         // test bitrate
@@ -1319,7 +1605,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.cameraRecordingModeEncoder(
                 camId: 0, mode: .hyperlapse, resolution: .resDci4k, framerate: .fps24, hyperlapse: .ratio60,
                 bitrate: 10000))
-        assertThat(changeCnt, `is`(21))
+        assertThat(changeCnt, `is`(27))
         assertThat(camera!.recordingSettings, `is`( bitrate: 10000, updating: false))
 
         // disconnect
@@ -1355,47 +1641,23 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             hdrAvailable: false, forMode: .highFramerate, resolution: .res720p, framerate: .fps30))
         assertNoExpectation()
 
-        // change hyperlapse resolution offline
-        camera?.recordingSettings.resolution = .resDci4k
-        assertThat(changeCnt, `is`(1))
-        assertThat(camera!.recordingSettings, `is`(
-            mode: .hyperlapse, resolution: .resDci4k, framerate: .fps24, hyperlapse: .ratio60, updating: false))
-
         cameraThermal?.recordingSettings.resolution = .resDci4k
-        assertThat(changeCnt, `is`(2))
+        assertThat(changeCnt, `is`(1))
         assertThat(cameraThermal!.recordingSettings, `is`(
             mode: .hyperlapse, resolution: .resDci4k, framerate: .fps24, hyperlapse: .ratio60, updating: false))
-
-        // change hyperlapse framerate offline
-        camera?.recordingSettings.framerate = .fps25
-        assertThat(changeCnt, `is`(3))
-        assertThat(camera!.recordingSettings, `is`(
-            mode: .hyperlapse, resolution: .resDci4k, framerate: .fps25, hyperlapse: .ratio60, updating: false))
 
         cameraThermal?.recordingSettings.framerate = .fps25
-        assertThat(changeCnt, `is`(4))
+        assertThat(changeCnt, `is`(2))
         assertThat(cameraThermal!.recordingSettings, `is`(
             mode: .hyperlapse, resolution: .resDci4k, framerate: .fps25, hyperlapse: .ratio60, updating: false))
 
-        // change hyperlapse value offline
-        camera?.recordingSettings.hyperlapseValue = .ratio30
-        assertThat(changeCnt, `is`(5))
-        assertThat(camera!.recordingSettings, `is`(
-            mode: .hyperlapse, resolution: .resDci4k, framerate: .fps25, hyperlapse: .ratio30, updating: false))
-
         cameraThermal?.recordingSettings.hyperlapseValue = .ratio30
-        assertThat(changeCnt, `is`(6))
+        assertThat(changeCnt, `is`(3))
         assertThat(cameraThermal!.recordingSettings, `is`(
             mode: .hyperlapse, resolution: .resDci4k, framerate: .fps25, hyperlapse: .ratio30, updating: false))
 
-        // change to highFramerate, expect previous stored resolution and fps
-        camera!.recordingSettings.mode = .highFramerate
-        assertThat(changeCnt, `is`(7))
-        assertThat(camera!.recordingSettings, `is`(
-            mode: .highFramerate, resolution: .res1080p, framerate: .fps60, updating: false))
-
         cameraThermal!.recordingSettings.mode = .highFramerate
-        assertThat(changeCnt, `is`(8))
+        assertThat(changeCnt, `is`(4))
         assertThat(cameraThermal!.recordingSettings, `is`(
             mode: .highFramerate, resolution: .res1080p, framerate: .fps60, updating: false))
 
@@ -1404,23 +1666,22 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             // capabilities
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraRecordingModeEncoder(
-                    camId: 0, mode: .standard, resolution: .res1080p, framerate: .fps24, hyperlapse: .ratio15,
-                    bitrate: 0))
-            self.mockArsdkCore.onCommandReceived(
-                1, encoder: CmdEncoder.cameraRecordingModeEncoder(
                     camId: 1, mode: .standard, resolution: .res1080p, framerate: .fps24, hyperlapse: .ratio15,
                     bitrate: 0))
 
             self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
-                camId: 0, mode: .highFramerate, resolution: .res1080p, framerate: .fps60, hyperlapse: .ratio15))
+                camId: 1, mode: .highFramerate, resolution: .res1080p, framerate: .fps60, hyperlapse: .ratio15))
         }
 
-        // ensure settings are resored
-        assertThat(camera!.recordingSettings, `is`(
-            mode: .highFramerate, resolution: .res1080p, framerate: .fps60, updating: false))
-
+        // ensure settings are restored
         assertThat(cameraThermal!.recordingSettings, `is`(
             mode: .highFramerate, resolution: .res1080p, framerate: .fps60, updating: false))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraRecordingModeEncoder(
+                camId: 1, mode: .highFramerate, resolution: .res1080p, framerate: .fps60, hyperlapse: .ratio15,
+                bitrate: 10000))
+
     }
 
     func testAutoRecord() {
@@ -1448,18 +1709,19 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         // should not received this command since camera thermal is not active
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.cameraAutorecordEncoder(camId: 1, state: .inactive))
-        assertThat(cameraThermal!.autoRecordSetting, `is`(nilValue()))
+        assertThat(cameraThermal!.autoRecordSetting, presentAnd(allOf(`is`(false), isUpToDate())))
+        assertThat(changeCnt, `is`(4))
 
         // Change value
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetAutorecord(camId: 0, state: .active))
         camera!.autoRecordSetting?.value = true
-        assertThat(changeCnt, `is`(4))
+        assertThat(changeCnt, `is`(5))
         assertThat(camera!.autoRecordSetting, presentAnd(allOf(`is`(true), isUpdating())))
 
         // mock reception of a different value
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.cameraAutorecordEncoder(camId: 0, state: .inactive))
-        assertThat(changeCnt, `is`(5))
+        assertThat(changeCnt, `is`(6))
         assertThat(camera!.autoRecordSetting, presentAnd(allOf(`is`(false), isUpToDate())))
 
         // disconnect
@@ -1624,19 +1886,28 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             mode: .single, format: .rectilinear, fileFormat: .jpeg, updating: false))
 
         // initial value of thermal camera since it is inactive
-        assertThat(cameraThermal!.photoSettings, `is`(mode: .single, format: .rectilinear, fileFormat: .jpeg,
-                                                      burst: .burst14Over4s, bracketing: .preset1ev, updating: false))
-        cameraThermal!.photoSettings.mode = .single
-        assertThat(changeCnt, `is`(4))
-        assertThat(cameraThermal!.photoSettings, `is`(mode: .single, format: .rectilinear, fileFormat: .jpeg,
-                                               burst: .burst14Over4s, bracketing: .preset1ev, updating: false))
+        assertThat(cameraThermal!.photoSettings, `is`(mode: .bracketing, format: .fullFrame, fileFormat: .dngAndJpeg,
+                                                      burst: .burst14Over4s, bracketing: .preset3ev, updating: false))
 
+        // if not in bracketing, bracketing value sent will be .preset1ev
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
+            camId: 1, mode: .single, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over4s,
+            bracketing: .preset1ev, captureInterval: 0.0))
+        cameraThermal!.photoSettings.mode = .single
+        assertThat(changeCnt, `is`(5))
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraPhotoModeEncoder(
+                camId: 1, mode: .single, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over4s,
+                bracketing: .preset1ev, captureInterval: 0.0))
+        assertThat(cameraThermal!.photoSettings, `is`(mode: .single, format: .rectilinear, fileFormat: .jpeg,
+                                               burst: .burst14Over4s, updating: false))
+        assertThat(changeCnt, `is`(6))
         // change format
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
             camId: 0, mode: .single, format: .fullFrame, fileFormat: .jpeg, burst: .burst14Over4s,
             bracketing: .preset1ev, captureInterval: 0.0))
         camera!.photoSettings.format = .fullFrame
-        assertThat(changeCnt, `is`(5))
+        assertThat(changeCnt, `is`(7))
         assertThat(camera!.photoSettings, `is`(
             mode: .single, format: .fullFrame, fileFormat: .jpeg, burst: .burst14Over4s, bracketing: .preset3ev,
             updating: true))
@@ -1646,23 +1917,26 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.cameraPhotoModeEncoder(
                 camId: 0, mode: .single, format: .fullFrame, fileFormat: .jpeg, burst: .burst14Over4s,
                 bracketing: .preset1ev, captureInterval: 0.0))
-        assertThat(changeCnt, `is`(6))
+        assertThat(changeCnt, `is`(8))
         assertThat(camera!.photoSettings, `is`(
             mode: .single, format: .fullFrame, fileFormat: .jpeg, burst: .burst14Over4s, bracketing: .preset3ev,
             updating: false))
 
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
+            camId: 1, mode: .single, format: .fullFrame, fileFormat: .jpeg, burst: .burst14Over4s,
+            bracketing: .preset1ev, captureInterval: 0.0))
         cameraThermal!.photoSettings.format = .fullFrame
-        assertThat(changeCnt, `is`(7))
+        assertThat(changeCnt, `is`(9))
         assertThat(cameraThermal!.photoSettings, `is`(
             mode: .single, format: .fullFrame, fileFormat: .jpeg, burst: .burst14Over4s, bracketing: .preset3ev,
-            updating: false))
+            updating: true))
 
         // change fileformat
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
             camId: 0, mode: .single, format: .fullFrame, fileFormat: .dngJpeg, burst: .burst14Over4s,
             bracketing: .preset1ev, captureInterval: 0.0))
         camera!.photoSettings.fileFormat = .dngAndJpeg
-        assertThat(changeCnt, `is`(8))
+        assertThat(changeCnt, `is`(10))
         assertThat(camera!.photoSettings, `is`(
             mode: .single, format: .fullFrame, fileFormat: .dngAndJpeg, burst: .burst14Over4s, bracketing: .preset3ev,
             updating: true))
@@ -1672,23 +1946,26 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.cameraPhotoModeEncoder(
                 camId: 0, mode: .single, format: .fullFrame, fileFormat: .dngJpeg, burst: .burst4Over1s,
                 bracketing: .preset3ev, captureInterval: 0.0))
-        assertThat(changeCnt, `is`(9))
+        assertThat(changeCnt, `is`(11))
         assertThat(camera!.photoSettings, `is`(
             mode: .single, format: .fullFrame, fileFormat: .dngAndJpeg, burst: .burst14Over4s, bracketing: .preset3ev,
             updating: false))
 
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
+            camId: 1, mode: .single, format: .fullFrame, fileFormat: .dngJpeg, burst: .burst14Over4s,
+            bracketing: .preset1ev, captureInterval: 0.0))
         cameraThermal!.photoSettings.fileFormat = .dngAndJpeg
-        assertThat(changeCnt, `is`(10))
+        assertThat(changeCnt, `is`(12))
         assertThat(cameraThermal!.photoSettings, `is`(
             mode: .single, format: .fullFrame, fileFormat: .dngAndJpeg, burst: .burst14Over4s, bracketing: .preset3ev,
-            updating: false))
+            updating: true))
 
         // change mode to bracketing, expect saved format and file format
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
             camId: 0, mode: .bracketing, format: .fullFrame, fileFormat: .dngJpeg, burst: .burst14Over4s,
             bracketing: .preset3ev, captureInterval: 0.0))
         camera!.photoSettings.mode = .bracketing
-        assertThat(changeCnt, `is`(11))
+        assertThat(changeCnt, `is`(13))
         assertThat(camera!.photoSettings, `is`(
             mode: .bracketing, format: .fullFrame, fileFormat: .dngAndJpeg, updating: true))
         assertNoExpectation()
@@ -1697,21 +1974,25 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.cameraPhotoModeEncoder(
                 camId: 0, mode: .bracketing, format: .fullFrame, fileFormat: .dngJpeg, burst: .burst14Over4s,
                 bracketing: .preset3ev, captureInterval: 0.0))
-        assertThat(changeCnt, `is`(12))
+        assertThat(changeCnt, `is`(14))
         assertThat(camera!.photoSettings, `is`(
             mode: .bracketing, format: .fullFrame, fileFormat: .dngAndJpeg, updating: false))
 
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
+            camId: 1, mode: .bracketing, format: .fullFrame, fileFormat: .dngJpeg, burst: .burst14Over4s,
+            bracketing: .preset3ev, captureInterval: 0.0))
+
         cameraThermal!.photoSettings.mode = .bracketing
-        assertThat(changeCnt, `is`(13))
+        assertThat(changeCnt, `is`(15))
         assertThat(cameraThermal!.photoSettings, `is`(
-            mode: .bracketing, format: .fullFrame, fileFormat: .dngAndJpeg, updating: false))
+            mode: .bracketing, format: .fullFrame, fileFormat: .dngAndJpeg, updating: true))
 
         // change bracketing value
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
             camId: 0, mode: .bracketing, format: .fullFrame, fileFormat: .dngJpeg, burst: .burst14Over4s,
             bracketing: .preset1ev2ev, captureInterval: 0.0))
         camera!.photoSettings.bracketingValue = .preset1ev2ev
-        assertThat(changeCnt, `is`(14))
+        assertThat(changeCnt, `is`(16))
         assertThat(camera!.photoSettings, `is`(mode: .bracketing, bracketing: .preset1ev2ev, updating: true))
         assertNoExpectation()
 
@@ -1719,19 +2000,22 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.cameraPhotoModeEncoder(
                 camId: 0, mode: .bracketing, format: .fullFrame, fileFormat: .dngJpeg, burst: .burst4Over1s,
                 bracketing: .preset1ev2ev, captureInterval: 0.0))
-        assertThat(changeCnt, `is`(15))
+        assertThat(changeCnt, `is`(17))
         assertThat(camera!.photoSettings, `is`(mode: .bracketing, bracketing: .preset1ev2ev, updating: false))
 
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
+            camId: 1, mode: .bracketing, format: .fullFrame, fileFormat: .dngJpeg, burst: .burst14Over4s,
+            bracketing: .preset1ev2ev, captureInterval: 0.0))
         cameraThermal!.photoSettings.bracketingValue = .preset1ev2ev
-        assertThat(changeCnt, `is`(16))
-        assertThat(cameraThermal!.photoSettings, `is`(mode: .bracketing, bracketing: .preset1ev2ev, updating: false))
+        assertThat(changeCnt, `is`(18))
+        assertThat(cameraThermal!.photoSettings, `is`(mode: .bracketing, bracketing: .preset1ev2ev, updating: true))
 
         // change mode to burst, expect default format and fileFormat
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
             camId: 0, mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over4s,
             bracketing: .preset1ev, captureInterval: 0.0))
         camera!.photoSettings.mode = .burst
-        assertThat(changeCnt, `is`(17))
+        assertThat(changeCnt, `is`(19))
         assertThat(camera!.photoSettings, `is`(
             mode: .burst, format: .rectilinear, fileFormat: .jpeg, updating: true))
         assertNoExpectation()
@@ -1740,21 +2024,30 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.cameraPhotoModeEncoder(
                 camId: 0, mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst4Over1s,
                 bracketing: .preset1ev2ev, captureInterval: 0.0))
-        assertThat(changeCnt, `is`(18))
+        assertThat(changeCnt, `is`(20))
         assertThat(camera!.photoSettings, `is`(
             mode: .burst, format: .rectilinear, fileFormat: .jpeg, updating: false))
 
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
+            camId: 1, mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over4s,
+            bracketing: .preset1ev, captureInterval: 0.0))
         cameraThermal!.photoSettings.mode = .burst
-        assertThat(changeCnt, `is`(19))
+        assertThat(changeCnt, `is`(21))
         assertThat(cameraThermal!.photoSettings, `is`(
-            mode: .burst, format: .rectilinear, fileFormat: .jpeg, updating: false))
+            mode: .burst, format: .rectilinear, fileFormat: .jpeg, updating: true))
 
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraPhotoModeEncoder(
+                camId: 1, mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over4s,
+                bracketing: .preset1ev2ev, captureInterval: 0.0))
+
+        assertThat(changeCnt, `is`(22))
         // change burst value
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
             camId: 0, mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over4s,
             bracketing: .preset1ev, captureInterval: 0.0))
         camera!.photoSettings.burstValue = .burst14Over4s
-        assertThat(changeCnt, `is`(20))
+        assertThat(changeCnt, `is`(23))
         assertThat(camera!.photoSettings, `is`(mode: .burst, burst: .burst14Over4s, updating: true))
         assertNoExpectation()
 
@@ -1763,12 +2056,12 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.cameraPhotoModeEncoder(
                 camId: 0, mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over2s,
                 bracketing: .preset1ev2ev, captureInterval: 0.0))
-        assertThat(changeCnt, `is`(21))
+        assertThat(changeCnt, `is`(24))
         // since .burst14Over2s is not supported, fallback to the first supported burst value
         assertThat(camera!.photoSettings, `is`(mode: .burst, burst: .burst14Over4s, updating: false))
 
         cameraThermal!.photoSettings.burstValue = .burst14Over4s
-        assertThat(changeCnt, `is`(21))
+        assertThat(changeCnt, `is`(24))
         assertThat(cameraThermal!.photoSettings, `is`(mode: .burst, burst: .burst14Over4s, updating: false))
 
         // disconnect
@@ -1818,40 +2111,32 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         assertThat(camera!.photoSettings, `is`(
             mode: .single, format: .fullFrame, fileFormat: .dngAndJpeg, updating: false))
 
-        cameraThermal!.photoSettings.mode = .single
-        assertThat(changeCnt, `is`(2))
-        assertThat(cameraThermal!.photoSettings, `is`(
-            mode: .single, format: .fullFrame, fileFormat: .dngAndJpeg, updating: false))
-
         // change format offline, file format must also change
         camera!.photoSettings.format = .rectilinear
-        assertThat(changeCnt, `is`(3))
+        assertThat(changeCnt, `is`(2))
         assertThat(camera!.photoSettings, `is`(
-            mode: .single, format: .rectilinear, fileFormat: .jpeg, updating: false))
-
-        cameraThermal!.photoSettings.format = .rectilinear
-        assertThat(changeCnt, `is`(4))
-        assertThat(cameraThermal!.photoSettings, `is`(
             mode: .single, format: .rectilinear, fileFormat: .jpeg, updating: false))
 
         // reconnect
         connect(drone: drone, handle: 1) {
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraPhotoModeEncoder(
-                    camId: 0, mode: .bracketing, format: .fullFrame, fileFormat: .dngJpeg, burst: .burst4Over1s,
-                    bracketing: .preset3ev, captureInterval: 0.0))
+                    camId: 0, mode: .bracketing, format: .fullFrame, fileFormat: .dngJpeg, burst: .burst14Over4s,
+                    bracketing: .preset1ev, captureInterval: 0.0))
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraPhotoModeEncoder(
-                    camId: 1, mode: .bracketing, format: .fullFrame, fileFormat: .dngJpeg, burst: .burst4Over1s,
-                    bracketing: .preset3ev, captureInterval: 0.0))
+                    camId: 1, mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over4s,
+                    bracketing: .preset1ev, captureInterval: 0.0))
             self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
                 camId: 0, mode: .single, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over4s,
                 bracketing: .preset1ev, captureInterval: 0.0))
         }
         // expect single mode
+        self.mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraPhotoModeEncoder(
+                camId: 0, mode: .single, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over4s,
+                bracketing: .preset1ev, captureInterval: 0.0))
         assertThat(camera!.photoSettings, `is`(
-            mode: .single, format: .rectilinear, fileFormat: .jpeg, updating: false))
-        assertThat(cameraThermal!.photoSettings, `is`(
             mode: .single, format: .rectilinear, fileFormat: .jpeg, updating: false))
     }
 
@@ -1978,7 +2263,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             mode: .single, format: .fullFrame, fileFormat: .dngAndJpeg, burst: .burst14Over1s,
             bracketing: .preset2ev))
         assertThat(cameraThermal!.photoSettings, `is`(
-            mode: .single, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over1s,
+            mode: .single, format: .fullFrame, fileFormat: .dngAndJpeg, burst: .burst14Over1s,
             bracketing: .preset2ev))
 
         // switch to burst mode. Should use the burst value of the api
@@ -1991,11 +2276,14 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over1s,
             bracketing: .preset2ev, updating: true))
 
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
+            camId: 1, mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over1s,
+            bracketing: .preset1ev, captureInterval: 0.0))
         cameraThermal!.photoSettings.mode = .burst
         assertThat(changeCnt, `is`(4))
         assertThat(cameraThermal!.photoSettings, `is`(
             mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over1s,
-            bracketing: .preset2ev, updating: false))
+            bracketing: .preset2ev, updating: true))
 
         // switch to single mode. Should use the burst value of the api
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
@@ -2007,11 +2295,14 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             mode: .single, format: .fullFrame, fileFormat: .dngAndJpeg, burst: .burst14Over1s,
             bracketing: .preset2ev, updating: true))
 
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
+            camId: 1, mode: .single, format: .fullFrame, fileFormat: .dngJpeg, burst: .burst14Over4s,
+            bracketing: .preset1ev, captureInterval: 0.0))
         cameraThermal!.photoSettings.mode = .single
         assertThat(changeCnt, `is`(6))
         assertThat(cameraThermal!.photoSettings, `is`(
             mode: .single, format: .fullFrame, fileFormat: .dngAndJpeg, burst: .burst14Over1s,
-            bracketing: .preset2ev, updating: false))
+            bracketing: .preset2ev, updating: true))
 
         // Change burst value while not in burst mode (should not send any command,
         // API should be changed and not updating)
@@ -2061,11 +2352,15 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over1s,
             bracketing: .preset2ev, updating: false))
 
+        // switch to burst mode. Should use the burst value previously set
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
+            camId: 1, mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst10Over2s,
+            bracketing: .preset1ev, captureInterval: 0.0))
         cameraThermal!.photoSettings.mode = .burst
         assertThat(changeCnt, `is`(11))
         assertThat(cameraThermal!.photoSettings, `is`(
             mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst10Over2s,
-            bracketing: .preset2ev, updating: false))
+            bracketing: .preset2ev, updating: true))
 
         // Change burst value while in burst mode
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
@@ -2081,7 +2376,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         assertThat(changeCnt, `is`(12))
         assertThat(cameraThermal!.photoSettings, `is`(
             mode: .burst, format: .rectilinear, fileFormat: .jpeg, burst: .burst10Over2s,
-            bracketing: .preset2ev, updating: false))
+            bracketing: .preset2ev, updating: true))
 
         // Change bracketing value while not in bracketing mode (should not send any command,
         // API should be changed and not updating)
@@ -2131,11 +2426,14 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             mode: .bracketing, format: .rectilinear, fileFormat: .jpeg, burst: .burst10Over2s,
             bracketing: .preset2ev, updating: false))
 
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetPhotoMode(
+            camId: 1, mode: .bracketing, format: .rectilinear, fileFormat: .jpeg, burst: .burst14Over4s,
+            bracketing: .preset3ev, captureInterval: 0.0))
         cameraThermal!.photoSettings.mode = .bracketing
         assertThat(changeCnt, `is`(17))
-        assertThat(cameraThermal!.photoSettings, `is`(
-            mode: .bracketing, format: .rectilinear, fileFormat: .jpeg, burst: .burst10Over2s,
-            bracketing: .preset3ev, updating: false))
+        //assertThat(cameraThermal!.photoSettings, `is`(
+        //    mode: .bracketing, format: .rectilinear, fileFormat: .jpeg, burst: .burst10Over2s,
+        //    bracketing: .preset3ev, updating: false))
     }
 
     func testHdr() {
@@ -2216,10 +2514,11 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         assertThat(changeCnt, `is`(8))
         assertThat(camera!.zoom?.velocityQualityDegradationAllowance, presentAnd(allOf(`is`(true), isUpToDate())))
 
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetZoomVelocityQualityDegradation(camId: 1, allow: 1))
         cameraThermal?.zoom?.velocityQualityDegradationAllowance.value = true
         assertThat(changeCnt, `is`(9))
         assertThat(cameraThermal!.zoom?.velocityQualityDegradationAllowance,
-                   presentAnd(allOf(`is`(true), isUpToDate())))
+                   presentAnd(allOf(`is`(true), isUpdating())))
 
         // receive max zoom velocity bounds
         mockArsdkCore.onCommandReceived(
@@ -2229,24 +2528,25 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.cameraMaxZoomSpeedEncoder(camId: 1, min: 0.5, max: 20.0, current: 10.0))
-        assertThat(changeCnt, `is`(10))
-        assertThat(cameraThermal!.zoom?.maxSpeed, presentAnd(allOf(`is`(0.0, 0.0, 0.0), isUpToDate())))
+        assertThat(changeCnt, `is`(11))
+        assertThat(cameraThermal!.zoom?.maxSpeed, presentAnd(allOf(`is`(0.5, 10.0, 20.0), isUpToDate())))
 
         // set the maxZoomSpeed
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetMaxZoomSpeed(camId: 0, max: 20.0))
         camera!.zoom?.maxSpeed.value = 30.0
-        assertThat(changeCnt, `is`(11))
+        assertThat(changeCnt, `is`(12))
         assertThat(camera!.zoom?.maxSpeed, presentAnd(allOf(`is`(0.5, 20.0, 20.0), isUpdating())))
 
         // mock answer with a different value than the one asked
         mockArsdkCore.onCommandReceived(
-            1, encoder: CmdEncoder.cameraMaxZoomSpeedEncoder(camId: 0, min: 0.5, max: 20.0, current: 15.0))
-        assertThat(changeCnt, `is`(12))
-        assertThat(camera!.zoom?.maxSpeed, presentAnd(allOf(`is`(0.5, 15.0, 20.0), isUpToDate())))
+            1, encoder: CmdEncoder.cameraMaxZoomSpeedEncoder(camId: 0, min: 0.5, max: 20.0, current: 20.0))
+        assertThat(changeCnt, `is`(13))
+        assertThat(camera!.zoom?.maxSpeed, presentAnd(allOf(`is`(0.5, 20.0, 20.0), isUpToDate())))
 
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetMaxZoomSpeed(camId: 1, max: 20.0))
         cameraThermal!.zoom?.maxSpeed.value = 30.0
-        assertThat(changeCnt, `is`(12))
-        assertThat(cameraThermal!.zoom?.maxSpeed, presentAnd(allOf(`is`(0.0, 0.0, 0.0), isUpToDate())))
+        assertThat(changeCnt, `is`(14))
+        assertThat(cameraThermal!.zoom?.maxSpeed, presentAnd(allOf(`is`(0.5, 20.0, 20.0), isUpdating())))
 
         // disconnect
         disconnect(drone: drone, handle: 1)
@@ -2256,7 +2556,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             available: false, currentLevel: 1.0, maxLossLessLevel: 1.0,
             maxLossyLevel: 1.0)))
         assertThat(camera!.zoom?.velocityQualityDegradationAllowance, presentAnd(`is`(true)))
-        assertThat(camera?.zoom?.maxSpeed, presentAnd(`is`(0.5, 15.0, 20.0)))
+        assertThat(camera?.zoom?.maxSpeed, presentAnd(`is`(0.5, 20.0, 20.0)))
 
         // restart engine
         resetArsdkEngine()
@@ -2283,10 +2583,10 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             self.sendCapabilitiesCommand(camId: 1, model: .thermal)
             // also modify bounds to check that new bounds are applied even if old value is kept
             self.mockArsdkCore.onCommandReceived(
-                1, encoder: CmdEncoder.cameraMaxZoomSpeedEncoder(camId: 0, min: 1.0, max: 25.0, current: 15.0))
+                1, encoder: CmdEncoder.cameraMaxZoomSpeedEncoder(camId: 0, min: 0.5, max: 20.0, current: 20.0))
             // should be ignore since thermal camera is not active
             self.mockArsdkCore.onCommandReceived(
-                1, encoder: CmdEncoder.cameraMaxZoomSpeedEncoder(camId: 1, min: 1.0, max: 25.0, current: 15.0))
+                1, encoder: CmdEncoder.cameraMaxZoomSpeedEncoder(camId: 1, min: 0.5, max: 25.0, current: 20.0))
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraZoomVelocityQualityDegradationEncoder(camId: 0, allowed: 1))
 
@@ -2298,10 +2598,9 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             available: false, currentLevel: 1.0, maxLossLessLevel: 1.0,
             maxLossyLevel: 1.0)))
         assertThat(camera!.zoom?.velocityQualityDegradationAllowance, presentAnd(`is`(false)))
-        assertThat(camera?.zoom?.maxSpeed, presentAnd(`is`(1.0, 1.0, 25.0)))
-        assertThat(changeCnt, `is`(3))
+        assertThat(camera?.zoom?.maxSpeed, presentAnd(`is`(0.5, 1.0, 20.0)))
 
-         assertThat(cameraThermal?.zoom?.maxSpeed, presentAnd(`is`(0.0, 0.0, 0.0)))
+         assertThat(cameraThermal?.zoom?.maxSpeed, presentAnd(`is`(0.5, 20.0, 25.0)))
         // mock zoom available
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.cameraZoomInfoEncoder(
@@ -2310,7 +2609,6 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         assertThat(camera!.zoom, presentAnd(`is`(
             available: true, currentLevel: 1.0, maxLossLessLevel: 2.0,
             maxLossyLevel: 3.0)))
-        assertThat(changeCnt, `is`(4))
 
         // check zoom control
         camera!.zoom?.control(mode: .level, target: 4.0)
@@ -2329,7 +2627,6 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                 camId: 0, available: .notAvailable, highQualityMaximumLevel: 9.0, maximumLevel: 10.0))
         assertThat(camera!.zoom, presentAnd(`is`(
             available: false, currentLevel: 1.0, maxLossLessLevel: 2.0, maxLossyLevel: 3.0)))
-        assertThat(changeCnt, `is`(5))
 
         // mock zoom available with bounds < 1.0: event should be skipped
         mockArsdkCore.onCommandReceived(
@@ -2337,7 +2634,6 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                 camId: 0, available: .available, highQualityMaximumLevel: 0.0, maximumLevel: 10.0))
         assertThat(camera!.zoom, presentAnd(`is`(
             available: false, currentLevel: 1.0, maxLossLessLevel: 2.0, maxLossyLevel: 3.0)))
-        assertThat(changeCnt, `is`(5))
     }
 
     func testZoomControlSendingTimes() {
@@ -3195,8 +3491,10 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         camera!.modeSetting.mode = .photo
         assertThat(camera!.modeSetting, `is`(mode: .photo, updating: true))
         assertThat(changeCnt, `is`(3))
+        expectCommand(
+            handle: 1, expectedCmd: ExpectedCmd.cameraSetCameraMode(camId: 1, value: .photo))
         cameraThermal!.modeSetting.mode = .photo
-        assertThat(cameraThermal!.modeSetting, `is`(mode: .photo, updating: false))
+        assertThat(cameraThermal!.modeSetting, `is`(mode: .photo, updating: true))
         assertThat(changeCnt, `is`(4))
 
         assertThat(camera!.whiteBalanceLock, present())

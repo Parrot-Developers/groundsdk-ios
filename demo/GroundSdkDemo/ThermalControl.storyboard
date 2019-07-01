@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y9t-ED-Rwp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y9t-ED-Rwp">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -111,7 +111,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="backgroundTemperature" textLabel="lkw-5f-T6a" detailTextLabel="Wtb-de-BkE" style="IBUITableViewCellStyleValue1" id="3RM-NO-Nca" userLabel="emissivity">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="backgroundTemperature" textLabel="lkw-5f-T6a" detailTextLabel="Wtb-de-BkE" style="IBUITableViewCellStyleValue1" id="3RM-NO-Nca" userLabel="Background temperature">
                                         <rect key="frame" x="0.0" y="187.33333333333334" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3RM-NO-Nca" id="irQ-5L-jPa">
@@ -177,6 +177,30 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="exposureMode" textLabel="qLd-hY-YoO" detailTextLabel="pRt-Ri-f0w" style="IBUITableViewCellStyleValue1" id="9VN-J1-C7Z" userLabel="Calibration mode">
+                                        <rect key="frame" x="0.0" y="319.33333333333337" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9VN-J1-C7Z" id="shY-8d-Vte">
+                                            <rect key="frame" x="0.0" y="0.0" width="376" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Calibration Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qLd-hY-YoO" userLabel="Calibration Mode">
+                                                    <rect key="frame" x="20" y="11.999999999999998" width="130.33333333333334" height="20.333333333333332"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="off" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pRt-Ri-f0w" userLabel="Value">
+                                                    <rect key="frame" x="354.66666666666669" y="11.999999999999998" width="21.333333333333332" height="20.333333333333332"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -185,8 +209,18 @@
                             <outlet property="delegate" destination="i4X-yV-6R6" id="0SH-Xf-7rC"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="rtb-HU-FKE"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="rtb-HU-FKE">
+                        <barButtonItem key="rightBarButtonItem" title="Calibrate" id="G5C-B1-Mu7">
+                            <connections>
+                                <action selector="calibrate:" destination="i4X-yV-6R6" id="oko-Pe-4XB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="calibrateBtn" destination="G5C-B1-Mu7" id="G9X-5p-Kzb"/>
+                        <outlet property="calibrationMode" destination="pRt-Ri-f0w" id="KQX-PT-HSC"/>
                         <outlet property="mode" destination="Nf1-cw-dQD" id="in8-fn-7kc"/>
                         <outlet property="sensitivityRange" destination="oXQ-ym-bI4" id="9X9-FY-wAx"/>
                         <segue destination="K7D-FX-EoH" kind="unwind" identifier="exit" unwindAction="showDefaultDetailWithUnwindSegue:" id="ghF-Bz-8IG"/>

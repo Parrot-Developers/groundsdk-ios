@@ -122,17 +122,24 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
+                physicalState: .usbMassStorage, fileSystemState: .unknown, attributeBitField: 0,
+                monitorEnabled: 0, monitorPeriod: 0))
+        assertThat(storage!.state, `is`(.usbMassStorage))
+        assertThat(changeCnt, `is`(7))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .undetected, fileSystemState: .formatting, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
         assertThat(storage!.state, `is`(.noMedia))
-        assertThat(changeCnt, `is`(7))
+        assertThat(changeCnt, `is`(8))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .error, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
         assertThat(storage!.state, `is`(.error))
-        assertThat(changeCnt, `is`(8))
+        assertThat(changeCnt, `is`(9))
 
         // sdkCoreUnknown should be skipped
         mockArsdkCore.onCommandReceived(
@@ -140,35 +147,35 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
                 physicalState: .available, fileSystemState: .sdkCoreUnknown, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
         assertThat(storage!.state, `is`(.error))
-        assertThat(changeCnt, `is`(8))
+        assertThat(changeCnt, `is`(9))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .unknown, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
         assertThat(storage!.state, `is`(.mounting))
-        assertThat(changeCnt, `is`(9))
+        assertThat(changeCnt, `is`(10))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatNeeded, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
         assertThat(storage!.state, `is`(.needFormat))
-        assertThat(changeCnt, `is`(10))
+        assertThat(changeCnt, `is`(11))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatting, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
         assertThat(storage!.state, `is`(.formatting))
-        assertThat(changeCnt, `is`(11))
+        assertThat(changeCnt, `is`(12))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
                 monitorEnabled: 1, monitorPeriod: 0))
         assertThat(storage!.state, `is`(.ready))
-        assertThat(changeCnt, `is`(12))
+        assertThat(changeCnt, `is`(13))
 
         // since monitor will be declared as disabled, we should start monitoring
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageStartMonitoring(period: 0))
@@ -177,7 +184,7 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
                 physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
         assertThat(storage!.state, `is`(.ready))
-        assertThat(changeCnt, `is`(12))
+        assertThat(changeCnt, `is`(13))
 
         // sdkCoreUnknown should be skipped
         mockArsdkCore.onCommandReceived(
@@ -185,7 +192,7 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
                 physicalState: .sdkCoreUnknown, fileSystemState: .unknown, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
         assertThat(storage!.state, `is`(.ready))
-        assertThat(changeCnt, `is`(12))
+        assertThat(changeCnt, `is`(13))
     }
 
     func testMediaInfo() {

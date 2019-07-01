@@ -144,6 +144,8 @@ extension UserStorageRemovableUserStorage: ArsdkFeatureUserStorageCallback {
             state = .mediaTooSmall
         case .tooSlow:
             state = .mediaTooSlow
+        case .usbMassStorage:
+            state = .usbMassStorage
         case .available:
             switch fileSystemState {
             case .unknown:

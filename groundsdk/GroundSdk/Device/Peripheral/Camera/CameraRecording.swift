@@ -76,6 +76,9 @@ public enum CameraRecordingResolution: Int, CustomStringConvertible, Comparable 
     /// 1280x720 pixels (HD)
     @objc(GSCameraRecordingResolution720p)
     case res720p
+    /// 1280x720 pixels (SD)
+    @objc(GSCameraRecordingResolution720pSd)
+    case res720pSd
     /// 856x480 pixels
     @objc(GSCameraRecordingResolution480p)
     case res480p
@@ -94,13 +97,14 @@ public enum CameraRecordingResolution: Int, CustomStringConvertible, Comparable 
         case .res1080p:     return "1080p"
         case .res1080pSd:   return "1080pSd"
         case .res720p:      return "720p"
+        case .res720pSd:    return "720pSd"
         case .res480p:      return "480p"
         }
     }
 
     /// Set containing all possible values.
     public static let allCases: Set<CameraRecordingResolution> = [
-        .resDci4k, .resUhd4k, .res2_7k, .res1080p, .res1080pSd, .res720p, .res480p]
+        .resDci4k, .resUhd4k, .res2_7k, .res1080p, .res1080pSd, .res720p, .res720pSd, .res480p]
 }
 
 /// Camera recording frame rates.

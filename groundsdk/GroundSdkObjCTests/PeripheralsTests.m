@@ -547,6 +547,10 @@
                                                                                 type:GSThermalSpotTypeCold
                                                                            threshold:100];
     [thermalControl sendPalette:spotPalette];
+
+    XCTAssertEqual(thermalControl.calibration.mode, GSThermalCalibrationModeAutomatic);
+    XCTAssertFalse(thermalControl.calibration.updating);
+    XCTAssertFalse([thermalControl.calibration isModeSupported:GSThermalCalibrationModeAutomatic]);
 }
 
 - (void)testGimbal {

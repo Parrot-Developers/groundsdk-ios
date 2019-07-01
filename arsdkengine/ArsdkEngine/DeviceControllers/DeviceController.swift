@@ -404,11 +404,6 @@ class DeviceController: NSObject {
     /// Memorize the previous data sync allowance value in order to notify only if it has changed.
     private var previousDataSyncAllowed = false
 
-    /// True if the user is identified and has accepted the terms of use and confidentiality, false otherwise
-    var userHasAuthorizedBlackbox = true
-    /// Monitor of the userAccount changes
-    var userAccountMonitor: MonitorCore!
-
     /// Constructor
     ///
     /// - Parameters:
@@ -836,18 +831,10 @@ class DeviceController: NSObject {
 
     /// Device controller did start
     func controllerDidStart() {
-        // get the UserAccount Utility in order to know if BlackBoxes are allowed (if the UserAccount exists)
-        let userAccountUtility = engine.utilities.getUtility(Utilities.userAccount)
-        // monitor userAccount changes
-        userAccountMonitor = userAccountUtility?.startMonitoring(accountDidChange: { (userAccountInfo) in
-            self.userHasAuthorizedBlackbox = userAccountInfo?.account != nil
-        })
     }
 
     /// Device controller did stop
     func controllerDidStop() {
-        userAccountMonitor?.stop()
-        userAccountMonitor = nil
     }
 
     /// About to connect the device

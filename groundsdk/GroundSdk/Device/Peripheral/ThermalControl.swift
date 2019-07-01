@@ -63,6 +63,23 @@ public enum ThermalSensitivityRange: Int, CustomStringConvertible {
     }
 }
 
+/// Thermal camera calibration modes.
+@objc(GSThermalCalibrationMode)
+public enum ThermalCalibrationMode: Int, CustomStringConvertible {
+    /// Calibration triggered automatically.
+    case automatic
+    /// Calibration triggered manually.
+    case manual
+
+    /// Debug description.
+    public var description: String {
+        switch self {
+        case .automatic: return "automatic"
+        case .manual: return "manual"
+        }
+    }
+}
+
 /// Thermal rendering modes.
 @objc(GSThermalRenderingMode)
 public enum ThermalRenderingMode: Int, CustomStringConvertible {
@@ -108,6 +125,23 @@ public protocol ThermalSensitivityRangeSetting: class {
 
     /// Current sensitivity range.
     var sensitivityRange: ThermalSensitivityRange { get set }
+}
+
+/// Thermal camera calibration.
+public protocol ThermalCalibration: class {
+    /// Tells if the calibration mode value has been changed and is waiting for change confirmation.
+    var updating: Bool { get }
+
+    /// Supported calibration modes.
+    var supportedModes: Set<ThermalCalibrationMode> { get }
+
+    /// Current calibration mode.
+    var mode: ThermalCalibrationMode { get set }
+
+    /// Triggers a calibration.
+    ///
+    /// - Returns: `true` if the calibration request has been sent to the drone, `false` otherwise
+    func calibrate() -> Bool
 }
 
 /// Thermal palette colorization modes.
@@ -356,6 +390,9 @@ public protocol ThermalControl: Peripheral {
     /// Sensitivity range setting
     var sensitivitySetting: ThermalSensitivityRangeSetting { get }
 
+    /// Thermal camera calibration
+    var calibration: ThermalCalibration? { get }
+
     /// Sends emissivity value.
     ///
     /// - Parameter emissivity: emissivity value in range [0, 1]
@@ -404,8 +441,6 @@ public class ThermalControlDesc: NSObject, PeripheralClassDesc {
     func isModeSupported(_ mode: ThermalControlMode) -> Bool
 }
 
-// MARK: - objc compatibility
-
 /// Setting to change the thermal sensitivity range
 /// - Note: This protocol is for Objective-C compatibility only.
 @objc public protocol GSThermalSensitivityRangeSetting {
@@ -422,6 +457,27 @@ public class ThermalControlDesc: NSObject, PeripheralClassDesc {
     var sensitivityRange: ThermalSensitivityRange { get set }
 }
 
+/// Thermal camera calibration.
+/// - Note: This protocol is for Objective-C compatibility only.
+@objc public protocol GSThermalCalibration: class {
+    /// Tells if the calibration mode value has been changed and is waiting for change confirmation.
+    var updating: Bool { get }
+
+    /// Current calibration mode.
+    var mode: ThermalCalibrationMode { get set }
+
+    /// Checks if a mode is supported.
+    ///
+    /// - Parameter mode: mode to check
+    /// - Returns: `true` if the mode is supported
+    func isModeSupported(_ mode: ThermalCalibrationMode) -> Bool
+
+    /// Triggers a calibration.
+    ///
+    /// - Returns: `true` if the calibration request has been sent to the drone
+    func calibrate() -> Bool
+}
+
 /// Peripheral managing thermal control.
 /// - Note: This protocol is for Objective-C compatibility only.
 @objc public protocol GSThermalControl {
@@ -432,6 +488,10 @@ public class ThermalControlDesc: NSObject, PeripheralClassDesc {
     /// Sensitivity range setting.
     @objc(sensitivitySetting)
     var gsSensitivityRangeSetting: GSThermalSensitivityRangeSetting { get }
+
+    /// Thermal camera calibration
+    @objc(calibration)
+    var gsCalibration: GSThermalCalibration? { get }
 
     /// Send emissivity value.
     ///

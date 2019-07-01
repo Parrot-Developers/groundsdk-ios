@@ -54,7 +54,12 @@ class HttpFlightPlanPilotingItfTests: ArsdkEngineTestBase {
     }
 
     func testAvailabilityWithHttpUpload() {
-        connect(drone: drone, handle: 1)
+        connect(drone: drone, handle: 1) {
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.commonMavlinkstateMavlinkfileplayingstatechangedEncoder(
+                    state: .stopped, filepath: "", type: .flightplan))
+        }
+
         // should be unavailable
         assertThat(flightPlanPilotingItf!.state, `is`(.unavailable))
         assertThat(changeCnt, `is`(1))

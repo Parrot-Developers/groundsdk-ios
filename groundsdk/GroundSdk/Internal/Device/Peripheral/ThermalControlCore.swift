@@ -43,6 +43,17 @@ public protocol ThermalControlBackend: class {
     /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
     func set(range: ThermalSensitivityRange) -> Bool
 
+    /// Sets thermal camera calibration mode.
+    ///
+    /// - Parameter calibrationMode: the new calibration mode
+    /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
+    func set(calibrationMode: ThermalCalibrationMode) -> Bool
+
+    /// Triggers a calibration of the thermal camera.
+    ///
+    /// - Returns: true if the command has been sent, false otherwise
+    func calibrate() -> Bool
+
     /// Sets emissivity
     ///
     /// - Parameter emissivity: the new emissivity
@@ -65,7 +76,7 @@ public protocol ThermalControlBackend: class {
     func set(rendering: ThermalRendering)
 }
 
-/// Thermal control peripheral implementation
+/// Thermal control setting implementation
 class ThermalControlSettingCore: ThermalControlSetting, CustomDebugStringConvertible {
 
     /// Delegate called when the setting value is changed by setting properties
@@ -131,7 +142,7 @@ class ThermalControlSettingCore: ThermalControlSetting, CustomDebugStringConvert
     /// Called by the backend, change the current mode
     ///
     /// - Parameter mode: new thermal control mode
-    /// - Returns: true if the setting has been changed, false else
+    /// - Returns: true if the setting has been changed, false otherwise
     func update(mode newMode: ThermalControlMode) -> Bool {
         if updating || _mode != newMode {
             _mode = newMode
@@ -154,6 +165,93 @@ class ThermalControlSettingCore: ThermalControlSetting, CustomDebugStringConvert
     /// Debug description
     var debugDescription: String {
         return "mode: \(_mode) \(supportedModes) updating: [\(updating)]"
+    }
+}
+
+/// Thermal camera calibration implementation
+class ThermalCalibrationCore: ThermalCalibration, CustomDebugStringConvertible {
+
+    /// Delegate called when the setting value is changed by setting properties
+    private unowned let didChangeDelegate: SettingChangeDelegate
+
+    /// Timeout object.
+    ///
+    /// Visibility is internal for testing purposes
+    let timeout = SettingTimeout()
+
+    /// Tells if the setting value has been changed and is waiting for change confirmation
+    var updating: Bool { return timeout.isScheduled }
+
+    /// Supported calibration modes
+    var supportedModes: Set<ThermalCalibrationMode> = [.automatic, .manual]
+
+    /// Current calibration mode
+    var mode: ThermalCalibrationMode {
+        get {
+            return _mode
+        }
+        set {
+            if _mode != newValue, supportedModes.contains(newValue) {
+                if backend.set(calibrationMode: newValue) {
+                    let oldValue = _mode
+                    // value sent to the backend, update setting value and mark it updating
+                    _mode = newValue
+                    timeout.schedule { [weak self] in
+                        if let `self` = self, self.update(mode: oldValue) {
+                            self.didChangeDelegate.userDidChangeSetting()
+                        }
+                    }
+                    didChangeDelegate.userDidChangeSetting()
+                }
+            }
+        }
+    }
+    /// Calibration mode
+    private var _mode: ThermalCalibrationMode = .automatic
+
+    /// Implementation backend
+    private unowned let backend: ThermalControlBackend
+
+    /// Constructor
+    ///
+    /// - Parameters:
+    ///   - didChangeDelegate: delegate called when the setting value is changed by setting properties
+    ///   - backend: closure to call to change the setting value
+    init(didChangeDelegate: SettingChangeDelegate, backend: ThermalControlBackend) {
+        self.didChangeDelegate = didChangeDelegate
+        self.backend = backend
+    }
+
+    /// Called by the backend, change the current calibration mode
+    ///
+    /// - Parameter mode: new thermal calibration mode
+    /// - Returns: true if the setting has been changed, false otherwise
+    func update(mode newMode: ThermalCalibrationMode) -> Bool {
+        if updating || _mode != newMode {
+            _mode = newMode
+            timeout.cancel()
+            return true
+        }
+        return false
+    }
+
+    /// Cancels any pending rollback.
+    ///
+    /// - Parameter completionClosure: block that will be called if a rollback was pending
+    func cancelRollback(completionClosure: () -> Void) {
+        if timeout.isScheduled {
+            timeout.cancel()
+            completionClosure()
+        }
+    }
+
+    func calibrate() -> Bool {
+        return backend.calibrate()
+    }
+
+    /// Debug description
+    var debugDescription: String {
+        return "calibration mode: \(_mode) \(supportedModes) updating: [\(updating)]"
     }
 }
 
@@ -214,7 +312,7 @@ class SensitivityRangeSettingCore: ThermalSensitivityRangeSetting, CustomDebugSt
     /// Called by the backend, change the current range
     ///
     /// - Parameter range: new range
-    /// - Returns: true if the setting has been changed, false else
+    /// - Returns: true if the setting has been changed, false otherwise
     func update(range newRange: ThermalSensitivityRange) -> Bool {
         if updating || _sensitivityRange != newRange {
             _sensitivityRange = newRange
@@ -236,7 +334,7 @@ class SensitivityRangeSettingCore: ThermalSensitivityRangeSetting, CustomDebugSt
 
     /// Debug description
     var debugDescription: String {
-        return "mode: \(_sensitivityRange) \(supportedSensitivityRanges) updating: [\(updating)]"
+        return "sensitivity range: \(_sensitivityRange) \(supportedSensitivityRanges) updating: [\(updating)]"
     }
 }
 
@@ -254,6 +352,12 @@ public class ThermalControlCore: PeripheralCore, ThermalControl {
     }
     private var _sensitivitySetting: SensitivityRangeSettingCore!
 
+    /// Thermal camera calibration
+    public var calibration: ThermalCalibration? {
+        return _calibration
+    }
+    private var _calibration: ThermalCalibrationCore?
+
     /// Implementation backend
     private unowned let backend: ThermalControlBackend
 
@@ -262,7 +366,7 @@ public class ThermalControlCore: PeripheralCore, ThermalControl {
         return "ThermalControl : setting = \(setting)]"
     }
 
-    /// Constructor
+    /// Constructor.
     ///
     /// - Parameters:
     ///    - store: store where this peripheral will be stored
@@ -277,7 +381,7 @@ public class ThermalControlCore: PeripheralCore, ThermalControl {
             return self.backend.set(range: range)})
     }
 
-    /// Send the emissivity
+    /// Sends the emissivity to drone.
     ///
     /// - Parameter emissivity: new emissivity
     /// - Note: emissivity value is in range [0, 1]
@@ -285,28 +389,28 @@ public class ThermalControlCore: PeripheralCore, ThermalControl {
         backend.set(emissivity: unsignedPercentIntervalDouble.clamp(emissivity))
     }
 
-    /// Send thermal palette configuration to drone.
+    /// Sends thermal palette configuration to drone.
     ///
     /// - Parameter palette: palette configuration
     public func sendPalette(_ palette: ThermalPalette) {
         backend.set(palette: palette)
     }
 
-    /// Send background temperature to drone
+    /// Sends background temperature to drone.
     ///
     /// - Parameter backgroundTemperature: background temperature (Kelvin)
     public func sendBackgroundTemperature(_ backgroundTemperature: Double) {
          backend.set(backgroundTemperature: backgroundTemperature)
     }
 
-    /// Send rendering to drone
+    /// Sends rendering to drone.
     ///
     /// - Parameter rendering: rendering configuration
     public func sendRendering(rendering: ThermalRendering) {
         backend.set(rendering: rendering)
     }
 
-    /// Send sensitivity range
+    /// Sends sensitivity range to drone.
     ///
     /// - Parameter range: sensitivity range
     public func sendSensitivity(range: ThermalSensitivityRange) {
@@ -316,9 +420,9 @@ public class ThermalControlCore: PeripheralCore, ThermalControl {
 
 /// Backend callback methods
 extension ThermalControlCore {
-    /// Set the supported modes
+    /// Updates supported modes.
     ///
-    /// - Parameter supportedModes: new supported modes.
+    /// - Parameter supportedModes: new supported modes
     /// - Returns: self to allow call chaining
     /// - Note: Changes are not notified until notifyUpdated() is called.
     @discardableResult public func update(
@@ -329,9 +433,9 @@ extension ThermalControlCore {
         return self
     }
 
-    /// Update current mode
+    /// Updates current mode.
     ///
-    /// - Parameter mode: new thermal control mode.
+    /// - Parameter mode: new thermal control mode
     /// - Returns: self to allow call chaining
     /// - Note: Changes are not notified until notifyUpdated() is called.
     @discardableResult public func update(mode newMode: ThermalControlMode) -> ThermalControlCore {
@@ -341,13 +445,29 @@ extension ThermalControlCore {
         return self
     }
 
-    /// Update sensitivity range
+    /// Updates sensitivity range.
     ///
-    /// - Parameter range: new sensitivity range.
+    /// - Parameter range: new sensitivity range
     /// - Returns: self to allow call chaining
     /// - Note: Changes are not notified until notifyUpdated() is called.
     @discardableResult public func update(range newRange: ThermalSensitivityRange) -> ThermalControlCore {
         if _sensitivitySetting.update(range: newRange) {
+            markChanged()
+        }
+        return self
+    }
+
+    /// Updates thermal camera calibration mode.
+    ///
+    /// - Parameter mode: new calibration mode
+    /// - Returns: self to allow call chaining
+    /// - Note: Changes are not notified until notifyUpdated() is called.
+    @discardableResult public func update(mode newMode: ThermalCalibrationMode) -> ThermalControlCore {
+        if _calibration == nil {
+            _calibration = ThermalCalibrationCore(didChangeDelegate: self, backend: backend)
+            markChanged()
+        }
+        if _calibration!.update(mode: newMode) {
             markChanged()
         }
         return self
@@ -359,6 +479,7 @@ extension ThermalControlCore {
     /// - Note: Changes are not notified until notifyUpdated() is called.
     @discardableResult public func cancelSettingsRollback() -> ThermalControlCore {
         _setting.cancelRollback { markChanged() }
+        _calibration?.cancelRollback { markChanged() }
         return self
     }
 }
@@ -366,6 +487,12 @@ extension ThermalControlCore {
 /// Objc support
 extension ThermalControlSettingCore: GSThermalControlSetting {
     func isModeSupported(_ mode: ThermalControlMode) -> Bool {
+        return supportedModes.contains(mode)
+    }
+}
+
+extension ThermalCalibrationCore: GSThermalCalibration {
+    func isModeSupported(_ mode: ThermalCalibrationMode) -> Bool {
         return supportedModes.contains(mode)
     }
 }
@@ -383,5 +510,9 @@ extension ThermalControlCore: GSThermalControl {
 
     public var gsSensitivityRangeSetting: GSThermalSensitivityRangeSetting {
         return _sensitivitySetting
+    }
+
+    public var gsCalibration: GSThermalCalibration? {
+        return _calibration
     }
 }

@@ -97,6 +97,9 @@ public enum RemovableUserStorageState: Int, CustomStringConvertible {
     /// Media rejected because it is too slow for operation.
     case mediaTooSlow
 
+    /// Media cannot be mounted since the drone acts as a USB mass-storage device.
+    case usbMassStorage
+
     /// Media is being mounted.
     case mounting
 
@@ -139,6 +142,7 @@ public enum RemovableUserStorageState: Int, CustomStringConvertible {
         case .noMedia:              return "noMedia"
         case .mediaTooSmall:        return "mediaTooSmall"
         case .mediaTooSlow:         return "mediaTooSlow"
+        case .usbMassStorage:       return "usbMassStorage"
         case .mounting:             return "mounting"
         case .needFormat:           return "needFormat"
         case .formatting:           return "formatting"

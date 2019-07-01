@@ -162,6 +162,8 @@
 		9BDDF1AB21479D60008252BA /* FtpFlightLogDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDDF1AA21479D60008252BA /* FtpFlightLogDownloaderTests.swift */; };
 		9BDDF1AD2147A050008252BA /* FlightLogDownloaderMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDDF1AC2147A050008252BA /* FlightLogDownloaderMatcher.swift */; };
 		9BDDF1AF2147A5C6008252BA /* MockFlightLogStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDDF1AE2147A5C6008252BA /* MockFlightLogStorage.swift */; };
+		9BF5447D22B772DC00452895 /* SkyControllerCopilot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF5447C22B772DC00452895 /* SkyControllerCopilot.swift */; };
+		9BF5448522B8ED6000452895 /* CopilotControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF5448422B8ED6000452895 /* CopilotControllerTests.swift */; };
 		F8034F981D33CD6F003A3CFD /* AnafiMagnetometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8034F971D33CD6F003A3CFD /* AnafiMagnetometer.swift */; };
 		F804B01920D979FC00BE2CF7 /* AppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F804B01820D979FB00BE2CF7 /* AppDefaults.swift */; };
 		F809C23F1E851CEF008B8153 /* UpdaterControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F809C23E1E851CEF008B8153 /* UpdaterControllerTests.swift */; };
@@ -461,6 +463,8 @@
 		9BDDF1AA21479D60008252BA /* FtpFlightLogDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FtpFlightLogDownloaderTests.swift; sourceTree = "<group>"; };
 		9BDDF1AC2147A050008252BA /* FlightLogDownloaderMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogDownloaderMatcher.swift; sourceTree = "<group>"; };
 		9BDDF1AE2147A5C6008252BA /* MockFlightLogStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlightLogStorage.swift; sourceTree = "<group>"; };
+		9BF5447C22B772DC00452895 /* SkyControllerCopilot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyControllerCopilot.swift; sourceTree = "<group>"; };
+		9BF5448422B8ED6000452895 /* CopilotControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopilotControllerTests.swift; sourceTree = "<group>"; };
 		F8034F971D33CD6F003A3CFD /* AnafiMagnetometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnafiMagnetometer.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F804B01820D979FB00BE2CF7 /* AppDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDefaults.swift; sourceTree = "<group>"; };
 		F809C23E1E851CEF008B8153 /* UpdaterControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdaterControllerTests.swift; sourceTree = "<group>"; };
@@ -924,6 +928,7 @@
 				F8D82B541E00628D0047ABF1 /* MapperVirtualGamepad.swift */,
 				9B40FAD0215E557300CF6690 /* PreciseHomeController.swift */,
 				02CE4466208E0038007B9F9F /* Sc3Gamepad.swift */,
+				9BF5447C22B772DC00452895 /* SkyControllerCopilot.swift */,
 				F87D5A3E1FFFEA24005AF079 /* SkyControllerMagnetometer.swift */,
 				F88468761DEC7AFE00ACE941 /* SkyControllerSystemInfo.swift */,
 				71D766012182FC5900517136 /* Stream */,
@@ -1101,6 +1106,7 @@
 				F884689A1DEF3FAC00ACE941 /* SkyControllerSystemInfoTests.swift */,
 				F8ED8B012040745B005D9D57 /* ArsdkMediaStoreHttpTests.swift */,
 				020F1DB920907FE100CCEB5E /* Sc3GamepadTests.swift */,
+				9BF5448422B8ED6000452895 /* CopilotControllerTests.swift */,
 				F809C23E1E851CEF008B8153 /* UpdaterControllerTests.swift */,
 				F86BA98C2125A68F004DFAB2 /* DroneFirmwareUpdaterTests.swift */,
 				F86BA98E2125B129004DFAB2 /* RcFirmwareUpdaterTests.swift */,
@@ -1398,6 +1404,7 @@
 				F8ED95561FDEDE17004300DE /* BlackBoxLocationData.swift in Sources */,
 				7C6947B91CD8F92B001FE253 /* AnafiFlyingIndicators.swift in Sources */,
 				9B2B789721426B940045ED0F /* EphemerisRestApi.swift in Sources */,
+				9BF5447D22B772DC00452895 /* SkyControllerCopilot.swift in Sources */,
 				F8D32CB51EF017A900074795 /* CommonBatteryInfo.swift in Sources */,
 				026B64D32085FF7900FE5C86 /* FollowFeatureFollowMePilotingItf.swift in Sources */,
 				F8E0112D1FD99FA3005A9520 /* BlackBoxData.swift in Sources */,
@@ -1490,6 +1497,7 @@
 				7C76AB551C8D75BF00FC213E /* ArithmeticMatchers.swift in Sources */,
 				F88E246B1FEA79D200D7AAC7 /* HttpFirmwareUpdaterTests.swift in Sources */,
 				F8123B5A200D0A670071672B /* UserStorageRemovableUserStorageTests.swift in Sources */,
+				9BF5448522B8ED6000452895 /* CopilotControllerTests.swift in Sources */,
 				F8D32CD71EF1856600074795 /* AnafiCopterMotorsTests.swift in Sources */,
 				9BBD4159222ED5CD0006CBAF /* PhotoProgressIndicatorControllerTests.swift in Sources */,
 				02C5D0101FD83BD20028DFEE /* GuidedPilotingItfTests.swift in Sources */,

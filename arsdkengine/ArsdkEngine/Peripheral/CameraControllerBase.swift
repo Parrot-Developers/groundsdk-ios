@@ -270,6 +270,7 @@ class CameraControllerBase: CameraBackend {
         switch self.model! {
         case .main:
             camera = MainCameraCore(store: peripheralStore, backend: self)
+
         case .thermal:
             camera = ThermalCameraCore(store: peripheralStore, backend: self)
         default:
@@ -297,8 +298,12 @@ class CameraControllerBase: CameraBackend {
             return
         }
         active = true
-        applyPresets()
         camera.updateActiveFlag(active: true).notifyUpdated()
+    }
+
+    public func didConnect() {
+        connected = true
+        applyAllPresets()
     }
 
     /// Publish camera
@@ -341,7 +346,7 @@ class CameraControllerBase: CameraBackend {
     /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
    func set(mode: CameraMode) -> Bool {
         presetStore?.write(key: SettingKey.modeKey.rawValue, value: mode).commit()
-        if active {
+        if connected {
             return sendCameraModeCommand(mode)
         } else {
             camera.update(mode: mode).notifyUpdated()
@@ -370,7 +375,7 @@ class CameraControllerBase: CameraBackend {
                                 maximumIsoSensitivity: maximumIsoSensitivity)
         presetStore?.write(key: SettingKey.exposureKey, value: exposurePresets.data).commit()
 
-        if active && shouldSendCommand && sendExposureCommand(
+        if connected && shouldSendCommand && sendExposureCommand(
             exposureMode: exposureMode, manualShutterSpeed: manualShutterSpeed,
             manualIsoSensitivity: manualIsoSensitivity, maximumIsoSensitivity: maximumIsoSensitivity) {
 
@@ -381,7 +386,8 @@ class CameraControllerBase: CameraBackend {
 
         } else {
             camera.update(exposureMode: exposureMode).update(manualShutterSpeed: manualShutterSpeed)
-                .update(manualIsoSensitivity: manualIsoSensitivity).update(maximumIsoSensitivity: maximumIsoSensitivity)
+                .update(manualIsoSensitivity: manualIsoSensitivity)
+                .update(maximumIsoSensitivity: maximumIsoSensitivity)
             computeEVCompensationAvailableValues()
             camera.notifyUpdated()
         }
@@ -402,7 +408,7 @@ class CameraControllerBase: CameraBackend {
     }
 
     func set(exposureLockMode: CameraExposureLockMode) -> Bool {
-        return active && sendExposureLockCommand(mode: exposureLockMode)
+        return connected && sendExposureLockCommand(mode: exposureLockMode)
     }
 
     /// Change camera exposure compensation
@@ -415,7 +421,7 @@ class CameraControllerBase: CameraBackend {
         presetStore?.write(key: SettingKey.exposureCompensationKey.rawValue,
                            value: exposureCompensationPresets.data).commit()
 
-        if active && shouldSendCommand
+        if connected && shouldSendCommand
             && sendExposureCompensationCommand(value: exposureCompensation) {
             camera.update(exposureCompensationValue: exposureCompensation)
             return true
@@ -439,7 +445,7 @@ class CameraControllerBase: CameraBackend {
         whiteBalancePresets.update(mode: whiteBalanceMode, customTemperature: customTemperature)
         presetStore?.write(key: SettingKey.whiteBalanceKey.rawValue, value: whiteBalancePresets.data).commit()
 
-        if active && shouldSendCommand
+        if connected && shouldSendCommand
             && sendWhiteBalanceCommand(mode: whiteBalanceMode, customTemperature: customTemperature) {
             camera.update(whiteBalanceMode: whiteBalanceMode).update(customWhiteBalanceTemperature: customTemperature)
             return true
@@ -455,7 +461,7 @@ class CameraControllerBase: CameraBackend {
     /// - Parameter whiteBalanceLock: white balance lock
     /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
     func set(whiteBalanceLock: Bool) -> Bool {
-        return active && sendWhiteBalanceLockedCommand(lock: whiteBalanceLock)
+        return sendWhiteBalanceLockedCommand(lock: whiteBalanceLock)
     }
     /// Change hdr setting
     ///
@@ -463,7 +469,7 @@ class CameraControllerBase: CameraBackend {
     /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
     func set(hdr: Bool) -> Bool {
         presetStore?.write(key: SettingKey.hdrKey.rawValue, value: hdr).commit()
-        if active {
+        if connected {
             return sendHdrSettingCommand(hdr)
         } else {
             camera.update(hdrSetting: hdr).notifyUpdated()
@@ -480,7 +486,7 @@ class CameraControllerBase: CameraBackend {
         stylePresets.update(activeStyle: activeStyle)
         presetStore?.write(key: SettingKey.activeStyleKey.rawValue, value: stylePresets.data).commit()
 
-        if active && shouldSendCommand
+        if connected && shouldSendCommand
             && sendActiveStyleCommand(style: activeStyle) {
             camera.update(activeStyle: activeStyle)
             return true
@@ -520,7 +526,7 @@ class CameraControllerBase: CameraBackend {
             maxSharpness = rangeSharpness.max
         }
 
-        if active && shouldSendCommand
+        if connected && shouldSendCommand
             && sendStyleParameterCommand(saturation: styleParameters.saturation, contrast: styleParameters.contrast,
                                          sharpness: styleParameters.sharpness) {
             camera.update(saturation: (min: minSaturation, value: styleParameters.saturation, max: maxSaturation))
@@ -563,7 +569,7 @@ class CameraControllerBase: CameraBackend {
                                 hyperlapseValue: hyperlapse, userSet: true)
         presetStore?.write(key: SettingKey.recordingKey, value: recordingPresets.data).commit()
 
-        if active && shouldSendCommand && sendRecordingCommand(
+        if connected && shouldSendCommand && sendRecordingCommand(
             recordingMode: recordingMode, resolution: resolution, framerate: framerate, hyperlapse: hyperlapse) {
             // update with new mode, resolution and framerate
             camera.update(recordingMode: recordingMode).update(recordingResolution: resolution)
@@ -582,7 +588,7 @@ class CameraControllerBase: CameraBackend {
     /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
     func set(autoRecord: Bool) -> Bool {
         presetStore?.write(key: SettingKey.autoRecordKey.rawValue, value: autoRecord).commit()
-        if active {
+        if connected {
             return sendAutoRecordCommand(autoRecord)
         } else {
             camera.update(autoRecord: autoRecord).notifyUpdated()
@@ -645,7 +651,7 @@ class CameraControllerBase: CameraBackend {
                             userSet: true)
         presetStore?.write(key: SettingKey.photoKey, value: photoPresets.data).commit()
 
-        if active && shouldSendCommand && sendPhotoCommand(
+        if connected && shouldSendCommand && sendPhotoCommand(
             photoMode: photoMode, photoFormat: format, photoFileFormat: fileFormat,
             bustValue: burst, bracketingValue: bracketing, captureInterval: captureIntervalToSend) {
 
@@ -678,7 +684,7 @@ class CameraControllerBase: CameraBackend {
     /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
     func set(maxZoomSpeed: Double) -> Bool {
         presetStore?.write(key: SettingKey.maxZoomSpeedKey, value: maxZoomSpeed).commit()
-        if active {
+        if connected {
             return sendMaxZoomSpeedCommand(value: maxZoomSpeed)
         } else {
             camera.update(
@@ -695,7 +701,7 @@ class CameraControllerBase: CameraBackend {
     func set(qualityDegradationAllowance: Bool) -> Bool {
         presetStore?.write(key: SettingKey.zoomVelocityQualityDegradationAllowedKey, value: qualityDegradationAllowance)
             .commit()
-        if active {
+        if connected {
             return sendZoomVelocityQualityDegradationAllowanceCommand(value: qualityDegradationAllowance)
         } else {
             camera.update(qualityDegradationAllowed: qualityDegradationAllowance).notifyUpdated()
@@ -722,7 +728,7 @@ class CameraControllerBase: CameraBackend {
     ///
     /// - Returns: true if the command has been sent, false else
     func startPhotoCapture() -> Bool {
-        if active {
+        if connected {
             return sendStartPhotoCommand()
         }
         return false
@@ -732,7 +738,7 @@ class CameraControllerBase: CameraBackend {
     ///
     /// - Returns: true if the command has been sent, false else
     func stopPhotoCapture() -> Bool {
-        if active {
+        if connected {
             return sendStopPhotoCommand()
         }
         return false
@@ -742,7 +748,7 @@ class CameraControllerBase: CameraBackend {
     ///
     /// - Returns: true if the command has been sent, false else
     func startRecording() -> Bool {
-        if active {
+        if connected && active {
             return sendStartRecordingCommand()
         }
         return false
@@ -752,7 +758,7 @@ class CameraControllerBase: CameraBackend {
     ///
     /// - Returns: true if the command has been sent, false else
     func stopRecording() -> Bool {
-        if active {
+        if connected && active {
             return sendStopRecordingCommand()
         }
         return false
@@ -929,9 +935,33 @@ class CameraControllerBase: CameraBackend {
         // reload preset store
         self.presetStore = presetStore
         loadPresets()
-        if active {
-            applyPresets()
+        if connected {
+            applyAllPresets()
         }
+    }
+
+    /// Apply all presets
+    private func applyAllPresets() {
+        // first configure settings for the mode the drone is NOT in, to avoid extraneous pipeline reconfiguration
+        let cameraModeBeforeSwitch = self.camera.modeSetting.mode
+        if cameraModeBeforeSwitch != .photo {
+            applyPhotoPreset()
+        }
+        if cameraModeBeforeSwitch != .recording {
+            applyRecordingPreset()
+        }
+
+        // then switch to preset camera mode
+        applyCameraModePreset()
+        if cameraModeBeforeSwitch == .photo {
+            applyPhotoPreset()
+        }
+        if cameraModeBeforeSwitch == .recording {
+            applyRecordingPreset()
+        }
+
+        // apply rest of configuration
+        applyOtherPresets()
     }
 
     /// Load saved settings
@@ -1019,6 +1049,7 @@ class CameraControllerBase: CameraBackend {
                             .update(manualIsoSensitivity: exposurePresets.manualIsoSensitivity)
                             .update(maximumIsoSensitivity: exposurePresets.maximumIsoSensitivity)
                     }
+
                 case .exposureCompensation:
                     if let supportedCompensation: StorableArray<CameraEvCompensation> =
                         deviceStore.read(key: SettingKey.exposureCompensationValuesKey),
@@ -1156,11 +1187,8 @@ class CameraControllerBase: CameraBackend {
         }
     }
 
-    /// Apply a preset
-    ///
-    /// Iterate settings received during connection
-    private func applyPresets() {
-        // iterate settings received during the connection
+    /// Apply camera mode preset
+    private func applyCameraModePreset() {
         for setting in droneSettings {
             switch setting {
             case .mode (let mode):
@@ -1172,15 +1200,75 @@ class CameraControllerBase: CameraBackend {
                 } else {
                     camera.update(mode: mode)
                 }
-            case .hdr(let hdr):
-                if let preset: Bool = presetStore?.read(key: setting.key) {
-                    if preset != hdr {
-                        _ = sendHdrSettingCommand(preset)
+            default:
+                break
+            }
+        }
+    }
+
+    /// Apply photo preset
+    private func applyPhotoPreset() {
+        for setting in droneSettings {
+            switch setting {
+            case .photo(let mode, let format, let fileFormat, let burst, let bracketing, let captureInterval):
+                if let photoPresetsData: PhotoPresets.Data = presetStore?.read(key: setting.key) {
+                    photoPresets.load(data: photoPresetsData)
+                    let presetMode = photoPresets.mode
+                    let presetFormat = photoPresets.format
+                    let presetFileFormat = photoPresets.fileFormat
+                    let presetBurst = photoPresets.burstValue
+                    let presetBracketing = photoPresets.bracketingValue
+                    var presetCaptureIntervalClamped = 0.0
+                    if presetMode == .gpsLapse {
+                        presetCaptureIntervalClamped = photoPresets.gpslapseCaptureIntervalValue
+                    } else if presetMode == .timeLapse {
+                        presetCaptureIntervalClamped = photoPresets.timelapseCaptureIntervalValue
                     }
-                    camera.update(hdrSetting: preset)
+
+                    if presetMode != mode || presetFormat != format || presetFileFormat != fileFormat ||
+                        (presetMode == .burst && presetBurst != burst) ||
+                        (presetMode == .bracketing && presetBracketing != bracketing) ||
+                        ((presetMode == .gpsLapse || presetMode == .timeLapse)
+                            && (presetCaptureIntervalClamped != captureInterval)) {
+                        _ = sendPhotoCommand(
+                            photoMode: presetMode, photoFormat: presetFormat, photoFileFormat: presetFileFormat,
+                            bustValue: presetBurst, bracketingValue: presetBracketing,
+                            captureInterval: presetCaptureIntervalClamped)
+                    }
+                    camera.update(photoMode: presetMode).update(photoFormat: presetFormat)
+                        .update(photoFileFormat: presetFileFormat)
+                    if presetMode == .burst {
+                        camera.update(photoBurstValue: presetBurst)
+                    } else if presetMode == .bracketing {
+                        camera.update(photoBracketingValue: presetBracketing)
+                    } else if presetMode == .timeLapse {
+                        camera.update(timelapseCaptureInterval: presetCaptureIntervalClamped)
+                    } else if presetMode == .gpsLapse {
+                        camera.update(gpslapseCaptureInterval: presetCaptureIntervalClamped)
+                    }
                 } else {
-                    camera.update(hdrSetting: hdr)
+                    camera.update(photoMode: mode).update(photoFormat: format)
+                        .update(photoFileFormat: fileFormat)
+                    if mode == .burst {
+                        camera.update(photoBurstValue: burst)
+                    } else if mode == .bracketing {
+                        camera.update(photoBracketingValue: bracketing)
+                    } else if mode == .gpsLapse {
+                        camera.update(gpslapseCaptureInterval: captureInterval)
+                    } else if mode == .timeLapse {
+                        camera.update(timelapseCaptureInterval: captureInterval)
+                    }
                 }
+            default:
+                break
+            }
+        }
+    }
+
+    /// Apply recording preset
+    private func applyRecordingPreset() {
+        for setting in droneSettings {
+            switch setting {
             case .recording(let mode, let resolution, let framerate, let hyperlapseValue):
                 if let recordingPresetsData: RecordingPresets.Data = presetStore?.read(key: setting.key) {
                     recordingPresets.load(data: recordingPresetsData)
@@ -1206,6 +1294,28 @@ class CameraControllerBase: CameraBackend {
                         camera.update(recordingHyperlapseValue: hyperlapseValue)
                     }
                 }
+            default:
+                break
+            }
+        }
+    }
+
+    /// Apply other presets
+    ///
+    /// Iterate settings received during connection
+    private func applyOtherPresets() {
+        // iterate settings received during the connection
+        for setting in droneSettings {
+            switch setting {
+            case .hdr(let hdr):
+                if let preset: Bool = presetStore?.read(key: setting.key) {
+                    if preset != hdr {
+                        _ = sendHdrSettingCommand(preset)
+                    }
+                    camera.update(hdrSetting: preset)
+                } else {
+                    camera.update(hdrSetting: hdr)
+                }
             case .autoRecord (let autoRecord):
                 if let preset: Bool = presetStore?.read(key: setting.key) {
                     if preset != autoRecord {
@@ -1214,56 +1324,6 @@ class CameraControllerBase: CameraBackend {
                     camera.update(autoRecord: preset)
                 } else {
                     camera.update(autoRecord: autoRecord)
-                }
-            case .photo(let mode, let format, let fileFormat, let burst, let bracketing, let captureInterval):
-                if let photoPresetsData: PhotoPresets.Data = presetStore?.read(key: setting.key) {
-                    photoPresets.load(data: photoPresetsData)
-                    let presetMode = photoPresets.mode
-                    let presetFormat = photoPresets.format
-                    let presetFileFormat = photoPresets.fileFormat
-                    let presetBurst = photoPresets.burstValue
-                    let presetBracketing = photoPresets.bracketingValue
-                    var presetCaptureIntervalClamped = 0.0
-                    if presetMode == .gpsLapse {
-                        presetCaptureIntervalClamped = photoPresets.gpslapseCaptureIntervalValue
-                    } else if presetMode == .timeLapse {
-                        presetCaptureIntervalClamped = photoPresets.timelapseCaptureIntervalValue
-                    }
-
-                    if presetMode != mode || presetFormat != format || presetFileFormat != fileFormat ||
-                        (presetMode == .burst && presetBurst != burst) ||
-                        (presetMode == .bracketing && presetBracketing != bracketing) ||
-                        ((presetMode == .gpsLapse || presetMode == .timeLapse)
-                            && (presetCaptureIntervalClamped != captureInterval)) {
-                        _ = sendPhotoCommand(
-                            photoMode: presetMode, photoFormat: presetFormat, photoFileFormat: presetFileFormat,
-                            bustValue: presetBurst, bracketingValue: presetBracketing,
-                            captureInterval: presetCaptureIntervalClamped)
-                    } else {
-                        camera.update(photoMode: presetMode).update(photoFormat: presetFormat)
-                            .update(photoFileFormat: presetFileFormat)
-                        if presetMode == .burst {
-                            camera.update(photoBurstValue: presetBurst)
-                        } else if presetMode == .bracketing {
-                            camera.update(photoBracketingValue: presetBracketing)
-                        } else if presetMode == .timeLapse {
-                            camera.update(timelapseCaptureInterval: presetCaptureIntervalClamped)
-                        } else if presetMode == .gpsLapse {
-                            camera.update(gpslapseCaptureInterval: presetCaptureIntervalClamped)
-                        }
-                    }
-                } else {
-                    camera.update(photoMode: mode).update(photoFormat: format)
-                        .update(photoFileFormat: fileFormat)
-                    if mode == .burst {
-                        camera.update(photoBurstValue: burst)
-                    } else if mode == .bracketing {
-                        camera.update(photoBracketingValue: bracketing)
-                    } else if mode == .gpsLapse {
-                        camera.update(gpslapseCaptureInterval: captureInterval)
-                    } else if mode == .timeLapse {
-                        camera.update(timelapseCaptureInterval: captureInterval)
-                    }
                 }
             case .maxZoomSpeed(let lowerBound, let value, let upperBound):
                 if let preset: Double = presetStore?.read(key: setting.key) {
@@ -1383,6 +1443,8 @@ class CameraControllerBase: CameraBackend {
                 }
             case .model:
                 break
+            default:
+                break
             }
         }
     }
@@ -1391,78 +1453,77 @@ class CameraControllerBase: CameraBackend {
     ///
     /// - Parameter setting: setting that changed
     func settingDidChange(_ setting: Setting) {
-        droneSettings.insert(setting)
-        if active {
-            switch setting {
-            case .mode(let mode):
-                camera.update(mode: mode)
-            case .hdr(let hdr):
-                camera.update(hdrSetting: hdr)
-            case .recording(let mode, let resolution, let framerate, let hyperlapseValue):
-                camera.update(recordingMode: mode).update(recordingResolution: resolution)
-                    .update(recordingFramerate: framerate)
-                if mode == .hyperlapse {
-                    camera.update(recordingHyperlapseValue: hyperlapseValue)
-                }
-                recordingPresets.update(mode: mode, resolution: resolution, framerate: framerate,
-                                        hyperlapseValue: hyperlapseValue, userSet: false)
-            case .autoRecord(let autoRecord):
-                 camera.update(autoRecord: autoRecord)
-            case .photo(let mode, let format, let fileFormat, let burstValue, let bracketingValue, let captureInterval):
-                camera.update(photoMode: mode).update(photoFormat: format).update(photoFileFormat: fileFormat)
-                if mode == .burst {
-                    camera.update(photoBurstValue: burstValue)
-                } else if mode == .bracketing {
-                    camera.update(photoBracketingValue: bracketingValue)
-                } else if mode == .gpsLapse {
-                    camera.update(gpslapseCaptureInterval: captureInterval)
-                } else if mode == .timeLapse {
-                    camera.update(timelapseCaptureInterval: captureInterval)
-                }
-                photoPresets.update(mode: mode, format: format, fileFormat: fileFormat, burstValue: burstValue,
-                                    bracketingValue: bracketingValue,
-                                    gpslapseCaptureIntervalValue: mode == .gpsLapse ? captureInterval : nil,
-                                    timelapseCaptureIntervalValue: mode == .timeLapse ? captureInterval : nil,
-                                    userSet: false)
-            case .maxZoomSpeed(let lowerBound, let value, let upperBound):
-                camera.update(
-                    maxZoomSpeedLowerBound: lowerBound, maxZoomSpeed: value,
-                    maxZoomSpeedUpperBound: upperBound)
-                deviceStore?.writeRange(key: setting.key, min: lowerBound, max: upperBound)
-            case .zoomVelocityQualityDegradation(let allowed):
-                camera.update(qualityDegradationAllowed: allowed)
-            case .whiteBalance(let mode, let customTemperature):
-                camera.update(whiteBalanceMode: mode).update(customWhiteBalanceTemperature: customTemperature)
-                whiteBalancePresets.update(mode: mode, customTemperature: customTemperature)
-            case .exposure(let mode, let manualShutterSpeed, let manualIsoSensitivity, let maximumIsoSensitivity):
-                camera.update(exposureMode: mode).update(manualShutterSpeed: manualShutterSpeed)
-                    .update(manualIsoSensitivity: manualIsoSensitivity)
-                    .update(maximumIsoSensitivity: maximumIsoSensitivity)
-                exposurePresets.update(mode: mode, manualShutterSpeed: manualShutterSpeed,
-                                       manualIsoSensitivity: manualIsoSensitivity,
-                                       maximumIsoSensitivity: maximumIsoSensitivity)
-            case .exposureCompensation(let exposureCompensation):
-                camera.update(exposureCompensationValue: exposureCompensation)
-                exposureCompensationPresets.update(exposureCompensation: exposureCompensation)
-            case .style(let activeStyle, let saturation, let contrast, let sharpness):
-                camera.update(activeStyle: activeStyle)
-                stylePresets.update(activeStyle: activeStyle)
-                stylePresets.update(saturation: saturation, contrast: contrast, sharpness: sharpness)
-            case .saturation(let min, let current, let max):
-                camera.update(saturation: (min: min, value: current, max: max))
-                deviceStore?.writeRange(key: setting.key, min: min, max: max)
-            case .contrast(let min, let current, let max):
-                camera.update(contrast: (min: min, value: current, max: max))
-                deviceStore?.writeRange(key: setting.key, min: min, max: max)
-            case .sharpness(let min, let current, let max):
-                camera.update(sharpness: (min: min, value: current, max: max))
-                deviceStore?.writeRange(key: setting.key, min: min, max: max)
-            case .model:
-                break
+        droneSettings.update(with: setting)
+
+        switch setting {
+        case .mode(let mode):
+            camera.update(mode: mode)
+        case .hdr(let hdr):
+            camera.update(hdrSetting: hdr)
+        case .recording(let mode, let resolution, let framerate, let hyperlapseValue):
+            camera.update(recordingMode: mode).update(recordingResolution: resolution)
+                .update(recordingFramerate: framerate)
+            if mode == .hyperlapse {
+                camera.update(recordingHyperlapseValue: hyperlapseValue)
             }
-            deviceStore?.commit()
-            camera.notifyUpdated()
+            recordingPresets.update(mode: mode, resolution: resolution, framerate: framerate,
+                                    hyperlapseValue: hyperlapseValue, userSet: false)
+        case .autoRecord(let autoRecord):
+            camera.update(autoRecord: autoRecord)
+        case .photo(let mode, let format, let fileFormat, let burstValue, let bracketingValue, let captureInterval):
+            camera.update(photoMode: mode).update(photoFormat: format).update(photoFileFormat: fileFormat)
+            if mode == .burst {
+                camera.update(photoBurstValue: burstValue)
+            } else if mode == .bracketing {
+                camera.update(photoBracketingValue: bracketingValue)
+            } else if mode == .gpsLapse {
+                camera.update(gpslapseCaptureInterval: captureInterval)
+            } else if mode == .timeLapse {
+                camera.update(timelapseCaptureInterval: captureInterval)
+            }
+            photoPresets.update(mode: mode, format: format, fileFormat: fileFormat, burstValue: burstValue,
+                                bracketingValue: bracketingValue,
+                                gpslapseCaptureIntervalValue: mode == .gpsLapse ? captureInterval : nil,
+                                timelapseCaptureIntervalValue: mode == .timeLapse ? captureInterval : nil,
+                                userSet: false)
+        case .maxZoomSpeed(let lowerBound, let value, let upperBound):
+            camera.update(
+                maxZoomSpeedLowerBound: lowerBound, maxZoomSpeed: value,
+                maxZoomSpeedUpperBound: upperBound)
+            deviceStore?.writeRange(key: setting.key, min: lowerBound, max: upperBound)
+        case .zoomVelocityQualityDegradation(let allowed):
+            camera.update(qualityDegradationAllowed: allowed)
+        case .whiteBalance(let mode, let customTemperature):
+            camera.update(whiteBalanceMode: mode).update(customWhiteBalanceTemperature: customTemperature)
+            whiteBalancePresets.update(mode: mode, customTemperature: customTemperature)
+        case .exposure(let mode, let manualShutterSpeed, let manualIsoSensitivity, let maximumIsoSensitivity):
+            camera.update(exposureMode: mode).update(manualShutterSpeed: manualShutterSpeed)
+                .update(manualIsoSensitivity: manualIsoSensitivity)
+                .update(maximumIsoSensitivity: maximumIsoSensitivity)
+                exposurePresets.update(mode: mode, manualShutterSpeed: manualShutterSpeed,
+                                   manualIsoSensitivity: manualIsoSensitivity,
+                                   maximumIsoSensitivity: maximumIsoSensitivity)
+        case .exposureCompensation(let exposureCompensation):
+            camera.update(exposureCompensationValue: exposureCompensation)
+            exposureCompensationPresets.update(exposureCompensation: exposureCompensation)
+        case .style(let activeStyle, let saturation, let contrast, let sharpness):
+            camera.update(activeStyle: activeStyle)
+            stylePresets.update(activeStyle: activeStyle)
+            stylePresets.update(saturation: saturation, contrast: contrast, sharpness: sharpness)
+        case .saturation(let min, let current, let max):
+            camera.update(saturation: (min: min, value: current, max: max))
+            deviceStore?.writeRange(key: setting.key, min: min, max: max)
+        case .contrast(let min, let current, let max):
+            camera.update(contrast: (min: min, value: current, max: max))
+            deviceStore?.writeRange(key: setting.key, min: min, max: max)
+        case .sharpness(let min, let current, let max):
+            camera.update(sharpness: (min: min, value: current, max: max))
+            deviceStore?.writeRange(key: setting.key, min: min, max: max)
+        case .model:
+            break
         }
+        deviceStore?.commit()
+        camera.notifyUpdated()
     }
 
     /// Process stored capabilities changes
@@ -1918,6 +1979,7 @@ private struct ExposurePresets {
         ///
         /// - Parameter content: store data
         init?(from content: AnyObject?) {
+
             if let content = StorableDict<String, AnyStorable>(from: content),
                let mode = CameraExposureMode(content[Key.mode]),
                let manualShutterSpeed = CameraShutterSpeed(content[Key.manualShutterSpeed]),
@@ -2463,6 +2525,7 @@ extension CameraRecordingResolution: StorableEnum {
         .res2_7k: "2.7k",
         .res1080p: "1080p",
         .res720p: "720p",
+        .res720pSd: "720pSd",
         .res480p: "480p",
         .res1080pSd: "1080pSd"])
 }

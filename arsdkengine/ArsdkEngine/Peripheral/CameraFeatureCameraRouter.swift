@@ -385,8 +385,8 @@ class CameraFeatureCameraRouter: DeviceComponentController {
 
         // store all cameras presets
         cameraControllers.forEach {
-            $1.connected = true
             $1.storeNewPresets()
+            $1.didConnect()
         }
         // activate each camera that must be activated
         controllersToActivate!.forEach {
@@ -1349,6 +1349,7 @@ extension CameraRecordingResolution: ArsdkMappableEnum {
         .res1080p: .res1080p,
         .res2_7k: .res2_7k,
         .res720p: .res720p,
+        .res720pSd: .res720pSd,
         .res480p: .res480p,
         .res1080pSd: .res1080pSd])
 }

@@ -30,19 +30,19 @@
 import UIKit
 import GroundSdk
 
-class ThermalControlCell: PeripheralProviderContentCell {
+class CopilotCell: PeripheralProviderContentCell {
 
-    private var thermalControl: Ref<ThermalControl>?
+    @IBOutlet weak var sourceLabel: UILabel!
 
-    @IBOutlet weak var modeLabel: UILabel!
-    @IBOutlet weak var calibrationLabel: UILabel!
+    private var peripheralProvider: PeripheralProvider?
+    private var copilot: Ref<Copilot>?
 
     override func set(peripheralProvider provider: PeripheralProvider) {
         super.set(peripheralProvider: provider)
-        thermalControl = provider.getPeripheral(Peripherals.thermalControl) { [unowned self] thermalControl in
-            if let thermalControl = thermalControl {
-                self.modeLabel.text = thermalControl.setting.mode.description
-                self.calibrationLabel.text = thermalControl.calibration?.mode.description ?? "-"
+        peripheralProvider = provider
+        copilot = provider.getPeripheral(Peripherals.copilot) {  [unowned self] copilot in
+            if let copilot = copilot {
+                self.sourceLabel.text = copilot.setting.source.description
                 self.show()
             } else {
                 self.hide()
