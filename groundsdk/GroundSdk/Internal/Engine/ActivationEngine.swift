@@ -138,7 +138,7 @@ class ActivationEngine: EngineBaseCore {
     ///
     /// - Returns: the list of the registered devices uids
     private func getRegisteredDevices() -> Set<String> {
-        var storedData: [String: Any]? = gsdkUserdefaults.loadData() as? [String: Any]
+        let storedData: [String: Any]? = gsdkUserdefaults.loadData() as? [String: Any]
         if let registeredDevices = storedData?[devicesKey] as? [String] {
             return Set<String>(registeredDevices)
         }

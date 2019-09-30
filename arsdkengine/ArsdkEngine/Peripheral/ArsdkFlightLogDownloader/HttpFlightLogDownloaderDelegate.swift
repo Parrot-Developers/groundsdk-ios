@@ -51,10 +51,14 @@ class HttpFlightLogDownloaderDelegate: ArsdkFlightLogDownloaderDelegate {
     ///         request).
     private var currentRequest: CancelableCore?
 
+    /// Device uid
+    private var deviceUid: String = ""
+
     func configure(downloader: ArsdkFlightLogDownloader) {
         if let droneServer = downloader.deviceController.droneServer {
             flightLogApi = FlightLogRestApi(server: droneServer)
         }
+        deviceUid = downloader.deviceController.device.uid
     }
 
     func reset(downloader: ArsdkFlightLogDownloader) {
@@ -96,7 +100,8 @@ class HttpFlightLogDownloaderDelegate: ArsdkFlightLogDownloaderDelegate {
     ///   - downloader: the downloader in charge
     private func downloadNextLog(toDirectory directory: URL, downloader: ArsdkFlightLogDownloader) {
         if let flightLog = pendingDownloads.first {
-            currentRequest = flightLogApi?.downloadFlightLog(flightLog, toDirectory: directory) { fileUrl in
+            currentRequest = flightLogApi?.downloadFlightLog(
+            flightLog, toDirectory: directory, deviceUid: deviceUid) { fileUrl in
                 if let fileUrl = fileUrl {
                     self.downloadCount += 1
                     downloader.flightLogDownloader.update(

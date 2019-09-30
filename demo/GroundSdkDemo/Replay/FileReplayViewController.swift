@@ -107,6 +107,5 @@ class FileReplayViewController: UIViewController {
 
     @IBAction func seekTo(_ sender: UISlider) {
         _ = fileReplay?.value?.seekTo(position: TimeInterval(sender.value))
-        print("seekTo \(sender.value)")
     }
 }

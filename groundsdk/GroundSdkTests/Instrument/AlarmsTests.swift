@@ -91,6 +91,7 @@ class AlarmsTests: XCTestCase {
         assertThat(alarms.getAlarm(kind: .automaticLandingBatteryIssue).level, `is`(.notAvailable))
         assertThat(alarms.getAlarm(kind: .wind).level, `is`(.notAvailable))
         assertThat(alarms.getAlarm(kind: .verticalCamera).level, `is`(.notAvailable))
+        assertThat(alarms.getAlarm(kind: .strongVibrations).level, `is`(.notAvailable))
 
         // check changing a single level
         impl.update(level: .critical, forAlarm: .power).notifyUpdated()
@@ -106,11 +107,13 @@ class AlarmsTests: XCTestCase {
         assertThat(alarms.getAlarm(kind: .automaticLandingBatteryIssue).level, `is`(.notAvailable))
         assertThat(alarms.getAlarm(kind: .wind).level, `is`(.notAvailable))
         assertThat(alarms.getAlarm(kind: .verticalCamera).level, `is`(.notAvailable))
+        assertThat(alarms.getAlarm(kind: .strongVibrations).level, `is`(.notAvailable))
 
         // check changing multiple levels
         impl.update(level: .warning, forAlarm: .power).update(level: .critical, forAlarm: .userEmergency)
             .update(level: .critical, forAlarm: .batteryTooHot)
             .update(level: .critical, forAlarm: .hoveringDifficultiesNoGpsTooDark)
+            .update(level: .warning, forAlarm: .strongVibrations)
             .notifyUpdated()
         assertThat(cnt, `is`(2))
         assertThat(alarms.getAlarm(kind: .power).level, `is`(.warning))
@@ -124,6 +127,7 @@ class AlarmsTests: XCTestCase {
         assertThat(alarms.getAlarm(kind: .automaticLandingBatteryIssue).level, `is`(.notAvailable))
         assertThat(alarms.getAlarm(kind: .wind).level, `is`(.notAvailable))
         assertThat(alarms.getAlarm(kind: .verticalCamera).level, `is`(.notAvailable))
+        assertThat(alarms.getAlarm(kind: .strongVibrations).level, `is`(.warning))
 
         // check setting again the same level does nothing
         impl.update(level: .warning, forAlarm: .power).notifyUpdated()
@@ -139,6 +143,7 @@ class AlarmsTests: XCTestCase {
         assertThat(alarms.getAlarm(kind: .automaticLandingBatteryIssue).level, `is`(.notAvailable))
         assertThat(alarms.getAlarm(kind: .wind).level, `is`(.notAvailable))
         assertThat(alarms.getAlarm(kind: .verticalCamera).level, `is`(.notAvailable))
+        assertThat(alarms.getAlarm(kind: .strongVibrations).level, `is`(.warning))
 
         // test notify without changes
         impl.notifyUpdated()

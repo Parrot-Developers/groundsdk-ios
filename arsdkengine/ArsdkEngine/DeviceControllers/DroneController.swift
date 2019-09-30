@@ -193,10 +193,11 @@ class DroneController: DeviceController {
         super.protocolWillConnect()
 
         if let blackBoxRecorder = engine.blackBoxRecoder {
-            // can force unwrap active provider since we are connecting
-            let connectorType = activeProvider!.connector.connectorType
-            blackBoxSession = blackBoxRecorder.openDroneSession(
-                drone: drone, providerUid: (connectorType == .remoteControl) ? activeProvider!.connector.uid : nil)
+            var providerUid: String?
+            if  activeProvider?.connector.connectorType == .remoteControl {
+                providerUid = activeProvider?.connector.uid
+            }
+            blackBoxSession = blackBoxRecorder.openDroneSession(drone: drone, providerUid: providerUid)
         }
     }
 

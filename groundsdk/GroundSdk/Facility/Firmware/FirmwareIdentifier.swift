@@ -59,13 +59,9 @@ public class FirmwareIdentifier: NSObject {
          return version.hashValue &* 31 &+ deviceModel.hashValue
     }
 
-    public static func == (lhs: FirmwareIdentifier, rhs: FirmwareIdentifier) -> Bool {
-        return lhs.deviceModel == rhs.deviceModel && lhs.version == rhs.version
-    }
-
     public override func isEqual(_ object: Any?) -> Bool {
         if let identifier = object as? FirmwareIdentifier {
-            return self == identifier
+            return deviceModel == identifier.deviceModel && version == identifier.version
         } else {
             return false
         }

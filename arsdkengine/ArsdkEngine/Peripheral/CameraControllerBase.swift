@@ -306,6 +306,14 @@ class CameraControllerBase: CameraBackend {
         applyAllPresets()
     }
 
+    public func didDisconnect() {
+        connected = false
+        // unpublish if offline settings are disabled
+        if GroundSdkConfig.sharedInstance.offlineSettings == .off {
+            camera.unpublish()
+        }
+    }
+
     /// Publish camera
     public func publish() {
         camera.publish()
@@ -328,12 +336,7 @@ class CameraControllerBase: CameraBackend {
             camera.update(photoState: .unavailable)
             camera.update(recordingState: .unavailable)
         }
-        // unpublish if offline settings are disabled
-        if GroundSdkConfig.sharedInstance.offlineSettings == .off {
-            camera.unpublish()
-        } else {
-            camera.notifyUpdated()
-        }
+        camera.notifyUpdated()
     }
 
     public func willForget() {
@@ -724,6 +727,29 @@ class CameraControllerBase: CameraBackend {
         // Subclass must override this function to set the value
     }
 
+    /// Sets alignment offsets.
+    ///
+    /// - Parameter yawOffset: the new offset to apply to the yaw axis
+    /// - Parameter pitchOffset: the new offset to apply to the pitch axis
+    /// - Parameter rollOffset: the new offset to apply to the roll axis
+    /// - Returns: true if the command has been sent, false otherwise
+    func set(yawOffset: Double, pitchOffset: Double, rollOffset: Double) -> Bool {
+        if connected {
+            return sendAlignementCommand(yaw: yawOffset, pitch: pitchOffset, roll: rollOffset)
+        }
+        return false
+    }
+
+    /// Factory reset camera alignment.
+    ///
+    /// - Returns: true if the command has been sent, false otherwise
+    func resetAlignment() -> Bool {
+        if connected {
+            return sendResetAlignmentCommand()
+        }
+        return false
+    }
+
     /// Start taking photo(s)
     ///
     /// - Returns: true if the command has been sent, false else
@@ -927,6 +953,24 @@ class CameraControllerBase: CameraBackend {
     /// - Parameter value: the new allowance
     /// - Returns: true if the command has been sent
     func sendZoomVelocityQualityDegradationAllowanceCommand(value: Bool) -> Bool {
+        return false
+    }
+
+    /// Send camera alignment offsets.
+    ///
+    /// - Parameters:
+    ///   - yaw: alignment offset applied to the yaw axis, in degrees
+    ///   - pitch: alignment offset applied to the pitch axis, in degrees
+    ///   - roll: alignment offset applied to the roll axis, in degrees
+    /// - Returns: true if the command has been sent
+    func sendAlignementCommand(yaw: Double, pitch: Double, roll: Double) -> Bool {
+        return false
+    }
+
+    /// Send command to reset camera alignment.
+    ///
+    /// - Returns: true if the command has been sent
+    func sendResetAlignmentCommand() -> Bool {
         return false
     }
 

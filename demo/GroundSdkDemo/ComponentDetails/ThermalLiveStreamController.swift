@@ -82,6 +82,7 @@ class ThermalLiveStreamController: UITableViewController, DeviceViewController {
     @IBOutlet weak var changeZoomBt: UIButton!
     @IBOutlet weak var gpslapseCaptureInterval: UILabel!
     @IBOutlet weak var timelapseCaptureInterval: UILabel!
+    @IBOutlet weak var alignmentBt: UIButton!
 
     func setDeviceUid(_ uid: String) {
         droneUid = uid
@@ -341,6 +342,8 @@ class ThermalLiveStreamController: UITableViewController, DeviceViewController {
                         self.zoomVelocityQualityDegradationAllowed.text = "-"
                     }
 
+                    // alignment
+                    self.alignmentBt.isEnabled = camera.alignment != nil
                 } else {
                     self?.performSegue(withIdentifier: "exit", sender: self)
                 }
@@ -533,6 +536,8 @@ class ThermalLiveStreamController: UITableViewController, DeviceViewController {
             }
         } else if segue.identifier == "changeZoom" {
             (segue.destination as! ThermalCameraChangeZoomViewController).setDeviceUid(droneUid!)
+        } else if segue.identifier == "alignment" {
+            (segue.destination as! ThermalCameraAlignmentViewController).setDeviceUid(droneUid!)
         }
     }
 

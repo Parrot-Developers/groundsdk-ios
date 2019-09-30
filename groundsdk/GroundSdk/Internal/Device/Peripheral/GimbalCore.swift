@@ -98,7 +98,18 @@ public class GimbalCore: PeripheralCore, Gimbal {
     }
     private var _stabilizationSettings: [GimbalAxis: BoolSettingCore] = [:]
 
-    private(set) public var currentAttitude: [GimbalAxis: Double] = [:]
+    private(set) public var _absoluteAttitude: [GimbalAxis: Double] = [:]
+    private(set) public var _relativeAttitude: [GimbalAxis: Double] = [:]
+
+    public var currentAttitude: [GimbalAxis: Double] {
+        var attitude: [GimbalAxis: Double] = [:]
+        GimbalAxis.allCases.forEach {
+            if let stabilization = stabilizationSettings[$0] {
+                attitude[$0] = stabilization.value ? _absoluteAttitude[$0] : _relativeAttitude[$0]
+            }
+        }
+        return attitude
+    }
 
     private(set) public var offsetsCorrectionProcess: GimbalOffsetsCorrectionProcess?
 
@@ -170,6 +181,14 @@ public class GimbalCore: PeripheralCore, Gimbal {
             backend.cancelCalibration()
         }
     }
+
+    public func currentAttitude(frameOfReference: FrameOfReference) -> [GimbalAxis: Double] {
+        if frameOfReference == .absolute {
+            return _absoluteAttitude
+        } else {
+            return _relativeAttitude
+        }
+    }
 }
 
 /// Backend callback methods
@@ -195,7 +214,8 @@ extension GimbalCore {
                 _maxSpeedSettings[$0] = nil
                 lockedAxes.remove($0)
                 _stabilizationSettings[$0] = nil
-                currentAttitude[$0] = nil
+                _absoluteAttitude[$0] = nil
+                _relativeAttitude[$0] = nil
             }
 
             markChanged()
@@ -307,7 +327,7 @@ extension GimbalCore {
         return self
     }
 
-    /// Updates the current attitude of the given axis.
+    /// Updates the absolute attitude of the given axis.
     ///
     /// - Note:
     ///   - only apply the update if the axis is supported
@@ -317,22 +337,54 @@ extension GimbalCore {
     ///   - newValue: the attitude in degrees.
     ///   - axis: the axis
     /// - Returns: self to allow call chaining
-    @discardableResult public func update(attitude newValue: Double?, onAxis axis: GimbalAxis) -> GimbalCore {
+    @discardableResult public func update(absoluteAttitude newValue: Double?, onAxis axis: GimbalAxis) -> GimbalCore {
         guard supportedAxes.contains(axis) else {
             return self
         }
-        if currentAttitude[axis] == nil && newValue != nil {
-            currentAttitude[axis] = newValue
+        if _absoluteAttitude[axis] == nil && newValue != nil {
+            _absoluteAttitude[axis] = newValue
             markChanged()
         } else {
             if let newValue = newValue {
-                if let currentAtt = currentAttitude[axis],
+                if let currentAtt = _absoluteAttitude[axis],
                     newValue != currentAtt {
-                    currentAttitude[axis] = newValue
+                    _absoluteAttitude[axis] = newValue
                     markChanged()
                 }
             } else {
-                currentAttitude[axis] = nil
+                _absoluteAttitude[axis] = nil
+                markChanged()
+            }
+        }
+        return self
+    }
+
+    /// Updates the relative attitude of the given axis.
+    ///
+    /// - Note:
+    ///   - only apply the update if the axis is supported
+    ///   - changes are not notified until notifyUpdated() is called
+    ///
+    /// - Parameters:
+    ///   - newValue: the attitude in degrees.
+    ///   - axis: the axis
+    /// - Returns: self to allow call chaining
+    @discardableResult public func update(relativeAttitude newValue: Double?, onAxis axis: GimbalAxis) -> GimbalCore {
+        guard supportedAxes.contains(axis) else {
+            return self
+        }
+        if _relativeAttitude[axis] == nil && newValue != nil {
+            _relativeAttitude[axis] = newValue
+            markChanged()
+        } else {
+            if let newValue = newValue {
+                if let currentAtt = _relativeAttitude[axis],
+                    newValue != currentAtt {
+                    _relativeAttitude[axis] = newValue
+                    markChanged()
+                }
+            } else {
+                _relativeAttitude[axis] = nil
                 markChanged()
             }
         }
@@ -496,10 +548,14 @@ extension GimbalCore: GSGimbal {
     }
 
     public func currentAttitude(onAxis axis: GimbalAxis) -> NSNumber? {
-        if let attitude = currentAttitude[axis] {
-            return NSNumber(value: attitude)
+        if let stabilization = _stabilizationSettings[axis] {
+            return NSNumber(value: (stabilization.value ? _absoluteAttitude[axis] : _relativeAttitude[axis]) ?? 0)
         }
         return nil
+    }
+
+    public func currentAttitude(onAxis axis: GimbalAxis, frameOfReference: FrameOfReference) -> NSNumber? {
+        return NSNumber(value: (frameOfReference == .absolute ? _absoluteAttitude[axis] : _relativeAttitude[axis]) ?? 0)
     }
 
     public func control(mode: GimbalControlMode, yaw: NSNumber?, pitch: NSNumber?, roll: NSNumber?) {

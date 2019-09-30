@@ -52,6 +52,26 @@ public enum GimbalAxis: Int, CustomStringConvertible {
     public static let allCases: Set<GimbalAxis> = [.yaw, .pitch, .roll]
 }
 
+/// Gimbal frame of reference.
+@objc(GSFrameOfReference)
+public enum FrameOfReference: Int, CustomStringConvertible {
+    /// Absolute frame of reference.
+    case absolute
+    /// Relative frame of reference.
+    case relative
+
+    /// Debug description.
+    public var description: String {
+        switch self {
+        case .absolute: return "absolute"
+        case .relative: return "relative"
+        }
+    }
+
+    /// Set containing all frame of reference.
+    public static let allCases: Set<FrameOfReference> = [.absolute, .relative]
+}
+
 /// Gimbal error.
 @objc(GSGimbalError)
 public enum GimbalError: Int, CustomStringConvertible {
@@ -191,6 +211,22 @@ public class GimbalOffsetsCorrectionProcess: NSObject {
 /// The gimbal can act on one or multiple axes. It can stabilize a given axis, meaning that the movement on this axis
 /// will be following the horizon (for `.roll` and `.pitch`) or the North (for the `.yaw`).
 ///
+/// Two frames of reference are used to control the gimbal with the `.position` mode, and to retrieve the gimbal
+/// attitude
+/// Relative frame of reference:
+/// - yaw: given angle is relative to the heading of the drone.
+///        Positive yaw values means a right orientation when seeing the gimbal from above.
+/// - pitch: given angle is relative to the body of the drone.
+///          Positive pitch values means an orientation of the gimbal towards the top of the drone.
+/// - roll: given angle is relative to the body of the drone.
+///         Positive roll values means an clockwise rotation of the gimbal.
+/// Absolute frame of reference:
+/// - yaw: given angle is relative to the magnetic North (clockwise).
+/// - pitch: given angle is relative to the horizon.
+///         Positive pitch values means an orientation towards sky.
+/// - roll: given angle is relative to the horizon line.
+///         Positive roll values means an orientation to the right when seeing the gimbal from behind.
+///
 /// This peripheral can be retrieved by:
 /// ```
 /// device.getPeripheral(Peripherals.gimbal)
@@ -251,22 +287,8 @@ public protocol Gimbal: Peripheral {
     ///    - `.velocity`: axis value is in max speed (`maxSpeedSettings[thisAxis].value`) ratio (from -1 to 1).
     ///
     /// If mode is `.position`, frame of reference of a given axis depends on the value of the stabilization on
-    /// this axis. If this axis is stabilized (i.e. `stabilizationSettings[thisAxis].value == true`, here are the frame
-    /// of references:
-    /// - yaw: given angle is relative to the magnetic North (clockwise).
-    /// - pitch: given angle is relative to the horizon.
-    ///          Positive pitch values means an orientation towards sky.
-    /// - roll: given angle is relative to the horizon line.
-    ///         Positive roll values means an orientation to the right when seeing the gimbal from behind.
-    ///
-    /// However, if the axis is not stabilized:
-    /// - yaw: given angle is relative to the heading of the drone.
-    ///        Positive yaw values means a right orientation when seeing the gimbal from above.
-    /// - pitch: given angle is relative to the body of the drone.
-    ///          Positive pitch values means an orientation of the gimbal towards the top of the drone.
-    /// - roll: given angle is relative to the body of the drone.
-    ///         Positive roll values means an clockwise rotation of the gimbal.
-    ///
+    /// this axis. If this axis is stabilized (i.e. `stabilizationSettings[thisAxis].value == true`), the .absolute
+    /// frame of reference is used. Otherwise .relative frame of reference is used.
     /// - Parameters:
     ///   - mode: the mode that should be used to move the gimbal. This parameter will change the unit of the following
     ///           parameters
@@ -293,6 +315,12 @@ public protocol Gimbal: Peripheral {
     /// Cancels the current calibration process.
     /// Does nothing when `calibrationProcessState` is not `calibrating`.
     func cancelCalibration()
+
+    /// Gets the current attitude for a given frame of reference.
+    ///
+    /// - Parameter frameOfReference: the frame of reference
+    /// - Returns: the current attitude as an array of axis.
+    func currentAttitude(frameOfReference: FrameOfReference) -> [GimbalAxis: Double]
 }
 
 /// Objective-C version of Gimbal.
@@ -372,6 +400,14 @@ public protocol GSGimbal: Peripheral {
     /// - Returns: the current attitude as a double in an NSNumber. `nil` if axis is not supported.
     func currentAttitude(onAxis axis: GimbalAxis) -> NSNumber?
 
+    /// Gets the current attitude on a given axis and frame of reference
+    ///
+    /// - Parameters:
+    ///   - axis: the axis
+    ///   - frameOfReference: the frame of reference
+    /// - Returns: the current attitude as a double in an NSNumber. `nil` if axis is not supported.
+    func currentAttitude(onAxis axis: GimbalAxis, frameOfReference: FrameOfReference) -> NSNumber?
+
     /// Controls the gimbal.
     ///
     /// Unit of the `yaw`, `pitch`, `roll` values depends on the value of the `mode` parameter:
@@ -379,22 +415,8 @@ public protocol GSGimbal: Peripheral {
     ///    - `.velocity`: axis value is in max speed (`maxSpeedSettings[thisAxis].value`) ratio (from -1 to 1).
     ///
     /// If mode is `.position`, frame of reference of a given axis depends on the value of the stabilization on
-    /// this axis. If this axis is stabilized (i.e. `stabilizationSettings[thisAxis].value == true`, here are the frame
-    /// of references:
-    /// - yaw: given angle is relative to the magnetic North (clockwise).
-    /// - pitch: given angle is relative to the horizon.
-    ///          Positive pitch values means an orientation towards sky.
-    /// - roll: given angle is relative to the horizon line.
-    ///         Positive roll values means an orientation to the right when seeing the gimbal from behind.
-    ///
-    /// However, if the axis is not stabilized:
-    /// - yaw: given angle is relative to the heading of the drone.
-    ///        Positive yaw values means a right orientation when seeing the gimbal from above.
-    /// - pitch: given angle is relative to the body of the drone.
-    ///          Positive pitch values means an orientation of the gimbal towards the top of the drone.
-    /// - roll: given angle is relative to the body of the drone.
-    ///         Positive roll values means an clockwise rotation of the gimbal.
-    ///
+    /// this axis. If this axis is stabilized (i.e. `stabilizationSettings[thisAxis].value == true`), the .absolute
+    /// frame of reference is used. Otherwise .relative frame of reference is used.
     /// - Parameters:
     ///   - mode: the mode that should be used to move the gimbal. This parameter will change the unit of the following
     ///           parameters

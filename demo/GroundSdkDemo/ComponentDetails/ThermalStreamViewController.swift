@@ -77,8 +77,6 @@ class ThermalStreamViewController: UIViewController, DeviceViewController {
             }
             thermalControl = drone.getPeripheral(Peripherals.thermalControl) { [weak self] thermalControl in
                 if let thermalControl = thermalControl {
-                    print("thermalControl.setting  mode:", thermalControl.setting.mode,
-                          " updating:", thermalControl.setting.updating)
                     self?.thermalSwitch.isEnabled = !thermalControl.setting.updating
                     self?.enableStreamSwitch.isEnabled = !thermalControl.setting.updating
                     self?.thermalSwitch.isOn = thermalControl.setting.mode == .standard

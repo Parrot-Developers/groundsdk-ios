@@ -34,12 +34,10 @@ class CopilotCell: PeripheralProviderContentCell {
 
     @IBOutlet weak var sourceLabel: UILabel!
 
-    private var peripheralProvider: PeripheralProvider?
     private var copilot: Ref<Copilot>?
 
     override func set(peripheralProvider provider: PeripheralProvider) {
         super.set(peripheralProvider: provider)
-        peripheralProvider = provider
         copilot = provider.getPeripheral(Peripherals.copilot) {  [unowned self] copilot in
             if let copilot = copilot {
                 self.sourceLabel.text = copilot.setting.source.description

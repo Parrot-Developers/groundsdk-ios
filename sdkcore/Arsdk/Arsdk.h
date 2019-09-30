@@ -34,4 +34,5 @@
 #include "SdkCore+MediaInfo.h"
 #include "SdkCore+Renderer.h"
 
+#include "GLError.h"
 #endif /* Arsdk_h */

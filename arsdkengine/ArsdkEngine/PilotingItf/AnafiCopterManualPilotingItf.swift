@@ -135,7 +135,8 @@ extension AnafiCopterManualPilotingItf: ArsdkFeatureArdrone3PilotingstateCallbac
              .motorRamping,
              .usertakeoff,
              .flying:
-            manualCopterPilotingItf.update(canTakeOff: false).update(canLand: true).notifyUpdated()
+            manualCopterPilotingItf.update(canTakeOff: false).update(smartWillThrownTakeoff: false)
+                .update(canLand: true).notifyUpdated()
         case .emergency,
              .emergencyLanding:
             manualCopterPilotingItf.update(canTakeOff: false).update(canLand: false).notifyUpdated()

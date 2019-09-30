@@ -82,16 +82,17 @@ class FlightLogRestApi {
     /// - Parameters:
     ///   - flightLog: the flight log to download
     ///   - directory: the directory where to put the downloaded flight log into
+    ///   - deviceUid: the device uid
     ///   - completion: the completion callback (called on the main thread)
     ///   - fileUrl: url of the locally downloaded file. `nil` if there were an error during download or during copy
     /// - Returns: the request
     func downloadFlightLog(
-        _ flightLog: FlightLog, toDirectory directory: URL,
+        _ flightLog: FlightLog, toDirectory directory: URL, deviceUid: String,
         completion: @escaping (_ fileUrl: URL?) -> Void) -> CancelableCore {
 
         return server.downloadFile(
             api: flightLog.urlPath,
-            destination: directory.appendingPathComponent(flightLog.name),
+            destination: directory.appendingPathComponent(deviceUid + "_" + flightLog.name),
             progress: { _ in },
             completion: { _, localFileUrl in
                 completion(localFileUrl)

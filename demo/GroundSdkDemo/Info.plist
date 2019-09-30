@@ -29,6 +29,8 @@
 		</dict>
 		<key>BlackBox</key>
 		<false/>
+		<key>BlackboxPublicFolder</key>
+		<string></string>
 		<key>UsbDebug</key>
 		<true/>
 		<key>BlackBoxQuotaMb</key>
@@ -86,5 +88,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>camera authorization - for HMD</string>
 </dict>
 </plist>

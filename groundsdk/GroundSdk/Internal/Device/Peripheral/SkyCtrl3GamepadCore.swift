@@ -65,12 +65,19 @@ public protocol SkyCtrl3GamepadBackend: class {
     ///   - droneModel: drone model for which the axis must be reversed
     ///   - reversed: whether or not the axis should be reverted
     func set(axis: SkyCtrl3Axis, forDroneModel droneModel: Drone.Model, reversed: Bool)
+
+    /// Enables or disables volatile mapping.
+    /// All mapping entries registered with volatile mapping enabled will be removed when it is disabled or when
+    /// remote control is disconnected. Disabling volatile mapping also cancels any ongoing action.
+    ///
+    /// - Parameter volatileMapping: volatile mapping
+    /// - Returns: whether the command has been sent
+    func set(volatileMapping: Bool) -> Bool
 }
 
 /// Internal SkyCtrl3Gamepad peripheral implementation
 @objcMembers // objc compatibility only for testing purpose
 public class SkyCtrl3GamepadCore: PeripheralCore, SkyCtrl3Gamepad {
-
     /// Struct that contains an axis interpolator and associate it with an axis and a drone model.
     public struct AxisInterpolatorEntry {
         /// Drone model associated to the interpolator
@@ -147,6 +154,13 @@ public class SkyCtrl3GamepadCore: PeripheralCore, SkyCtrl3Gamepad {
 
     /// Set of drone models supported by the remote control.
     public var supportedDroneModels = Set<Drone.Model>()
+
+    /// Volatile mapping setting
+    public var volatileMappingSetting: BoolSetting? {
+        return _volatileMappingSetting
+    }
+    /// Internal storage for volatile mapping settings
+    private var _volatileMappingSetting: BoolSettingCore?
 
     /// Currently active drone model.
     ///
@@ -469,6 +483,23 @@ extension SkyCtrl3GamepadCore {
         return self
     }
 
+    /// Update the volatile mapping state
+    ///
+    /// - Parameter volatileMappingState: new volatile mapping state
+    /// - Returns: self to allow call chaining
+    @discardableResult
+    public func update(volatileMappingState newValue: Bool) -> SkyCtrl3GamepadCore {
+        if _volatileMappingSetting == nil {
+            _volatileMappingSetting = BoolSettingCore(didChangeDelegate: self) { [unowned self] newValue in
+                return self.backend.set(volatileMapping: newValue)
+            }
+        }
+        if _volatileMappingSetting!.update(value: newValue) {
+            markChanged()
+        }
+        return self
+    }
+
     /// Resets the button and axis listeners
     /// Should be called before that the component is unpublished
     public func resetEventListeners() {
@@ -493,6 +524,21 @@ extension SkyCtrl3GamepadCore {
 /// Extension of SkyCtrl3GamepadCore that implements the GSSkyCtrl3Gamepad (obj-c protocol).
 /// Only transforms Obj-C compatible objects into Swift ones
 extension SkyCtrl3GamepadCore: GSSkyCtrl3Gamepad {
+    public var gsVolatileMappingSupported: Bool {
+        if volatileMappingSetting != nil {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    public var gsVolatileMappingState: Bool {
+        if volatileMappingSetting != nil {
+            return volatileMappingSetting!.value
+        } else {
+            return false
+        }
+    }
     public func getGrabbedButtonsState() -> [Int: Int] {
         var buttonsState = [Int: Int]()
         for (event, state) in grabbedButtonsState {

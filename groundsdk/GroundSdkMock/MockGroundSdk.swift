@@ -317,9 +317,15 @@ public class MockGroundSdk: NSObject {
         case Peripherals.preciseHome.uid:
             let preciseHome = PreciseHomeCore(store: drone.peripheralStore, backend: preciseHomeMockBackend)
             preciseHome.publish()
+        case Peripherals.pilotingControl.uid:
+            let pilotingControl = PilotingControlCore(store: drone.peripheralStore, backend: pilotingControlMockBackend)
+            pilotingControl.publish()
         case Peripherals.thermalControl.uid:
             let thermalControl = ThermalControlCore(store: drone.peripheralStore, backend: thermalControlMockBackend)
             thermalControl.publish()
+        case Peripherals.copilot.uid:
+            let copilot = CopilotCore(store: drone.peripheralStore, backend: copilotMockBackend)
+            copilot.publish()
         default:
             print("Adding peripheral interface \(uid) is not implemented in MockGroundSdk")
         }
@@ -486,6 +492,9 @@ public class MockGroundSdk: NSObject {
     let mediaStoreMockBackend = MediaStoreMockBackend()
 
     class SkyCtrl3GamepadMockBackend: SkyCtrl3GamepadBackend {
+
+        func set(volatileMapping: Bool) -> Bool { return false }
+
         func grab(buttons: Set<SkyCtrl3Button>, axes: Set<SkyCtrl3Axis>) { }
 
         public func setup(mappingEntry: SkyCtrl3MappingEntry, register: Bool) { }
@@ -591,6 +600,14 @@ public class MockGroundSdk: NSObject {
         }
 
         func control(mode: CameraZoomControlMode, target: Double) { }
+
+        func set(yawOffset: Double, pitchOffset: Double, rollOffset: Double) -> Bool {
+            return false
+        }
+
+        func resetAlignment() -> Bool {
+            return false
+        }
     }
     let cameraMockBackend = CameraMockBackend()
 
@@ -607,6 +624,13 @@ public class MockGroundSdk: NSObject {
         }
     }
     let preciseHomeMockBackend = PreciseHomeMockBackend()
+
+    class PilotingControlMockBackend: PilotingControlBackend {
+        func set(behaviour: PilotingBehaviour) -> Bool {
+            return false
+        }
+    }
+    let pilotingControlMockBackend = PilotingControlMockBackend()
 
     class ThermalControlMockBackend: ThermalControlBackend {
         func set(range: ThermalSensitivityRange) -> Bool {
@@ -638,6 +662,14 @@ public class MockGroundSdk: NSObject {
         }
     }
     let thermalControlMockBackend = ThermalControlMockBackend()
+
+    class CopilotMockBackend: CopilotBackend {
+        func set(source: CopilotSource) -> Bool {
+            return false
+        }
+    }
+
+    let copilotMockBackend = CopilotMockBackend()
 
     class GeofenceMockBackend: GeofenceBackend {
         func set(mode: GeofenceMode) -> Bool {

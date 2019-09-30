@@ -68,12 +68,29 @@ public enum CopilotSource: Int {
 public protocol Copilot: Peripheral {
     /// Copilot setting
     var setting: CopilotSetting { get }
-
 }
 
 /// Setting to change the piloting source
 public protocol CopilotSetting: class {
     /// Tells if the setting value has been changed and is waiting for change confirmation.
+    var updating: Bool { get }
+
+    /// Current source setting.
+    var source: CopilotSource { get set }
+}
+
+/// Peripheral managing copilot
+/// - Note: this protocol is for Objective-C compatibility only.
+@objc public protocol GSCopilot {
+    /// Copilot setting
+    @objc(setting)
+    var gsSetting: GSCopilotSetting { get }
+}
+
+/// Setting to change the piloting source
+/// - Note: this protocol is for Objective-C compatibility only.
+@objc public protocol GSCopilotSetting {
+    /// Tells if a setting value has been changed and is waiting for change confirmation.
     var updating: Bool { get }
 
     /// Current source setting.

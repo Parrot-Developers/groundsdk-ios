@@ -115,11 +115,15 @@ extension Sc3Gamepad: SkyCtrl3GamepadBackend {
             send(axis: mapperAxis, forDroneModel: droneModel, reversed: reversed)
         }
     }
+
+    public func set(volatileMapping: Bool) -> Bool {
+        send(volatileMapping: volatileMapping)
+        return true
+    }
 }
 
 /// Extension of Sc3Gamepad that implements SpecializedGamepadBackend
 extension Sc3Gamepad: SpecializedGamepadBackend {
-
     /// The buttons mask of all navigation buttons
     var navigationGrabButtonsMask: MapperButtonsMask {
         return MapperButtonsMask.from(.button2, .button3, .button4, .button5, .button6, .button7)
@@ -289,6 +293,10 @@ extension Sc3Gamepad: SpecializedGamepadBackend {
 
     func updateActiveDroneModel(_ droneModel: Drone.Model) {
         skyCtrl3Gamepad.updateActiveDroneModel(droneModel).notifyUpdated()
+    }
+
+    func update(volatileMapping: Bool) {
+        skyCtrl3Gamepad.update(volatileMappingState: volatileMapping)
     }
 
     func clearAllAxisInterpolators() {

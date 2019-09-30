@@ -2674,4 +2674,106 @@ class CameraFeatureCameraTests: ArsdkEngineTestBase {
         assertThat(camera!.photoSettings.timelapseCaptureInterval, `is`(3.5))
         assertThat(camera!.photoSettings.gpslapseCaptureInterval, `is`(0.5))
     }
+
+    func testAlignment() {
+        connect(drone: drone, handle: 1) {
+            self.sendCapabilitiesCommand()
+        }
+
+        // check initial value
+        assertThat(camera!.alignment, nilValue())
+        assertThat(changeCnt, `is`(1))
+
+        // mock alignment command reception
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraAlignmentOffsetsEncoder(camId: 0,
+                                                                 minBoundYaw: 10, maxBoundYaw: 30, currentYaw: 20,
+                                                                 minBoundPitch: 40, maxBoundPitch: 60, currentPitch: 50,
+                                                                 minBoundRoll: 70, maxBoundRoll: 90, currentRoll: 80))
+        assertThat(camera!.alignment, present())
+        assertThat(camera!.alignment!, `is`(yawLowerBound: 10, yaw: 20, yawUpperBound: 30,
+                                            pitchLowerBound: 40, pitch: 50, pitchUpperBound: 60,
+                                            rollLowerBound: 70, roll: 80, rollUpperBound: 90, updating: false))
+        assertThat(changeCnt, `is`(2))
+
+        // change yaw offset from api
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetAlignmentOffsets(
+            camId: 0, yaw: 25, pitch: 50, roll: 80))
+        camera!.alignment!.yaw = 25
+        assertThat(camera!.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                            pitchLowerBound: 40, pitch: 50, pitchUpperBound: 60,
+                                            rollLowerBound: 70, roll: 80, rollUpperBound: 90, updating: true))
+        assertThat(changeCnt, `is`(3))
+
+        // mock alignment command reception
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraAlignmentOffsetsEncoder(camId: 0,
+                                                                 minBoundYaw: 10, maxBoundYaw: 30, currentYaw: 25,
+                                                                 minBoundPitch: 40, maxBoundPitch: 60, currentPitch: 50,
+                                                                 minBoundRoll: 70, maxBoundRoll: 90, currentRoll: 80))
+        assertThat(camera!.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                            pitchLowerBound: 40, pitch: 50, pitchUpperBound: 60,
+                                            rollLowerBound: 70, roll: 80, rollUpperBound: 90, updating: false))
+        assertThat(changeCnt, `is`(4))
+
+        // change pitch offset from api
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetAlignmentOffsets(
+            camId: 0, yaw: 25, pitch: 55, roll: 80))
+        camera!.alignment!.pitch = 55
+        assertThat(camera!.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                            pitchLowerBound: 40, pitch: 55, pitchUpperBound: 60,
+                                            rollLowerBound: 70, roll: 80, rollUpperBound: 90, updating: true))
+        assertThat(changeCnt, `is`(5))
+
+        // mock alignment command reception
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraAlignmentOffsetsEncoder(camId: 0,
+                                                                 minBoundYaw: 10, maxBoundYaw: 30, currentYaw: 25,
+                                                                 minBoundPitch: 40, maxBoundPitch: 60, currentPitch: 55,
+                                                                 minBoundRoll: 70, maxBoundRoll: 90, currentRoll: 80))
+        assertThat(camera!.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                            pitchLowerBound: 40, pitch: 55, pitchUpperBound: 60,
+                                            rollLowerBound: 70, roll: 80, rollUpperBound: 90, updating: false))
+        assertThat(changeCnt, `is`(6))
+
+        // change roll offset from api
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetAlignmentOffsets(
+            camId: 0, yaw: 25, pitch: 55, roll: 85))
+        camera!.alignment!.roll = 85
+        assertThat(camera!.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                            pitchLowerBound: 40, pitch: 55, pitchUpperBound: 60,
+                                            rollLowerBound: 70, roll: 85, rollUpperBound: 90, updating: true))
+        assertThat(changeCnt, `is`(7))
+
+        // mock alignment command reception
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraAlignmentOffsetsEncoder(camId: 0,
+                                                                 minBoundYaw: 10, maxBoundYaw: 30, currentYaw: 25,
+                                                                 minBoundPitch: 40, maxBoundPitch: 60, currentPitch: 55,
+                                                                 minBoundRoll: 70, maxBoundRoll: 90, currentRoll: 85))
+        assertThat(camera!.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                            pitchLowerBound: 40, pitch: 55, pitchUpperBound: 60,
+                                            rollLowerBound: 70, roll: 85, rollUpperBound: 90, updating: false))
+        assertThat(changeCnt, `is`(8))
+
+        // reset offsets
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraResetAlignmentOffsets(camId: 0))
+        _ = camera!.alignment!.reset()
+
+        // mock alignment command reception
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.cameraAlignmentOffsetsEncoder(camId: 0,
+                                                                 minBoundYaw: 10, maxBoundYaw: 30, currentYaw: 20,
+                                                                 minBoundPitch: 40, maxBoundPitch: 60, currentPitch: 50,
+                                                                 minBoundRoll: 70, maxBoundRoll: 90, currentRoll: 80))
+        assertThat(camera!.alignment!, `is`(yawLowerBound: 10, yaw: 20, yawUpperBound: 30,
+                                            pitchLowerBound: 40, pitch: 50, pitchUpperBound: 60,
+                                            rollLowerBound: 70, roll: 80, rollUpperBound: 90, updating: false))
+        assertThat(changeCnt, `is`(9))
+
+        // alignment should be nil after a disconnection
+        disconnect(drone: drone, handle: 1)
+        assertThat(camera!.alignment, nilValue())
+        assertThat(changeCnt, `is`(10))
+    }
 }

@@ -55,6 +55,9 @@ class BlackBoxCollector {
     /// File extension of a non finalized report
     fileprivate static let nonFinalizedFileExtension = "tmp"
 
+    /// Blackbox public folder
+    private var blackboxPublicFolder: String? = GroundSdkConfig.sharedInstance.blackboxPublicFolder
+
     /// Constructor
     ///
     /// - Parameters:
@@ -175,8 +178,41 @@ class BlackBoxCollector {
                 return
             }
 
+            self.copyToPublicFolder(finalizedFileUrl, blackBoxMd5)
+
             DispatchQueue.main.async {
                 blackBoxArchived(BlackBox(url: finalizedFileUrl))
+            }
+        }
+    }
+
+    /// Copies the given black box file to the public folder if it is configured.
+    ///
+    /// - Parameters:
+    ///   - fileToCopy: file to copy
+    ///   - name: name of file
+    /// - Returns: result of copy
+    private func copyToPublicFolder(_ fileToCopy: URL, _ name: String) {
+        if let blackboxPublicFolder = blackboxPublicFolder {
+            let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let blackboxPublicFolderPath = documentPath.appendingPathComponent(blackboxPublicFolder)
+
+            /// create directory if it doesn't exist.
+            do {
+                try FileManager.default.createDirectory(at: blackboxPublicFolderPath,
+                                                        withIntermediateDirectories: true, attributes: nil)
+                ULog.d(.blackBoxEngineTag, "Directory created at: \(blackboxPublicFolderPath.absoluteString)")
+            } catch let error as NSError {
+                ULog.w(.blackBoxEngineTag, "Unable to create directory \(error.debugDescription)")
+                return
+            }
+            /// copy blackbox file.
+            let newPath = documentPath.appendingPathComponent(blackboxPublicFolder + "/" + name)
+            do {
+                try FileManager.default.copyItem(at: fileToCopy, to: newPath)
+            } catch  let err {
+                ULog.e(.blackBoxEngineTag, "Failed to copy file at \(newPath)" +
+                    " with file \(fileToCopy): \(err)")
             }
         }
     }

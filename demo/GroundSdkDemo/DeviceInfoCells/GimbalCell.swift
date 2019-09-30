@@ -40,7 +40,8 @@ class GimbalCell: PeripheralProviderContentCell {
     @IBOutlet weak var stabilizedAxesLabel: UILabel!
     @IBOutlet weak var boundsLabel: UILabel!
     @IBOutlet weak var maxSpeedsLabel: UILabel!
-    @IBOutlet weak var attitudeLabel: UILabel!
+    @IBOutlet weak var absoluteAttitudeLabel: UILabel!
+    @IBOutlet weak var relativeAttitudeLabel: UILabel!
     @IBOutlet weak var calibratedLabel: UILabel!
 
     override func set(peripheralProvider provider: PeripheralProvider) {
@@ -56,7 +57,13 @@ class GimbalCell: PeripheralProviderContentCell {
                     .joined(separator: ", ")
                 self.maxSpeedsLabel.text = gimbal.maxSpeedSettings.map { $0.value.value.description }
                     .joined(separator: ", ")
-                self.attitudeLabel.text = gimbal.currentAttitude.map { $0.value.description }.joined(separator: ", ")
+
+                let absolute = gimbal.currentAttitude(frameOfReference: .absolute)
+                self.absoluteAttitudeLabel.text =
+                    "Pitch: \(absolute[.pitch] ?? 0) Roll: \( absolute[.roll] ?? 0)"
+                let relative = gimbal.currentAttitude(frameOfReference: .relative)
+                self.relativeAttitudeLabel.text =
+                    "Pitch: \(relative[.pitch] ?? 0) Roll: \(relative[.roll] ?? 0)"
                 self.calibratedLabel.text = "\(gimbal.calibrated)"
 
                 self.show()

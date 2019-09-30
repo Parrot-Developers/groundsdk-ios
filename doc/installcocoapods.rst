@@ -79,8 +79,8 @@ Now, you can open the **groundSdkDemo** with the Xcode workspace:
 
 |image0|
 
-Adding Parrot Sdk Pods from in a fresh Xcode project
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Adding Parrot Sdk Pods in a fresh Xcode project
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You first need to close Xcode.
 
@@ -116,9 +116,9 @@ Replace all content with:
 
     target ' appProject ' do
         use_frameworks!
-        pod 'GroundSdk', '1.0.0'
-        pod 'ArsdkEngine', '1.0.0'
-        pod 'SdkCore', '1.0.0'
+        pod 'GroundSdk', '~> 1.1.0'
+        pod 'ArsdkEngine', '~> 1.1.0'
+        pod 'SdkCore', '~> 1.1.0'
     end
 
 Save and close the Podfile.

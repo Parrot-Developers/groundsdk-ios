@@ -100,6 +100,9 @@ public enum FlightPlanFileUploadState: Int, CustomStringConvertible {
 /// Flight Plan piloting interface for drones.
 ///
 /// Allows to make the drone execute predefined flight plans.
+/// A flight plan is defined using a file in Mavlink format. For further information, please refer to
+/// [Parrot FlightPlan Mavlink documentation](https://developer.parrot.com/docs/mavlink-flightplan).
+///
 /// This piloting interface remains `.unavailable` until all `FlightPlanUnavailabilityReason` have been cleared:
 ///  - A Flight Plan file (i.e. a mavlink file) has been uploaded to the drone (see uploadFlightPlan(filepath:))
 ///  - The drone GPS location has been acquired

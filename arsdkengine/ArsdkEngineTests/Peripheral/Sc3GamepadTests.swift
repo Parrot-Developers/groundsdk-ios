@@ -1565,6 +1565,33 @@ extension Sc3GamepadTests {
         assertNoExpectation()
     }
 
+    func testVolatileMapping() {
+        connect(remoteControl: remoteControl, handle: 1)
+        assertThat(skyCtrl3Gamepad?.volatileMappingSetting, nilValue())
+        assertThat(sc3ChangeCnt, `is`(1))
+        disconnect(remoteControl: remoteControl, handle: 1)
+        assertThat(sc3ChangeCnt, `is`(2))
+        connect(remoteControl: remoteControl, handle: 1) {
+            self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.mapperVolatileMappingStateEncoder(active: 0))
+        }
+        assertThat(sc3ChangeCnt, `is`(3))
+        assertThat(skyCtrl3Gamepad?.volatileMappingSetting!.value, `is`(false))
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.mapperEnterVolatileMapping())
+        skyCtrl3Gamepad?.volatileMappingSetting!.value = true
+        assertThat(sc3ChangeCnt, `is`(4))
+        assertThat(skyCtrl3Gamepad?.volatileMappingSetting!.value, `is`(true))
+        assertThat(skyCtrl3Gamepad?.volatileMappingSetting!.updating, `is`(true))
+
+        self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.mapperVolatileMappingStateEncoder(active: 1))
+
+        assertThat(skyCtrl3Gamepad?.volatileMappingSetting!.value, `is`(true))
+        assertThat(skyCtrl3Gamepad?.volatileMappingSetting!.updating, `is`(false))
+
+        assertThat(sc3ChangeCnt, `is`(4))
+        disconnect(remoteControl: remoteControl, handle: 1)
+        assertThat(skyCtrl3Gamepad?.volatileMappingSetting, nilValue())
+    }
+
     func resetListenersVars() {
         navEvent = nil
         navState = nil

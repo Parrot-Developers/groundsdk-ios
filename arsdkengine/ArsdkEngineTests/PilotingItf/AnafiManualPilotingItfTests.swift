@@ -260,6 +260,30 @@ class AnafiManualPilotingItfTests: ArsdkEngineTestBase {
         assertThat(manualCopterPilotingItf!.smartTakeOffLandAction, `is`(.land))
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.ardrone3PilotingLanding())
         manualCopterPilotingItf!.smartTakeOffLand()
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstateFlyingstatechangedEncoder(state: .landed))
+
+        // move the drone (MotionDetection)
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstateMotionstateEncoder(state: .moving))
+        assertThat(manualCopterPilotingItf!.smartTakeOffLandAction, `is`(.thrownTakeOff))
+
+        // move to usertakeoff
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstateFlyingstatechangedEncoder(state: .usertakeoff))
+        assertThat(manualCopterPilotingItf!.smartTakeOffLandAction, `is`(.land))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstateFlyingstatechangedEncoder(state: .hovering))
+        assertThat(manualCopterPilotingItf!.smartTakeOffLandAction, `is`(.land))
+
+        // move to landing
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstateFlyingstatechangedEncoder(state: .landing))
+        assertThat(manualCopterPilotingItf!.smartTakeOffLandAction, `is`(.takeOff))
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.ardrone3PilotingTakeoff())
+        manualCopterPilotingItf!.smartTakeOffLand()
     }
 
     func testMaxPitchRoll() {

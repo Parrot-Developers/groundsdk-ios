@@ -70,4 +70,11 @@ extension UINavigationController {
     open override var shouldAutorotate: Bool {
         return visibleViewController!.shouldAutorotate
     }
+
+    override open var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        if let visibleVC = visibleViewController {
+            return visibleVC.preferredInterfaceOrientationForPresentation
+        }
+        return super.preferredInterfaceOrientationForPresentation
+    }
 }

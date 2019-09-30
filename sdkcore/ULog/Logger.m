@@ -70,7 +70,7 @@
 }
 
 - (void)setMinLevel:(Level)level {
-    ulog_set_level(&_nativeCookie, level);
+    ulog_set_level(&_nativeCookie, (int) level);
 }
 
 - (Level)minLevel {
@@ -297,7 +297,7 @@ static void asl_ulog_write_func(uint32_t prio, struct ulog_cookie *cookie, const
  */
 + (void) log:(Level)prio tag:(ULogTag *)tag msg:(NSString *)msg {
     if (prio <= [tag minLevel ]) {
-        ulog_log_str(prio, [tag nativeCookiePtr], [msg UTF8String]);
+        ulog_log_str((uint32_t) prio, [tag nativeCookiePtr], [msg UTF8String]);
     }
 }
 
@@ -311,7 +311,7 @@ static void asl_ulog_write_func(uint32_t prio, struct ulog_cookie *cookie, const
  */
 + (void) vlog:(Level)prio tag:(ULogTag *)tag msg:(NSString *)msg args:(va_list)args {
     if (prio <= [tag minLevel ]) {
-        ulog_vlog(prio, [tag nativeCookiePtr], [msg UTF8String], args);
+        ulog_vlog((uint32_t) prio, [tag nativeCookiePtr], [msg UTF8String], args);
     }
 }
 
@@ -382,7 +382,7 @@ static void asl_ulog_write_func(uint32_t prio, struct ulog_cookie *cookie, const
 }
 
 + (int) setLogLevel:(Level) minLevel tagName:(NSString *)tagName {
-    return ulog_set_tag_level([tagName UTF8String], minLevel);
+    return ulog_set_tag_level([tagName UTF8String], (int) minLevel);
 }
 
 + (BOOL) c:(ULogTag *) tag {

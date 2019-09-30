@@ -482,3 +482,41 @@ func `is`(available: Bool? = nil, currentLevel: Double? = nil, maxLossLessLevel:
     }
     return allOf(matchers)
 }
+
+// MARK: - alignment
+func `is`(yawLowerBound: Double, yaw: Double, yawUpperBound: Double,
+          pitchLowerBound: Double, pitch: Double, pitchUpperBound: Double,
+          rollLowerBound: Double, roll: Double, rollUpperBound: Double, updating: Bool) -> Matcher<CameraAlignment> {
+    return allOf(
+        Matcher("yawLowerBound \(yawLowerBound)") {
+            $0.supportedYawRange.lowerBound == yawLowerBound
+        },
+        Matcher("yaw \(yaw)") {
+            $0.yaw == yaw
+        },
+        Matcher("yawUpperBound \(yawUpperBound)") {
+            $0.supportedYawRange.upperBound == yawUpperBound
+        },
+        Matcher("pitchLowerBound \(pitchLowerBound)") {
+            $0.supportedPitchRange.lowerBound == pitchLowerBound
+        },
+        Matcher("pitch \(pitch)") {
+            $0.pitch == pitch
+        },
+        Matcher("pitchUpperBound \(pitchUpperBound)") {
+            $0.supportedPitchRange.upperBound == pitchUpperBound
+        },
+        Matcher("rollLowerBound \(rollLowerBound)") {
+            $0.supportedRollRange.lowerBound == rollLowerBound
+        },
+        Matcher("roll \(roll)") {
+            $0.roll == roll
+        },
+        Matcher("rollUpperBound \(rollUpperBound)") {
+            $0.supportedRollRange.upperBound == rollUpperBound
+        },
+        Matcher("updating \(updating)") {
+            $0.updating == updating
+        }
+    )
+}

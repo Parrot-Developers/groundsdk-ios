@@ -59,6 +59,9 @@
 		1D2194E21EE6D479005A6883 /* ArsdkCrashmlDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2194E11EE6D479005A6883 /* ArsdkCrashmlDownloader.swift */; };
 		1DA626ED1EF8137E0031AA69 /* CrashReportDownloaderMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA626EC1EF8137E0031AA69 /* CrashReportDownloaderMatcher.swift */; };
 		1DA626EF1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA626EE1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift */; };
+		702D4594230FD46200FEAE56 /* PilotingControlMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D4593230FD46200FEAE56 /* PilotingControlMatcher.swift */; };
+		702D4596230FD4A100FEAE56 /* AnafiPilotingControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D4595230FD4A100FEAE56 /* AnafiPilotingControlTests.swift */; };
+		70E8ECDD230EC10800DE0776 /* AnafiPilotingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8ECDC230EC10800DE0776 /* AnafiPilotingControl.swift */; };
 		70F73FD62136A6B4006E27BB /* ArsdkFlightLogDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F73FD52136A6B4006E27BB /* ArsdkFlightLogDownloader.swift */; };
 		70F73FDA2136A820006E27BB /* FtpFlightLogDownloaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F73FD82136A81F006E27BB /* FtpFlightLogDownloaderDelegate.swift */; };
 		70F73FDB2136A820006E27BB /* HttpFlightLogDownloaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F73FD92136A81F006E27BB /* HttpFlightLogDownloaderDelegate.swift */; };
@@ -353,6 +356,9 @@
 		1D2194E11EE6D479005A6883 /* ArsdkCrashmlDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkCrashmlDownloader.swift; sourceTree = "<group>"; };
 		1DA626EC1EF8137E0031AA69 /* CrashReportDownloaderMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashReportDownloaderMatcher.swift; sourceTree = "<group>"; };
 		1DA626EE1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkCrashmlDownloaderTests.swift; sourceTree = "<group>"; };
+		702D4593230FD46200FEAE56 /* PilotingControlMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotingControlMatcher.swift; sourceTree = "<group>"; };
+		702D4595230FD4A100FEAE56 /* AnafiPilotingControlTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiPilotingControlTests.swift; sourceTree = "<group>"; };
+		70E8ECDC230EC10800DE0776 /* AnafiPilotingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiPilotingControl.swift; sourceTree = "<group>"; };
 		70F73FD52136A6B4006E27BB /* ArsdkFlightLogDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkFlightLogDownloader.swift; sourceTree = "<group>"; };
 		70F73FD82136A81F006E27BB /* FtpFlightLogDownloaderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FtpFlightLogDownloaderDelegate.swift; sourceTree = "<group>"; };
 		70F73FD92136A81F006E27BB /* HttpFlightLogDownloaderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpFlightLogDownloaderDelegate.swift; sourceTree = "<group>"; };
@@ -901,6 +907,7 @@
 		F8034F961D33CD43003A3CFD /* Peripheral */ = {
 			isa = PBXGroup;
 			children = (
+				70E8ECDC230EC10800DE0776 /* AnafiPilotingControl.swift */,
 				02D12B27202899A1002C00BB /* AnafiBeeper.swift */,
 				F8D32CCA1EF12CE800074795 /* AnafiCopterMotors.swift */,
 				021D82232093219500C53EC3 /* AnafiGeofence.swift */,
@@ -988,6 +995,7 @@
 				F88468971DEF253300ACE941 /* SystemVersionMatcher.swift */,
 				7C32FF781F868DDF0099A750 /* CameraMatcher.swift */,
 				7C7406A72050144400D1CD78 /* AntiflickerMatcher.swift */,
+				702D4593230FD46200FEAE56 /* PilotingControlMatcher.swift */,
 				F8D0078A1DDE1B07002D478A /* LiveStreamMatcher.swift */,
 				7C06715A1DBE42D000C90162 /* DiscoveredDroneMatcher.swift */,
 				F8441DAE1D47B8CC0062DC77 /* EnumSettingMatcher.swift */,
@@ -1099,6 +1107,7 @@
 				F8D007881DDE1A41002D478A /* ArsdkStreamTests.swift */,
 				021D8225209367D500C53EC3 /* AnafiGeofenceTests.swift */,
 				7C7406A92050250700D1CD78 /* CameraFeatureAntiflickerTests.swift */,
+				702D4595230FD4A100FEAE56 /* AnafiPilotingControlTests.swift */,
 				7CA52AA51FDFDD1400C118FB /* CameraStorableEmumTests.swift */,
 				7C895B08207798F900DD689C /* CameraFeatureCameraTests.swift */,
 				9B6ACC7521F0CBBF0024B837 /* CameraFeatureCameraRouterTests.swift */,
@@ -1247,7 +1256,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Parrot SA";
 				TargetAttributes = {
 					7CA1C96C1C807AC200FE9ED4 = {
@@ -1264,7 +1273,7 @@
 			};
 			buildConfigurationList = 7CA1C9671C807AC200FE9ED4 /* Build configuration list for PBXProject "ArsdkEngine" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -1448,6 +1457,7 @@
 				F88E246F1FEAB8D400D7AAC7 /* UpdaterController.swift in Sources */,
 				F8BFCDC01FE984B10060D6A0 /* HttpFirmwareUploader.swift in Sources */,
 				9BBD4151222EAF700006CBAF /* PhotoProgressIndicatorController.swift in Sources */,
+				70E8ECDD230EC10800DE0776 /* AnafiPilotingControl.swift in Sources */,
 				02156A3420502F01002F3F7D /* AnafiPoiPilotingItf.swift in Sources */,
 				021D82242093219500C53EC3 /* AnafiGeofence.swift in Sources */,
 				F8BFCDBE1FE95FFE0060D6A0 /* UpdateRestApi.swift in Sources */,
@@ -1509,6 +1519,7 @@
 				7CCFFA9B1E12A5FA0029D35A /* MediaDeleterMatcher.swift in Sources */,
 				02D96EFF2084B23D004A3553 /* TargetTrajectoryMatcher.swift in Sources */,
 				F8C9C4371D18309F00DB1647 /* AnafiAttitudeIndicatorTests.swift in Sources */,
+				702D4594230FD46200FEAE56 /* PilotingControlMatcher.swift in Sources */,
 				021D8226209367D500C53EC3 /* AnafiGeofenceTests.swift in Sources */,
 				F809C23F1E851CEF008B8153 /* UpdaterControllerTests.swift in Sources */,
 				02D12B2C2028A3CD002C00BB /* AnafiBeeperControllerTests.swift in Sources */,
@@ -1543,6 +1554,7 @@
 				0237580D209C92CD0077F63C /* MockFlightDataStorage.swift in Sources */,
 				F88468951DEF23CC00ACE941 /* AnafiSystemInfoTests.swift in Sources */,
 				F8C9C4351D182F8400DB1647 /* AnafiSpeedometerTests.swift in Sources */,
+				702D4596230FD4A100FEAE56 /* AnafiPilotingControlTests.swift in Sources */,
 				0235EDCF207671A6006E7C9C /* MockSystemLocation.swift in Sources */,
 				F86BA98521230489004DFAB2 /* MockInternetConnectivity.swift in Sources */,
 				022C387B20A34B8200B4E319 /* FlightDataDecoderTests.swift in Sources */,
@@ -1734,9 +1746,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1758,7 +1771,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;

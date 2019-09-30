@@ -311,7 +311,7 @@ class GimbalFeatureGimbalTests: ArsdkEngineTestBase {
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.gimbalSetTarget(
             gimbalId: 0, controlMode: .position,
             yawFrameOfReference: .relative, yaw: 1,
-            pitchFrameOfReference: .none, pitch: 0,
+            pitchFrameOfReference: .absolute, pitch: 5,
             rollFrameOfReference: .none, roll: 0))
         mockNonAckLoop(handle: 1, noAckType: .gimbalControl)
 
@@ -328,7 +328,7 @@ class GimbalFeatureGimbalTests: ArsdkEngineTestBase {
         assertThat(gimbal!.currentAttitude[.pitch], presentAnd(`is`(5)))
         assertThat(gimbal!.attitudeBounds[.pitch], presentAnd(`is`(-100..<100)))
         assertThat(gimbal!.stabilizationSettings[.roll], nilValue())
-        assertThat(changeCnt, `is`(5))
+        assertThat(changeCnt, `is`(4))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.gimbalSetTarget(
             gimbalId: 0, controlMode: .position,
@@ -347,7 +347,7 @@ class GimbalFeatureGimbalTests: ArsdkEngineTestBase {
         assertThat(gimbal!.stabilizationSettings[.yaw], presentAnd(allOf(`is`(false), isUpToDate())))
         assertThat(gimbal!.stabilizationSettings[.pitch], presentAnd(allOf(`is`(false), isUpToDate())))
         assertThat(gimbal!.stabilizationSettings[.roll], nilValue())
-        assertThat(changeCnt, `is`(6))
+        assertThat(changeCnt, `is`(5))
     }
 
     func testMaxSpeed() {
@@ -558,6 +558,9 @@ class GimbalFeatureGimbalTests: ArsdkEngineTestBase {
         // Check initial value
         assertThat(gimbal!.supportedAxes, containsInAnyOrder(.yaw, .pitch))
         assertThat(gimbal!.currentAttitude, empty())
+        assertThat(gimbal!.currentAttitude(frameOfReference: .absolute), empty())
+        assertThat(gimbal!.currentAttitude(frameOfReference: .relative), empty())
+
         assertThat(changeCnt, `is`(1))
 
         // mock attitude info
@@ -571,6 +574,17 @@ class GimbalFeatureGimbalTests: ArsdkEngineTestBase {
         assertThat(gimbal!.currentAttitude[.yaw], presentAnd(`is`(10)))
         assertThat(gimbal!.currentAttitude[.pitch], presentAnd(`is`(2)))
         assertThat(gimbal!.currentAttitude[.roll], nilValue())
+
+        let absoluteAttitude = gimbal!.currentAttitude(frameOfReference: .absolute)
+        assertThat(absoluteAttitude[.yaw], presentAnd(`is`(10)))
+        assertThat(absoluteAttitude[.pitch], presentAnd(`is`(20)))
+        assertThat(absoluteAttitude[.roll], nilValue())
+
+        let relativeAttitude = gimbal!.currentAttitude(frameOfReference: .relative)
+        assertThat(relativeAttitude[.yaw], presentAnd(`is`(1)))
+        assertThat(relativeAttitude[.pitch], presentAnd(`is`(2)))
+        assertThat(relativeAttitude[.roll], nilValue())
+
         assertThat(changeCnt, `is`(2))
 
         // if a stabilization change is asked, attitude should automatically match the asked frame of reference
@@ -1344,5 +1358,125 @@ class GimbalFeatureGimbalTests: ArsdkEngineTestBase {
         assertThat(gimbal!.attitudeBounds[.pitch], nilValue())
         assertThat(gimbal!.attitudeBounds[.roll], nilValue())
         assertThat(gimbal!.offsetsCorrectionProcess, nilValue())
+    }
+
+    // Stabilization preset (stabilized or not) for each axes will always be sent on the connection for
+    // supported axes
+    // It is sent even if the user didn't asked for a modification.
+     func testApplyPresetsStabOnConnect() {
+        connect(drone: drone, handle: 1) {
+            self.mockSupportedAxes(.roll, .pitch)
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalMaxSpeedEncoder(
+                    gimbalId: 0,
+                    minBoundYaw: 0, maxBoundYaw: 1, currentYaw: 0,
+                    minBoundPitch: 0, maxBoundPitch: 1, currentPitch: 0,
+                    minBoundRoll: 0, maxBoundRoll: 1, currentRoll: 0))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalAxisLockStateEncoder(
+                    gimbalId: 0, lockedBitField: Bitfield<ArsdkFeatureGimbalAxis>.of(.pitch)))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalRelativeAttitudeBoundsEncoder(
+                    gimbalId: 0, minYaw: 2, maxYaw: 10, minPitch: 3, maxPitch: 10, minRoll: 4, maxRoll: 10))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalAbsoluteAttitudeBoundsEncoder(
+                    gimbalId: 0, minYaw: -100, maxYaw: 100, minPitch: -100, maxPitch: 100, minRoll: -100, maxRoll: 100))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalAttitudeEncoder(
+                    gimbalId: 0,
+                    yawFrameOfReference: .absolute, pitchFrameOfReference: .relative, rollFrameOfReference: .relative,
+                    yawRelative: 1, pitchRelative: 2, rollRelative: 3,
+                    yawAbsolute: 10, pitchAbsolute: 20, rollAbsolute: 30))
+        }
+
+        assertThat(gimbal!.stabilizationSettings[.yaw], nilValue())
+        assertThat(gimbal!.stabilizationSettings[.pitch], presentAnd(allOf(`is`(false), isUpToDate())))
+        assertThat(gimbal!.stabilizationSettings[.roll], presentAnd(allOf(`is`(false), isUpToDate())))
+
+        // disconnect
+        disconnect(drone: drone, handle: 1)
+        assertThat(gimbal!.stabilizationSettings[.yaw], nilValue())
+        assertThat(gimbal!.stabilizationSettings[.pitch], presentAnd(allOf(`is`(false), isUpToDate())))
+        assertThat(gimbal!.stabilizationSettings[.roll], presentAnd(allOf(`is`(false), isUpToDate())))
+
+        gimbal!.stabilizationSettings[.pitch]!.value = true
+        gimbal!.stabilizationSettings[.roll]!.value = true
+        assertThat(gimbal!.stabilizationSettings[.pitch], presentAnd(allOf(`is`(true), isUpToDate())))
+        assertThat(gimbal!.stabilizationSettings[.roll], presentAnd(allOf(`is`(true), isUpToDate())))
+
+        connect(drone: drone, handle: 1) {
+            self.mockSupportedAxes(.roll, .pitch)
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalMaxSpeedEncoder(
+                    gimbalId: 0,
+                    minBoundYaw: 0, maxBoundYaw: 1, currentYaw: 0,
+                    minBoundPitch: 0, maxBoundPitch: 1, currentPitch: 0,
+                    minBoundRoll: 0, maxBoundRoll: 1, currentRoll: 0))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalAxisLockStateEncoder(
+                    gimbalId: 0, lockedBitField: Bitfield<ArsdkFeatureGimbalAxis>.of(.pitch)))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalRelativeAttitudeBoundsEncoder(
+                    gimbalId: 0, minYaw: 2, maxYaw: 10, minPitch: 3, maxPitch: 10, minRoll: 4, maxRoll: 10))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalAbsoluteAttitudeBoundsEncoder(
+                    gimbalId: 0, minYaw: -100, maxYaw: 100, minPitch: -100, maxPitch: 100, minRoll: -100, maxRoll: 100))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalAttitudeEncoder(
+                    gimbalId: 0,
+                    yawFrameOfReference: .absolute, pitchFrameOfReference: .relative, rollFrameOfReference: .relative,
+                    yawRelative: 1, pitchRelative: 2, rollRelative: 3,
+                    yawAbsolute: 10, pitchAbsolute: 20, rollAbsolute: 30))
+        }
+
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.gimbalSetTarget(
+            gimbalId: 0, controlMode: .position,
+            yawFrameOfReference: .none, yaw: 0,
+            pitchFrameOfReference: .absolute, pitch: 20,
+            rollFrameOfReference: .absolute, roll: 30))
+        mockNonAckLoop(handle: 1, noAckType: .gimbalControl)
+
+        assertThat(gimbal!.stabilizationSettings[.pitch], presentAnd(allOf(`is`(true), isUpToDate())))
+        assertThat(gimbal!.stabilizationSettings[.roll], presentAnd(allOf(`is`(true), isUpToDate())))
+
+        // disconnect
+        disconnect(drone: drone, handle: 1)
+        gimbal!.stabilizationSettings[.pitch]!.value = true
+        gimbal!.stabilizationSettings[.roll]!.value = false
+
+        assertThat(gimbal!.stabilizationSettings[.pitch], presentAnd(allOf(`is`(true), isUpToDate())))
+        assertThat(gimbal!.stabilizationSettings[.roll], presentAnd(allOf(`is`(false), isUpToDate())))
+
+        connect(drone: drone, handle: 1) {
+            self.mockSupportedAxes(.roll, .pitch)
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalMaxSpeedEncoder(
+                    gimbalId: 0,
+                    minBoundYaw: 0, maxBoundYaw: 1, currentYaw: 0,
+                    minBoundPitch: 0, maxBoundPitch: 1, currentPitch: 0,
+                    minBoundRoll: 0, maxBoundRoll: 1, currentRoll: 0))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalAxisLockStateEncoder(
+                    gimbalId: 0, lockedBitField: Bitfield<ArsdkFeatureGimbalAxis>.of(.pitch)))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalRelativeAttitudeBoundsEncoder(
+                    gimbalId: 0, minYaw: 2, maxYaw: 10, minPitch: 3, maxPitch: 10, minRoll: 4, maxRoll: 10))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalAbsoluteAttitudeBoundsEncoder(
+                    gimbalId: 0, minYaw: -100, maxYaw: 100, minPitch: -100, maxPitch: 100, minRoll: -100, maxRoll: 100))
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.gimbalAttitudeEncoder(
+                    gimbalId: 0,
+                    yawFrameOfReference: .absolute, pitchFrameOfReference: .absolute, rollFrameOfReference: .absolute,
+                    yawRelative: 1, pitchRelative: 2, rollRelative: 3,
+                    yawAbsolute: 10, pitchAbsolute: 20, rollAbsolute: 30))
+        }
+
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.gimbalSetTarget(
+            gimbalId: 0, controlMode: .position,
+            yawFrameOfReference: .none, yaw: 0,
+            pitchFrameOfReference: .absolute, pitch: 20,
+            rollFrameOfReference: .relative, roll: 4))
+        mockNonAckLoop(handle: 1, noAckType: .gimbalControl)
     }
 }

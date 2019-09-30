@@ -113,6 +113,10 @@ public protocol Camera {
     /// `nil` if zoom is not supported by this camera.
     var zoom: CameraZoom? { get }
 
+    /// Camera alignment.
+    /// `nil` if camera is not the active camera, if device is not connected or if alignment is not supported.
+    var alignment: CameraAlignment? { get }
+
     /// Whether `startRecording` can be called.
     var canStartRecord: Bool { get }
 
@@ -206,6 +210,11 @@ public protocol Camera {
     ///
     /// `nil` if zoom is not supported by this camera.
     var zoom: CameraZoom? { get }
+
+    /// Camera alignment.
+    /// `nil` if camera is not the active camera, if device is not connected or if alignment is not supported.
+    @objc(alignment)
+    var gsAlignment: GSCameraAlignment? { get }
 
     /// Recording function state.
     var recordingState: CameraRecordingState { get }

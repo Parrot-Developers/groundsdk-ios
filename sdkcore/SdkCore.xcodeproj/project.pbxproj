@@ -23,6 +23,8 @@
 		68ED066C222812C9007DAECE /* SdkCore+MediaInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 68ED066B222812C9007DAECE /* SdkCore+MediaInfo.m */; };
 		70569A0F21F8B4AC000FE1C2 /* PompLoopUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 70569A0E21F8B4AC000FE1C2 /* PompLoopUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70569A1121F8B4B7000FE1C2 /* PompLoopUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 70569A1021F8B4B7000FE1C2 /* PompLoopUtil.m */; };
+		706070BA22CA075600006C80 /* GLError.h in Headers */ = {isa = PBXBuildFile; fileRef = 706070B822CA075500006C80 /* GLError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		706070BB22CA075600006C80 /* GLError.m in Sources */ = {isa = PBXBuildFile; fileRef = 706070B922CA075500006C80 /* GLError.m */; };
 		710CAB8321F8B93900C6199B /* SdkCore+Stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 710CAB8221F8B93900C6199B /* SdkCore+Stream.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		710CAB8521F8B94F00C6199B /* SdkCore+Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 710CAB8421F8B94F00C6199B /* SdkCore+Stream.m */; };
 		710CAB8721F8B96200C6199B /* SdkCore+Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 710CAB8621F8B96200C6199B /* SdkCore+Renderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -144,6 +146,8 @@
 		68ED066B222812C9007DAECE /* SdkCore+MediaInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SdkCore+MediaInfo.m"; sourceTree = "<group>"; };
 		70569A0E21F8B4AC000FE1C2 /* PompLoopUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PompLoopUtil.h; sourceTree = "<group>"; };
 		70569A1021F8B4B7000FE1C2 /* PompLoopUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PompLoopUtil.m; sourceTree = "<group>"; };
+		706070B822CA075500006C80 /* GLError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLError.h; sourceTree = "<group>"; };
+		706070B922CA075500006C80 /* GLError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLError.m; sourceTree = "<group>"; };
 		710CAB8221F8B93900C6199B /* SdkCore+Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SdkCore+Stream.h"; sourceTree = "<group>"; };
 		710CAB8421F8B94F00C6199B /* SdkCore+Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SdkCore+Stream.m"; sourceTree = "<group>"; };
 		710CAB8621F8B96200C6199B /* SdkCore+Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SdkCore+Renderer.h"; sourceTree = "<group>"; };
@@ -326,6 +330,8 @@
 			children = (
 				7C634F711DE750D10006F23F /* backends */,
 				7C49BB661C8840A300B1F1E1 /* Arsdk.h */,
+				706070B822CA075500006C80 /* GLError.h */,
+				706070B922CA075500006C80 /* GLError.m */,
 				7C7C27811E5C54960084B4BD /* ArsdkBackendType.h */,
 				F8B5369B1CC147E800277331 /* ArsdkCommand.h */,
 				F8B5369C1CC147E800277331 /* ArsdkCommand.m */,
@@ -514,6 +520,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				68ED066A22280C05007DAECE /* SdkCore+MediaInfo.h in Headers */,
+				706070BA22CA075600006C80 /* GLError.h in Headers */,
 				712A9F4B22034F0600BD4DFC /* SdkCore+FileSource.h in Headers */,
 				710CAB8321F8B93900C6199B /* SdkCore+Stream.h in Headers */,
 				717246B421FA0D7300AB82E5 /* SdkCore+Source.h in Headers */,
@@ -630,7 +637,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Parrot SA";
 				TargetAttributes = {
 					7C68F9641C86F8DD000722CA = {
@@ -803,6 +810,7 @@
 				F8B536891CC1293800277331 /* ArsdkFeatures.m in Sources */,
 				F83BFC9D1CBD331300513169 /* ArsdkNetDiscoveryBonjour.m in Sources */,
 				02143390202B156A0054DE99 /* NoAckCommandLoop.m in Sources */,
+				706070BB22CA075600006C80 /* GLError.m in Sources */,
 				7C7ACB421D782B7F00A04F30 /* ArsdkMuxIpBackendController.m in Sources */,
 				68ED066C222812C9007DAECE /* SdkCore+MediaInfo.m in Sources */,
 				F83BFC941CBCFB4D00513169 /* ArsdkNetDiscovery.m in Sources */,
@@ -962,9 +970,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -986,7 +995,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;

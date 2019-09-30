@@ -133,7 +133,6 @@ class GimbalFeatureGimbal: DeviceComponentController {
                             frameOfReferences[$0] = ArsdkFeatureGimbalFrameOfReference.none
                         }
                     }
-
                     return ArsdkFeatureGimbal.setTargetEncoder(
                         gimbalId: GimbalFeatureGimbal.gimbalId,
                         controlMode: controlMode,
@@ -257,7 +256,7 @@ class GimbalFeatureGimbal: DeviceComponentController {
         }
 
         /// All values to allow enumerating settings
-        static let allCases: [Setting] = [
+        static let allCases: Set<Setting> = [
             .maxSpeeds([:]),
             .stabilizedAxes([])
         ]
@@ -272,11 +271,11 @@ class GimbalFeatureGimbal: DeviceComponentController {
     }
 
     /// Stored capabilities for settings
-    enum Capabilities {
+    enum Capabilities: Hashable {
         case supportedAxes(Set<GimbalAxis>)
 
         /// All values to allow enumerating capabilities
-        static let allCases: [Capabilities] = [
+        static let allCases: Set<Capabilities> = [
             .supportedAxes([])
         ]
 
@@ -285,6 +284,10 @@ class GimbalFeatureGimbal: DeviceComponentController {
             switch self {
             case .supportedAxes: return .supportedAxesKey
             }
+        }
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(key)
         }
     }
 
@@ -344,7 +347,8 @@ class GimbalFeatureGimbal: DeviceComponentController {
             .update(currentErrors: [])
             .cancelSettingsRollback()
         GimbalAxis.allCases.forEach {
-            gimbal.update(attitude: nil, onAxis: $0)
+            gimbal.update(absoluteAttitude: nil, onAxis: $0)
+                .update(relativeAttitude: nil, onAxis: $0)
                 .update(axisBounds: nil, onAxis: $0)
         }
         pendingStabilizationChange = []
@@ -503,27 +507,24 @@ class GimbalFeatureGimbal: DeviceComponentController {
                 if let storedStabilizedAxes: StorableArray<GimbalAxis> = presetStore?.read(key: setting.key) {
                     gimbal.supportedAxes.forEach { axis in
                         let storedStab = storedStabilizedAxes.storableValue.contains(axis)
-                        if stabilizedAxes.contains(axis) != storedStab {
-
-                            let targetAttitude: Double
-                            if let bounds = storedStab ? absoluteAttitudeBounds[axis] : relativeAttitudeBounds[axis] {
-                                if let currentAttitude = storedStab ? absoluteAttitude[axis] : relativeAttitude[axis] {
-                                    // if range and current attitude is known, the target attitude is the current
-                                    // attitude clamped into the range
-                                    targetAttitude = bounds.clamp(currentAttitude)
-                                } else {
-                                    // if no current attitude, take the mid-range
-                                    targetAttitude = (bounds.upperBound + bounds.lowerBound) / 2.0
-                                }
+                        let targetAttitude: Double
+                        if let bounds = storedStab ? absoluteAttitudeBounds[axis] : relativeAttitudeBounds[axis] {
+                            if let currentAttitude = storedStab ? absoluteAttitude[axis] : relativeAttitude[axis] {
+                                // if range and current attitude is known, the target attitude is the current
+                                // attitude clamped into the range
+                                targetAttitude = bounds.clamp(currentAttitude)
                             } else {
-                                targetAttitude = 0
+                                // if no current attitude, take the mid-range
+                                targetAttitude = (bounds.upperBound + bounds.lowerBound) / 2.0
                             }
-
-                            controlEncoder.set(
-                                stabilization: storedStab,
-                                targetAttitude: targetAttitude,
-                                onAxis: axis)
+                        } else {
+                            targetAttitude = 0
                         }
+
+                        controlEncoder.set(
+                            stabilization: storedStab,
+                            targetAttitude: targetAttitude,
+                            onAxis: axis)
                         gimbal.update(stabilization: storedStab, onAxis: axis)
                     }
                 } else {
@@ -578,7 +579,8 @@ class GimbalFeatureGimbal: DeviceComponentController {
             gimbal.update(lockedAxes: axes)
             GimbalAxis.allCases.forEach { axis in
                 gimbal.update(axisBounds: nil, onAxis: axis)
-                gimbal.update(attitude: nil, onAxis: axis)
+                gimbal.update(absoluteAttitude: nil, onAxis: axis)
+                gimbal.update(relativeAttitude: nil, onAxis: axis)
             }
         }
         deviceStore?.commit()
@@ -607,9 +609,8 @@ extension GimbalFeatureGimbal: GimbalBackend {
         expectedStabilization[axis] = stabilization
         pendingStabilizationChange.insert(axis)
 
-        // Update the attitude to take the correct frame of reference and bounds according to the new stab
-        gimbal.update(attitude: stabilization ? absoluteAttitude[axis] : relativeAttitude[axis], onAxis: axis)
-            .update(axisBounds: stabilization ? absoluteAttitudeBounds[axis] : relativeAttitudeBounds[axis],
+        // Update the attitude bounds to take the correct frame of reference according to the new stab
+        gimbal.update(axisBounds: stabilization ? absoluteAttitudeBounds[axis] : relativeAttitudeBounds[axis],
                     onAxis: axis)
 
         if connected {
@@ -852,13 +853,16 @@ extension GimbalFeatureGimbal: ArsdkFeatureGimbalCallback {
                         settingHasChanged = true
                     }
 
-                    // update the current attitude and bounds according to the frame reference that has been asked
+                    // update the attitude bounds according to the frame reference that has been asked
                     gimbal.update(
                         axisBounds: expectedStabilization[axis]! ?
                             absoluteAttitudeBounds[axis] : relativeAttitudeBounds[axis],
                         onAxis: axis)
                         .update(
-                            attitude: expectedStabilization[axis]! ? absoluteAttitude[axis]! : relativeAttitude[axis]!,
+                            absoluteAttitude: absoluteAttitude[axis]!,
+                            onAxis: axis)
+                        .update(
+                            relativeAttitude: relativeAttitude[axis]!,
                             onAxis: axis)
                 }
             }

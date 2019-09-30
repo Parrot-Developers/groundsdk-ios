@@ -356,6 +356,17 @@ class CameraFeatureCameraRouter: DeviceComponentController {
         override func control(mode: CameraZoomControlMode, target: Double) {
             zoomControlEncoder.control(mode: mode, target: target)
         }
+
+        override func sendAlignementCommand(yaw: Double, pitch: Double, roll: Double) -> Bool {
+            router.sendCommand(ArsdkFeatureCamera.setAlignmentOffsetsEncoder(camId: cameraId, yaw: Float(yaw),
+                                                                             pitch: Float(pitch), roll: Float(roll)))
+            return true
+        }
+
+        override func sendResetAlignmentCommand() -> Bool {
+            router.sendCommand(ArsdkFeatureCamera.resetAlignmentOffsetsEncoder(camId: cameraId))
+            return true
+        }
     }
 
     /// Drone is about to be forgotten
@@ -987,6 +998,21 @@ extension CameraFeatureCameraRouter: ArsdkFeatureCameraCallback {
         }
     }
 
+    func onAlignmentOffsets(camId: UInt, minBoundYaw: Float, maxBoundYaw: Float, currentYaw: Float,
+                            minBoundPitch: Float, maxBoundPitch: Float, currentPitch: Float,
+                            minBoundRoll: Float, maxBoundRoll: Float, currentRoll: Float) {
+        if let cameraController = self.cameraControllers[camId] {
+            cameraController.camera.update(
+                yawLowerBound: Double(minBoundYaw), yaw: Double(currentYaw), yawUpperBound: Double(maxBoundYaw),
+                pitchLowerBound: Double(minBoundPitch), pitch: Double(currentPitch),
+                pitchUpperBound: Double(maxBoundPitch),
+                rollLowerBound: Double(minBoundRoll), roll: Double(currentRoll), rollUpperBound: Double(maxBoundRoll))
+            .notifyUpdated()
+            self.cameraControllers[camId] = cameraController
+        } else {
+            ULog.w(.cameraTag, "Alignment offsets received for an unknown camera id=\(camId)")
+        }
+    }
 }
 
 // MARK: - Extensions

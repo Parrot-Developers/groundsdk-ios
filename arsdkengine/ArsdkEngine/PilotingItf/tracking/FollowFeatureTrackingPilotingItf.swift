@@ -269,6 +269,12 @@ extension FollowFeatureTrackingPilotingItf: ArsdkFeatureFollowMeCallback {
         updateAvailabilityIssues(withDroneIssues: requirementsStorage.value)
         pilotingItf.notifyUpdated()
     }
+
+    // onState() event implementation. This function will be overrided in derived classes.
+    func onState(
+        mode: ArsdkFeatureFollowMeMode, behavior: ArsdkFeatureFollowMeBehavior,
+        animation: ArsdkFeatureFollowMeAnimation, animationAvailableBitField: UInt) {
+    }
 }
 
 // MARK: - ArsdkFeatureArdrone3PilotingstateCallback

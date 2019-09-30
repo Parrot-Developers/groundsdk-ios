@@ -108,4 +108,10 @@ extension ULogTag {
 
     /// Logging tag of ground sdk video stream engine (internal)
     static let videoStreamEngineTag = ULogTag(name: "gsdk.core.engine.stream")
+
+    /// tag myparrot debug
+    static let myparrot = ULogTag(name: "MYPARROT-gsdkv1-")
+
+    /// tag Hmd
+    static let hmdTag = ULogTag(name: "gsdk.hmd")
 }

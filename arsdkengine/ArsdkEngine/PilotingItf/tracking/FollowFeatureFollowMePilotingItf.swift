@@ -113,11 +113,14 @@ class FollowFeatureFollowMePilotingItf: FollowFeatureTrackingPilotingItf, Follow
     }
 }
 
+// MARK: - Extensions
+
 // MARK: - Follow Callbacks
-/// TargetTracker - FollowMe Feature decode callback implementation
+/// TargetTracker - FollowMe Feature decode callback implementation. This extension overrides some functions of the
+/// ArsdkFeatureFollowMeCallback extension implemented in the super class.
 extension FollowFeatureFollowMePilotingItf {
 
-    func onState(
+    override func onState(
         mode: ArsdkFeatureFollowMeMode, behavior: ArsdkFeatureFollowMeBehavior,
         animation: ArsdkFeatureFollowMeAnimation, animationAvailableBitField: UInt) {
 
@@ -152,8 +155,6 @@ extension FollowFeatureFollowMePilotingItf {
         followMePilotingItf.notifyUpdated()
     }
 }
-
-// MARK: - Extensions
 
 /// Extension that add conversion from/to arsdk enum
 extension FollowMode: ArsdkMappableEnum {

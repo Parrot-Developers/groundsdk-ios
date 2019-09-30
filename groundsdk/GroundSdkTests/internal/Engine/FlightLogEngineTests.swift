@@ -331,8 +331,6 @@ class FlightLogEngineTests: XCTestCase {
         task.mock(error: NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled))
         assertThat(changeCnt, `is`(3))
 
-        //print("isUploading(): \(String(describing: flightLogReporter?.isUploading))")
-
         assertThat(flightLogReporter, presentAnd(allOf(isNotUploading(), has(pendingCount: 2))))
         assertThat(httpSession.tasks, empty())
         assertThat(engine.pendingFlightLogUrls, contains(flightLogA, flightLogB))

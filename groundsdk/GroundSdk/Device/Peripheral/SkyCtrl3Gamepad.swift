@@ -230,6 +230,13 @@ public protocol SkyCtrl3Gamepad: Peripheral {
     /// - Parameter droneModel: drone model whose reversed axes must be retrieved
     /// - Returns: the set of currently reversed axes, or `nil` if the provided drone model is not supported
     func reversedAxes(forDroneModel droneModel: Drone.Model) -> Set<SkyCtrl3Axis>?
+
+    /// Setting for volatile mapping mode
+    /// All mapping entries registered with volatile mapping enabled will be removed when it is disabled or when
+    /// remote control is disconnected. Disabling volatile mapping also cancels any ongoing action.
+    /// Setting is nil if volatile mapping is not supported.
+    var volatileMappingSetting: BoolSetting? { get }
+
 }
 
 /// :nodoc:
@@ -460,4 +467,10 @@ public protocol GSSkyCtrl3Gamepad: Peripheral {
     /// - Returns: the set of currently reversed axes, or `nil` if the provided drone model is not supported
     @objc(reversedAxesForDroneModel:)
     func gsReversedAxes(forDroneModel droneModel: Drone.Model) -> GSSkyCtrl3AxisSet?
+
+    /// Setting for volatile mapping mode
+    /// All mapping entries registered with volatile mapping enabled will be removed when it is disabled or when
+    /// remote control is disconnected. Disabling volatile mapping also cancels any ongoing action.
+    /// Setting is nil if volatile mapping is not supported.
+    var volatileMappingSetting: BoolSetting? { get }
 }

@@ -91,12 +91,51 @@
 		02FF1F472018903F0034348E /* UserLocationCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FF1F462018903F0034348E /* UserLocationCoreTests.swift */; };
 		1DA626F31EF97B4B0031AA69 /* CrashReportDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA626F21EF97B4B0031AA69 /* CrashReportDownloaderTests.swift */; };
 		1DA626F51EF981F80031AA69 /* CrashReportDownloaderMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA626F41EF981F80031AA69 /* CrashReportDownloaderMatcher.swift */; };
+		6805CC4122C60C3600D3DB64 /* CameraAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6805CC4022C60C3500D3DB64 /* CameraAlignment.swift */; };
+		6805CC4322C616A700D3DB64 /* CameraAlignmentCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6805CC4222C616A700D3DB64 /* CameraAlignmentCore.swift */; };
 		684DCB152228312E001DB681 /* MediaRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684DCB142228312E001DB681 /* MediaRegistry.swift */; };
 		684DCB1722292EBD001DB681 /* MediaRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684DCB1622292EBD001DB681 /* MediaRegistryTests.swift */; };
 		68ED06662227E23C007DAECE /* YuvSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68ED06652227E23C007DAECE /* YuvSink.swift */; };
 		68ED06682227EDC7007DAECE /* YuvSinkCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68ED06672227EDC7007DAECE /* YuvSinkCore.swift */; };
 		7029530D21393FB20051827B /* FlightLogStorageCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7029530C21393FB20051827B /* FlightLogStorageCore.swift */; };
 		7029530F2139447D0051827B /* FlightLogEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7029530E2139447D0051827B /* FlightLogEngine.swift */; };
+		702D4590230FCA8700FEAE56 /* PilotingControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D458F230FCA8700FEAE56 /* PilotingControlTests.swift */; };
+		702D4592230FD0F800FEAE56 /* PilotingControlMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D4591230FD0F800FEAE56 /* PilotingControlMatcher.swift */; };
+		7037D19522C63EF7002CB93A /* HmdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7037D19422C63EF7002CB93A /* HmdViewController.swift */; };
+		703B3C4F22CB676100EE440B /* OffSCreenStreamRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703B3C4E22CB676100EE440B /* OffSCreenStreamRender.swift */; };
+		7060707122C9FA7E00006C80 /* streamShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 7060706B22C9FA7D00006C80 /* streamShader.fsh */; };
+		7060707222C9FA7E00006C80 /* distortionShader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 7060706C22C9FA7D00006C80 /* distortionShader.vsh */; };
+		7060707322C9FA7E00006C80 /* textureShader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 7060706D22C9FA7D00006C80 /* textureShader.vsh */; };
+		7060707422C9FA7E00006C80 /* textureShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 7060706E22C9FA7E00006C80 /* textureShader.fsh */; };
+		7060707522C9FA7E00006C80 /* distortionShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 7060706F22C9FA7E00006C80 /* distortionShader.fsh */; };
+		7060707622C9FA7E00006C80 /* streamShader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 7060707022C9FA7E00006C80 /* streamShader.vsh */; };
+		7060708622C9FB8E00006C80 /* cockpitg1_tex_coords_red.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060707A22C9FB8D00006C80 /* cockpitg1_tex_coords_red.txt */; };
+		7060708722C9FB8E00006C80 /* cockpitg2_tex_coords_blue.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060707B22C9FB8D00006C80 /* cockpitg2_tex_coords_blue.txt */; };
+		7060708822C9FB8E00006C80 /* cockpitg2_tex_coords_green.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060707C22C9FB8D00006C80 /* cockpitg2_tex_coords_green.txt */; };
+		7060708922C9FB8E00006C80 /* cockpitg2_colors.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060707D22C9FB8D00006C80 /* cockpitg2_colors.txt */; };
+		7060708A22C9FB8E00006C80 /* cockpitg1_positions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060707E22C9FB8D00006C80 /* cockpitg1_positions.txt */; };
+		7060708B22C9FB8E00006C80 /* cockpitg1_tex_coords_green.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060707F22C9FB8D00006C80 /* cockpitg1_tex_coords_green.txt */; };
+		7060708C22C9FB8E00006C80 /* cockpitg2_tex_coords_red.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060708022C9FB8D00006C80 /* cockpitg2_tex_coords_red.txt */; };
+		7060708D22C9FB8E00006C80 /* cockpitg2_indices.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060708122C9FB8E00006C80 /* cockpitg2_indices.txt */; };
+		7060708E22C9FB8E00006C80 /* cockpitg1_colors.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060708222C9FB8E00006C80 /* cockpitg1_colors.txt */; };
+		7060708F22C9FB8E00006C80 /* cockpitg1_indices.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060708322C9FB8E00006C80 /* cockpitg1_indices.txt */; };
+		7060709022C9FB8E00006C80 /* cockpitg1_tex_coords_blue.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060708422C9FB8E00006C80 /* cockpitg1_tex_coords_blue.txt */; };
+		7060709122C9FB8E00006C80 /* cockpitg2_positions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060708522C9FB8E00006C80 /* cockpitg2_positions.txt */; };
+		7060709622C9FBBB00006C80 /* UIScreenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7060709222C9FBBA00006C80 /* UIScreenExtension.swift */; };
+		7060709722C9FBBB00006C80 /* GGLDistortionMeshLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7060709322C9FBBA00006C80 /* GGLDistortionMeshLoader.swift */; };
+		7060709822C9FBBB00006C80 /* Cockpit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7060709422C9FBBA00006C80 /* Cockpit.swift */; };
+		7060709922C9FBBB00006C80 /* GGLDistortionMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7060709522C9FBBB00006C80 /* GGLDistortionMesh.swift */; };
+		7060709E22C9FD9900006C80 /* GGLUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7060709D22C9FD9900006C80 /* GGLUtils.swift */; };
+		706070A022C9FDF300006C80 /* GGLDrawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7060709F22C9FDF300006C80 /* GGLDrawable.swift */; };
+		706070A222C9FE1F00006C80 /* GGLVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706070A122C9FE1F00006C80 /* GGLVertex.swift */; };
+		706070A722C9FE5800006C80 /* GGLFboQuad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706070A322C9FE5800006C80 /* GGLFboQuad.swift */; };
+		706070A822C9FE5800006C80 /* GGLFbo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706070A422C9FE5800006C80 /* GGLFbo.swift */; };
+		706070A922C9FE5800006C80 /* GGLTexturedQuad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706070A522C9FE5800006C80 /* GGLTexturedQuad.swift */; };
+		706070AA22C9FE5800006C80 /* GGLCameraQuad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706070A622C9FE5800006C80 /* GGLCameraQuad.swift */; };
+		706070AC22C9FE6500006C80 /* GGLMultiLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706070AB22C9FE6500006C80 /* GGLMultiLayer.swift */; };
+		706070AE22C9FEB500006C80 /* GGLErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706070AD22C9FEB500006C80 /* GGLErrors.swift */; };
+		706070B022C9FF3100006C80 /* GGLShaderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706070AF22C9FF3100006C80 /* GGLShaderLoader.swift */; };
+		706070BD22CA162900006C80 /* GGLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706070BC22CA162900006C80 /* GGLView.swift */; };
 		70807CE2217E16C300A87464 /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70807CE1217E16C300A87464 /* FileManagerExtension.swift */; };
 		708D7D62213D42D8009DBD12 /* FlightLogReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7D61213D42D8009DBD12 /* FlightLogReporter.swift */; };
 		708D7D64213D42FC009DBD12 /* FlightLogReporterCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7D63213D42FC009DBD12 /* FlightLogReporterCore.swift */; };
@@ -108,7 +147,11 @@
 		708D7D74213ED260009DBD12 /* FlightLogDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7D73213ED260009DBD12 /* FlightLogDownloaderTests.swift */; };
 		708D7D76213ED378009DBD12 /* FlightLogReporterMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7D75213ED378009DBD12 /* FlightLogReporterMatcher.swift */; };
 		708D7D78213ED39F009DBD12 /* FlightLogDownloaderMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7D77213ED39F009DBD12 /* FlightLogDownloaderMatcher.swift */; };
+		70C2C98A230E8FF000159B4B /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B56C2B221F1DA510002EC1C /* UIDevice.swift */; };
+		70E8ECD9230E997300DE0776 /* PilotingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8ECD8230E997300DE0776 /* PilotingControl.swift */; };
+		70E8ECDB230EA10C00DE0776 /* PilotingControlCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8ECDA230EA10B00DE0776 /* PilotingControlCore.swift */; };
 		70EE171D2268A863001D8424 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EE171C2268A863001D8424 /* StringExtension.swift */; };
+		70FF52AB22D3929C00DEB90F /* HmdSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FF52AA22D3929C00DEB90F /* HmdSprite.swift */; };
 		712A9F452203493200BD4DFC /* FileReplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712A9F442203493200BD4DFC /* FileReplay.swift */; };
 		712A9F47220349ED00BD4DFC /* FileReplayRefCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712A9F46220349ED00BD4DFC /* FileReplayRefCore.swift */; };
 		712A9F4922034A6700BD4DFC /* FileReplayCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712A9F4822034A6700BD4DFC /* FileReplayCore.swift */; };
@@ -224,7 +267,6 @@
 		9B40FACC215E2A9300CF6690 /* PreciseHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B40FACB215E2A9300CF6690 /* PreciseHome.swift */; };
 		9B40FAD921626BD600CF6690 /* PreciseHomeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B40FAD821626BD600CF6690 /* PreciseHomeTests.swift */; };
 		9B40FADB216270EF00CF6690 /* PreciseHomeMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B40FADA216270EF00CF6690 /* PreciseHomeMatcher.swift */; };
-		9B56C2B321F1DA510002EC1C /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B56C2B221F1DA510002EC1C /* UIDevice.swift */; };
 		9B6490AA213D7960005EBDE7 /* EphemerisEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6490A9213D7960005EBDE7 /* EphemerisEngine.swift */; };
 		9B6490B8213EBB2C005EBDE7 /* EphemerisUtilityCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6490B7213EBB2C005EBDE7 /* EphemerisUtilityCore.swift */; };
 		9B6490BB213EC251005EBDE7 /* EphemerisDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6490BA213EC251005EBDE7 /* EphemerisDownloader.swift */; };
@@ -645,12 +687,51 @@
 		02FF1F462018903F0034348E /* UserLocationCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationCoreTests.swift; sourceTree = "<group>"; };
 		1DA626F21EF97B4B0031AA69 /* CrashReportDownloaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashReportDownloaderTests.swift; sourceTree = "<group>"; };
 		1DA626F41EF981F80031AA69 /* CrashReportDownloaderMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashReportDownloaderMatcher.swift; sourceTree = "<group>"; };
+		6805CC4022C60C3500D3DB64 /* CameraAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraAlignment.swift; sourceTree = "<group>"; };
+		6805CC4222C616A700D3DB64 /* CameraAlignmentCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraAlignmentCore.swift; sourceTree = "<group>"; };
 		684DCB142228312E001DB681 /* MediaRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaRegistry.swift; sourceTree = "<group>"; };
 		684DCB1622292EBD001DB681 /* MediaRegistryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaRegistryTests.swift; sourceTree = "<group>"; };
 		68ED06652227E23C007DAECE /* YuvSink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YuvSink.swift; sourceTree = "<group>"; };
 		68ED06672227EDC7007DAECE /* YuvSinkCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YuvSinkCore.swift; sourceTree = "<group>"; };
 		7029530C21393FB20051827B /* FlightLogStorageCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogStorageCore.swift; sourceTree = "<group>"; };
 		7029530E2139447D0051827B /* FlightLogEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogEngine.swift; sourceTree = "<group>"; };
+		702D458F230FCA8700FEAE56 /* PilotingControlTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotingControlTests.swift; sourceTree = "<group>"; };
+		702D4591230FD0F800FEAE56 /* PilotingControlMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotingControlMatcher.swift; sourceTree = "<group>"; };
+		7037D19422C63EF7002CB93A /* HmdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HmdViewController.swift; sourceTree = "<group>"; };
+		703B3C4E22CB676100EE440B /* OffSCreenStreamRender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffSCreenStreamRender.swift; sourceTree = "<group>"; };
+		7060706B22C9FA7D00006C80 /* streamShader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = streamShader.fsh; sourceTree = "<group>"; };
+		7060706C22C9FA7D00006C80 /* distortionShader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = distortionShader.vsh; sourceTree = "<group>"; };
+		7060706D22C9FA7D00006C80 /* textureShader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = textureShader.vsh; sourceTree = "<group>"; };
+		7060706E22C9FA7E00006C80 /* textureShader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = textureShader.fsh; sourceTree = "<group>"; };
+		7060706F22C9FA7E00006C80 /* distortionShader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = distortionShader.fsh; sourceTree = "<group>"; };
+		7060707022C9FA7E00006C80 /* streamShader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = streamShader.vsh; sourceTree = "<group>"; };
+		7060707A22C9FB8D00006C80 /* cockpitg1_tex_coords_red.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg1_tex_coords_red.txt; sourceTree = "<group>"; };
+		7060707B22C9FB8D00006C80 /* cockpitg2_tex_coords_blue.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg2_tex_coords_blue.txt; sourceTree = "<group>"; };
+		7060707C22C9FB8D00006C80 /* cockpitg2_tex_coords_green.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg2_tex_coords_green.txt; sourceTree = "<group>"; };
+		7060707D22C9FB8D00006C80 /* cockpitg2_colors.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg2_colors.txt; sourceTree = "<group>"; };
+		7060707E22C9FB8D00006C80 /* cockpitg1_positions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg1_positions.txt; sourceTree = "<group>"; };
+		7060707F22C9FB8D00006C80 /* cockpitg1_tex_coords_green.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg1_tex_coords_green.txt; sourceTree = "<group>"; };
+		7060708022C9FB8D00006C80 /* cockpitg2_tex_coords_red.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg2_tex_coords_red.txt; sourceTree = "<group>"; };
+		7060708122C9FB8E00006C80 /* cockpitg2_indices.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg2_indices.txt; sourceTree = "<group>"; };
+		7060708222C9FB8E00006C80 /* cockpitg1_colors.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg1_colors.txt; sourceTree = "<group>"; };
+		7060708322C9FB8E00006C80 /* cockpitg1_indices.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg1_indices.txt; sourceTree = "<group>"; };
+		7060708422C9FB8E00006C80 /* cockpitg1_tex_coords_blue.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg1_tex_coords_blue.txt; sourceTree = "<group>"; };
+		7060708522C9FB8E00006C80 /* cockpitg2_positions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg2_positions.txt; sourceTree = "<group>"; };
+		7060709222C9FBBA00006C80 /* UIScreenExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScreenExtension.swift; sourceTree = "<group>"; };
+		7060709322C9FBBA00006C80 /* GGLDistortionMeshLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLDistortionMeshLoader.swift; sourceTree = "<group>"; };
+		7060709422C9FBBA00006C80 /* Cockpit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cockpit.swift; sourceTree = "<group>"; };
+		7060709522C9FBBB00006C80 /* GGLDistortionMesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLDistortionMesh.swift; sourceTree = "<group>"; };
+		7060709D22C9FD9900006C80 /* GGLUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLUtils.swift; sourceTree = "<group>"; };
+		7060709F22C9FDF300006C80 /* GGLDrawable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLDrawable.swift; sourceTree = "<group>"; };
+		706070A122C9FE1F00006C80 /* GGLVertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLVertex.swift; sourceTree = "<group>"; };
+		706070A322C9FE5800006C80 /* GGLFboQuad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLFboQuad.swift; sourceTree = "<group>"; };
+		706070A422C9FE5800006C80 /* GGLFbo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLFbo.swift; sourceTree = "<group>"; };
+		706070A522C9FE5800006C80 /* GGLTexturedQuad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLTexturedQuad.swift; sourceTree = "<group>"; };
+		706070A622C9FE5800006C80 /* GGLCameraQuad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLCameraQuad.swift; sourceTree = "<group>"; };
+		706070AB22C9FE6500006C80 /* GGLMultiLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLMultiLayer.swift; sourceTree = "<group>"; };
+		706070AD22C9FEB500006C80 /* GGLErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLErrors.swift; sourceTree = "<group>"; };
+		706070AF22C9FF3100006C80 /* GGLShaderLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLShaderLoader.swift; sourceTree = "<group>"; };
+		706070BC22CA162900006C80 /* GGLView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLView.swift; sourceTree = "<group>"; };
 		70807CE1217E16C300A87464 /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
 		708D7D61213D42D8009DBD12 /* FlightLogReporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogReporter.swift; sourceTree = "<group>"; };
 		708D7D63213D42FC009DBD12 /* FlightLogReporterCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogReporterCore.swift; sourceTree = "<group>"; };
@@ -662,7 +743,10 @@
 		708D7D73213ED260009DBD12 /* FlightLogDownloaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogDownloaderTests.swift; sourceTree = "<group>"; };
 		708D7D75213ED378009DBD12 /* FlightLogReporterMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogReporterMatcher.swift; sourceTree = "<group>"; };
 		708D7D77213ED39F009DBD12 /* FlightLogDownloaderMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogDownloaderMatcher.swift; sourceTree = "<group>"; };
+		70E8ECD8230E997300DE0776 /* PilotingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotingControl.swift; sourceTree = "<group>"; };
+		70E8ECDA230EA10B00DE0776 /* PilotingControlCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotingControlCore.swift; sourceTree = "<group>"; };
 		70EE171C2268A863001D8424 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		70FF52AA22D3929C00DEB90F /* HmdSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HmdSprite.swift; sourceTree = "<group>"; };
 		712A9F442203493200BD4DFC /* FileReplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileReplay.swift; sourceTree = "<group>"; };
 		712A9F46220349ED00BD4DFC /* FileReplayRefCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileReplayRefCore.swift; sourceTree = "<group>"; };
 		712A9F4822034A6700BD4DFC /* FileReplayCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileReplayCore.swift; sourceTree = "<group>"; };
@@ -1209,6 +1293,7 @@
 				716788C322005F600052406E /* Replay.swift */,
 				7183DB2C21A312DA005FCF42 /* Stream.swift */,
 				71D766102195CE0D00517136 /* StreamView.swift */,
+				703B3C4E22CB676100EE440B /* OffSCreenStreamRender.swift */,
 				71A85BAD21AD53A70094E8F2 /* TextureLoader.swift */,
 				68ED06652227E23C007DAECE /* YuvSink.swift */,
 			);
@@ -1222,6 +1307,80 @@
 				708D7D66213D44DC009DBD12 /* FlightLogUploader.swift */,
 			);
 			path = FlightLog;
+			sourceTree = "<group>";
+		};
+		7037D19322C63DC3002CB93A /* Hmd */ = {
+			isa = PBXGroup;
+			children = (
+				7037D19422C63EF7002CB93A /* HmdViewController.swift */,
+				70FF52AA22D3929C00DEB90F /* HmdSprite.swift */,
+				7037D19622C63F8D002CB93A /* internal */,
+			);
+			path = Hmd;
+			sourceTree = "<group>";
+		};
+		7037D19622C63F8D002CB93A /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				7060707922C9FB6D00006C80 /* Ressources */,
+				7060706A22C9FA5E00006C80 /* Shaders */,
+				7060709A22C9FD5D00006C80 /* GroundGL */,
+				7060709422C9FBBA00006C80 /* Cockpit.swift */,
+				7060709322C9FBBA00006C80 /* GGLDistortionMeshLoader.swift */,
+				7060709522C9FBBB00006C80 /* GGLDistortionMesh.swift */,
+				7060709222C9FBBA00006C80 /* UIScreenExtension.swift */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		7060706A22C9FA5E00006C80 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				7060706F22C9FA7E00006C80 /* distortionShader.fsh */,
+				7060706C22C9FA7D00006C80 /* distortionShader.vsh */,
+				7060706B22C9FA7D00006C80 /* streamShader.fsh */,
+				7060707022C9FA7E00006C80 /* streamShader.vsh */,
+				7060706E22C9FA7E00006C80 /* textureShader.fsh */,
+				7060706D22C9FA7D00006C80 /* textureShader.vsh */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		7060707922C9FB6D00006C80 /* Ressources */ = {
+			isa = PBXGroup;
+			children = (
+				7060708222C9FB8E00006C80 /* cockpitg1_colors.txt */,
+				7060708322C9FB8E00006C80 /* cockpitg1_indices.txt */,
+				7060707E22C9FB8D00006C80 /* cockpitg1_positions.txt */,
+				7060708422C9FB8E00006C80 /* cockpitg1_tex_coords_blue.txt */,
+				7060707F22C9FB8D00006C80 /* cockpitg1_tex_coords_green.txt */,
+				7060707A22C9FB8D00006C80 /* cockpitg1_tex_coords_red.txt */,
+				7060707D22C9FB8D00006C80 /* cockpitg2_colors.txt */,
+				7060708122C9FB8E00006C80 /* cockpitg2_indices.txt */,
+				7060708522C9FB8E00006C80 /* cockpitg2_positions.txt */,
+				7060707B22C9FB8D00006C80 /* cockpitg2_tex_coords_blue.txt */,
+				7060707C22C9FB8D00006C80 /* cockpitg2_tex_coords_green.txt */,
+				7060708022C9FB8D00006C80 /* cockpitg2_tex_coords_red.txt */,
+			);
+			path = Ressources;
+			sourceTree = "<group>";
+		};
+		7060709A22C9FD5D00006C80 /* GroundGL */ = {
+			isa = PBXGroup;
+			children = (
+				706070BC22CA162900006C80 /* GGLView.swift */,
+				706070AD22C9FEB500006C80 /* GGLErrors.swift */,
+				7060709D22C9FD9900006C80 /* GGLUtils.swift */,
+				7060709F22C9FDF300006C80 /* GGLDrawable.swift */,
+				706070A122C9FE1F00006C80 /* GGLVertex.swift */,
+				706070A622C9FE5800006C80 /* GGLCameraQuad.swift */,
+				706070AF22C9FF3100006C80 /* GGLShaderLoader.swift */,
+				706070A422C9FE5800006C80 /* GGLFbo.swift */,
+				706070A322C9FE5800006C80 /* GGLFboQuad.swift */,
+				706070A522C9FE5800006C80 /* GGLTexturedQuad.swift */,
+				706070AB22C9FE6500006C80 /* GGLMultiLayer.swift */,
+			);
+			path = GroundGL;
 			sourceTree = "<group>";
 		};
 		712A9F5C2204A03300BD4DFC /* Stream */ = {
@@ -1298,6 +1457,7 @@
 		7C32F1751FB3654400BFCF1D /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				6805CC4022C60C3500D3DB64 /* CameraAlignment.swift */,
 				7C32F17B1FB3654400BFCF1D /* CameraAntiFlickering.swift */,
 				7C32F17A1FB3654400BFCF1D /* CameraExposure.swift */,
 				7C32F1761FB3654400BFCF1D /* CameraExposureCompensation.swift */,
@@ -1352,6 +1512,7 @@
 				F8C04CB81FB0A7120020ED18 /* Component.swift */,
 				F8C04C8F1FB0A7120020ED18 /* Device */,
 				F8F9CD051FB9A13D00A0CC48 /* Facility */,
+				7037D19322C63DC3002CB93A /* Hmd */,
 				F8C04D761FB0A7730020ED18 /* Setting */,
 				1DDA087620641E88008B1B9B /* Stream */,
 				F8C04C2B1FB0A7110020ED18 /* Internal */,
@@ -1517,6 +1678,7 @@
 		F8034F991D33D250003A3CFD /* Peripheral */ = {
 			isa = PBXGroup;
 			children = (
+				702D458F230FCA8700FEAE56 /* PilotingControlTests.swift */,
 				708D7D73213ED260009DBD12 /* FlightLogDownloaderTests.swift */,
 				F8D32CCE1EF1343400074795 /* CopterMotorsTests.swift */,
 				1DA626F21EF97B4B0031AA69 /* CrashReportDownloaderTests.swift */,
@@ -1561,6 +1723,7 @@
 				F82913CC1DDE0C5800B612E9 /* LiveStreamMatcher.swift */,
 				F8884B661FB34A6D00D1E7CC /* CameraMatcher.swift */,
 				7C7406A3204FF03E00D1CD78 /* AntiflickerMatcher.swift */,
+				702D4591230FD0F800FEAE56 /* PilotingControlMatcher.swift */,
 				F884688C1DEEE90700ACE941 /* SystemVersionMatcher.swift */,
 				7C7C4D4F1E1167C1000F1429 /* MediaItemMatcher.swift */,
 				7C6BDB6D1E115BCF0041C35A /* MediaDownloaderMatcher.swift */,
@@ -1708,6 +1871,7 @@
 		F8884B511FB33A2B00D1E7CC /* CameraCore */ = {
 			isa = PBXGroup;
 			children = (
+				6805CC4222C616A700D3DB64 /* CameraAlignmentCore.swift */,
 				F8884B591FB33A2B00D1E7CC /* CameraExposureCompensationSettingsCore.swift */,
 				F8F2B1AB20E4C98B00A1A802 /* CameraExposureLockCore.swift */,
 				F8884B571FB33A2B00D1E7CC /* CameraExposureSettingsCore.swift */,
@@ -1908,6 +2072,7 @@
 				F8C04C7E1FB0A7120020ED18 /* MediaStoreCore */,
 				F8C04C671FB0A7110020ED18 /* MediaStoreCore.swift */,
 				F8C04C661FB0A7110020ED18 /* PeripheralCore.swift */,
+				70E8ECDA230EA10B00DE0776 /* PilotingControlCore.swift */,
 				9B40FAC9215E29BA00CF6690 /* PreciseHomeCore.swift */,
 				F8123B51200CF0C70071672B /* RemovableUserStorageCore.swift */,
 				02CE4464208DE83E007B9F9F /* SkyCtrl3GamepadCore.swift */,
@@ -2032,6 +2197,7 @@
 		F8C04CBB1FB0A7120020ED18 /* Peripheral */ = {
 			isa = PBXGroup;
 			children = (
+				70E8ECD8230E997300DE0776 /* PilotingControl.swift */,
 				F8C04CCF1FB0A7120020ED18 /* PeripheralProvider.swift */,
 				F8C04CBF1FB0A7120020ED18 /* Peripheral.swift */,
 				7CCEE3CE204D87BB00C20208 /* Antiflicker.swift */,
@@ -2355,7 +2521,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Parrot SA";
 				TargetAttributes = {
 					7C31C9311CC7A9F90007833F = {
@@ -2382,11 +2548,11 @@
 			};
 			buildConfigurationList = 7C3CD1B71C7F430D005B09D1 /* Build configuration list for PBXProject "GroundSdk" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
+				Base,
 			);
 			mainGroup = 7C3CD1B31C7F430D005B09D1;
 			productRefGroup = 7C3CD1BE1C7F430D005B09D1 /* Products */;
@@ -2413,6 +2579,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7060709122C9FB8E00006C80 /* cockpitg2_positions.txt in Resources */,
+				7060708622C9FB8E00006C80 /* cockpitg1_tex_coords_red.txt in Resources */,
+				7060708922C9FB8E00006C80 /* cockpitg2_colors.txt in Resources */,
+				7060708B22C9FB8E00006C80 /* cockpitg1_tex_coords_green.txt in Resources */,
+				7060708722C9FB8E00006C80 /* cockpitg2_tex_coords_blue.txt in Resources */,
+				7060708A22C9FB8E00006C80 /* cockpitg1_positions.txt in Resources */,
+				7060708822C9FB8E00006C80 /* cockpitg2_tex_coords_green.txt in Resources */,
+				7060708F22C9FB8E00006C80 /* cockpitg1_indices.txt in Resources */,
+				7060708C22C9FB8E00006C80 /* cockpitg2_tex_coords_red.txt in Resources */,
+				7060708D22C9FB8E00006C80 /* cockpitg2_indices.txt in Resources */,
+				7060707622C9FA7E00006C80 /* streamShader.vsh in Resources */,
+				7060708E22C9FB8E00006C80 /* cockpitg1_colors.txt in Resources */,
+				7060707422C9FA7E00006C80 /* textureShader.fsh in Resources */,
+				7060707122C9FA7E00006C80 /* streamShader.fsh in Resources */,
+				7060707322C9FA7E00006C80 /* textureShader.vsh in Resources */,
+				7060709022C9FB8E00006C80 /* cockpitg1_tex_coords_blue.txt in Resources */,
+				7060707222C9FA7E00006C80 /* distortionShader.vsh in Resources */,
+				7060707522C9FA7E00006C80 /* distortionShader.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2475,6 +2659,7 @@
 				F89D609C1FFE45BB00263CBC /* MagnetometerWith3StepCalibration.swift in Sources */,
 				F8C04D5E1FB0A7120020ED18 /* Peripheral.swift in Sources */,
 				F8C04D131FB0A7120020ED18 /* ChannelSettingCore.swift in Sources */,
+				70E8ECD9230E997300DE0776 /* PilotingControl.swift in Sources */,
 				9B963313222E6AFA00474651 /* StreamServerCore.swift in Sources */,
 				716788C92201D8350052406E /* GlRenderSink.swift in Sources */,
 				F8C04CF11FB0A7120020ED18 /* BatteryInfoCore.swift in Sources */,
@@ -2483,6 +2668,7 @@
 				F8F2B1AC20E4C98B00A1A802 /* CameraExposureLockCore.swift in Sources */,
 				F8E137A8207E689F005BAF66 /* VertigoAnimationCore.swift in Sources */,
 				F8C04D1C1FB0A7120020ED18 /* SystemInfoCore.swift in Sources */,
+				6805CC4122C60C3600D3DB64 /* CameraAlignment.swift in Sources */,
 				F8A21F411FCC719E006E3D2E /* InternetReachabilityListener.swift in Sources */,
 				F8C04D691FB0A7120020ED18 /* AxisInterpolator.swift in Sources */,
 				02155D7B2046F3BF0078B498 /* ReverseGeocoder.swift in Sources */,
@@ -2508,6 +2694,7 @@
 				F8C04D8A1FB0B7980020ED18 /* EngineBaseCore.swift in Sources */,
 				F8F2B1AA20E3DB7100A1A802 /* CameraExposureLock.swift in Sources */,
 				F8C04CDB1FB0A7120020ED18 /* DoubleSettingCore.swift in Sources */,
+				706070A922C9FE5800006C80 /* GGLTexturedQuad.swift in Sources */,
 				F8C04D011FB0A7120020ED18 /* SpiralAnimationCore.swift in Sources */,
 				0223BCF8200E427800FCEC22 /* SystemPositionCore.swift in Sources */,
 				9BB4FBBA21E79295005E2E58 /* MainCamera.swift in Sources */,
@@ -2531,6 +2718,8 @@
 				F8C04D3C1FB0A7120020ED18 /* FlyingIndicators.swift in Sources */,
 				708D7D62213D42D8009DBD12 /* FlightLogReporter.swift in Sources */,
 				02CB17A3207F5DF2006478DA /* FollowMePilotingItf.swift in Sources */,
+				70FF52AB22D3929C00DEB90F /* HmdSprite.swift in Sources */,
+				706070A722C9FE5800006C80 /* GGLFboQuad.swift in Sources */,
 				712A9F452203493200BD4DFC /* FileReplay.swift in Sources */,
 				F899E73F20777460004763E4 /* FirmwareInfo.swift in Sources */,
 				9BF5448322B8BF2400452895 /* Copilot.swift in Sources */,
@@ -2544,11 +2733,14 @@
 				0239813E2091FE8E00261CC6 /* Geofence.swift in Sources */,
 				F8C04D501FB0A7120020ED18 /* DronieAnimation.swift in Sources */,
 				F8C252ED1FCF07AE00A87B5F /* FirmwareStoreCore.swift in Sources */,
+				706070B022C9FF3100006C80 /* GGLShaderLoader.swift in Sources */,
+				706070A222C9FE1F00006C80 /* GGLVertex.swift in Sources */,
 				F8C04D611FB0A7120020ED18 /* SystemInfo.swift in Sources */,
 				F8884B5E1FB33A2C00D1E7CC /* CameraRecordingStateCore.swift in Sources */,
 				F8369C8020A0A004008010AE /* BlacklistedVersionStoreCore.swift in Sources */,
 				F8884B5F1FB33A2C00D1E7CC /* CameraPhotoCore.swift in Sources */,
 				F8A21F4B1FCEBE31006E3D2E /* FirmwareEngine.swift in Sources */,
+				703B3C4F22CB676100EE440B /* OffSCreenStreamRender.swift in Sources */,
 				F8C04D811FB0A9130020ED18 /* MotorError.swift in Sources */,
 				F8C04D221FB0A7120020ED18 /* UpdaterCore.swift in Sources */,
 				02CE4460208DE5A1007B9F9F /* SkyCtrl3Input.swift in Sources */,
@@ -2589,6 +2781,7 @@
 				F8C04D421FB0A7120020ED18 /* Compass.swift in Sources */,
 				F8C04CDD1FB0A7120020ED18 /* BoolSettingCore.swift in Sources */,
 				F8C04CE91FB0A7120020ED18 /* FlyingIndicatorsCore.swift in Sources */,
+				7060709622C9FBBB00006C80 /* UIScreenExtension.swift in Sources */,
 				708D7D67213D44DD009DBD12 /* FlightLogCollector.swift in Sources */,
 				F8C04CDA1FB0A7120020ED18 /* Math.swift in Sources */,
 				68ED06662227E23C007DAECE /* YuvSink.swift in Sources */,
@@ -2602,7 +2795,9 @@
 				F8C04D711FB0A7120020ED18 /* MediaItem.swift in Sources */,
 				02AFDFAC2005088C0066D6CA /* UserLocation.swift in Sources */,
 				F8C04D251FB0A7120020ED18 /* MediaGalleryAdder.swift in Sources */,
+				6805CC4322C616A700D3DB64 /* CameraAlignmentCore.swift in Sources */,
 				F8C04CF01FB0A7120020ED18 /* AltimeterCore.swift in Sources */,
+				7060709E22C9FD9900006C80 /* GGLUtils.swift in Sources */,
 				F8C04D0C1FB0A7120020ED18 /* NameHolderCore.swift in Sources */,
 				F8C04D601FB0A7120020ED18 /* WifiAccessPoint.swift in Sources */,
 				9BBAAFC42215B4E600E1E5BF /* LedsCore.swift in Sources */,
@@ -2634,6 +2829,7 @@
 				02AFDFB2200687920066D6CA /* UserHeading.swift in Sources */,
 				02CE4465208DE83E007B9F9F /* SkyCtrl3GamepadCore.swift in Sources */,
 				F8C04D481FB0A7120020ED18 /* Animation.swift in Sources */,
+				7037D19522C63EF7002CB93A /* HmdViewController.swift in Sources */,
 				F8C04D411FB0A7120020ED18 /* Radio.swift in Sources */,
 				F8C04D3F1FB0A7120020ED18 /* Alarms.swift in Sources */,
 				F892D6C61FD85E3300B80041 /* BlackBoxStorageCore.swift in Sources */,
@@ -2675,6 +2871,7 @@
 				F8C04D341FB0A7120020ED18 /* DeviceState.swift in Sources */,
 				023752542074F95800825545 /* TargetTrackerCore.swift in Sources */,
 				F8C04D461FB0A7120020ED18 /* ReturnHomePilotingItf.swift in Sources */,
+				7060709722C9FBBB00006C80 /* GGLDistortionMeshLoader.swift in Sources */,
 				F8884B6B1FB3668B00D1E7CC /* InternetConnectivityCore.swift in Sources */,
 				9B193ED821679C9C00A8AA41 /* SphericalPhotoPanoramaAnimationCore.swift in Sources */,
 				F8884B5B1FB33A2C00D1E7CC /* CameraModeSettingCore.swift in Sources */,
@@ -2700,9 +2897,11 @@
 				71E16AE5217F48CE00CB8D17 /* CameraLiveCore.swift in Sources */,
 				0289AF15204948E700DED63B /* GroundSdkUserDefaults.swift in Sources */,
 				708D7D64213D42FC009DBD12 /* FlightLogReporterCore.swift in Sources */,
+				7060709822C9FBBB00006C80 /* Cockpit.swift in Sources */,
 				02108839209B19C200F013E4 /* FlightDataManager.swift in Sources */,
 				F8C04D2D1FB0A7120020ED18 /* Values.swift in Sources */,
 				F8A03118206AA4C600690465 /* FirmwareVersionHolderCore.swift in Sources */,
+				706070BD22CA162900006C80 /* GGLView.swift in Sources */,
 				F8C04D7E1FB0A7740020ED18 /* StringSetting.swift in Sources */,
 				F8C04CFC1FB0A7120020ED18 /* CandleAnimationCore.swift in Sources */,
 				02155D7D2046F6740078B498 /* ReverseGeocoderCore.swift in Sources */,
@@ -2712,6 +2911,8 @@
 				9B193ED621679C8900A8AA41 /* Vertical180PhotoPanoramaAnimationCore.swift in Sources */,
 				0216F7BA1FCF032B00841577 /* GuidedPilotingItf.swift in Sources */,
 				F8ED8B0420441EC5005D9D57 /* CameraZoom.swift in Sources */,
+				706070AC22C9FE6500006C80 /* GGLMultiLayer.swift in Sources */,
+				706070AA22C9FE5800006C80 /* GGLCameraQuad.swift in Sources */,
 				F8C04D5D1FB0A7120020ED18 /* WifiChannel.swift in Sources */,
 				7183DB2F21A312EB005FCF42 /* MediaReplay.swift in Sources */,
 				F8C04D741FB0A7120020ED18 /* Magnetometer.swift in Sources */,
@@ -2719,6 +2920,7 @@
 				F8C04D311FB0A7120020ED18 /* ComponentCore.swift in Sources */,
 				F8C04D091FB0A7120020ED18 /* DeviceConnectorCore.swift in Sources */,
 				F8D993141FFF85E40061579B /* MagnetometerWith1StepCalibrationCore.swift in Sources */,
+				706070A022C9FDF300006C80 /* GGLDrawable.swift in Sources */,
 				02BAB80B209B6230009D0127 /* FlightDataEngine.swift in Sources */,
 				F8C04CE41FB0A7120020ED18 /* GroundSdkCore.swift in Sources */,
 				F8A21F491FCEBBA6006E3D2E /* FirmwareManagerCore.swift in Sources */,
@@ -2745,9 +2947,11 @@
 				F8C04D401FB0A7120020ED18 /* Speedometer.swift in Sources */,
 				F8CCFED9205FCEBF000E738C /* UpdateRestApi.swift in Sources */,
 				F8D993121FFF80A20061579B /* MagnetometerWith1StepCalibration.swift in Sources */,
+				706070AE22C9FEB500006C80 /* GGLErrors.swift in Sources */,
 				F8A031162068EE0C00690465 /* FirmwareDownloader.swift in Sources */,
 				684DCB152228312E001DB681 /* MediaRegistry.swift in Sources */,
 				F8C04D4A1FB0A7120020ED18 /* VerticalRevealAnimation.swift in Sources */,
+				70E8ECDB230EA10C00DE0776 /* PilotingControlCore.swift in Sources */,
 				F892D6BE1FD8542C00B80041 /* BlackBoxUploader.swift in Sources */,
 				9B1914F72142B393004D0601 /* PositionTwistUpAnimation.swift in Sources */,
 				F8C04D0B1FB0A7120020ED18 /* DroneListRefCore.swift in Sources */,
@@ -2781,9 +2985,11 @@
 				F8C04D2E1FB0A7120020ED18 /* ComponentStoreCore.swift in Sources */,
 				F8C04D241FB0A7120020ED18 /* MediaDeleterRefCore.swift in Sources */,
 				0289AF0F2047FAFB00DED63B /* ReverseGeocoderUtilityCore.swift in Sources */,
+				7060709922C9FBBB00006C80 /* GGLDistortionMesh.swift in Sources */,
 				F8C04D031FB0A7120020ED18 /* AnimationPilotingItfCore.swift in Sources */,
 				F8C04D681FB0A7120020ED18 /* MappableAction.swift in Sources */,
-				9B56C2B321F1DA510002EC1C /* UIDevice.swift in Sources */,
+				70C2C98A230E8FF000159B4B /* UIDevice.swift in Sources */,
+				706070A822C9FE5800006C80 /* GGLFbo.swift in Sources */,
 				9BBB950A21DDFBB200CE4322 /* ThermalCameraCore.swift in Sources */,
 				F8C04D141FB0A7120020ED18 /* SecurityModeSettingCore.swift in Sources */,
 				F8C04CFA1FB0A7120020ED18 /* DollySlideAnimationCore.swift in Sources */,
@@ -2925,6 +3131,7 @@
 				7C76AAC01C8D759700FC213E /* StringMatchers.swift in Sources */,
 				7C76AABC1C8D759700FC213E /* OperatorMatchers.swift in Sources */,
 				F8F2B1A120E3AD5B00A1A802 /* CameraExposureValuesTests.swift in Sources */,
+				702D4592230FD0F800FEAE56 /* PilotingControlMatcher.swift in Sources */,
 				7C06715D1DBE53DC00C90162 /* DroneFinderTests.swift in Sources */,
 				7C2D2DE11DA54BEA00337779 /* RemoteControlTests.swift in Sources */,
 				F8369C8D20A1DB44008010AE /* MockGroundSdkUserDefaults.swift in Sources */,
@@ -2968,6 +3175,7 @@
 				7C3CD1CD1C7F430D005B09D1 /* GroundSdkSessionsTests.swift in Sources */,
 				0237525820760D9800825545 /* TargetFramingSettingMatcher.swift in Sources */,
 				708D7D76213ED378009DBD12 /* FlightLogReporterMatcher.swift in Sources */,
+				702D4590230FCA8700FEAE56 /* PilotingControlTests.swift in Sources */,
 				708D7D74213ED260009DBD12 /* FlightLogDownloaderTests.swift in Sources */,
 				02155D7F204707A20078B498 /* ReverseGeocoderTests.swift in Sources */,
 				F8FF144C1D2A5C1400A87DA6 /* CLLocationMatcher.swift in Sources */,
@@ -3178,9 +3386,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -3202,7 +3411,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;

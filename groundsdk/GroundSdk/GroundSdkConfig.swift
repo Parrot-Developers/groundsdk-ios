@@ -260,6 +260,13 @@ public class GroundSdkConfig: NSObject {
         }
     }
 
+    /// Black box public folder.
+    public var blackboxPublicFolder: String? {
+        willSet(newValue) {
+            checkLocked()
+        }
+    }
+
     /// List of all supported devices.
     /// This API is ObjC only. For Swift, please use `supportedDevices`.
     @objc(supportedDevices)
@@ -392,6 +399,10 @@ public class GroundSdkConfig: NSObject {
         if let crashReportQuotaMb = config?[Keys.crashReportQuotaMb.rawValue] as? Int {
             self.crashReportQuotaMb = crashReportQuotaMb
         }
+        if let blackboxPublicFolder = config?[Keys.blackboxPublicFolder.rawValue] as? String,
+            !blackboxPublicFolder.isEmpty {
+            self.blackboxPublicFolder = blackboxPublicFolder
+        }
     }
 
     /// Settings info.plist keys.
@@ -420,6 +431,7 @@ public class GroundSdkConfig: NSObject {
         case flightLogQuotaMb = "FlightLogQuotaMb"
         case flightDataQuotaMb = "FlightDataQuotaMb"
         case crashReportQuotaMb = "CrashReportQuotaMb"
+        case blackboxPublicFolder = "BlackboxPublicFolder"
     }
 
     /// `true` if configuration is locked, i.e. the first ground sdk instance has already been created.

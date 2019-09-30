@@ -90,6 +90,15 @@ public class Alarm: NSObject {
         /// Flying is not recommended.
         case verticalCamera
 
+        /// Vibrations alters the drone ability to fly properly.
+        ///
+        ///   - `.off`: detected vibration level is normal and has no impact on drone flight.
+        ///   - `.warning`: detected vibration level is strong enough to alter the drone ability to fly
+        ///     properly, potentially because propellers are not tightly screwed.
+        ///   - `.critical`: detected vibration level is so strong that the drone is completely unable to
+        ///     fly properly, indicating a serious drone malfunction.
+        case strongVibrations
+
         /// Debug description.
         public var description: String {
             switch self {
@@ -104,6 +113,7 @@ public class Alarm: NSObject {
             case .automaticLandingBatteryIssue:     return "automaticLandingBatteryIssue"
             case .wind:                             return "wind"
             case .verticalCamera:                   return "verticalCamera"
+            case .strongVibrations:                 return "strongVibrations"
             }
         }
 
@@ -112,7 +122,7 @@ public class Alarm: NSObject {
                                                  .batteryTooCold, .hoveringDifficultiesNoGpsTooDark,
                                                  .hoveringDifficultiesNoGpsTooHigh,
                                                  .automaticLandingBatteryIssue, .wind,
-                                                 .verticalCamera]
+                                                 .verticalCamera, .strongVibrations]
     }
 
     /// Alarm level.

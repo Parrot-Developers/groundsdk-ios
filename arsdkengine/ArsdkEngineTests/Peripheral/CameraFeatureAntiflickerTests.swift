@@ -33,8 +33,6 @@ import XCTest
 @testable import ArsdkEngine
 @testable import GroundSdk
 import SdkCoreTesting
-import CoreLocation
-import AddressBook
 
 class CameraFeatureAntiflickerTests: ArsdkEngineTestBase {
 

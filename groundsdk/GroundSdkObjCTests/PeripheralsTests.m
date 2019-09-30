@@ -489,6 +489,19 @@
     camera.zoom.velocityQualityDegradationAllowance.value = YES;
     [camera.zoom controlWithMode:GSCameraZoomControlModeLevel target:2.0];
     [camera.zoom controlWithMode:GSCameraZoomControlModeVelocity target:-1.0];
+
+    // alignment
+    XCTAssertEqual(camera.alignment.yaw, 0.0);
+    XCTAssertEqual(camera.alignment.pitch, 0.0);
+    XCTAssertEqual(camera.alignment.roll, 0.0);
+    XCTAssertEqual(camera.alignment.gsMinSupportedYawRange, 0.0);
+    XCTAssertEqual(camera.alignment.gsMaxSupportedYawRange, 0.0);
+    XCTAssertEqual(camera.alignment.gsMinSupportedPitchRange, 0.0);
+    XCTAssertEqual(camera.alignment.gsMaxSupportedPitchRange, 0.0);
+    XCTAssertEqual(camera.alignment.gsMinSupportedRollRange, 0.0);
+    XCTAssertEqual(camera.alignment.gsMaxSupportedRollRange, 0.0);
+
+    XCTAssertEqual([camera.alignment reset], false);
 }
 
 - (void)testAntiflicker {
@@ -513,6 +526,20 @@
     XCTAssertFalse([preciseHome.setting isModeSupported:GSPreciseHomeModeDisabled]);
     preciseHome.setting.mode = GSPreciseHomeModeStandard;
     XCTAssertEqual(preciseHome.state, GSPreciseHomeStateUnavailable);
+}
+
+- (void)testPilotingControl {
+    GSDrone *drone = [_gsdk getDroneWithUid:@"123"];
+    [_mockGsdk addPeripheralWithUid:GSPeripherals.pilotingControl.uid droneUid:@"123"];
+    id<GSPilotingControl> pilotingControl = (id<GSPilotingControl>) [drone getPeripheral:GSPeripherals.pilotingControl];
+    XCTAssertNotNil(pilotingControl);
+}
+
+- (void)testCopilot {
+    GSDrone *drone = [_gsdk getDroneWithUid:@"123"];
+    [_mockGsdk addPeripheralWithUid:GSPeripherals.copilot.uid droneUid:@"123"];
+    id<GSCopilot> copilot = (id<GSCopilot>) [drone getPeripheral:GSPeripherals.copilot];
+    XCTAssertNotNil(copilot);
 }
 
 - (void)testThermalControl{

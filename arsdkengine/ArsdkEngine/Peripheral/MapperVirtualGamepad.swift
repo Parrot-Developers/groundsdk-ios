@@ -311,6 +311,8 @@ protocol SpecializedGamepadBackend {
 
     /// Synchronizes all known reversed axes with the public gamepad interface.
     func updateReversedAxis()
+
+    func update(volatileMapping: Bool)
 }
 
 /// Virtual gamepad controller for Mapper message based remote control.
@@ -504,6 +506,15 @@ class MapperVirtualGamepad: DeviceComponentController {
     final func send(axis: MapperAxis, forDroneModel droneModel: Drone.Model, reversed: Bool) {
         sendCommand(ArsdkFeatureMapper.setInvertedEncoder(
             product: UInt(droneModel.internalId), axis: axis.rawValue, inverted: reversed ? 1 : 0))
+    }
+
+    /// Sends the command to enter or exit volatile mapping
+    final func send(volatileMapping: Bool) {
+        if volatileMapping {
+            sendCommand(ArsdkFeatureMapper.enterVolatileMappingEncoder())
+        } else {
+            sendCommand(ArsdkFeatureMapper.exitVolatileMappingEncoder())
+        }
     }
 }
 
@@ -763,6 +774,10 @@ extension MapperVirtualGamepad: ArsdkFeatureMapperCallback {
         } else {
             ULog.w(.mapperTag, "Unknown product \(product)")
         }
+    }
+
+    func onVolatileMappingState(active: UInt) {
+        specializedBackend.update(volatileMapping: active == 1)
     }
 }
 

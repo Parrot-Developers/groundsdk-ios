@@ -83,7 +83,7 @@ class LedsController: DeviceComponentController, LedsBackend {
             }
         }
         /// All values to allow enumerating settings
-        static let allCases: [Setting] = [.state(false)]
+        static let allCases: Set<Setting> = [.state(false)]
 
         func hash(into hasher: inout Hasher) {
             hasher.combine(key)
@@ -146,10 +146,10 @@ class LedsController: DeviceComponentController, LedsBackend {
     /// Load saved settings
     private func loadPresets() {
         if let presetStore = presetStore {
-            for setting in Setting.allCases {
-                switch setting {
+            Setting.allCases.forEach {
+                switch $0 {
                 case .state:
-                    if  let state: Bool = presetStore.read(key: setting.key) {
+                    if let state: Bool = presetStore.read(key: $0.key) {
                         leds.update(state: state)
                     }
                     leds.notifyUpdated()

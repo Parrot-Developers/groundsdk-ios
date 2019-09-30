@@ -170,6 +170,19 @@ public protocol CameraBackend: class {
     ///   - mode: the mode that should be used to control the zoom.
     ///   - target: Either level or velocity zoom target, clamped in the correct range
     func control(mode: CameraZoomControlMode, target: Double)
+
+    /// Sets alignment offsets.
+    ///
+    /// - Parameter yawOffset: the new offset to apply to the yaw axis
+    /// - Parameter pitchOffset: the new offset to apply to the pitch axis
+    /// - Parameter rollOffset: the new offset to apply to the roll axis
+    /// - Returns: true if the command has been sent, false otherwise
+    func set(yawOffset: Double, pitchOffset: Double, rollOffset: Double) -> Bool
+
+    /// Factory reset camera alignment.
+    ///
+    /// - Returns: true if the command has been sent, false otherwise
+    func resetAlignment() -> Bool
 }
 
 /// Camera peripheral implementation
@@ -289,6 +302,13 @@ public class CameraCore: PeripheralCore, Camera {
     }
     /// Internal storage for zoom
     private var _zoom: CameraZoomCore?
+
+    /// Camera alignment
+    public var alignment: CameraAlignment? {
+        return isActive ? _alignment : nil
+    }
+    /// Internal camera alignment
+    private var _alignment: CameraAlignmentCore?
 
     /// Constructor
     ///
@@ -414,6 +434,7 @@ public class CameraCore: PeripheralCore, Camera {
         _whiteBalanceLock = nil
         _exposureLock = nil
         _zoom = nil
+        _alignment = nil
         createSettings()
     }
 
@@ -460,6 +481,11 @@ extension CameraCore: GSCamera {
 
     public var gsExposureLock: GSCameraExposureLock? {
         return _exposureLock
+    }
+
+    /// Camera alignment
+    public var gsAlignment: GSCameraAlignment? {
+        return _alignment
     }
 
     /// Exposure compensation setting
@@ -1355,6 +1381,47 @@ extension CameraCore {
         return self
     }
 
+    /// Changes alignments offsets.
+    ///
+    /// - Parameters:
+    ///   - yawLowerBound: new yaw offset lower bound
+    ///   - yaw: new yaw offset value
+    ///   - yawUpperBound: new yaw offset upper bound
+    ///   - pitchLowerBound: new pitch offset lower bound
+    ///   - pitch: new pitch offset value
+    ///   - pitchUpperBound: new pitch offset upper bound
+    ///   - rollLowerBound: new roll offset lower bound
+    ///   - roll: new roll offset value
+    ///   - rollUpperBound: new roll offset upper bound
+    /// - Returns: self to allow call chaining
+    /// - Note: Changes are not notified until notifyUpdated() is called.
+    @discardableResult public func update(yawLowerBound: Double, yaw: Double, yawUpperBound: Double,
+                                          pitchLowerBound: Double, pitch: Double, pitchUpperBound: Double,
+                                          rollLowerBound: Double, roll: Double, rollUpperBound: Double) -> CameraCore {
+        if _alignment == nil {
+            _alignment = CameraAlignmentCore(backend: self, didChangeDelegate: self)
+            if isActive {
+                markChanged()
+            }
+        }
+        if _alignment!.update(yawLowerBound: yawLowerBound, yaw: yaw, yawUpperBound: yawUpperBound) {
+            if isActive {
+                markChanged()
+            }
+        }
+        if _alignment!.update(pitchLowerBound: pitchLowerBound, pitch: pitch, pitchUpperBound: pitchUpperBound) {
+            if isActive {
+                markChanged()
+            }
+        }
+        if _alignment!.update(rollLowerBound: rollLowerBound, roll: roll, rollUpperBound: rollUpperBound) {
+            if isActive {
+                markChanged()
+            }
+        }
+        return self
+    }
+
     /// Cancels all pending settings rollbacks.
     ///
     /// - Returns: self to allow call chaining
@@ -1372,6 +1439,7 @@ extension CameraCore {
         _hdrSetting?.cancelRollback { markChanged() }
         _zoom?.cancelSettingsRollback { markChanged() }
         _whiteBalanceLock?.cancelRollback { markChanged() }
+        _alignment?.cancelRollback { markChanged() }
         return self
     }
 }
@@ -1389,5 +1457,17 @@ extension CameraCore: CameraZoomBackend {
 
     func control(mode: CameraZoomControlMode, target: Double) {
         backend.control(mode: mode, target: target)
+    }
+}
+
+// MARK: - CameraAlignmentBackend
+/// Camera alignment backend implementation
+extension CameraCore: CameraAlignmentBackend {
+    func set(yawOffset: Double, pitchOffset: Double, rollOffset: Double) -> Bool {
+        return backend.set(yawOffset: yawOffset, pitchOffset: pitchOffset, rollOffset: rollOffset)
+    }
+
+    func resetAlignment() -> Bool {
+        return backend.resetAlignment()
     }
 }

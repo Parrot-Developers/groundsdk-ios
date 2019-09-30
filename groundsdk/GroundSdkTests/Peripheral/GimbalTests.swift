@@ -87,9 +87,9 @@ class GimbalTests: XCTestCase {
             .update(stabilization: true, onAxis: .pitch)
             .update(stabilization: false, onAxis: .roll)
             .update(lockedAxes: [.yaw, .roll])
-            .update(attitude: 10.0, onAxis: .yaw)
-            .update(attitude: 10.0, onAxis: .pitch)
-            .update(attitude: 10.0, onAxis: .roll)
+            .update(absoluteAttitude: 10.0, onAxis: .yaw)
+            .update(absoluteAttitude: 10.0, onAxis: .pitch)
+            .update(relativeAttitude: 10.0, onAxis: .roll)
             .update(maxSpeedSetting: (min: 0.0, value: 2.2, max: 3.3), onAxis: .yaw)
             .update(maxSpeedSetting: (min: 0.0, value: 2.2, max: 3.3), onAxis: .pitch)
             .update(maxSpeedSetting: (min: 0.0, value: 2.2, max: 3.3), onAxis: .roll)
@@ -302,33 +302,105 @@ class GimbalTests: XCTestCase {
         assertThat(gimbal.currentAttitude, empty())
         assertThat(cnt, `is`(0))
 
+        impl.update(stabilization: true, onAxis: .yaw).update(stabilization: true, onAxis: .roll)
+            .update(stabilization: false, onAxis: .pitch).notifyUpdated()
         // test backend triggers a notification
-        impl.update(attitude: 2.0, onAxis: .yaw).notifyUpdated()
+        impl.update(absoluteAttitude: 2.0, onAxis: .yaw).notifyUpdated()
         assertThat(gimbal.currentAttitude[.yaw], presentAnd(`is`(2.0)))
         assertThat(gimbal.currentAttitude[.pitch], nilValue())
         assertThat(gimbal.currentAttitude[.roll], nilValue())
+        assertThat(cnt, `is`(2))
+
+        // test backend triggers a notification
+        impl.update(relativeAttitude: 3.0, onAxis: .pitch).notifyUpdated()
+        assertThat(gimbal.currentAttitude[.yaw], presentAnd(`is`(2.0)))
+        assertThat(gimbal.currentAttitude[.pitch], presentAnd(`is`(3.0)))
+        assertThat(gimbal.currentAttitude[.roll], nilValue())
+        assertThat(cnt, `is`(3))
+
+        impl.update(absoluteAttitude: 3.0, onAxis: .pitch).notifyUpdated()
+        assertThat(gimbal.currentAttitude[.yaw], presentAnd(`is`(2.0)))
+        assertThat(gimbal.currentAttitude[.pitch], presentAnd(`is`(3.0)))
+        assertThat(gimbal.currentAttitude[.roll], nilValue())
+        assertThat(cnt, `is`(4))
+
+        // test update of a non-supported axis does not trigger a notification
+        impl.update(relativeAttitude: 5.0, onAxis: .roll).notifyUpdated()
+        assertThat(gimbal.currentAttitude[.yaw], presentAnd(`is`(2.0)))
+        assertThat(gimbal.currentAttitude[.pitch], presentAnd(`is`(3.0)))
+        assertThat(gimbal.currentAttitude[.roll], nilValue())
+        assertThat(cnt, `is`(4))
+    }
+
+    func testAbsoluteAttitude() {
+        impl.update(supportedAxes: [.yaw, .pitch]).notifyUpdated()
+        impl.publish()
+        var cnt = 0
+        let gimbal = store.get(Peripherals.gimbal)!
+        _ = store.register(desc: Peripherals.gimbal) {
+            cnt += 1
+        }
+        impl.update(stabilization: true, onAxis: .yaw).update(stabilization: true, onAxis: .roll)
+            .update(stabilization: true, onAxis: .pitch).notifyUpdated()
+
+        // test default value
+        assertThat(gimbal.currentAttitude, empty())
         assertThat(cnt, `is`(1))
 
         // test backend triggers a notification
-        impl.update(attitude: 3.0, onAxis: .pitch).notifyUpdated()
-        assertThat(gimbal.currentAttitude[.yaw], presentAnd(`is`(2.0)))
-        assertThat(gimbal.currentAttitude[.pitch], presentAnd(`is`(3.0)))
+        impl.update(relativeAttitude: 2.0, onAxis: .yaw).notifyUpdated()
+        assertThat(gimbal.currentAttitude[.yaw], nilValue())
+        assertThat(gimbal.currentAttitude[.pitch], nilValue())
         assertThat(gimbal.currentAttitude[.roll], nilValue())
         assertThat(cnt, `is`(2))
 
-        // test update with same value does not trigger a notification
-        impl.update(attitude: 3.0, onAxis: .pitch).notifyUpdated()
+        impl.update(absoluteAttitude: 2.0, onAxis: .yaw).notifyUpdated()
         assertThat(gimbal.currentAttitude[.yaw], presentAnd(`is`(2.0)))
-        assertThat(gimbal.currentAttitude[.pitch], presentAnd(`is`(3.0)))
+        assertThat(gimbal.currentAttitude[.pitch], nilValue())
+        assertThat(gimbal.currentAttitude[.roll], nilValue())
+        assertThat(cnt, `is`(3))
+
+        impl.update(relativeAttitude: 5.0, onAxis: .pitch).notifyUpdated()
+        assertThat(gimbal.currentAttitude[.yaw], presentAnd(`is`(2.0)))
+        assertThat(gimbal.currentAttitude[.pitch], nilValue())
+        assertThat(gimbal.currentAttitude[.roll], nilValue())
+        assertThat(cnt, `is`(4))
+
+        impl.update(absoluteAttitude: 6.0, onAxis: .pitch).notifyUpdated()
+        assertThat(gimbal.currentAttitude[.yaw], presentAnd(`is`(2.0)))
+        assertThat(gimbal.currentAttitude[.pitch], presentAnd(`is`(6.0)))
+        assertThat(gimbal.currentAttitude[.roll], nilValue())
+        assertThat(cnt, `is`(5))
+    }
+
+    func testRelativeAttitude() {
+        impl.update(supportedAxes: [.yaw, .pitch]).notifyUpdated()
+        impl.publish()
+        var cnt = 0
+        let gimbal = store.get(Peripherals.gimbal)!
+        _ = store.register(desc: Peripherals.gimbal) {
+            cnt += 1
+        }
+
+        impl.update(stabilization: false, onAxis: .yaw).update(stabilization: false, onAxis: .roll)
+            .update(stabilization: false, onAxis: .pitch).notifyUpdated()
+
+        // test default value
+        assertThat(gimbal.currentAttitude, empty())
+        assertThat(cnt, `is`(1))
+
+        // test backend triggers a notification
+        impl.update(absoluteAttitude: 2.0, onAxis: .yaw).notifyUpdated()
+        assertThat(gimbal.currentAttitude[.yaw], nilValue())
+        assertThat(gimbal.currentAttitude[.pitch], nilValue())
         assertThat(gimbal.currentAttitude[.roll], nilValue())
         assertThat(cnt, `is`(2))
 
-        // test update of a non-supported axis does not trigger a notification
-        impl.update(attitude: 5.0, onAxis: .roll).notifyUpdated()
+        impl.update(relativeAttitude: 2.0, onAxis: .yaw).notifyUpdated()
         assertThat(gimbal.currentAttitude[.yaw], presentAnd(`is`(2.0)))
-        assertThat(gimbal.currentAttitude[.pitch], presentAnd(`is`(3.0)))
+        assertThat(gimbal.currentAttitude[.pitch], nilValue())
         assertThat(gimbal.currentAttitude[.roll], nilValue())
-        assertThat(cnt, `is`(2))
+        assertThat(cnt, `is`(3))
     }
 
     func testMaxSpeed() {

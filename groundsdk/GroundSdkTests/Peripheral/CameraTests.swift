@@ -2029,6 +2029,136 @@ class CameraTests: XCTestCase {
             i += 1
         }
     }
+
+    func testAlignment() {
+        implThermal.publish()
+        var cnt = 0
+        let camera: Camera = store.get(Peripherals.thermalCamera)!
+        _ = store.register(desc: Peripherals.thermalCamera) {
+            cnt += 1
+        }
+
+        // check default value
+        assertThat(camera.alignment, nilValue())
+        assertThat(backend.yawOffset, `is`(0))
+        assertThat(backend.pitchOffset, `is`(0))
+        assertThat(backend.rollOffset, `is`(0))
+        assertThat(backend.resetAlignmentCnt, `is`(0))
+        assertThat(cnt, `is`(0))
+
+        implThermal.update(yawLowerBound: 1, yaw: 2, yawUpperBound: 3,
+                           pitchLowerBound: 4, pitch: 5, pitchUpperBound: 6,
+                           rollLowerBound: 7, roll: 8, rollUpperBound: 9).notifyUpdated()
+        assertThat(camera.alignment, nilValue())
+        assertThat(cnt, `is`(0))
+
+        implThermal.updateActiveFlag(active: true).notifyUpdated()
+
+        assertThat(camera.alignment, present())
+        assertThat(camera.alignment!, `is`(yawLowerBound: 1, yaw: 2, yawUpperBound: 3,
+                                           pitchLowerBound: 4, pitch: 5, pitchUpperBound: 6,
+                                           rollLowerBound: 7, roll: 8, rollUpperBound: 9, updating: false))
+        assertThat(cnt, `is`(1))
+
+        // update offsets settings
+        implThermal.update(yawLowerBound: 10, yaw: 20, yawUpperBound: 30,
+                           pitchLowerBound: 40, pitch: 50, pitchUpperBound: 60,
+                           rollLowerBound: 70, roll: 80, rollUpperBound: 90).notifyUpdated()
+        assertThat(camera.alignment!, `is`(yawLowerBound: 10, yaw: 20, yawUpperBound: 30,
+                                           pitchLowerBound: 40, pitch: 50, pitchUpperBound: 60,
+                                           rollLowerBound: 70, roll: 80, rollUpperBound: 90, updating: false))
+        assertThat(cnt, `is`(2))
+
+        // change yaw offset
+        camera.alignment?.yaw = 25
+        assertThat(camera.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                           pitchLowerBound: 40, pitch: 50, pitchUpperBound: 60,
+                                           rollLowerBound: 70, roll: 80, rollUpperBound: 90, updating: true))
+        assertThat(backend.yawOffset, `is`(25))
+        assertThat(backend.pitchOffset, `is`(50))
+        assertThat(backend.rollOffset, `is`(80))
+        assertThat(cnt, `is`(3))
+
+        implThermal.update(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                           pitchLowerBound: 40, pitch: 50, pitchUpperBound: 60,
+                           rollLowerBound: 70, roll: 80, rollUpperBound: 90).notifyUpdated()
+        assertThat(camera.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                           pitchLowerBound: 40, pitch: 50, pitchUpperBound: 60,
+                                           rollLowerBound: 70, roll: 80, rollUpperBound: 90, updating: false))
+        assertThat(cnt, `is`(4))
+
+        // change pitch offset
+        camera.alignment?.pitch = 55
+        assertThat(camera.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                           pitchLowerBound: 40, pitch: 55, pitchUpperBound: 60,
+                                           rollLowerBound: 70, roll: 80, rollUpperBound: 90, updating: true))
+        assertThat(backend.yawOffset, `is`(25))
+        assertThat(backend.pitchOffset, `is`(55))
+        assertThat(backend.rollOffset, `is`(80))
+        assertThat(cnt, `is`(5))
+
+        implThermal.update(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                           pitchLowerBound: 40, pitch: 55, pitchUpperBound: 60,
+                           rollLowerBound: 70, roll: 80, rollUpperBound: 90).notifyUpdated()
+        assertThat(camera.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                           pitchLowerBound: 40, pitch: 55, pitchUpperBound: 60,
+                                           rollLowerBound: 70, roll: 80, rollUpperBound: 90, updating: false))
+        assertThat(cnt, `is`(6))
+
+        // change roll offset
+        camera.alignment?.roll = 85
+        assertThat(camera.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                           pitchLowerBound: 40, pitch: 55, pitchUpperBound: 60,
+                                           rollLowerBound: 70, roll: 85, rollUpperBound: 90, updating: true))
+        assertThat(backend.yawOffset, `is`(25))
+        assertThat(backend.pitchOffset, `is`(55))
+        assertThat(backend.rollOffset, `is`(85))
+        assertThat(cnt, `is`(7))
+
+        implThermal.update(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                           pitchLowerBound: 40, pitch: 55, pitchUpperBound: 60,
+                           rollLowerBound: 70, roll: 85, rollUpperBound: 90).notifyUpdated()
+        assertThat(camera.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                           pitchLowerBound: 40, pitch: 55, pitchUpperBound: 60,
+                                           rollLowerBound: 70, roll: 85, rollUpperBound: 90, updating: false))
+        assertThat(cnt, `is`(8))
+
+        // set to same values
+        camera.alignment?.yaw = 25
+        camera.alignment?.pitch = 55
+        camera.alignment?.roll = 85
+        assertThat(camera.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                           pitchLowerBound: 40, pitch: 55, pitchUpperBound: 60,
+                                           rollLowerBound: 70, roll: 85, rollUpperBound: 90, updating: false))
+        assertThat(cnt, `is`(8))
+
+        // update to same values
+        implThermal.update(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                           pitchLowerBound: 40, pitch: 55, pitchUpperBound: 60,
+                           rollLowerBound: 70, roll: 85, rollUpperBound: 90).notifyUpdated()
+        assertThat(camera.alignment!, `is`(yawLowerBound: 10, yaw: 25, yawUpperBound: 30,
+                                           pitchLowerBound: 40, pitch: 55, pitchUpperBound: 60,
+                                           rollLowerBound: 70, roll: 85, rollUpperBound: 90, updating: false))
+        assertThat(cnt, `is`(8))
+
+        // reset offsets
+        assertThat(camera.alignment?.reset(), `is`(true))
+        assertThat(backend.resetAlignmentCnt, `is`(1))
+        assertThat(cnt, `is`(8))
+
+        implThermal.update(yawLowerBound: 0, yaw: 0, yawUpperBound: 0,
+                           pitchLowerBound: 0, pitch: 0, pitchUpperBound: 0,
+                           rollLowerBound: 0, roll: 0, rollUpperBound: 0).notifyUpdated()
+        assertThat(camera.alignment!, `is`(yawLowerBound: 0, yaw: 0, yawUpperBound: 0,
+                                           pitchLowerBound: 0, pitch: 0, pitchUpperBound: 0,
+                                           rollLowerBound: 0, roll: 0, rollUpperBound: 0, updating: false))
+        assertThat(cnt, `is`(9))
+
+        // deactivate camera
+        implThermal.updateActiveFlag(active: false).notifyUpdated()
+        assertThat(camera.alignment, nilValue())
+        assertThat(cnt, `is`(10))
+    }
 }
 
 private class Backend: CameraBackend {
@@ -2063,6 +2193,10 @@ private class Backend: CameraBackend {
     var stopRecordingCnt = 0
     var gpslapseCaptureInterval: Double?
     var timelapseCaptureInterval: Double?
+    var yawOffset = 0.0
+    var pitchOffset = 0.0
+    var rollOffset = 0.0
+    var resetAlignmentCnt = 0
 
     func set(mode: CameraMode) -> Bool {
         self.mode = mode
@@ -2171,6 +2305,18 @@ private class Backend: CameraBackend {
 
     func stopPhotoCapture() -> Bool {
         takePhotoCnt += 1
+        return true
+    }
+
+    func set(yawOffset: Double, pitchOffset: Double, rollOffset: Double) -> Bool {
+        self.yawOffset = yawOffset
+        self.pitchOffset = pitchOffset
+        self.rollOffset = rollOffset
+        return true
+    }
+
+    func resetAlignment() -> Bool {
+        resetAlignmentCnt += 1
         return true
     }
 }

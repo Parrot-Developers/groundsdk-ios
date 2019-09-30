@@ -640,7 +640,42 @@ class SkyCtrl3GamepadTests: XCTestCase {
         assertThat(AxisMappableAction.allCases.count, `is`(7))
     }
 
+    func testVolatileMapping() {
+        impl.publish()
+        var cnt = 0
+        let sc3Gamepad = store.get(Peripherals.skyCtrl3Gamepad)!
+        _ = store.register(desc: Peripherals.skyCtrl3Gamepad) {
+            cnt += 1
+        }
+
+        assertThat(sc3Gamepad.volatileMappingSetting, nilValue())
+        impl.update(volatileMappingState: false).notifyUpdated()
+
+        assertThat(cnt, `is`(0))
+        impl.volatileMappingSetting?.value = true
+        assertThat(backend.volatileMappingState, `is`(true))
+
+        impl.update(volatileMappingState: true).notifyUpdated()
+        assertThat(cnt, `is`(2))
+
+        // should do nothing
+        impl.update(volatileMappingState: true).notifyUpdated()
+        assertThat(cnt, `is`(2))
+
+        impl.volatileMappingSetting?.value = false
+        assertThat(cnt, `is`(3))
+        assertThat(backend.volatileMappingState, `is`(false))
+
+        impl.update(volatileMappingState: false).notifyUpdated()
+        assertThat(cnt, `is`(4))
+
+        // should do nothing
+        impl.update(volatileMappingState: false).notifyUpdated()
+        assertThat(cnt, `is`(4))
+    }
+
     private class Backend: SkyCtrl3GamepadBackend {
+
         var grabCalls = 0
         var buttons: Set<SkyCtrl3Button>?
         var axes: Set<SkyCtrl3Axis>?
@@ -661,6 +696,8 @@ class SkyCtrl3GamepadTests: XCTestCase {
         var interpolatorModel: Drone.Model?
         var interpolatorAxis: SkyCtrl3Axis?
         var interpolatorValue: AxisInterpolator?
+
+        var volatileMappingState: Bool?
 
         func grab(buttons: Set<SkyCtrl3Button>, axes: Set<SkyCtrl3Axis>) {
             self.buttons = buttons
@@ -692,6 +729,11 @@ class SkyCtrl3GamepadTests: XCTestCase {
             reverseModel = droneModel
             reverseAxis = axis
             self.reversed = reversed
+        }
+
+        func set(volatileMapping: Bool) -> Bool {
+            volatileMappingState = volatileMapping
+            return true
         }
     }
 }

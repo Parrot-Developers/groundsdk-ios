@@ -79,6 +79,8 @@ public class FlightPlanPilotingItfCore: ActivablePilotingItfCore, FlightPlanPilo
     /// then the interface becomes idle and the Flight Plan is ready to be executed.
     ///
     /// - Parameter filepath: local path of the file to upload
+    ///
+    /// - Note: See [Parrot FlightPlan Mavlink documentation](https://developer.parrot.com/docs/mavlink-flightplan).
     public func uploadFlightPlan(filepath: String) {
         flightPlanBackend.uploadFlightPlan(filepath: filepath)
     }

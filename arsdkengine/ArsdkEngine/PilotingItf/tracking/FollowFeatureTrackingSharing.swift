@@ -30,14 +30,13 @@
 import Foundation
 import GroundSdk
 
-/// This object is used by the different instances of FollowFeatureTrackingPilotingItf. Uniquely allocated by the
-/// drone controller, it is given as parameter during the init of a tracking pilotingitf.
-///
 /// Objective: The tracking stop command at the drone level is common to all modes,
-/// and it is necessary to prevent an interface from making a stop that would stop the tracking of another interface.
+/// and it is necessary to prevent an interface from making a stop that would stop the tracking of another
+/// interface.
 ///
 /// This object makes it possible to share the last known state of the tracking function at the drone level (Follow
-/// relative, Followgeograhic, LookAt, ...). When a tracking interface wants to send a stop command, the command is sent
+/// relative, Followgeograhic, LookAt, ...). When a tracking interface wants to send a stop command, the command is
+/// sent
 /// only if the (shared) state is that of the interface
 class FollowFeatureTrackingSharing {
     var latestModeReceived: ArsdkFeatureFollowMeMode = .none

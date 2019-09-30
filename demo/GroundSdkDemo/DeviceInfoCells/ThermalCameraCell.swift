@@ -39,6 +39,7 @@ class ThermalCameraCell: PeripheralProviderContentCell {
     @IBOutlet weak var whiteBalanceLabel: UILabel!
     @IBOutlet weak var whiteBalanceLockLabel: UILabel!
     @IBOutlet weak var exposureLockLabel: UILabel!
+    @IBOutlet weak var alignmentLabel: UILabel!
     @IBOutlet weak var photoRecordingModeLablel: UILabel!
 
     override func set(peripheralProvider provider: PeripheralProvider) {
@@ -85,6 +86,15 @@ class ThermalCameraCell: PeripheralProviderContentCell {
                     self.exposureLockLabel.text = exposureLock.mode.description
                 } else {
                     self.exposureLockLabel.text = "-"
+                }
+
+                // alignment
+                if let alignment = camera.alignment {
+                    self.alignmentLabel.text = "\(alignment.yaw.roundedToDecimal(2)), "
+                        + "\(alignment.pitch.roundedToDecimal(2)), "
+                        + "\(alignment.roll.roundedToDecimal(2))"
+                } else {
+                    self.alignmentLabel.text = "-"
                 }
 
                 // photo/video mode

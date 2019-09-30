@@ -429,6 +429,8 @@ class HttpFlightLogDownloaderTests: ArsdkEngineTestBase {
         // mock download completion during the download
         dlTask.mockCompletionSuccess(localFileUrl: URL(fileURLWithPath: "/logA.bin"))
 
+        assertThat(dlTask.destination.absoluteString, `is`("file:///mock-flightlog/work/123_log1.bin"))
+
         // we don't wait the delete to be done to update the peripheral
         assertThat(changeCnt, `is`(3))
         assertThat(droneFlightLogDownloader!, isDownloading(downloadedCount: 1))
@@ -446,6 +448,7 @@ class HttpFlightLogDownloaderTests: ArsdkEngineTestBase {
         // mock download completion during the download
         dlTask2.mockCompletionSuccess(localFileUrl: URL(fileURLWithPath: "/logA.bin"))
 
+        assertThat(dlTask2.destination.absoluteString, `is`("file:///mock-flightlog/work/123_log2.bin"))
         // we don't wait the delete to be done to update the peripheral
         assertThat(changeCnt, `is`(4))
         assertThat(droneFlightLogDownloader!, isDownloading(downloadedCount: 2))
@@ -491,6 +494,5 @@ class HttpFlightLogDownloaderTests: ArsdkEngineTestBase {
         // last task is a donwload task
         let downloadTask = httpSession.popLastTask() as! MockDownloadTask
         assertThat(downloadTask, present())
-
     }
 }

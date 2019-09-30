@@ -64,7 +64,8 @@ class AnafiAlarms: DeviceComponentController {
                                  supportedAlarms: [.power, .motorCutOut, .userEmergency,
                                                    .motorError, .batteryTooHot, .batteryTooCold,
                                                    .hoveringDifficultiesNoGpsTooDark, .hoveringDifficultiesNoGpsTooHigh,
-                                                   .automaticLandingBatteryIssue, .wind, .verticalCamera])
+                                                   .automaticLandingBatteryIssue, .wind, .verticalCamera,
+                                                   .strongVibrations])
     }
 
     /// Drone is connected
@@ -201,6 +202,21 @@ extension AnafiAlarms: ArsdkFeatureArdrone3PilotingstateCallback {
             return
         }
         alarms.update(level: level, forAlarm: .wind).notifyUpdated()
+    }
+
+    func onVibrationLevelChanged(state: ArsdkFeatureArdrone3PilotingstateVibrationlevelchangedState) {
+        let level: Alarm.Level
+        switch state {
+        case .ok:
+            level = .off
+        case .critical:
+            level = .critical
+        case .warning:
+           level = .warning
+        case .sdkCoreUnknown:
+            return
+        }
+        alarms.update(level: level, forAlarm: .strongVibrations).notifyUpdated()
     }
 }
 

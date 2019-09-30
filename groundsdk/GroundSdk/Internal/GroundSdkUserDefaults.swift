@@ -75,7 +75,7 @@ internal class GroundSdkUserDefaults {
     /// Get the value previously saved with `storeData()`
     public func loadData() -> Any? {
         // get the Groundsdk Store Dictionary
-        var gsdkStoreDictionary = userDefaults.dictionary(forKey: globalKey) ?? [:]
+        let gsdkStoreDictionary = userDefaults.dictionary(forKey: globalKey) ?? [:]
         return gsdkStoreDictionary[rootStoreKey]
     }
 }

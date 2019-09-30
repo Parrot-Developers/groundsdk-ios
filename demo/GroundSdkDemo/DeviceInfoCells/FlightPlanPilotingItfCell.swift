@@ -86,7 +86,7 @@ class FlightPlanPilotingItfCell: PilotingItfProviderContentCell {
         let alert = UIAlertController(title: "Flight plan file", message: "Chose the flight plan file to use.\n" +
             "Files should be put in Documents/flightPlans.",
                                       preferredStyle: .actionSheet)
-
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let flightPlanFolderPath = documentPath.appendingPathComponent("flightPlans")
         let fileManager = FileManager.default

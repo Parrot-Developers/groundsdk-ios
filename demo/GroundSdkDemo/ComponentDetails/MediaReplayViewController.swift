@@ -84,7 +84,6 @@ class MediaReplayViewController: UIViewController {
 
     @objc func refreshStreamPosition() {
         let position = mediaReplay?.value?.position ?? 0
-        print("refreshStreamPosition \(position)")
         positionLabel.text = timeFormatter.string(from: position)
         timeSlider.value = Float(position)
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(refreshStreamPosition),
@@ -125,6 +124,5 @@ class MediaReplayViewController: UIViewController {
 
     @IBAction func seekTo(_ sender: UISlider) {
         _ = mediaReplay?.value?.seekTo(position: TimeInterval(sender.value))
-        print("seekTo \(sender.value)")
     }
 }
