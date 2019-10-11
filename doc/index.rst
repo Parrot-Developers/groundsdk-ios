@@ -7,4 +7,4 @@ GroundSdk iOS Documentation
     buildgroundsdk
     installcocoapods
     appsubmission
-    Samples <http://https://developer.parrot.com/docs/groundsdk-ios-samples/>
+    Samples <https://developer.parrot.com/docs/groundsdk-ios-samples/>

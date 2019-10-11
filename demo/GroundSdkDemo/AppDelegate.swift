@@ -35,9 +35,12 @@ import GroundSdk
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        if let svc = self.window?.rootViewController as? UISplitViewController {
+            svc.preferredDisplayMode = .allVisible
+            svc.delegate = self
+        }
         return true
     }
 
@@ -60,6 +63,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      completionHandler: @escaping () -> Void) {
         GroundSdk.setBackgroundUrlSessionCompletionHandler(completionHandler, forSessionIdentifier: identifier)
     }
+}
+
+// MARK: - UISplitViewControllerDelegate
+extension AppDelegate: UISplitViewControllerDelegate {
+    func splitViewController(_ splitViewController: UISplitViewController,
+                                collapseSecondary secondaryViewController: UIViewController,
+                                onto primaryViewController: UIViewController) -> Bool {
+           return true
+       }
 }
 
 extension UINavigationController {

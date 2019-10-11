@@ -30,7 +30,7 @@
 import UIKit
 import GroundSdk
 
-class DevicesListViewController: UITableViewController, UISplitViewControllerDelegate {
+class DevicesListViewController: UITableViewController {
 
     private let droneInfoSegue = "DroneInfoSegue"
     private let rcInfoSegue = "RcInfoSegue"
@@ -51,8 +51,6 @@ class DevicesListViewController: UITableViewController, UISplitViewControllerDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        splitViewController?.delegate = self
-        splitViewController?.preferredDisplayMode = UISplitViewController.DisplayMode.allVisible
         rcListRef = groundSdk.getRemoteControlList(
             observer: {  [unowned self] entryList in
                 self.rcList = entryList
@@ -144,13 +142,6 @@ class DevicesListViewController: UITableViewController, UISplitViewControllerDel
                 viewController.setDeviceUid(selectedUid)
             }
         }
-    }
-
-    // MARK: - UISplitViewControllerDelegate
-    func splitViewController(_ splitViewController: UISplitViewController,
-                             collapseSecondary secondaryViewController: UIViewController,
-                             onto primaryViewController: UIViewController) -> Bool {
-        return true
     }
 
     private func formatConnectors(

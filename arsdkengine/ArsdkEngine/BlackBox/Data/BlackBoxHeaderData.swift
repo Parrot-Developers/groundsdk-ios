@@ -48,11 +48,12 @@ struct BlackBoxHeaderData: Encodable {
         case motorVersion = "product_motor_version"
         case gpsVersion = "product_gps_version"
         case academyId = "academy_id"
+        case bootId = "boot_id"
         case remoteControlData = "remote_controller"
     }
 
     /// Black box version
-    let blackBoxVersion = "1.0.3"
+    let blackBoxVersion = "1.0.5"
     /// OS version
     let osVersion = "iOS \(AppInfoCore.systemVersion)"
     /// Device model
@@ -75,6 +76,8 @@ struct BlackBoxHeaderData: Encodable {
     var gpsVersion: String?
     /// User's academy id
     var academyId: String? // TODO: defined here but needs academy integration.
+    /// Drone's boot id
+    var bootId: String?
     /// Remote controller information
     var remoteControlData: BlackBoxRemoteControlData?
 

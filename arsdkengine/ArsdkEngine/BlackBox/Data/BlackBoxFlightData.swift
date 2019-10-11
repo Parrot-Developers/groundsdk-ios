@@ -38,6 +38,7 @@ struct BlackBoxFlightData: Encodable {
     private enum CodingKeys: String, CodingKey {
         case timestamp
         case altitude = "product_alt"
+        case heightAboveGround = "product_height_above_ground"
         case speed = "product_speed"
         case attitude = "product_angles"
         case pcmd = "device_pcmd"
@@ -51,6 +52,15 @@ struct BlackBoxFlightData: Encodable {
     var altitude = 0.0 {
         didSet {
             if oldValue != altitude {
+                hasChanged = true
+            }
+        }
+    }
+
+    /// Height of the drone in meters above ground level
+    var heightAboveGround = Float(0) {
+        didSet {
+            if oldValue != heightAboveGround {
                 hasChanged = true
             }
         }

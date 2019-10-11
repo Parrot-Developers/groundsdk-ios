@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bVC-yV-1Qs">
-    <device id="retina4_7" orientation="landscape">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bVC-yV-1Qs">
+    <device id="retina4_7" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3mn-Vp-m2c">
-                                <rect key="frame" x="0.0" y="52" width="667" height="948"/>
+                                <rect key="frame" x="0.0" y="32" width="667" height="968"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="0s5-Ms-1bd">
                                         <rect key="frame" x="8" y="8" width="651" height="236.5"/>
@@ -61,7 +58,6 @@
                                                         </connections>
                                                     </slider>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="1Rq-tM-rRF" firstAttribute="leading" secondItem="AGV-t6-MCn" secondAttribute="leading" constant="20" id="Pps-pB-9iJ"/>
                                                     <constraint firstItem="1Rq-tM-rRF" firstAttribute="centerY" secondItem="AGV-t6-MCn" secondAttribute="centerY" id="e2n-Ki-BPS"/>
@@ -71,7 +67,6 @@
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CRW-uv-J03" userLabel="Sep">
                                                 <rect key="frame" x="0.0" y="131" width="240" height="15"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="15" id="gyB-zr-J5w"/>
                                                 </constraints>
@@ -106,7 +101,6 @@
                                                         </connections>
                                                     </slider>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="OqX-QY-5eW" secondAttribute="trailing" constant="20" id="Auv-zl-wzz"/>
                                                     <constraint firstItem="OqX-QY-5eW" firstAttribute="leading" secondItem="Yqh-1Q-PWF" secondAttribute="leading" constant="20" id="B9D-8F-bDK"/>
@@ -123,7 +117,6 @@
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="0s5-Ms-1bd" firstAttribute="top" secondItem="3mn-Vp-m2c" secondAttribute="topMargin" id="Tai-xY-E2b"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="0s5-Ms-1bd" secondAttribute="trailing" id="cpM-J4-Ize"/>
@@ -131,7 +124,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="i7l-AY-tA6" firstAttribute="trailing" secondItem="3mn-Vp-m2c" secondAttribute="trailing" id="CTj-HJ-vM7"/>
                             <constraint firstItem="i7l-AY-tA6" firstAttribute="bottom" secondItem="3mn-Vp-m2c" secondAttribute="bottom" id="FOj-Tr-iZH"/>

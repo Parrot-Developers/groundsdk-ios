@@ -110,4 +110,11 @@ struct BlackBoxData: Encodable {
         header.softwareVersion = software
         header.hardwareVersion = hardware
     }
+
+    /// Records the boot id
+    ///
+    /// - Parameter bootId: the boot id to record
+    mutating func set(bootId: String) {
+        header.bootId = bootId
+    }
 }

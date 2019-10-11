@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tel-le-ofv">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tel-le-ofv">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -29,7 +27,6 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-ib-tt0" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
                                                 <rect key="frame" x="8" y="32" width="359" height="64"/>
-                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="64" id="YDo-QY-FMK"/>
                                                 </constraints>
@@ -42,7 +39,6 @@
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HUW-hb-IvO" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
                                                 <rect key="frame" x="8" y="104" width="359" height="64"/>
-                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="64" id="Gnj-Ro-NvR"/>
                                                 </constraints>
@@ -55,7 +51,6 @@
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BDb-Ja-S83" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
                                                 <rect key="frame" x="8" y="248" width="359" height="64"/>
-                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="64" id="Bpg-7m-SRf"/>
                                                 </constraints>
@@ -68,7 +63,6 @@
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BjI-zc-gec" customClass="BoolSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
                                                 <rect key="frame" x="8" y="320" width="359" height="32"/>
-                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="32" id="2Ju-Zj-mSe"/>
                                                 </constraints>
@@ -81,7 +75,6 @@
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NQ1-Wo-k0Z" userLabel="Thrown TakeOff" customClass="BoolSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
                                                 <rect key="frame" x="8" y="360" width="359" height="32"/>
-                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="32" id="Cco-VQ-Nai"/>
                                                 </constraints>
@@ -94,7 +87,6 @@
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VXe-jq-R4h" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
                                                 <rect key="frame" x="8" y="176" width="359" height="64"/>
-                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="64" id="oe8-3S-tYq"/>
                                                 </constraints>
@@ -138,7 +130,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="itH-eU-yvP" secondAttribute="trailing" id="GzJ-pT-B0y"/>
                             <constraint firstItem="qCL-c1-CGW" firstAttribute="top" secondItem="itH-eU-yvP" secondAttribute="bottom" id="IGK-uW-xeo"/>
@@ -171,7 +163,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tel-le-ofv" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ctq-XD-A8z">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

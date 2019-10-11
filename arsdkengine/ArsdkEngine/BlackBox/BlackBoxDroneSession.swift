@@ -139,6 +139,8 @@ class BlackBoxDroneSession: NSObject, BlackBoxSession {
             ArsdkFeatureArdrone3Pilotingstate.decode(command, callback: self)
         case kArsdkFeatureArdrone3SettingsstateUid:
             ArsdkFeatureArdrone3Settingsstate.decode(command, callback: self)
+        case kArsdkFeatureBatteryUid:
+            ArsdkFeatureBattery.decode(command, callback: self)
         case kArsdkFeatureCommonCommonstateUid:
             ArsdkFeatureCommonCommonstate.decode(command, callback: self)
         case kArsdkFeatureCommonMavlinkstateUid:
@@ -184,6 +186,28 @@ extension BlackBoxDroneSession: ArsdkFeatureArdrone3PilotingstateCallback {
         blackBox.add(event: BlackBoxEvent.alertStateChange(state.rawValue))
     }
 
+    func onHoveringWarning(noGpsTooDark: UInt, noGpsTooHigh: UInt) {
+        if noGpsTooDark != 0 {
+            blackBox.add(event: BlackBoxEvent.hoveringWarning(tooDark: true))
+        }
+        if noGpsTooHigh != 0 {
+            blackBox.add(event: BlackBoxEvent.hoveringWarning(tooDark: false))
+        }
+    }
+
+    func onForcedLandingAutoTrigger(reason: ArsdkFeatureArdrone3PilotingstateForcedlandingautotriggerReason,
+                                    delay: UInt) {
+        blackBox.add(event: BlackBoxEvent.forcedLanding(reason.rawValue))
+    }
+
+    func onWindStateChanged(state: ArsdkFeatureArdrone3PilotingstateWindstatechangedState) {
+        blackBox.add(event: BlackBoxEvent.windStateChange(state.rawValue))
+    }
+
+    func onVibrationLevelChanged(state: ArsdkFeatureArdrone3PilotingstateVibrationlevelchangedState) {
+        blackBox.add(event: BlackBoxEvent.vibrationLevelChange(state.rawValue))
+    }
+
     func onFlyingStateChanged(state: ArsdkFeatureArdrone3PilotingstateFlyingstatechangedState) {
         blackBox.add(event: BlackBoxEvent.flyingStateChange(state: state.rawValue))
         if state == .takingoff {
@@ -213,6 +237,10 @@ extension BlackBoxDroneSession: ArsdkFeatureArdrone3PilotingstateCallback {
     func onAltitudeChanged(altitude: Double) {
         flightData.altitude = altitude
     }
+
+    func onAltitudeAboveGroundChanged(altitude: Float) {
+        flightData.heightAboveGround = altitude
+    }
 }
 
 extension BlackBoxDroneSession: ArsdkFeatureArdrone3SettingsstateCallback {
@@ -223,15 +251,46 @@ extension BlackBoxDroneSession: ArsdkFeatureArdrone3SettingsstateCallback {
     func onMotorSoftwareVersionChanged(version: String!) {
         blackBox.set(motorSoftwareVersion: version)
     }
+
+    func onMotorErrorStateChanged(motorids: UInt,
+                                  motorerror: ArsdkFeatureArdrone3SettingsstateMotorerrorstatechangedMotorerror) {
+        blackBox.add(event: BlackBoxEvent.motorError(motorerror.rawValue))
+    }
+}
+
+extension BlackBoxDroneSession: ArsdkFeatureBatteryCallback {
+    func onAlert(alert: ArsdkFeatureBatteryAlert, level: ArsdkFeatureBatteryAlertLevel, listFlagsBitField: UInt) {
+        if !ArsdkFeatureGenericListFlagsBitField.isSet(.empty, inBitField: listFlagsBitField) &&
+           !ArsdkFeatureGenericListFlagsBitField.isSet(.remove, inBitField: listFlagsBitField) &&
+            level != ArsdkFeatureBatteryAlertLevel.none {
+            blackBox.add(event: BlackBoxEvent.batteryAlert(critical: level == ArsdkFeatureBatteryAlertLevel.critical,
+                                                           type: alert.rawValue))
+        }
+    }
+
+    func onVoltage(voltage: UInt) {
+        environmentData.batteryVoltage = Int(voltage)
+    }
 }
 
 extension BlackBoxDroneSession: ArsdkFeatureCommonCommonstateCallback {
+    func onSensorsStatesListChanged(sensorname: ArsdkFeatureCommonCommonstateSensorsstateslistchangedSensorname,
+                                    sensorstate: UInt) {
+        if sensorstate == 0 {
+            blackBox.add(event: BlackBoxEvent.sensorError(sensorname.rawValue))
+        }
+    }
+
     func onBatteryStateChanged(percent: UInt) {
         blackBox.add(event: BlackBoxEvent.batteryLevelChange(Int(percent)))
     }
 
     func onWifiSignalChanged(rssi: Int) {
         environmentData.rssi = rssi
+    }
+
+    func onBootId(bootid: String!) {
+        blackBox.set(bootId: bootid)
     }
 }
 

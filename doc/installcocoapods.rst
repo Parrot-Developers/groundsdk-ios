@@ -116,9 +116,9 @@ Replace all content with:
 
     target ' appProject ' do
         use_frameworks!
-        pod 'GroundSdk', '~> 1.1.0'
-        pod 'ArsdkEngine', '~> 1.1.0'
-        pod 'SdkCore', '~> 1.1.0'
+        pod 'GroundSdk', '~> 1.1.1'
+        pod 'ArsdkEngine', '~> 1.1.1'
+        pod 'SdkCore', '~> 1.1.1'
     end
 
 Save and close the Podfile.

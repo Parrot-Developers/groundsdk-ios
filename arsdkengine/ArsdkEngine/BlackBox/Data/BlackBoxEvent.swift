@@ -41,6 +41,64 @@ struct BlackBoxEvent: Encodable {
         return BlackBoxEvent(type: "product_alert", value: state)
     }
 
+    /// Obtains a hovering warning event
+    ///
+    /// - Parameter tooDark: `true` if the reason is darkness, `false` if it's the drone height
+    /// - Returns: hovering warning event
+    static func hoveringWarning(tooDark: Bool) -> BlackBoxEvent {
+        return BlackBoxEvent(type: "product_hovering_warning", value: tooDark ? "no_gps_too_dark" : "no_gps_too_high")
+    }
+
+    /// Obtains a forced landing event
+    ///
+    /// - Parameter reason: forced landing reason
+    /// - Returns: forced landing event
+    static func forcedLanding(_ reason: Int) -> BlackBoxEvent {
+        return BlackBoxEvent(type: "product_forced_landing", value: reason)
+    }
+
+    /// Obtains a wind state change event
+    ///
+    /// - Parameter state: wind state
+    /// - Returns: wind state change event
+    static func windStateChange(_ state: Int) -> BlackBoxEvent {
+        return BlackBoxEvent(type: "product_wind", value: state)
+    }
+
+    /// Obtains a vibration level change event
+    ///
+    /// - Parameter state: vibration level state
+    /// - Returns: vibration level change event
+    static func vibrationLevelChange(_ state: Int) -> BlackBoxEvent {
+        return BlackBoxEvent(type: "product_vibration_level", value: state)
+    }
+
+    /// Obtains a motor error event
+    ///
+    /// - Parameter error: motor error
+    /// - Returns: motor error event
+    static func motorError(_ error: Int) -> BlackBoxEvent {
+        return BlackBoxEvent(type: "product_motor_error", value: error)
+    }
+
+    /// Obtains a battery alert event
+    ///
+    /// - Parameters:
+    ///   - critical: `true` if the alert is critical, `false` if it's a warning
+    ///   - type: alert type
+    /// - Returns: battery alert event
+    static func batteryAlert(critical: Bool, type: Int) -> BlackBoxEvent {
+        return BlackBoxEvent(type: "product_battery_" + (critical ? "critical" : "warning"), value: type)
+    }
+
+    /// Obtains a sensor error event
+    ///
+    /// - Parameter sensor: sensor
+    /// - Returns: sensor error event
+    static func sensorError(_ sensor: Int) -> BlackBoxEvent {
+        return BlackBoxEvent(type: "product_sensor_error", value: sensor)
+    }
+
     /// Obtains a battery level change event
     ///
     /// - Parameter level: battery level

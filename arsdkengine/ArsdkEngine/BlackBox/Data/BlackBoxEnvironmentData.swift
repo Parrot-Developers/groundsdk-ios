@@ -41,6 +41,7 @@ struct BlackBoxEnvironmentData: Encodable {
         case controllerLocation = "device_gps"
         case rcPcmd = "mpp_pcmd"
         case rssi = "wifi_rssi"
+        case batteryVoltage = "product_battery_voltage"
     }
 
     /// Whether the data has been modified since the last `useIfChanged` call
@@ -78,6 +79,15 @@ struct BlackBoxEnvironmentData: Encodable {
     var rcPcmd = BlackBoxRcPilotingCommandData() {
         didSet {
             if oldValue != rcPcmd {
+                hasChanged = true
+            }
+        }
+    }
+
+    /// Battery voltage
+    var batteryVoltage = 0 {
+        didSet {
+            if oldValue != batteryVoltage {
                 hasChanged = true
             }
         }
