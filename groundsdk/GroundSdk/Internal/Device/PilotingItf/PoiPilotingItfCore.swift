@@ -34,20 +34,25 @@ public class PointOfInterestCore: PointOfInterest, Equatable {
     public let latitude: Double
     public let longitude: Double
     public let altitude: Double
+    public let mode: PointOfInterestMode
+
     /// Constructor
     ///
     /// - Parameters:
     ///   - latitude: Latitude of the location (in degrees) to look at.
     ///   - longitude: Longitude of the location (in degrees) to look at.
     ///   - altitude: Altitude above take off point (in meters) to look at.
-    public init(latitude: Double, longitude: Double, altitude: Double) {
+    ///   - mode: Point Of Interest operating mode
+    public init(latitude: Double, longitude: Double, altitude: Double, mode: PointOfInterestMode) {
         self.latitude = latitude
         self.longitude = longitude
         self.altitude = altitude
+        self.mode = mode
     }
     // MARK: Equatable protocol concordance
     public static func == (lhs: PointOfInterestCore, rhs: PointOfInterestCore) -> Bool {
         return (lhs.latitude == rhs.latitude) && (lhs.longitude == rhs.longitude) && (lhs.altitude == rhs.altitude)
+            && (lhs.mode == rhs.mode)
     }
 }
 
@@ -59,7 +64,8 @@ public protocol PoiPilotingItfBackend: ActivablePilotingItfBackend {
     ///   - latitude: latitude of the location (in degrees) to look at
     ///   - longitude: longitude of the location (in degrees) to look at
     ///   - altitude: altitude above take off point (in meters) to look at
-    func start(latitude: Double, longitude: Double, altitude: Double)
+    ///   - mode: Point Of Interest mode
+    func start(latitude: Double, longitude: Double, altitude: Double, mode: PointOfInterestMode)
 
     /// Sets the current pitch value.
     ///
@@ -119,7 +125,13 @@ public class PoiPilotingItfCore: ActivablePilotingItfCore, PointOfInterestPiloti
     // MARK: API methods
     public func start(latitude: Double, longitude: Double, altitude: Double) {
         if state != .unavailable {
-            poiBackend.start(latitude: latitude, longitude: longitude, altitude: altitude)
+            poiBackend.start(latitude: latitude, longitude: longitude, altitude: altitude, mode: .lockedGimbal)
+        }
+    }
+
+    public func start(latitude: Double, longitude: Double, altitude: Double, mode: PointOfInterestMode) {
+        if state != .unavailable {
+            poiBackend.start(latitude: latitude, longitude: longitude, altitude: altitude, mode: mode)
         }
     }
 

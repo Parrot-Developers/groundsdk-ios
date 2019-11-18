@@ -393,7 +393,7 @@ public class MockGroundSdk: NSObject {
     let guidedPilotingItfMockBackend = GuidedPilotingItfMockBackend()
 
     class PoiPilotingItfMockBackend: PoiPilotingItfBackend {
-        func start(latitude: Double, longitude: Double, altitude: Double) {}
+        func start(latitude: Double, longitude: Double, altitude: Double, mode: PointOfInterestMode) {}
         func set(roll: Int) {}
         func set(pitch: Int) {}
         func set(verticalSpeed: Int) {}

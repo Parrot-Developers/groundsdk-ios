@@ -38,6 +38,7 @@ class PoiPilotingItfViewController: UIViewController, DeviceViewController {
     @IBOutlet var poiLonValue: UILabel!
     @IBOutlet var poiAltitudeValue: UILabel!
     @IBOutlet var altitudeSlider: UISlider!
+    @IBOutlet var modeControl: UISegmentedControl!
     @IBOutlet weak var actionButton: UIButton!
     @IBOutlet weak var interfaceStatusValue: UILabel!
     @IBOutlet var droneLatValue: UILabel!
@@ -49,6 +50,7 @@ class PoiPilotingItfViewController: UIViewController, DeviceViewController {
     @IBOutlet var currentLatValue: UILabel!
     @IBOutlet var currentLonValue: UILabel!
     @IBOutlet var currentAltValue: UILabel!
+    @IBOutlet var currentMode: UILabel!
     @IBOutlet weak var pitchSlider: UISlider!
     @IBOutlet weak var pichValue: UILabel!
     @IBOutlet weak var rollSlider: UISlider!
@@ -142,6 +144,7 @@ class PoiPilotingItfViewController: UIViewController, DeviceViewController {
             currentLatValue.text = currentPointOfInterest.latitude.description
             currentLonValue.text = currentPointOfInterest.longitude.description
             currentAltValue.text = currentPointOfInterest.altitude.description
+            currentMode.text = currentPointOfInterest.mode.description
 
         } else {
             showCommands = false
@@ -149,6 +152,7 @@ class PoiPilotingItfViewController: UIViewController, DeviceViewController {
             currentLatValue.text = ""
             currentLonValue.text = ""
             currentAltValue.text = ""
+            currentMode.text = ""
         }
 
         if commandsView.isHidden != !showCommands {
@@ -178,7 +182,9 @@ class PoiPilotingItfViewController: UIViewController, DeviceViewController {
                 if let locationDestination = locationDestination {
                     pointOfInterestItf.start(
                         latitude: locationDestination.latitude, longitude: locationDestination.longitude,
-                        altitude: Double(altitudeSlider.value))
+                        altitude: Double(altitudeSlider.value),
+                        mode: modeControl.selectedSegmentIndex == 0 ?
+                            PointOfInterestMode.lockedGimbal : PointOfInterestMode.freeGimbal)
                 }
             }
         }
@@ -217,7 +223,9 @@ class PoiPilotingItfViewController: UIViewController, DeviceViewController {
             pointOfInterestItf.state == .active {
             pointOfInterestItf.start(
                 latitude: locationDestination.latitude, longitude: locationDestination.longitude,
-                altitude: Double(altitudeSlider.value))
+                altitude: Double(altitudeSlider.value),
+                mode: modeControl.selectedSegmentIndex == 0 ?
+                    PointOfInterestMode.lockedGimbal : PointOfInterestMode.freeGimbal)
         }
     }
 }

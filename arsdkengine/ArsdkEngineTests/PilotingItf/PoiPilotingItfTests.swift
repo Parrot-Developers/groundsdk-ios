@@ -89,7 +89,7 @@ class PoiPilotingItfTests: ArsdkEngineTestBase {
         // flying
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.ardrone3PilotingstateFlyingstatechangedEncoder(state: .flying))
-         assertThat(poiPilotingItf!.state, `is`(.unavailable))
+        assertThat(poiPilotingItf!.state, `is`(.unavailable))
         assertThat(changeCnt, `is`(1))
 
         mockArsdkCore.onCommandReceived(
@@ -115,9 +115,34 @@ class PoiPilotingItfTests: ArsdkEngineTestBase {
         assertThat(changeCnt, `is`(3))
         let currentPoi = poiPilotingItf!.currentPointOfInterest
 
-        assertThat(currentPoi, presentAnd(`is`(latitude: 1.1, longitude: 2.2, altitude: 3.3)))
+        assertThat(currentPoi, presentAnd(`is`(latitude: 1.1, longitude: 2.2, altitude: 3.3, mode: .lockedGimbal)))
 
         // The poi Piloting interface should be active
+        assertThat(poiPilotingItf!.state, `is`(.active))
+
+        // Receiving piloted POI V2 state
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstatePilotedpoiv2Encoder(
+                latitude: 500, longitude: 500, altitude: 500, mode: .lockedGimbal, status: .available))
+
+        assertThat(poiPilotingItf!.currentPointOfInterest, nilValue())
+        assertThat(poiPilotingItf!.state, `is`(.idle))
+        assertThat(changeCnt, `is`(4))
+
+        // Now we should send a piloted POI V2 command
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.ardrone3PilotingStartpilotedpoiv2(
+            latitude: 4.4, longitude: 5.5, altitude: 6.6, mode: .freeGimbal))
+
+        poiPilotingItf!.start(latitude: 4.4, longitude: 5.5, altitude: 6.6, mode: .freeGimbal)
+
+        // POI is running
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstatePilotedpoiv2Encoder(
+                latitude: 4.4, longitude: 5.5, altitude: 6.6, mode: .freeGimbal, status: .running))
+
+        assertThat(changeCnt, `is`(5))
+        assertThat(poiPilotingItf!.currentPointOfInterest,
+                   presentAnd(`is`(latitude: 4.4, longitude: 5.5, altitude: 6.6, mode: .freeGimbal)))
         assertThat(poiPilotingItf!.state, `is`(.active))
 
         // Send piloting commands
@@ -143,13 +168,13 @@ class PoiPilotingItfTests: ArsdkEngineTestBase {
                 latitude: 500, longitude: 500, altitude: 500, status: .available))
         assertThat(poiPilotingItf!.currentPointOfInterest, nilValue())
         assertThat(poiPilotingItf!.state, `is`(.idle))
-        assertThat(changeCnt, `is`(4))
+        assertThat(changeCnt, `is`(6))
 
         // Landed and state unavailable
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.ardrone3PilotingstateFlyingstatechangedEncoder(state: .landed))
         assertThat(poiPilotingItf!.state, `is`(.unavailable))
-        assertThat(changeCnt, `is`(5))
+        assertThat(changeCnt, `is`(7))
     }
 
     func testAvailableAndThenFlying() {
@@ -205,7 +230,7 @@ class PoiPilotingItfTests: ArsdkEngineTestBase {
 
         assertThat(changeCnt, `is`(3))
         let currentPoi = poiPilotingItf!.currentPointOfInterest
-        assertThat(currentPoi, presentAnd(`is`(latitude: 1.1, longitude: 2.2, altitude: 3.3)))
+        assertThat(currentPoi, presentAnd(`is`(latitude: 1.1, longitude: 2.2, altitude: 3.3, mode: .lockedGimbal)))
 
         // The poi Piloting interface should be active
         assertThat(poiPilotingItf!.state, `is`(.active))
@@ -223,7 +248,8 @@ class PoiPilotingItfTests: ArsdkEngineTestBase {
 
         assertThat(changeCnt, `is`(4))
         let newCurrentPoi = poiPilotingItf!.currentPointOfInterest
-        assertThat(newCurrentPoi, presentAnd(`is`(latitude: 11.1, longitude: 22.2, altitude: 33.3)))
+        assertThat(newCurrentPoi, presentAnd(`is`(latitude: 11.1, longitude: 22.2, altitude: 33.3,
+                                                  mode: .lockedGimbal)))
 
         // The poi Piloting interface should be active
         assertThat(poiPilotingItf!.state, `is`(.active))
@@ -273,7 +299,7 @@ class PoiPilotingItfTests: ArsdkEngineTestBase {
 
         assertThat(changeCnt, `is`(3))
         let currentPoi = poiPilotingItf!.currentPointOfInterest
-        assertThat(currentPoi, presentAnd(`is`(latitude: 1.1, longitude: 2.2, altitude: 3.3)))
+        assertThat(currentPoi, presentAnd(`is`(latitude: 1.1, longitude: 2.2, altitude: 3.3, mode: .lockedGimbal)))
 
         // The poi Piloting interface should be active
         assertThat(poiPilotingItf!.state, `is`(.active))
@@ -297,7 +323,7 @@ class PoiPilotingItfTests: ArsdkEngineTestBase {
     }
 
     /// test status when we reconnect to a flying  drone
-    func testStatusReconnecingAFlyingDrone() {
+    func testStatusReconnectingAFlyingDrone() {
         connect(drone: drone, handle: 1)
         assertThat(poiPilotingItf, `is`(present()))
         assertThat(changeCnt, `is`(1))
@@ -348,7 +374,7 @@ class PoiPilotingItfTests: ArsdkEngineTestBase {
 
         assertThat(changeCnt, `is`(6))
         let currentPoi = poiPilotingItf!.currentPointOfInterest
-        assertThat(currentPoi, presentAnd(`is`(latitude: 11.1, longitude: 22.2, altitude: 33.3)))
+        assertThat(currentPoi, presentAnd(`is`(latitude: 11.1, longitude: 22.2, altitude: 33.3, mode: .lockedGimbal)))
 
         // The poi Piloting interface should be active
         assertThat(poiPilotingItf!.state, `is`(.active))
@@ -372,6 +398,7 @@ class PoiPilotingItfTests: ArsdkEngineTestBase {
         assertThat(changeCnt, `is`(9))
         let currentPoiRunning = poiPilotingItf!.currentPointOfInterest
         assertThat(poiPilotingItf!.state, `is`(.active))
-        assertThat(currentPoiRunning, presentAnd(`is`(latitude: 11.1, longitude: 22.2, altitude: 33.3)))
+        assertThat(currentPoiRunning, presentAnd(`is`(latitude: 11.1, longitude: 22.2, altitude: 33.3,
+                                                      mode: .lockedGimbal)))
     }
 }

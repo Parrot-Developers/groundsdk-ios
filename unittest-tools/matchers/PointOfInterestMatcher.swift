@@ -32,12 +32,14 @@ import GroundSdk
 
 func `is`(latitude: Double,
           longitude: Double,
-          altitude: Double) -> Matcher<PointOfInterest> {
+          altitude: Double,
+          mode: PointOfInterestMode) -> Matcher<PointOfInterest> {
 
     return allOf(
         Matcher<PointOfInterest>("latitude: (\(latitude)") { $0.latitude == latitude },
         Matcher<PointOfInterest>("longitude: (\(longitude)") { $0.longitude == longitude },
-        Matcher<PointOfInterest>("altitude: (\(altitude)") { $0.altitude == altitude }
+        Matcher<PointOfInterest>("altitude: (\(altitude)") { $0.altitude == altitude },
+        Matcher<PointOfInterest>("mode: (\(mode)") { $0.mode == mode }
     )
 }
 

@@ -40,12 +40,39 @@ public protocol PointOfInterest {
 
     /// Altitude above take off point (in meters) to look at.
     var altitude: Double { get }
+
+    /// Point Of Interest operating mode.
+    var mode: PointOfInterestMode { get }
+}
+
+/// Point Of Interest operating mode.
+@objc(GSPointOfInterestMode)
+public enum PointOfInterestMode: Int, CustomStringConvertible {
+    /// Gimbal is locked on the Point Of Interest.
+    case lockedGimbal
+
+    /// Gimbal is freely controllable.
+    case freeGimbal
+
+    /// Debug description.
+    public var description: String {
+        switch self {
+        case .lockedGimbal:     return "lockedGimbal"
+        case .freeGimbal:       return "freeGimbal"
+        }
+    }
 }
 
 /// Point Of Interest piloting interface.
 ///
-/// During a piloted Point Of Interest, the drone will always look at the given Point Of Interest but can be piloted
-/// normally. However, yaw value is not settable. Camera tilt and pan command is ignored by the drone.
+/// During a piloted Point Of Interest, the drone always points towards the given Point Of Interest but can be piloted
+/// normally. However, yaw value is not settable.
+///
+/// There are two variants of piloted Point Of Interest:
+///   - In `.lockedGimbal` mode, the gimbal always looks at the Point Of Interest. Gimbal control command is ignored by
+///     the drone.
+///   - In `.freeGimbal` mode, the gimbal initially looks at the Point Of Interest, and is then freely controllable by
+///     the gimbal command.
 ///
 /// This piloting interface can be retrieved by:
 /// ```
@@ -57,13 +84,27 @@ public protocol PointOfInterestPilotingItf: PilotingItf, ActivablePilotingItf {
     /// Current targeted Point Of Interest. `nil` if there's no piloted Point Of Interest in progress.
     var currentPointOfInterest: PointOfInterest? { get }
 
-    /// Starts a piloted Point Of Interest.
+    /// Starts a piloted Point Of Interest in locked gimbal mode.
+    ///
+    /// This is equivalent to calling:
+    /// ```
+    /// start(latitude, longitude, altitude, .lockedGimbal)
+    /// ```
     ///
     /// - Parameters:
     ///   - latitude: latitude of the location (in degrees) to look at
     ///   - longitude: longitude of the location (in degrees) to look at
     ///   - altitude: altitude above take off point (in meters) to look at
     func start(latitude: Double, longitude: Double, altitude: Double)
+
+    /// Starts a piloted Point Of Interest.
+    ///
+    /// - Parameters:
+    ///   - latitude: latitude of the location (in degrees) to look at
+    ///   - longitude: longitude of the location (in degrees) to look at
+    ///   - altitude: altitude above take off point (in meters) to look at
+    ///   - mode: point of interest mode
+    func start(latitude: Double, longitude: Double, altitude: Double, mode: PointOfInterestMode)
 
     /// Sets the current pitch value.
     ///

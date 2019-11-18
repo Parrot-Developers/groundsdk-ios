@@ -78,12 +78,13 @@ public extension UIScreen {
          "iPhone9,1", "iPhone9,3",                    // iPhone 7
          "iPhone10,1", "iPhone10,4",                  // iPhone 8
          "iPhone11,8",                                // iPhone XR
+         "iPhone12,1",                                // iPhone 11
          "iPod5,1",                                   // iPod Touch 5th generation
          "iPod7,1",                                   // iPod Touch 6th generation
          "iPad4,4", "iPad4,5", "iPad4,6",             // iPad Mini 2
          "iPad4,7", "iPad4,8", "iPad4,9",             // iPad Mini 3
          "iPad5,1", "iPad5,2",                        // iPad Mini 4
-         "iPad11,1", "iPad11,2":                                 // iPad Mini 5
+         "iPad11,1", "iPad11,2":                      // iPad Mini 5
             return 326
 
         case "iPhone7,1",                             // iPhone 6 Plus
@@ -93,8 +94,10 @@ public extension UIScreen {
             return 401
 
         case "iPhone10,3", "iPhone10,6",              // iPhone X
-         "iPhone11,2",                                // iPhone XS
-        "iPhone11,4", "iPhone11,6":                  // iPhone XS Max
+        "iPhone11,2",                                 // iPhone XS
+        "iPhone11,4", "iPhone11,6",                   // iPhone XS Max
+        "iPhone12,3",                                 // iPhone 11 Pro
+        "iPhone12,5":                                 // iPhone 11 Pro Max
             return 458
 
         default:                                      // unknown model identifier

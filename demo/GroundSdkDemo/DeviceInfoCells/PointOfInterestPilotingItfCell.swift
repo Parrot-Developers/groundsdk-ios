@@ -37,6 +37,7 @@ class PointOfInterestPilotingItfCell: PilotingItfProviderContentCell {
     @IBOutlet weak var latitudeValue: UILabel!
     @IBOutlet weak var longitudeValue: UILabel!
     @IBOutlet weak var altitudeValue: UILabel!
+    @IBOutlet weak var modeValue: UILabel!
 
     @IBOutlet weak var deactivateButton: UIButton!
 
@@ -52,6 +53,7 @@ class PointOfInterestPilotingItfCell: PilotingItfProviderContentCell {
                 self?.latitudeValue.text = pilotingItf.currentPointOfInterest?.latitude.description ?? "-"
                 self?.longitudeValue.text = pilotingItf.currentPointOfInterest?.longitude.description ?? "-"
                 self?.altitudeValue.text = pilotingItf.currentPointOfInterest?.altitude.description ?? "-"
+                self?.modeValue.text = pilotingItf.currentPointOfInterest?.mode.description ?? "-"
             } else {
                 self?.hide()
             }

@@ -145,14 +145,14 @@ class ThermalControlViewController: UITableViewController, DeviceViewController 
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var rowHeight: CGFloat = 44.0
-
         if thermalControl?.value?.calibration == nil, indexPath.row == rowCalibration {
             rowHeight = 0.0
         }
 
         if let state = stateRef?.value?.connectionState {
+            let offLineRows: Set<Int> = [rowMode, rowSensitivityRange]
             if state == .disconnected {
-                if indexPath.row > 1 {
+                if !offLineRows.contains(indexPath.row) {
                     rowHeight = 0.0
                 }
             }

@@ -1823,15 +1823,15 @@
                                             <segue destination="dTx-UM-et0" kind="showDetail" id="yAC-DO-CpE"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="pointOfInterest" rowHeight="165" id="chC-aq-D0K" userLabel="pointOfInterest" customClass="PointOfInterestPilotingItfCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="2287.5" width="375" height="165"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="pointOfInterest" rowHeight="190" id="chC-aq-D0K" userLabel="pointOfInterest" customClass="PointOfInterestPilotingItfCell" customModule="GroundSdkDemo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="2287.5" width="375" height="190"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="chC-aq-D0K" id="lUa-r2-2U1">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="165"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="190"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="5X4-jL-1HK">
-                                                    <rect key="frame" x="15" y="11" width="345" height="145"/>
+                                                    <rect key="frame" x="15" y="11" width="345" height="167.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Point Of Interest Piloting" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FKV-5x-P3R">
                                                             <rect key="frame" x="0.0" y="0.0" width="345" height="23"/>
@@ -1910,8 +1910,25 @@
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Wcf-2f-6fV" userLabel="Mode View">
+                                                            <rect key="frame" x="0.0" y="115" width="345" height="20.5"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyq-DY-gEy" userLabel="Mode">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="172.5" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EMR-Dm-AIr" userLabel="modeValue">
+                                                                    <rect key="frame" x="172.5" y="0.0" width="172.5" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
                                                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gAs-gG-sIb" userLabel="Deactivate Button">
-                                                            <rect key="frame" x="0.0" y="115" width="345" height="30"/>
+                                                            <rect key="frame" x="0.0" y="137.5" width="345" height="30"/>
                                                             <state key="normal" title="Deactivate"/>
                                                             <connections>
                                                                 <action selector="deactivateAction:" destination="chC-aq-D0K" eventType="touchUpInside" id="E8b-Om-17M"/>
@@ -1922,7 +1939,9 @@
                                                         <constraint firstAttribute="trailing" secondItem="BIL-oA-fKb" secondAttribute="trailing" id="3xu-Lf-R9h"/>
                                                         <constraint firstItem="BIL-oA-fKb" firstAttribute="leading" secondItem="5X4-jL-1HK" secondAttribute="leading" id="DMR-MH-v7W"/>
                                                         <constraint firstAttribute="trailing" secondItem="hGS-Lb-Se0" secondAttribute="trailing" id="Owe-Zm-nrj"/>
+                                                        <constraint firstItem="Wcf-2f-6fV" firstAttribute="leading" secondItem="5X4-jL-1HK" secondAttribute="leading" id="mbY-bK-GjK"/>
                                                         <constraint firstItem="hGS-Lb-Se0" firstAttribute="leading" secondItem="5X4-jL-1HK" secondAttribute="leading" id="rCb-vH-jCF"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Wcf-2f-6fV" secondAttribute="trailing" id="wbn-oI-p8I"/>
                                                         <constraint firstItem="LUG-58-kOi" firstAttribute="leading" secondItem="5X4-jL-1HK" secondAttribute="leading" id="yQR-GS-VtP"/>
                                                         <constraint firstAttribute="trailing" secondItem="LUG-58-kOi" secondAttribute="trailing" id="z4P-SR-osc"/>
                                                     </constraints>
@@ -1939,12 +1958,13 @@
                                             <outlet property="deactivateButton" destination="gAs-gG-sIb" id="VBJ-oM-j5z"/>
                                             <outlet property="latitudeValue" destination="AvW-Oa-JCr" id="13D-y0-acC"/>
                                             <outlet property="longitudeValue" destination="6yV-k8-cLP" id="rTl-YV-LcP"/>
+                                            <outlet property="modeValue" destination="EMR-Dm-AIr" id="253-yh-iGq"/>
                                             <outlet property="stateLabel" destination="s0l-3v-esz" id="hlb-nm-Ywa"/>
                                             <segue destination="Mjr-ow-0Y9" kind="showDetail" id="84z-JB-9JO"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="lookAt" rowHeight="180" id="sin-N0-2dc" userLabel="lookAt" customClass="LookAtPilotingItfCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="2452.5" width="375" height="180"/>
+                                        <rect key="frame" x="0.0" y="2477.5" width="375" height="180"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="sin-N0-2dc" id="yI4-uQ-cVo">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
@@ -2037,7 +2057,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="followMe" rowHeight="260" id="M0B-Jp-1Iz" userLabel="followMe" customClass="FollowMePilotingItfCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="2632.5" width="375" height="260"/>
+                                        <rect key="frame" x="0.0" y="2657.5" width="375" height="260"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="M0B-Jp-1Iz" id="jqM-g2-i3l">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="260"/>
@@ -2163,7 +2183,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="flightPlan" rowHeight="235" id="8SH-6w-6ek" userLabel="flightPlan" customClass="FlightPlanPilotingItfCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="2892.5" width="375" height="235"/>
+                                        <rect key="frame" x="0.0" y="2917.5" width="375" height="235"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="8SH-6w-6ek" id="oMi-gQ-Lzg">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="235"/>
@@ -2348,7 +2368,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="geofence" rowHeight="160" id="yF8-rE-pNe" userLabel="Geofence" customClass="GeofenceCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="3127.5" width="375" height="160"/>
+                                        <rect key="frame" x="0.0" y="3152.5" width="375" height="160"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yF8-rE-pNe" id="6Xd-be-giL">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
@@ -2467,7 +2487,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="animation" rowHeight="225" id="WXD-4c-EIw" userLabel="animation" customClass="AnimationPilotingItfCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="3287.5" width="375" height="225"/>
+                                        <rect key="frame" x="0.0" y="3312.5" width="375" height="225"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="WXD-4c-EIw" id="bg1-q7-fH3">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="225"/>
@@ -2614,7 +2634,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="magnetometer" rowHeight="80" id="S4B-VD-sdh" userLabel="magnetometer" customClass="MagnetometerCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="3512.5" width="375" height="80"/>
+                                        <rect key="frame" x="0.0" y="3537.5" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="S4B-VD-sdh" id="ZPV-sh-7DY">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
@@ -2672,7 +2692,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="liveStream" rowHeight="78" id="Sxt-p4-gB9" customClass="StreamServerCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="3592.5" width="375" height="78"/>
+                                        <rect key="frame" x="0.0" y="3617.5" width="375" height="78"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Sxt-p4-gB9" id="9VL-Lz-fzn">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="78"/>
@@ -2725,7 +2745,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="thermalStream" rowHeight="48" id="TXF-G2-CWI" customClass="ThermalStreamCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="3670.5" width="375" height="48"/>
+                                        <rect key="frame" x="0.0" y="3695.5" width="375" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TXF-G2-CWI" id="ohf-lf-Neg">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
@@ -2759,7 +2779,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="hmd" rowHeight="48" id="8vB-of-UU1" userLabel="hmd" customClass="HmdCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="3718.5" width="375" height="48"/>
+                                        <rect key="frame" x="0.0" y="3743.5" width="375" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8vB-of-UU1" id="cVq-uK-eat">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
@@ -2793,7 +2813,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="camera" rowHeight="200" id="7W0-uP-1Kq" userLabel="camera" customClass="CameraCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="3766.5" width="375" height="200"/>
+                                        <rect key="frame" x="0.0" y="3791.5" width="375" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="7W0-uP-1Kq" id="JDK-fC-HKa">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
@@ -2919,7 +2939,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="thermal" rowHeight="224" id="I7d-qA-2Uj" userLabel="thermal" customClass="ThermalCameraCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="3966.5" width="375" height="224"/>
+                                        <rect key="frame" x="0.0" y="3991.5" width="375" height="224"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="I7d-qA-2Uj" id="cZS-v4-adQ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="224"/>
@@ -3063,7 +3083,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="antiflickering" rowHeight="86" id="XL1-Q5-9Ge" userLabel="antiflickering" customClass="AntiflickerCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="4190.5" width="375" height="86"/>
+                                        <rect key="frame" x="0.0" y="4215.5" width="375" height="86"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XL1-Q5-9Ge" id="Y7a-5b-JvH">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="86"/>
@@ -3128,7 +3148,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="preciseHome" rowHeight="86" id="Pmm-XO-dVE" userLabel="preciseHome" customClass="PreciseHomeCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="4276.5" width="375" height="86"/>
+                                        <rect key="frame" x="0.0" y="4301.5" width="375" height="86"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pmm-XO-dVE" id="yed-VK-RFp">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="86"/>
@@ -3193,7 +3213,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="thermalControl" rowHeight="86" id="dWT-bd-zOs" userLabel="thermalControl" customClass="ThermalControlCell" customModule="GroundSdkDemo">
-                                        <rect key="frame" x="0.0" y="4362.5" width="375" height="86"/>
+                                        <rect key="frame" x="0.0" y="4387.5" width="375" height="86"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dWT-bd-zOs" id="GFW-Fr-dbh">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="86"/>
@@ -3258,7 +3278,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="pilotingControl" rowHeight="86" id="YJw-pl-gT5" userLabel="pilotingControl" customClass="PilotingControlCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="4448.5" width="375" height="86"/>
+                                        <rect key="frame" x="0.0" y="4473.5" width="375" height="86"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YJw-pl-gT5" id="q4A-Mi-hDc">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="86"/>
@@ -3305,7 +3325,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="gimbal" rowHeight="220" id="afQ-A8-HnQ" customClass="GimbalCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="4534.5" width="375" height="220"/>
+                                        <rect key="frame" x="0.0" y="4559.5" width="375" height="220"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="afQ-A8-HnQ" id="1Nf-qm-dWs">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="220"/>
@@ -3496,7 +3516,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="updater" rowHeight="350" id="bFd-ns-k8C" userLabel="Updater" customClass="UpdaterCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="4754.5" width="375" height="350"/>
+                                        <rect key="frame" x="0.0" y="4779.5" width="375" height="350"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bFd-ns-k8C" id="4MN-X9-MXN">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="350"/>
@@ -3684,7 +3704,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="crashReporter" rowHeight="120" id="d57-IB-WtQ" userLabel="CrashReportDownloader" customClass="CrashReportDownloadCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="5104.5" width="375" height="120"/>
+                                        <rect key="frame" x="0.0" y="5129.5" width="375" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d57-IB-WtQ" id="Zpj-Tc-pib">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
@@ -3767,7 +3787,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="systemInfo" rowHeight="197" id="Y7X-dl-QOU" userLabel="SystemInfo" customClass="SystemInfoCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="5224.5" width="375" height="197"/>
+                                        <rect key="frame" x="0.0" y="5249.5" width="375" height="197"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="Y7X-dl-QOU" id="J5O-Lo-OQL">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="197"/>
@@ -3926,7 +3946,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="copterMotors" rowHeight="135" id="QxT-vl-ezJ" userLabel="copterMotors" customClass="CopterMotorsCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="5421.5" width="375" height="135"/>
+                                        <rect key="frame" x="0.0" y="5446.5" width="375" height="135"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="QxT-vl-ezJ" id="GYr-bl-mxR">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="135"/>
@@ -4043,7 +4063,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="beeper" rowHeight="100" id="6uz-mJ-7Ev" userLabel="Beeper" customClass="BeeperCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="5556.5" width="375" height="100"/>
+                                        <rect key="frame" x="0.0" y="5581.5" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="6uz-mJ-7Ev" id="B5a-zx-AW9">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
@@ -4106,7 +4126,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="leds" rowHeight="100" id="6sf-yp-uRl" userLabel="Leds" customClass="LedsCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="5656.5" width="375" height="100"/>
+                                        <rect key="frame" x="0.0" y="5681.5" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="6sf-yp-uRl" id="pqN-jt-ZXn">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
@@ -4169,7 +4189,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="mediaStore" rowHeight="160" id="QIR-5g-Frc" userLabel="MediaStore" customClass="MediaStoreCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="5756.5" width="375" height="160"/>
+                                        <rect key="frame" x="0.0" y="5781.5" width="375" height="160"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QIR-5g-Frc" id="CtR-ZE-ynM">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
@@ -4291,7 +4311,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="wifiScanner" rowHeight="150" id="HqC-SL-Pnb" userLabel="WifiScanner" customClass="WifiScannerCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="5916.5" width="375" height="150"/>
+                                        <rect key="frame" x="0.0" y="5941.5" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HqC-SL-Pnb" id="VJq-Bn-pP9">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
@@ -4350,7 +4370,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="wifiAccessPoint" rowHeight="210" id="wjr-6C-xzs" userLabel="WifiAccessPoint" customClass="WifiAccessPointCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="6066.5" width="375" height="210"/>
+                                        <rect key="frame" x="0.0" y="6091.5" width="375" height="210"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wjr-6C-xzs" id="TRi-ga-YTx">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="210"/>
@@ -4537,7 +4557,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="removableUserStorage" rowHeight="140" id="OgT-sG-iwJ" userLabel="RemovableUserStorage" customClass="RemovableUserStorageCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="6276.5" width="375" height="140"/>
+                                        <rect key="frame" x="0.0" y="6301.5" width="375" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OgT-sG-iwJ" id="Pzi-ah-gQU">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
@@ -4641,7 +4661,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="targetTracker" rowHeight="150" id="cKC-D3-AHT" userLabel="TargetTracker" customClass="TargetTrackerCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="6416.5" width="375" height="150"/>
+                                        <rect key="frame" x="0.0" y="6441.5" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="cKC-D3-AHT" id="ujG-cX-ZX2">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
@@ -4723,7 +4743,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="flightDataDownloader" rowHeight="120" id="X2l-92-wMQ" userLabel="FlightData" customClass="FlightDataDownloaderCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="6566.5" width="375" height="120"/>
+                                        <rect key="frame" x="0.0" y="6591.5" width="375" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="X2l-92-wMQ" id="jsn-EO-0JI">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
@@ -4808,7 +4828,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="flightLogDownloader" rowHeight="120" id="O1d-Wi-Emi" userLabel="FlightLog" customClass="FlightLogDownloadCell" customModule="GroundSdkDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="6686.5" width="375" height="120"/>
+                                        <rect key="frame" x="0.0" y="6711.5" width="375" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="O1d-Wi-Emi" id="fVe-Or-mYS">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>

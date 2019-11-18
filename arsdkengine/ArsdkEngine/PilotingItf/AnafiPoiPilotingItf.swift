@@ -63,6 +63,9 @@ class AnafiPoiPilotingItf: ActivablePilotingItfController {
     /// Whether POI command is available on the drone
     private var dronePoiFeatureAvailable = false
 
+    /// Whether PilotedPOIV2 command is supported
+    private var poiV2Supported = false
+
     /// Constructor
     ///
     /// - Parameter activationController: activation controller that owns this piloting interface controller
@@ -76,8 +79,8 @@ class AnafiPoiPilotingItf: ActivablePilotingItfController {
         // the unavailable state will be set in unpublish
         pilotingItf.unpublish()
         // be sure to reset the current status
-        pendingPointOfInterest = nil
         currentPointOfInterest = nil
+        pendingPointOfInterest = nil
         isFlying = false
         dronePoiFeatureAvailable = false
     }
@@ -102,7 +105,7 @@ class AnafiPoiPilotingItf: ActivablePilotingItfController {
         if let pendingPointOfInterest = pendingPointOfInterest {
                 sendStartPoi(
                     latitude: pendingPointOfInterest.latitude, longitude: pendingPointOfInterest.longitude,
-                    altitude: pendingPointOfInterest.altitude)
+                    altitude: pendingPointOfInterest.altitude, mode: pendingPointOfInterest.mode)
             self.pendingPointOfInterest = nil
         }
     }
@@ -140,8 +143,8 @@ class AnafiPoiPilotingItf: ActivablePilotingItfController {
                 notifyActive()
             }
         } else {
-            pendingPointOfInterest = nil
             currentPointOfInterest = nil
+            pendingPointOfInterest = nil
             notifyUnavailable()
         }
     }
@@ -171,13 +174,14 @@ extension AnafiPoiPilotingItf: PoiPilotingItfBackend {
         setGaz(verticalSpeed)
     }
 
-    func start(latitude: Double, longitude: Double, altitude: Double) {
+    func start(latitude: Double, longitude: Double, altitude: Double, mode: PointOfInterestMode) {
         switch pilotingItf.state {
         case .idle:
-            pendingPointOfInterest = PointOfInterestCore(latitude: latitude, longitude: longitude, altitude: altitude)
+            pendingPointOfInterest = PointOfInterestCore(latitude: latitude, longitude: longitude, altitude: altitude,
+                                                         mode: mode)
             _ = droneController.pilotingItfActivationController.activate(pilotingItf: self)
         case .active:
-            sendStartPoi(latitude: latitude, longitude: longitude, altitude: altitude)
+            sendStartPoi(latitude: latitude, longitude: longitude, altitude: altitude, mode: mode)
         case .unavailable:
             break
         }
@@ -192,10 +196,24 @@ extension AnafiPoiPilotingItf: PoiPilotingItfBackend {
     ///   - latitude: latitude of the location (in degrees) to look at
     ///   - longitude: longitude of the location (in degrees) to look at
     ///   - altitude: altitude above take off point (in meters) to look at
-    private func sendStartPoi(latitude: Double, longitude: Double, altitude: Double) {
-        sendCommand(
-            ArsdkFeatureArdrone3Piloting.startPilotedPOIEncoder(
-                latitude: latitude, longitude: longitude, altitude: altitude))
+    ///   - mode: Point Of Interest mode
+    private func sendStartPoi(latitude: Double, longitude: Double, altitude: Double, mode: PointOfInterestMode) {
+        if poiV2Supported {
+            let arsdkMode: ArsdkFeatureArdrone3PilotingStartpilotedpoiv2Mode
+            switch mode {
+            case .lockedGimbal:
+                arsdkMode = .lockedGimbal
+            case .freeGimbal:
+                arsdkMode = .freeGimbal
+            }
+            sendCommand(
+                ArsdkFeatureArdrone3Piloting.startPilotedPOIV2Encoder(
+                    latitude: latitude, longitude: longitude, altitude: altitude, mode: arsdkMode))
+        } else if mode == .lockedGimbal {
+            sendCommand(
+                ArsdkFeatureArdrone3Piloting.startPilotedPOIEncoder(
+                    latitude: latitude, longitude: longitude, altitude: altitude))
+        }
     }
 
     /// Send the command to cancel a Point Of Interest
@@ -228,7 +246,8 @@ extension AnafiPoiPilotingItf: ArsdkFeatureArdrone3PilotingstateCallback {
             if latitude != AnafiPoiPilotingItf.UnknownCoordinate &&
                 longitude != AnafiPoiPilotingItf.UnknownCoordinate &&
                 altitude != AnafiPoiPilotingItf.UnknownCoordinate {
-                newPointOfInterest = PointOfInterestCore(latitude: latitude, longitude: longitude, altitude: altitude)
+                newPointOfInterest = PointOfInterestCore(latitude: latitude, longitude: longitude, altitude: altitude,
+                                                         mode: .lockedGimbal)
             } else {
                 newPointOfInterest = nil
             }
@@ -237,6 +256,54 @@ extension AnafiPoiPilotingItf: ArsdkFeatureArdrone3PilotingstateCallback {
         case .sdkCoreUnknown:
             // don't change anything if value is unknown
             ULog.w(.tag, "Unknown onPilotedPoi status, skipping this event.")
+
+        default:
+            update(dronePoiFeatureAvailable: true, pointOfInterest: nil)
+        }
+    }
+
+    func onPilotedPOIV2(latitude: Double, longitude: Double, altitude: Double,
+                        mode: ArsdkFeatureArdrone3PilotingstatePilotedpoiv2Mode,
+                        status: ArsdkFeatureArdrone3PilotingstatePilotedpoiv2Status) {
+        ULog.d(.ctrlTag, "PoiPiloting: onPilotedPoiV2 latitude=\(latitude) longitude=\(longitude)" +
+            " altitude=\(altitude) mode=\(mode) status=\(status)")
+
+        poiV2Supported = true
+
+        switch status {
+        case .unavailable:
+            currentPointOfInterest = nil
+            update(dronePoiFeatureAvailable: false, pointOfInterest: nil)
+
+        case .running:
+            let newPointOfInterest: PointOfInterestCore?
+            if latitude != AnafiPoiPilotingItf.UnknownCoordinate &&
+                longitude != AnafiPoiPilotingItf.UnknownCoordinate &&
+                altitude != AnafiPoiPilotingItf.UnknownCoordinate {
+                let newMode: PointOfInterestMode?
+                switch mode {
+                case .lockedGimbal:
+                    newMode = .lockedGimbal
+                case .freeGimbal:
+                    newMode = .freeGimbal
+                case .sdkCoreUnknown:
+                    newMode = nil
+                }
+                if let newMode = newMode {
+                    newPointOfInterest = PointOfInterestCore(latitude: latitude, longitude: longitude,
+                                                             altitude: altitude, mode: newMode)
+                } else {
+                    newPointOfInterest = nil
+                }
+            } else {
+                newPointOfInterest = nil
+            }
+
+            update(dronePoiFeatureAvailable: true, pointOfInterest: newPointOfInterest)
+
+        case .sdkCoreUnknown:
+            // don't change anything if value is unknown
+            ULog.w(.tag, "Unknown onPilotedPoiV2 status, skipping this event.")
 
         default:
             update(dronePoiFeatureAvailable: true, pointOfInterest: nil)

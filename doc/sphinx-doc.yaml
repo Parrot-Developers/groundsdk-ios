@@ -1,2 +1,7 @@
 project: GroundSdk iOS
 out_dir: groundsdk-ios
+python_path:
+    - $ROOT
+custom_config:
+    extensions:
+        - sphinx-ext

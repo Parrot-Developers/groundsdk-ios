@@ -68,10 +68,11 @@ class PoiPilotingItfTest: XCTestCase {
         assertThat(poiItf.currentPointOfInterest, nilValue())
 
         // update from low level
-        let pointOfInterest = PointOfInterestCore(latitude: 1.1, longitude: 2.2, altitude: 3.3)
+        let pointOfInterest = PointOfInterestCore(latitude: 1.1, longitude: 2.2, altitude: 3.3, mode: .freeGimbal)
         impl.update(currentPointOfInterest: pointOfInterest).notifyUpdated()
         assertThat(cnt, `is`(1))
-        assertThat(poiItf.currentPointOfInterest, presentAnd(`is`(latitude: 1.1, longitude: 2.2, altitude: 3.3)))
+        assertThat(poiItf.currentPointOfInterest, presentAnd(`is`(latitude: 1.1, longitude: 2.2, altitude: 3.3,
+                                                                  mode: .freeGimbal)))
     }
 
     func testCallingBackendThroughInterface() {
@@ -82,7 +83,11 @@ class PoiPilotingItfTest: XCTestCase {
         impl.update(activeState: .idle)
 
         poiInterface.start(latitude: 1.1, longitude: 2.2, altitude: 3.3)
-        assertThat(backend.currentPointOfInterest, presentAnd(`is`(latitude: 1.1, longitude: 2.2, altitude: 3.3)))
+        assertThat(backend.currentPointOfInterest, presentAnd(`is`(latitude: 1.1, longitude: 2.2, altitude: 3.3,
+                                                                   mode: .lockedGimbal)))
+        poiInterface.start(latitude: 4.4, longitude: 5.5, altitude: 6.6, mode: .freeGimbal)
+        assertThat(backend.currentPointOfInterest, presentAnd(`is`(latitude: 4.4, longitude: 5.5, altitude: 6.6,
+                                                                   mode: .freeGimbal)))
         poiInterface.set(roll: 1)
         assertThat(backend.roll, `is`(1))
         poiInterface.set(pitch: 2)
@@ -107,9 +112,10 @@ private class Backend: PoiPilotingItfBackend {
         return true
     }
 
-    func start(latitude: Double, longitude: Double, altitude: Double) {
+    func start(latitude: Double, longitude: Double, altitude: Double, mode: PointOfInterestMode) {
         // mock update a nex point of interest
-        currentPointOfInterest = PointOfInterestCore(latitude: latitude, longitude: longitude, altitude: altitude)
+        currentPointOfInterest = PointOfInterestCore(latitude: latitude, longitude: longitude, altitude: altitude,
+                                                     mode: mode)
     }
 
     func set(roll: Int) {

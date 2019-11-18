@@ -148,7 +148,7 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
         colorData = GGLDistortionMeshLoader.dataArray(.colors, cockpit)
         calculatedDistScaleFactor = cockpit.calculatedDistScaleFactor
 
-        _dpi = UIScreen.pixelsPerInch ?? 163
+        _dpi = UIScreen.pixelsPerInch ?? 401
         _deviceScale = UIScreen.main.scale
         /* We downsample to 401 dpi */
         if _dpi > 401.0 {
