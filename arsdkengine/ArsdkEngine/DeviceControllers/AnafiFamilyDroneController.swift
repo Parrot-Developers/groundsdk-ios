@@ -105,7 +105,8 @@ class AnafiFamilyDroneController: DroneController {
         }
         if let flightLogStorage = engine.utilities.getUtility(Utilities.flightLogStorage) {
             componentControllers.append(
-                HttpFlightLogDownloader(deviceController: self, flightLogStorage: flightLogStorage))
+                HttpFlightLogDownloader(deviceController: self, flightLogStorage: flightLogStorage,
+                                        converter: GutmaLogProducer.create(deviceController: self)))
         }
         componentControllers.append(WifiFeatureWifiAccessPoint(deviceController: self))
         componentControllers.append(UserStorageRemovableUserStorage(deviceController: self))
@@ -118,6 +119,7 @@ class AnafiFamilyDroneController: DroneController {
         componentControllers.append(LedsController(deviceController: self))
         componentControllers.append(PhotoProgressIndicatorController(deviceController: self))
         componentControllers.append(AnafiPilotingControl(deviceController: self))
+        componentControllers.append(BatteryGaugeUpdaterController(deviceController: self))
         sendDateAndTime = { [weak self] in
             let dateFormatter = DateFormatter()
             dateFormatter.timeZone = NSTimeZone.system

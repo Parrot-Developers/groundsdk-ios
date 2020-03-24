@@ -114,6 +114,7 @@
 		7CE609E82062C217008E338E /* CameraStyleParametresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE609E72062C217008E338E /* CameraStyleParametresViewController.swift */; };
 		7CECF2871D2A8E1A00BF5C84 /* ReturnHomePilotingItfCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CECF2861D2A8E1A00BF5C84 /* ReturnHomePilotingItfCell.swift */; };
 		7CF4E8BA20597FC100B5373B /* AntiflickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF4E8B920597FC100B5373B /* AntiflickerCell.swift */; };
+		849ADAF3239AB1B100D9F722 /* GutmaLogManagerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849ADAF2239AB1B100D9F722 /* GutmaLogManagerCell.swift */; };
 		9B044EA421FEFDFF00672794 /* ThermalBackgrountTemperatureVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B044EA321FEFDFF00672794 /* ThermalBackgrountTemperatureVC.swift */; };
 		9B211A7121F8611000187592 /* ThermalPaletteAddColorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B211A7021F8611000187592 /* ThermalPaletteAddColorVC.swift */; };
 		9B31E00821C947A7006F389E /* ThermalControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B31E00721C947A7006F389E /* ThermalControlCell.swift */; };
@@ -126,6 +127,7 @@
 		9B48547E21809977007D1CFC /* RemovableUserStorageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B48547D21809977007D1CFC /* RemovableUserStorageViewController.swift */; };
 		9B56C2B521F764150002EC1C /* ThermalPaletteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B56C2B421F764150002EC1C /* ThermalPaletteViewController.swift */; };
 		9B56C2B721F84EBA0002EC1C /* ThermalChoosePaletteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B56C2B621F84EBA0002EC1C /* ThermalChoosePaletteViewController.swift */; };
+		9B5D350C23D09A280098016D /* BatteryGaugeUpdaterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5D350B23D09A280098016D /* BatteryGaugeUpdaterCell.swift */; };
 		9B6ACC7421F0C23F0024B837 /* ThermalEmissivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6ACC7321F0C23F0024B837 /* ThermalEmissivityViewController.swift */; };
 		9B73BDC62216FFF8008DA1F7 /* LedsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B73BDC52216FFF8008DA1F7 /* LedsCell.swift */; };
 		9B9C7E142200442800FB312D /* ThermalRenderingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9C7E132200442700FB312D /* ThermalRenderingViewController.swift */; };
@@ -315,6 +317,7 @@
 		7CE609E72062C217008E338E /* CameraStyleParametresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraStyleParametresViewController.swift; sourceTree = "<group>"; };
 		7CECF2861D2A8E1A00BF5C84 /* ReturnHomePilotingItfCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnHomePilotingItfCell.swift; sourceTree = "<group>"; };
 		7CF4E8B920597FC100B5373B /* AntiflickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AntiflickerCell.swift; sourceTree = "<group>"; };
+		849ADAF2239AB1B100D9F722 /* GutmaLogManagerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GutmaLogManagerCell.swift; sourceTree = "<group>"; };
 		9B044EA321FEFDFF00672794 /* ThermalBackgrountTemperatureVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalBackgrountTemperatureVC.swift; sourceTree = "<group>"; };
 		9B211A7021F8611000187592 /* ThermalPaletteAddColorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalPaletteAddColorVC.swift; sourceTree = "<group>"; };
 		9B31E00721C947A7006F389E /* ThermalControlCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalControlCell.swift; sourceTree = "<group>"; };
@@ -327,6 +330,7 @@
 		9B48547D21809977007D1CFC /* RemovableUserStorageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovableUserStorageViewController.swift; sourceTree = "<group>"; };
 		9B56C2B421F764150002EC1C /* ThermalPaletteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalPaletteViewController.swift; sourceTree = "<group>"; };
 		9B56C2B621F84EBA0002EC1C /* ThermalChoosePaletteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalChoosePaletteViewController.swift; sourceTree = "<group>"; };
+		9B5D350B23D09A280098016D /* BatteryGaugeUpdaterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryGaugeUpdaterCell.swift; sourceTree = "<group>"; };
 		9B6ACC7321F0C23F0024B837 /* ThermalEmissivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalEmissivityViewController.swift; sourceTree = "<group>"; };
 		9B73BDC52216FFF8008DA1F7 /* LedsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedsCell.swift; sourceTree = "<group>"; };
 		9B9C7E132200442700FB312D /* ThermalRenderingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermalRenderingViewController.swift; sourceTree = "<group>"; };
@@ -475,6 +479,7 @@
 				7CF4E8B920597FC100B5373B /* AntiflickerCell.swift */,
 				7C7CF4E11D184163000BB8FC /* AttitudeIndicatorCell.swift */,
 				F8D32CB81EF01DD800074795 /* BatteryInfoCell.swift */,
+				9B5D350B23D09A280098016D /* BatteryGaugeUpdaterCell.swift */,
 				02D12B2D2028AAAB002C00BB /* BeeperCell.swift */,
 				7C59BAF31FAB8BC400AB8A6C /* CameraCell.swift */,
 				F8F2B19E20E3A8D700A1A802 /* CameraExposureValuesCell.swift */,
@@ -664,6 +669,7 @@
 				F845CCE31FBF39E700F71BDA /* FacilityCell.swift */,
 				F8C252F11FD017FD00A87B5F /* FirmwareManagerCell.swift */,
 				0237585D209DD6500077F63C /* FlightDataManagerCell.swift */,
+				849ADAF2239AB1B100D9F722 /* GutmaLogManagerCell.swift */,
 				708D7D6F213E87E9009DBD12 /* FlightLogReporterCell.swift */,
 				02893A05204D9D790025E127 /* ReverseGeocoderCell.swift */,
 				02F39FF520AB46900058890D /* UserAccountCell.swift */,
@@ -861,6 +867,7 @@
 				7C8A61CB1CF7253500CB9392 /* ManualCopterPilotingItfViewController.swift in Sources */,
 				1D2194E81EE83883005A6883 /* CrashReportDownloaderCell.swift in Sources */,
 				F87D5A431FFFF353005AF079 /* MagnetometerWith1StepCalibrationVC.swift in Sources */,
+				9B5D350C23D09A280098016D /* BatteryGaugeUpdaterCell.swift in Sources */,
 				7CF4E8BA20597FC100B5373B /* AntiflickerCell.swift in Sources */,
 				9B31E00821C947A7006F389E /* ThermalControlCell.swift in Sources */,
 				7C8A61CF1CF7272200CB9392 /* DeviceViewController.swift in Sources */,
@@ -871,6 +878,7 @@
 				F82C3EA11DDC6B6F000804C5 /* VideoStreamViewController.swift in Sources */,
 				F8C252F21FD017FD00A87B5F /* FirmwareManagerCell.swift in Sources */,
 				027364AC209753E900C16142 /* GeofenceViewController.swift in Sources */,
+				849ADAF3239AB1B100D9F722 /* GutmaLogManagerCell.swift in Sources */,
 				7037D18D22C61603002CB93A /* HmdCell.swift in Sources */,
 				7C92BF331D2BD81A00C1C486 /* ReturnHomePilotingItfViewController.swift in Sources */,
 				9B6ACC7421F0C23F0024B837 /* ThermalEmissivityViewController.swift in Sources */,

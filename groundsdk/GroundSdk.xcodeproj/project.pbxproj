@@ -245,6 +245,14 @@
 		7CECE60D1CC67AC80091C1DB /* DroneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CECE60B1CC67AC80091C1DB /* DroneTests.m */; };
 		7CF4E8BC2059834500B5373B /* CameraStylesSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF4E8BB2059834500B5373B /* CameraStylesSettings.swift */; };
 		7CF4E8BE205A775700B5373B /* CameraStylesSettingsCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF4E8BD205A775700B5373B /* CameraStylesSettingsCore.swift */; };
+		845A3DA12396C3D800EC3871 /* GutmaLogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A3DA02396C3D800EC3871 /* GutmaLogManager.swift */; };
+		849ADAE9239802CD00D9F722 /* GutmaLogStorageCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849ADAE8239802CD00D9F722 /* GutmaLogStorageCore.swift */; };
+		849ADAEB23990D6000D9F722 /* GutmaLogEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849ADAEA23990D6000D9F722 /* GutmaLogEngine.swift */; };
+		849ADAED2399126600D9F722 /* GutmaLogManagerCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849ADAEC2399126600D9F722 /* GutmaLogManagerCore.swift */; };
+		849ADAF0239916FB00D9F722 /* GutmaLogCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849ADAEF239916FB00D9F722 /* GutmaLogCollector.swift */; };
+		849ADAF5239E454700D9F722 /* GutmaLogManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849ADAF4239E454700D9F722 /* GutmaLogManagerTests.swift */; };
+		849ADAF7239E58E100D9F722 /* GutmaLogEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849ADAF6239E58E100D9F722 /* GutmaLogEngineTests.swift */; };
+		849ADAF9239E5A8800D9F722 /* MockGutmaLogEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849ADAF8239E5A8800D9F722 /* MockGutmaLogEngine.swift */; };
 		9B042F82221FE3CE003F63B0 /* NSError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B042F81221FE3CE003F63B0 /* NSError.swift */; };
 		9B042F872226A049003F63B0 /* MediaSourceCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B042F862226A049003F63B0 /* MediaSourceCore.swift */; };
 		9B042F892226C7AA003F63B0 /* FileSourceCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B042F882226C7AA003F63B0 /* FileSourceCore.swift */; };
@@ -267,6 +275,9 @@
 		9B40FACC215E2A9300CF6690 /* PreciseHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B40FACB215E2A9300CF6690 /* PreciseHome.swift */; };
 		9B40FAD921626BD600CF6690 /* PreciseHomeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B40FAD821626BD600CF6690 /* PreciseHomeTests.swift */; };
 		9B40FADB216270EF00CF6690 /* PreciseHomeMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B40FADA216270EF00CF6690 /* PreciseHomeMatcher.swift */; };
+		9B5D350223CE021A0098016D /* BatteryGaugeUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5D350123CE021A0098016D /* BatteryGaugeUpdater.swift */; };
+		9B5D350423CE12AD0098016D /* BatteryGaugeUpdaterCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5D350323CE12AD0098016D /* BatteryGaugeUpdaterCore.swift */; };
+		9B5D350823CF53F60098016D /* BatteryGaugeUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5D350723CF53F60098016D /* BatteryGaugeUpdaterTests.swift */; };
 		9B6490AA213D7960005EBDE7 /* EphemerisEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6490A9213D7960005EBDE7 /* EphemerisEngine.swift */; };
 		9B6490B8213EBB2C005EBDE7 /* EphemerisUtilityCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6490B7213EBB2C005EBDE7 /* EphemerisUtilityCore.swift */; };
 		9B6490BB213EC251005EBDE7 /* EphemerisDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6490BA213EC251005EBDE7 /* EphemerisDownloader.swift */; };
@@ -851,6 +862,14 @@
 		7CECE60B1CC67AC80091C1DB /* DroneTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DroneTests.m; sourceTree = "<group>"; };
 		7CF4E8BB2059834500B5373B /* CameraStylesSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraStylesSettings.swift; sourceTree = "<group>"; };
 		7CF4E8BD205A775700B5373B /* CameraStylesSettingsCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraStylesSettingsCore.swift; sourceTree = "<group>"; };
+		845A3DA02396C3D800EC3871 /* GutmaLogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GutmaLogManager.swift; sourceTree = "<group>"; };
+		849ADAE8239802CD00D9F722 /* GutmaLogStorageCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GutmaLogStorageCore.swift; sourceTree = "<group>"; };
+		849ADAEA23990D6000D9F722 /* GutmaLogEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GutmaLogEngine.swift; sourceTree = "<group>"; };
+		849ADAEC2399126600D9F722 /* GutmaLogManagerCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GutmaLogManagerCore.swift; sourceTree = "<group>"; };
+		849ADAEF239916FB00D9F722 /* GutmaLogCollector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GutmaLogCollector.swift; sourceTree = "<group>"; };
+		849ADAF4239E454700D9F722 /* GutmaLogManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GutmaLogManagerTests.swift; sourceTree = "<group>"; };
+		849ADAF6239E58E100D9F722 /* GutmaLogEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GutmaLogEngineTests.swift; sourceTree = "<group>"; };
+		849ADAF8239E5A8800D9F722 /* MockGutmaLogEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGutmaLogEngine.swift; sourceTree = "<group>"; };
 		9B042F81221FE3CE003F63B0 /* NSError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSError.swift; sourceTree = "<group>"; };
 		9B042F862226A049003F63B0 /* MediaSourceCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaSourceCore.swift; sourceTree = "<group>"; };
 		9B042F882226C7AA003F63B0 /* FileSourceCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSourceCore.swift; sourceTree = "<group>"; };
@@ -874,6 +893,9 @@
 		9B40FAD821626BD600CF6690 /* PreciseHomeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreciseHomeTests.swift; sourceTree = "<group>"; };
 		9B40FADA216270EF00CF6690 /* PreciseHomeMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreciseHomeMatcher.swift; sourceTree = "<group>"; };
 		9B56C2B221F1DA510002EC1C /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
+		9B5D350123CE021A0098016D /* BatteryGaugeUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryGaugeUpdater.swift; sourceTree = "<group>"; };
+		9B5D350323CE12AD0098016D /* BatteryGaugeUpdaterCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryGaugeUpdaterCore.swift; sourceTree = "<group>"; };
+		9B5D350723CF53F60098016D /* BatteryGaugeUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryGaugeUpdaterTests.swift; sourceTree = "<group>"; };
 		9B6490A9213D7960005EBDE7 /* EphemerisEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemerisEngine.swift; sourceTree = "<group>"; };
 		9B6490B7213EBB2C005EBDE7 /* EphemerisUtilityCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemerisUtilityCore.swift; sourceTree = "<group>"; };
 		9B6490BA213EC251005EBDE7 /* EphemerisDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemerisDownloader.swift; sourceTree = "<group>"; };
@@ -1667,6 +1689,14 @@
 			path = internal;
 			sourceTree = "<group>";
 		};
+		849ADAEE239916E900D9F722 /* ConvertedFile */ = {
+			isa = PBXGroup;
+			children = (
+				849ADAEF239916FB00D9F722 /* GutmaLogCollector.swift */,
+			);
+			path = ConvertedFile;
+			sourceTree = "<group>";
+		};
 		9B6490B9213EC23C005EBDE7 /* Ephemeris */ = {
 			isa = PBXGroup;
 			children = (
@@ -1688,6 +1718,7 @@
 				F8884B641FB34A5800D1E7CC /* CameraTests.swift */,
 				020C8E7D20288DF00003B0CD /* BeeperTests.swift */,
 				9B73BDC922170DB2008DA1F7 /* LedsTests.swift */,
+				9B5D350723CF53F60098016D /* BatteryGaugeUpdaterTests.swift */,
 				7C7406A1204FE89C00D1CD78 /* AntiflickerTests.swift */,
 				02398141209229FE00261CC6 /* GeofenceTests.swift */,
 				F884688E1DEF07B600ACE941 /* FirmwareVersionTests.swift */,
@@ -1754,6 +1785,7 @@
 				F8468C4C1FBDE3C800B534FD /* AutoConnectionTests.swift */,
 				F8A21F3B1FCC59D5006E3D2E /* CrashReporterTests.swift */,
 				0210883C209B328800F013E4 /* FlightDataManagerTests.swift */,
+				849ADAF4239E454700D9F722 /* GutmaLogManagerTests.swift */,
 				02C1D55B200E354D0057FA06 /* UserLocationGPSTests.swift */,
 				02155D7E204707A20078B498 /* ReverseGeocoderTests.swift */,
 				0223BCFD2010AF1000FCEC22 /* UserLocationHeadingTests.swift */,
@@ -1779,6 +1811,7 @@
 				F8F2AA1A1FCC28950023F796 /* CrashReportEngineTests.swift */,
 				02375857209C9E2E0077F63C /* FlightDataEngineTests.swift */,
 				9BDDF1A2214687F5008252BA /* FlightLogEngineTests.swift */,
+				849ADAF6239E58E100D9F722 /* GutmaLogEngineTests.swift */,
 				025FBA0020AC8D3C00D84597 /* BlackBoxEngineTests.swift */,
 				F8C252FA1FD1650500A87B5F /* FirmwareEngineTests.swift */,
 				F8C1A2512121DF4700813353 /* Firmware */,
@@ -1841,6 +1874,7 @@
 				F8A21F421FCC7E7F006E3D2E /* MockCrashReportEngine.swift */,
 				02375859209C9EE90077F63C /* MockFlightDataEngine.swift */,
 				9B191509214685E0004D0601 /* MockFlightLogEngine.swift */,
+				849ADAF8239E5A8800D9F722 /* MockGutmaLogEngine.swift */,
 				F8A21F3D1FCC6099006E3D2E /* MockInternetConnectivity.swift */,
 				F8369C8920A1DAA6008010AE /* MockGroundSdkUserDefaults.swift */,
 				F8369C8B20A1DB29008010AE /* MockUserDefaults.swift */,
@@ -2055,9 +2089,11 @@
 			isa = PBXGroup;
 			children = (
 				7C740695204E8A3900D1CD78 /* AntiflickerCore.swift */,
+				9B5D350323CE12AD0098016D /* BatteryGaugeUpdaterCore.swift */,
 				020C8E7B202889FB0003B0CD /* BeeperCore.swift */,
 				F8884B511FB33A2B00D1E7CC /* CameraCore */,
 				F8884B5A1FB33A2C00D1E7CC /* CameraCore.swift */,
+				9BF5447E22B7827100452895 /* CopilotCore.swift */,
 				F8C04C781FB0A7110020ED18 /* CopterMotorsCore.swift */,
 				F8C04C7D1FB0A7110020ED18 /* CrashReportDownloaderCore.swift */,
 				F8C04C701FB0A7110020ED18 /* DroneFinderCore.swift */,
@@ -2071,12 +2107,12 @@
 				F8D993151FFF91890061579B /* MagnetometerWith3StepCalibrationCore.swift */,
 				F8C04C7E1FB0A7120020ED18 /* MediaStoreCore */,
 				F8C04C671FB0A7110020ED18 /* MediaStoreCore.swift */,
+				9BAF3DE422958CA600234BE6 /* OnboardTrackerCore.swift */,
 				F8C04C661FB0A7110020ED18 /* PeripheralCore.swift */,
 				70E8ECDA230EA10B00DE0776 /* PilotingControlCore.swift */,
 				9B40FAC9215E29BA00CF6690 /* PreciseHomeCore.swift */,
 				F8123B51200CF0C70071672B /* RemovableUserStorageCore.swift */,
 				02CE4464208DE83E007B9F9F /* SkyCtrl3GamepadCore.swift */,
-				9BF5447E22B7827100452895 /* CopilotCore.swift */,
 				71E16ADF217F298E00CB8D17 /* StreamCore */,
 				F8C04C761FB0A7110020ED18 /* SystemInfoCore.swift */,
 				023752532074F95800825545 /* TargetTrackerCore.swift */,
@@ -2200,6 +2236,7 @@
 				70E8ECD8230E997300DE0776 /* PilotingControl.swift */,
 				F8C04CCF1FB0A7120020ED18 /* PeripheralProvider.swift */,
 				F8C04CBF1FB0A7120020ED18 /* Peripheral.swift */,
+				9B5D350123CE021A0098016D /* BatteryGaugeUpdater.swift */,
 				7CCEE3CE204D87BB00C20208 /* Antiflicker.swift */,
 				020C8E792028725A0003B0CD /* Beeper.swift */,
 				7C32F1751FB3654400BFCF1D /* Camera */,
@@ -2304,6 +2341,8 @@
 				02BAB80A209B6230009D0127 /* FlightDataEngine.swift */,
 				70295312213944A70051827B /* FlightLog */,
 				7029530E2139447D0051827B /* FlightLogEngine.swift */,
+				849ADAEE239916E900D9F722 /* ConvertedFile */,
+				849ADAEA23990D6000D9F722 /* GutmaLogEngine.swift */,
 				0289AF12204850D600DED63B /* ReverseGeocoderEngine.swift */,
 				F896BF111FB459F400ADAE34 /* SystemEngine.swift */,
 				0285565220A6D6FE00A898BD /* UserAccountEngine.swift */,
@@ -2326,6 +2365,7 @@
 				F8C252EC1FCF07AE00A87B5F /* FirmwareStoreCore.swift */,
 				0210883E209B510300F013E4 /* FlightDataStorageCore.swift */,
 				7029530C21393FB20051827B /* FlightLogStorageCore.swift */,
+				849ADAE8239802CD00D9F722 /* GutmaLogStorageCore.swift */,
 				F8A21F3F1FCC716C006E3D2E /* InternetConnectivity */,
 				F8884B6A1FB3668B00D1E7CC /* InternetConnectivityCore.swift */,
 				0289AF0E2047FAFB00DED63B /* ReverseGeocoderUtilityCore.swift */,
@@ -2390,6 +2430,7 @@
 				F8A21F461FCEB91B006E3D2E /* FirmwareManager.swift */,
 				02108838209B19C200F013E4 /* FlightDataManager.swift */,
 				708D7D61213D42D8009DBD12 /* FlightLogReporter.swift */,
+				845A3DA02396C3D800EC3871 /* GutmaLogManager.swift */,
 				02155D7A2046F3BE0078B498 /* ReverseGeocoder.swift */,
 				0285564E20A5E6C200A898BD /* UserAccount.swift */,
 				02AFDFB1200687920066D6CA /* UserHeading.swift */,
@@ -2403,6 +2444,7 @@
 			children = (
 				F8F9CD0B1FB9A6F200A0CC48 /* AutoConnectionCore.swift */,
 				F892D6B41FD801EE00B80041 /* BlackBoxReporterCore.swift */,
+				849ADAEC2399126600D9F722 /* GutmaLogManagerCore.swift */,
 				F8766ED81FC5D968007020CE /* CrashReporterCore.swift */,
 				F8F9CD0D1FB9A78200A0CC48 /* FacilityCore.swift */,
 				F8C04C331FB0A7110020ED18 /* Firmware */,
@@ -2706,6 +2748,7 @@
 				F87CC5091FC6DB05007A9AD6 /* CrashReportCollector.swift in Sources */,
 				9B31DFFC21C9298A006F389E /* ThermalControlCore.swift in Sources */,
 				F892D6B51FD801EE00B80041 /* BlackBoxReporterCore.swift in Sources */,
+				849ADAE9239802CD00D9F722 /* GutmaLogStorageCore.swift in Sources */,
 				F8F9CD071FB9A15600A0CC48 /* Facility.swift in Sources */,
 				0235EDD120779991006E7C9C /* SystemBarometer.swift in Sources */,
 				0243455C209A02FB008BBE2F /* FlightDataDownloader.swift in Sources */,
@@ -2757,6 +2800,7 @@
 				F8C7DBD11FC4890E00793D31 /* DeviceStoreUtilityCore.swift in Sources */,
 				7C32F1831FB3654400BFCF1D /* CameraAntiFlickering.swift in Sources */,
 				02893A0C204FEE370025E127 /* PoiPilotingItfCore.swift in Sources */,
+				845A3DA12396C3D800EC3871 /* GutmaLogManager.swift in Sources */,
 				F8C04CFB1FB0A7120020ED18 /* AnimationCore.swift in Sources */,
 				F8C04D721FB0A7120020ED18 /* Updater.swift in Sources */,
 				7183DB3121A312F8005FCF42 /* CameraLive.swift in Sources */,
@@ -2770,6 +2814,7 @@
 				F8C04D121FB0A7120020ED18 /* EnvironmentSettingCore.swift in Sources */,
 				F8C04D591FB0A7120020ED18 /* Component.swift in Sources */,
 				F8C04D4B1FB0A7120020ED18 /* DollySlideAnimation.swift in Sources */,
+				9B5D350223CE021A0098016D /* BatteryGaugeUpdater.swift in Sources */,
 				9BBAAFC62215BEAF00E1E5BF /* Leds.swift in Sources */,
 				0239814020921E5600261CC6 /* GeofenceCore.swift in Sources */,
 				F892D6B71FD8031F00B80041 /* BlackBoxEngine.swift in Sources */,
@@ -2797,6 +2842,7 @@
 				F8C04D251FB0A7120020ED18 /* MediaGalleryAdder.swift in Sources */,
 				6805CC4322C616A700D3DB64 /* CameraAlignmentCore.swift in Sources */,
 				F8C04CF01FB0A7120020ED18 /* AltimeterCore.swift in Sources */,
+				849ADAEB23990D6000D9F722 /* GutmaLogEngine.swift in Sources */,
 				7060709E22C9FD9900006C80 /* GGLUtils.swift in Sources */,
 				F8C04D0C1FB0A7120020ED18 /* NameHolderCore.swift in Sources */,
 				F8C04D601FB0A7120020ED18 /* WifiAccessPoint.swift in Sources */,
@@ -2823,6 +2869,8 @@
 				708D7D6A213D73FA009DBD12 /* FlightLogDownloader.swift in Sources */,
 				7029530F2139447D0051827B /* FlightLogEngine.swift in Sources */,
 				F8C04CDE1FB0A7120020ED18 /* StringSettingCore.swift in Sources */,
+				9B5D350423CE12AD0098016D /* BatteryGaugeUpdaterCore.swift in Sources */,
+				9D9A6F992386D3AC00BE6C7C /* ReturnToLaunchCommand.swift in Sources */,
 				F8C04D4C1FB0A7120020ED18 /* SpiralAnimation.swift in Sources */,
 				02FC4C77202497F300D76490 /* FlightMeter.swift in Sources */,
 				71DFEBC621A707DF005A7816 /* Overlayer.swift in Sources */,
@@ -2864,6 +2912,7 @@
 				F8C04CDC1FB0A7120020ED18 /* SettingChangeDelegate.swift in Sources */,
 				0285564F20A5E6C200A898BD /* UserAccount.swift in Sources */,
 				9B6490B8213EBB2C005EBDE7 /* EphemerisUtilityCore.swift in Sources */,
+				849ADAF0239916FB00D9F722 /* GutmaLogCollector.swift in Sources */,
 				7CA1C9621C80788000FE9ED4 /* GroundSdk.swift in Sources */,
 				7C32F17E1FB3654400BFCF1D /* CameraExposureCompensation.swift in Sources */,
 				0237586020A052BC0077F63C /* StreamWriter.swift in Sources */,
@@ -2948,6 +2997,7 @@
 				F8CCFED9205FCEBF000E738C /* UpdateRestApi.swift in Sources */,
 				F8D993121FFF80A20061579B /* MagnetometerWith1StepCalibration.swift in Sources */,
 				706070AE22C9FEB500006C80 /* GGLErrors.swift in Sources */,
+				849ADAED2399126600D9F722 /* GutmaLogManagerCore.swift in Sources */,
 				F8A031162068EE0C00690465 /* FirmwareDownloader.swift in Sources */,
 				684DCB152228312E001DB681 /* MediaRegistry.swift in Sources */,
 				F8C04D4A1FB0A7120020ED18 /* VerticalRevealAnimation.swift in Sources */,
@@ -3083,11 +3133,13 @@
 				0216F7BB1FCF033400841577 /* GuidedPilotingItfTests.swift in Sources */,
 				F8369C8C20A1DB29008010AE /* MockUserDefaults.swift in Sources */,
 				7C2DFDEC1D59C83C006A68E8 /* IntSettingTests.swift in Sources */,
+				849ADAF5239E454700D9F722 /* GutmaLogManagerTests.swift in Sources */,
 				F8A13B721F03D92700F58104 /* StringSettingMatcher.swift in Sources */,
 				9B31DFFE21C931B3006F389E /* ThermalControlTests.swift in Sources */,
 				F8A21F3C1FCC59D5006E3D2E /* CrashReporterTests.swift in Sources */,
 				7C6BDB6E1E115BCF0041C35A /* MediaDownloaderMatcher.swift in Sources */,
 				F8441DAD1D47B07F0062DC77 /* EnumSettingMatcher.swift in Sources */,
+				849ADAF9239E5A8800D9F722 /* MockGutmaLogEngine.swift in Sources */,
 				02C5D00E1FD835DE0028DFEE /* GuidedDirectiveMatcher.swift in Sources */,
 				9B6490C1213EDF5B005EBDE7 /* MockEphemerisEngine.swift in Sources */,
 				0235EDD32077B2E0006E7C9C /* SystemBarometerCoreTests.swift in Sources */,
@@ -3145,6 +3197,7 @@
 				F8034F9B1D33D268003A3CFD /* MagnetometerTests.swift in Sources */,
 				0285565D20A7237400A898BD /* UserAccountInfoMatcher.swift in Sources */,
 				F87005761FC885FD003114D9 /* MockEnginesController.swift in Sources */,
+				849ADAF7239E58E100D9F722 /* GutmaLogEngineTests.swift in Sources */,
 				F89194FC1FC2E7DC002EE4C9 /* AutoConnectionMatcher.swift in Sources */,
 				F8B240381FE3C1A50092974F /* MockBlackBoxEngine.swift in Sources */,
 				F8C252F91FD1617E00A87B5F /* FirmwareManagerTests.swift in Sources */,
@@ -3157,6 +3210,7 @@
 				F887CC1320AEC46100B7A3B3 /* MockActivationEngine.swift in Sources */,
 				7C6BDB701E115F770041C35A /* MediaResourceListCoreTests.swift in Sources */,
 				02108833209B015800F013E4 /* FlightDataDownloaderTests.swift in Sources */,
+				9B5D350823CF53F60098016D /* BatteryGaugeUpdaterTests.swift in Sources */,
 				7C8788FA1DF7047F00D3775E /* LinkedListTests.swift in Sources */,
 				F8468C4D1FBDE3C800B534FD /* AutoConnectionTests.swift in Sources */,
 				F8F2AA1B1FCC28950023F796 /* CrashReportEngineTests.swift in Sources */,

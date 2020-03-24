@@ -68,6 +68,8 @@
 		7CEC4AF41CEDE63A000EEF80 /* ArsdkBleDeviceConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CEC4AF21CEDE63A000EEF80 /* ArsdkBleDeviceConnection.m */; };
 		7CF074001DE8454600C75ACD /* PompBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CF073FD1DE8454600C75ACD /* PompBuffer.h */; };
 		7CF074011DE8454600C75ACD /* PompBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CF073FE1DE8454600C75ACD /* PompBuffer.m */; };
+		845A3D9A239692C500EC3871 /* FileConverterAPI.mm in Sources */ = {isa = PBXBuildFile; fileRef = 845A3D99239692C500EC3871 /* FileConverterAPI.mm */; };
+		849ADAF1239AA6A900D9F722 /* FileConverterAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 845A3D9B239692F000EC3871 /* FileConverterAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9B11B49B22243BED00C5408E /* SdkCore+Sink.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B11B49922243BED00C5408E /* SdkCore+Sink.m */; };
 		9B11B49C22243BED00C5408E /* SdkCore+Sink.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B11B49A22243BED00C5408E /* SdkCore+Sink.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9B3AD49622256F9000955E85 /* SdkCore+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3AD49422256F9000955E85 /* SdkCore+Frame.m */; };
@@ -194,6 +196,8 @@
 		7CEC4AF21CEDE63A000EEF80 /* ArsdkBleDeviceConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArsdkBleDeviceConnection.m; sourceTree = "<group>"; };
 		7CF073FD1DE8454600C75ACD /* PompBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PompBuffer.h; sourceTree = "<group>"; };
 		7CF073FE1DE8454600C75ACD /* PompBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PompBuffer.m; sourceTree = "<group>"; };
+		845A3D99239692C500EC3871 /* FileConverterAPI.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FileConverterAPI.mm; sourceTree = "<group>"; };
+		845A3D9B239692F000EC3871 /* FileConverterAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileConverterAPI.h; sourceTree = "<group>"; };
 		9B11B49922243BED00C5408E /* SdkCore+Sink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SdkCore+Sink.m"; path = "Stream/SdkCore+Sink.m"; sourceTree = SOURCE_ROOT; };
 		9B11B49A22243BED00C5408E /* SdkCore+Sink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SdkCore+Sink.h"; path = "Stream/SdkCore+Sink.h"; sourceTree = SOURCE_ROOT; };
 		9B3AD49422256F9000955E85 /* SdkCore+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SdkCore+Frame.m"; sourceTree = "<group>"; };
@@ -360,6 +364,8 @@
 				F822E34B1E42488B0037DB0F /* ArsdkFirmwareInfo.m */,
 				F8D4256A1E3FAE81004D04BB /* ArsdkRequest.h */,
 				F8D4256B1E3FAE81004D04BB /* ArsdkRequest.m */,
+				845A3D9B239692F000EC3871 /* FileConverterAPI.h */,
+				845A3D99239692C500EC3871 /* FileConverterAPI.mm */,
 				0214338D202B156A0054DE99 /* NoAckCommandLoop.h */,
 				0214338E202B156A0054DE99 /* NoAckCommandLoop.m */,
 				02619F4B2032DFDF00EE30AA /* NoAckStorage.h */,
@@ -538,6 +544,7 @@
 				F8D4256C1E3FAE81004D04BB /* ArsdkRequest.h in Headers */,
 				F822E34C1E42488B0037DB0F /* ArsdkFirmwareInfo.h in Headers */,
 				0214338F202B156A0054DE99 /* NoAckCommandLoop.h in Headers */,
+				849ADAF1239AA6A900D9F722 /* FileConverterAPI.h in Headers */,
 				F85909C81CAC22DF00B08530 /* ArsdkBackendController.h in Headers */,
 				7CE4FEF51D77348000A543C2 /* ArsdkMuxEaBackendController.h in Headers */,
 				F8D425671E3FA352004D04BB /* ArsdkCore+Update.h in Headers */,
@@ -821,6 +828,7 @@
 				F83BFC761CBBE32A00513169 /* ArsdkCore.m in Sources */,
 				F83BFC901CBCF80100513169 /* ArsdkWifiBackendController.m in Sources */,
 				717246B121F9FF4200AB82E5 /* ArsdkCore+Source.m in Sources */,
+				845A3D9A239692C500EC3871 /* FileConverterAPI.mm in Sources */,
 				7C30C1D41CD2125E00FB80B6 /* Logger.m in Sources */,
 				1D2560131EF039F8000C11FA /* NSData+zlib.m in Sources */,
 				7C00F4861D6F293100CE1621 /* ArsdkMux.m in Sources */,

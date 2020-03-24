@@ -746,6 +746,12 @@ public class MockGroundSdk: NSObject {
         func set(state: Bool) -> Bool { return true }
     }
 
+    let batteryGaugeUpdaterMockBackend = BatteryGaugeUpdaterMockBackend()
+    class BatteryGaugeUpdaterMockBackend: BatteryGaugeUpdaterBackend {
+        func prepareUpdate() {}
+        func update() {}
+    }
+
     let targetTrackerMockBackend = TargetTrackerMockBackend()
     class TargetTrackerMockBackend: TargetTrackerBackend {
         func set(targetIsController: Bool) {}

@@ -89,6 +89,9 @@ public class EnginesControllerCore: NSObject {
         if GroundSdkConfig.sharedInstance.enableFlightData && GroundSdkConfig.sharedInstance.applicationKey != nil {
             allEngineList.append(FlightDataEngine(enginesController: self))
         }
+        if GroundSdkConfig.sharedInstance.enableGutmaLog && GroundSdkConfig.sharedInstance.applicationKey != nil {
+            allEngineList.append(GutmaLogEngine(enginesController: self))
+        }
         if GroundSdkConfig.sharedInstance.enableFlightData && GroundSdkConfig.sharedInstance.applicationKey != nil {
             allEngineList.append(FlightLogEngine(enginesController: self))
         }

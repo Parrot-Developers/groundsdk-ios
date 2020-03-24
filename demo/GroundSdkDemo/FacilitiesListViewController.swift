@@ -49,6 +49,7 @@ class FacilitiesListViewController: UITableViewController {
         addCell("reverseGeocoder")
         addCell("userHeading")
         addCell("flightDataManager")
+        addCell("gutmaLogManager")
     }
 
     private func addCell(_ identifier: String) {

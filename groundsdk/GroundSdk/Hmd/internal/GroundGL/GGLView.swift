@@ -54,6 +54,7 @@ internal class GGLView: GLKView {
     /// Expressed in frames per second.
     public var autoRefreshFps: Int = 0 {
         didSet {
+            resetFpsChecker()
             switch autoRefreshFps {
             case let value where value <= 0:
                 autoRefreshFps = 0
@@ -101,9 +102,14 @@ internal class GGLView: GLKView {
     private var controlFpsDate: Date?
     private var fpsCount = 0
 
+    /// Reset the Fps preformance checker
+    public func resetFpsChecker() {
+        controlFpsDate = nil
+    }
+
     override func draw(_ rect: CGRect) {
         guard enabled else {
-            controlFpsDate = nil
+            resetFpsChecker()
             return
         }
         if autoRefreshFps > 0 {
@@ -117,8 +123,8 @@ internal class GGLView: GLKView {
                         badFps = true
                     } else {
                         badFps = false
-                        self.controlFpsDate = nil
                     }
+                    resetFpsChecker()
                 }
             } else {
                 controlFpsDate = Date()

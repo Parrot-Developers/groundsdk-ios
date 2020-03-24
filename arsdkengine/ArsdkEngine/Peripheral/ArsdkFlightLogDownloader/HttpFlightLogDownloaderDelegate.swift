@@ -103,6 +103,13 @@ class HttpFlightLogDownloaderDelegate: ArsdkFlightLogDownloaderDelegate {
             currentRequest = flightLogApi?.downloadFlightLog(
             flightLog, toDirectory: directory, deviceUid: deviceUid) { fileUrl in
                 if let fileUrl = fileUrl {
+                    if let converter = downloader.converter {
+                        let queue = DispatchQueue(label: "com.arsdkengine.gutmalog")
+
+                        queue.async {
+                            _ = converter.convert(fileUrl)
+                        }
+                    }
                     self.downloadCount += 1
                     downloader.flightLogDownloader.update(
                         downloadedCount: self.downloadCount).notifyUpdated()

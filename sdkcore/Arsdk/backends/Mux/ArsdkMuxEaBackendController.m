@@ -184,13 +184,12 @@ static NSString* ACCESSORY_PROTOCOL = @"com.parrot.dronesdk";
         self.discovery = nil;
         self.backend = nil;
         self.mux = nil;
+        self.accessorySession = nil;
+        if (self.accessoryConnected != nil) {
+            [self.accessoryConnected setDelegate:nil];
+            self.accessoryConnected = nil;
+        }
     }];
-
-    self.accessorySession = nil;
-    if (_accessoryConnected != nil) {
-        [_accessoryConnected setDelegate:nil];
-        _accessoryConnected = nil;
-    }
 }
 
 /**
@@ -227,7 +226,11 @@ static NSString* ACCESSORY_PROTOCOL = @"com.parrot.dronesdk";
         _backend = [[ArsdkMuxBackend alloc] initWithArsdkCore:self.arsdkCore mux:_mux];
         _discovery = [[ArsdkMuxDiscovery alloc] initWithArsdkCore:self.arsdkCore mux:_mux backend:_backend
                                                   deviceTypes: _deviceTypes];
-        [_discovery start];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.arsdkCore dispatch_sync:^{
+                [self.discovery start];
+            }];
+        });
     }
     else {
         [self startConnectedAccessory];

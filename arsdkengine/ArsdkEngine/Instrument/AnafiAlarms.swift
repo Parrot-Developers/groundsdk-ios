@@ -136,7 +136,7 @@ extension AnafiAlarms: ArsdkFeatureArdrone3PilotingstateCallback {
             alarms.update(level: .off, forAlarm: .motorCutOut)
                 .update(level: .critical, forAlarm: .userEmergency)
                 .notifyUpdated()
-        case .criticalBattery:
+        case .criticalBattery, .almostEmptyBattery:
             if !batteryFeatureSupported {
                 alarms.update(level: .critical, forAlarm: .power)
                     .update(level: .off, forAlarm: .motorCutOut)

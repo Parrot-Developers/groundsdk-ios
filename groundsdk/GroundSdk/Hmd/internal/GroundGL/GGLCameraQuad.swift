@@ -215,6 +215,8 @@ extension GGLCameraQuad {
         _session?.sessionPreset = _sessionPreset
         // Create a video device and input from that Device. Add the input to the capture session.
         guard let videoDevice = AVCaptureDevice.default(for: .video) else {
+            // delete the session, in order to avoid future actions on it
+            _session = nil
             return
         }
         fov = Double(videoDevice.activeFormat.videoFieldOfView)
@@ -233,11 +235,17 @@ extension GGLCameraQuad {
             _session?.addOutput(dataOutput)
             _session?.commitConfiguration()
             _session?.startRunning()
+        } else {
+            // delete the session, in order to avoid future actions on it
+            _session = nil
         }
     }
 
     private func tearDownAVCapture() {
-        _session?.stopRunning()
+        if _session?.isRunning == true {
+            // always test 'isRunning' before a stop (iOS may crash)
+            _session?.stopRunning()
+        }
         isFrameReady = false
         cleanUpTextures()
     }

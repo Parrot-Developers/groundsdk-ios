@@ -61,6 +61,9 @@ extension ULogTag {
     /// Logging tag of ground sdk flight data (PUDs) engine (internal)
     static let flightDataEngineTag = ULogTag(name: "gsdk.core.engine.flightdata")
 
+    /// Logging tag of ground sdk file converter engine (internal)
+    static let gutmaLogEngineTag = ULogTag(name: "gsdk.core.engine.gutmalog")
+
     /// Logging tag of ground sdk flight log engine (internal)
     static let flightLogEngineTag = ULogTag(name: "gsdk.core.engine.flightlog")
 

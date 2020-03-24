@@ -73,6 +73,9 @@ extension ULogTag {
     /// Logging tag of arsdk ephemeris
     static let ephemerisTag = ULogTag(name: "arsdkengine.ephemeris")
 
+    /// Logging tag of arsdk file converter to Gutma
+    static let gutmaLogTag = ULogTag(name: "arsdkengine.gutmalog")
+
     /// Logging tag of arsdk webSocket session
     static let flightLogTag = ULogTag(name: "arsdkengine.flightlog")
 

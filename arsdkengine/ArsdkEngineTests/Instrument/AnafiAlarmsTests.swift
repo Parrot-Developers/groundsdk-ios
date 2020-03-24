@@ -87,6 +87,23 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
         assertThat(changeCnt, `is`(1))
 
+        // Almost empty battery
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstateAlertstatechangedEncoder(state: .almostEmptyBattery))
+        assertThat(alarms!.getAlarm(kind: .power).level, `is`(.critical))
+        assertThat(alarms!.getAlarm(kind: .userEmergency).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .motorCutOut).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .motorError).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .batteryTooCold).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .batteryTooHot).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .hoveringDifficultiesNoGpsTooHigh).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .hoveringDifficultiesNoGpsTooDark).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .automaticLandingBatteryIssue).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
+        assertThat(changeCnt, `is`(2))
+
         // Mock low battery from ARDrone3 reception
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.ardrone3PilotingstateAlertstatechangedEncoder(state: .lowBattery))
@@ -102,7 +119,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(2))
+        assertThat(changeCnt, `is`(3))
 
         // Critical battery
         mockArsdkCore.onCommandReceived(
@@ -119,7 +136,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(3))
+        assertThat(changeCnt, `is`(4))
 
         // UserEmergency
         mockArsdkCore.onCommandReceived(
@@ -136,7 +153,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(4))
+        assertThat(changeCnt, `is`(5))
 
         // Cut out
         mockArsdkCore.onCommandReceived(
@@ -153,7 +170,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(5))
+        assertThat(changeCnt, `is`(6))
 
         // Motor error
         mockArsdkCore.onCommandReceived(
@@ -171,7 +188,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(6))
+        assertThat(changeCnt, `is`(7))
 
         // Alert none
         mockArsdkCore.onCommandReceived(
@@ -188,7 +205,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(7))
+        assertThat(changeCnt, `is`(8))
 
         // Cut out
         mockArsdkCore.onCommandReceived(
@@ -205,14 +222,14 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(8))
+        assertThat(changeCnt, `is`(9))
 
         // Warning battery low (as first element of the map, should not trigger any update)
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.batteryAlertEncoder(
                 alert: .powerLevel, level: .warning,
                 listFlagsBitField: Bitfield<ArsdkFeatureGenericListFlags>.of(.first)))
-        assertThat(changeCnt, `is`(8))
+        assertThat(changeCnt, `is`(9))
 
         // Critical battery too cold
         mockArsdkCore.onCommandReceived(
@@ -231,7 +248,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(9))
+        assertThat(changeCnt, `is`(10))
 
         // Remove battery too cold
         mockArsdkCore.onCommandReceived(
@@ -250,7 +267,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(10))
+        assertThat(changeCnt, `is`(11))
 
         // Add as first and last battery too hot
         mockArsdkCore.onCommandReceived(
@@ -269,7 +286,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(11))
+        assertThat(changeCnt, `is`(12))
 
         // Add as last battery level
         mockArsdkCore.onCommandReceived(
@@ -288,7 +305,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(12))
+        assertThat(changeCnt, `is`(13))
 
         // Alert none
         mockArsdkCore.onCommandReceived(
@@ -305,7 +322,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(13))
+        assertThat(changeCnt, `is`(14))
 
         // Motor error gone
         mockArsdkCore.onCommandReceived(
@@ -323,7 +340,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(14))
+        assertThat(changeCnt, `is`(15))
 
         // Too much angle should not add any alarms
         mockArsdkCore.onCommandReceived(
@@ -340,7 +357,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(14))
+        assertThat(changeCnt, `is`(15))
 
         // Remove battery level alarm
         mockArsdkCore.onCommandReceived(
@@ -359,7 +376,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(15))
+        assertThat(changeCnt, `is`(16))
 
         // Receiving low battery from ARDrone3 reception after having received a battery alarm (from battery feature)
         // should not trigger any change
@@ -377,7 +394,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(15))
+        assertThat(changeCnt, `is`(16))
 
         // Receiving critical battery from ARDrone3 reception after having received a battery alarm
         // (from battery feature) should not trigger any change
@@ -395,7 +412,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(15))
+        assertThat(changeCnt, `is`(16))
 
         // receiving hovering warning event
         mockArsdkCore.onCommandReceived(
@@ -412,7 +429,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(16))
+        assertThat(changeCnt, `is`(17))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.ardrone3PilotingstateHoveringwarningEncoder(noGpsTooDark: 1, noGpsTooHigh: 0))
@@ -428,7 +445,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(17))
+        assertThat(changeCnt, `is`(18))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.ardrone3PilotingstateHoveringwarningEncoder(noGpsTooDark: 0, noGpsTooHigh: 0))
@@ -444,7 +461,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(18))
+        assertThat(changeCnt, `is`(19))
 
         // receiving autolanding in 25s because of battery low
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.ardrone3PilotingstateForcedlandingautotriggerEncoder(
@@ -462,7 +479,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(19))
+        assertThat(changeCnt, `is`(20))
 
         // receiving autolanding in less or equal than 3s because of battery low
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.ardrone3PilotingstateForcedlandingautotriggerEncoder(
@@ -480,7 +497,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(20))
+        assertThat(changeCnt, `is`(21))
 
         // receiving autolanding deactivated (i.e. reason is none)
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.ardrone3PilotingstateForcedlandingautotriggerEncoder(
@@ -498,7 +515,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(21))
+        assertThat(changeCnt, `is`(22))
 
         // receiving wind warning event
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.ardrone3PilotingstateWindstatechangedEncoder(
@@ -515,7 +532,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.critical))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(22))
+        assertThat(changeCnt, `is`(23))
 
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.ardrone3PilotingstateWindstatechangedEncoder(
             state: .warning))
@@ -531,7 +548,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.warning))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(23))
+        assertThat(changeCnt, `is`(24))
 
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.ardrone3PilotingstateWindstatechangedEncoder(
             state: .ok))
@@ -547,7 +564,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(24))
+        assertThat(changeCnt, `is`(25))
 
         // receiving state from vertical camera sensor
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.commonCommonstateSensorsstateslistchangedEncoder(
@@ -564,7 +581,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.critical))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(25))
+        assertThat(changeCnt, `is`(26))
 
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.commonCommonstateSensorsstateslistchangedEncoder(
             sensorname: .verticalCamera, sensorstate: 1))
@@ -580,7 +597,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(26))
+        assertThat(changeCnt, `is`(27))
 
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.ardrone3PilotingstateVibrationlevelchangedEncoder(
             state: .warning))
@@ -596,7 +613,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.warning))
-        assertThat(changeCnt, `is`(27))
+        assertThat(changeCnt, `is`(28))
 
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.ardrone3PilotingstateVibrationlevelchangedEncoder(
             state: .critical))
@@ -612,7 +629,7 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.critical))
-        assertThat(changeCnt, `is`(28))
+        assertThat(changeCnt, `is`(29))
 
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.ardrone3PilotingstateVibrationlevelchangedEncoder(
             state: .ok))
@@ -628,7 +645,24 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(changeCnt, `is`(29))
+        assertThat(changeCnt, `is`(30))
+
+        // Almost empty battery should not worked.
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstateAlertstatechangedEncoder(state: .almostEmptyBattery))
+        assertThat(alarms!.getAlarm(kind: .power).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .userEmergency).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .motorCutOut).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .motorError).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .batteryTooCold).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .batteryTooHot).level, `is`(.warning))
+        assertThat(alarms!.getAlarm(kind: .hoveringDifficultiesNoGpsTooHigh).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .hoveringDifficultiesNoGpsTooDark).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .automaticLandingBatteryIssue).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
+        assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
+        assertThat(changeCnt, `is`(30))
     }
 
     func testNoGpsAlarmsAndFlyingStatus() {

@@ -27,28 +27,35 @@
 //    OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 //    SUCH DAMAGE.
 
-import Foundation
-@testable import GroundSdk
+import GroundSdk
+import UIKit
 
-class MockGroundSdkCore: GroundSdkCore {
+class GutmaLogManagerCell: FacilityCell {
 
-    var mockEngine: MockEngine?
+    @IBOutlet weak var countFilesValue: UILabel!
 
-    override init() {
-        super.init()
-        self.setAsInstance()
+    private var gutmaLogManager: Ref<GutmaLogManager>?
+
+    override func initContent(tableView: UITableView) {
+        super.initContent(tableView: tableView)
+
+        gutmaLogManager =
+            groundSdk.getFacility(Facilities.gutmaLogManager) { [weak self] gutmaLogManager in
+                if let gutmaLogManager = gutmaLogManager {
+                    self?.show()
+                    self?.countFilesValue.text = gutmaLogManager.files.count.description
+                } else {
+                    self?.hide()
+                }
+        }
     }
 
-    deinit {
-        GroundSdkConfig.reload()
-        close()
-    }
-
-    internal override func makeEnginesController(utilityRegistry: UtilityCoreRegistry,
-                                                 facilityStore: ComponentStoreCore) -> EnginesControllerCore {
-        let enginesController = EnginesControllerCore(utilityRegistry: utilityRegistry, facilityStore: facilityStore)
-        mockEngine = MockEngine(enginesController: enginesController)
-        enginesController.engines.append(mockEngine!)
-        return enginesController
+    @IBAction func startStopGutmaLogManager(_ sender: UIButton) {
+        if let gutmaLogManager = gutmaLogManager?.value {
+            gutmaLogManager.files.forEach { urlFile in
+                // remove gutma
+                _ = gutmaLogManager.delete(file: urlFile)
+            }
+        }
     }
 }

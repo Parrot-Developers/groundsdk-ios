@@ -59,6 +59,8 @@ import Foundation
 ///  - `FlightLog` (Bool): enable flight logs (from drone or remote control) to be shared with Parrot. Default is
 ///     `true`.
 ///
+///  - `GutmaLog` (Bool): enable convert flight data files from drone to GUTMA. Default is `true`.
+///
 ///  - `BlackBox` (Bool): enable black box recording and sharing these records with Parrot. Default is `true`.
 ///
 ///  - `FirmwareSync` (Bool): enable firmware synchronization. Default is `true`.
@@ -180,6 +182,13 @@ public class GroundSdkConfig: NSObject {
         }
     }
 
+    /// Enable gutma log
+    public var enableGutmaLog = true {
+        willSet(newValue) {
+            checkLocked()
+        }
+    }
+
     /// Enable black box recording and sending them to Parrot's servers.
     /// If set to `true`, as soon as a device is connecting, a black box will be recorded in memory. Then, when
     /// the drone is disconnected, this black box is stored on the file system and will be sent to Parrot's servers.
@@ -248,6 +257,13 @@ public class GroundSdkConfig: NSObject {
 
     /// Flight data quota in mega bytes.
     public var flightDataQuotaMb: Int? {
+        willSet(newValue) {
+            checkLocked()
+        }
+    }
+
+    /// Gutma log quota in mega bytes.
+    public var gutmaLogQuotaMb: Int? {
         willSet(newValue) {
             checkLocked()
         }
@@ -338,6 +354,9 @@ public class GroundSdkConfig: NSObject {
         if let enableFlightLog = config?[Keys.enableFlightLog.rawValue] as? Bool {
             self.enableFlightLog = enableFlightLog
         }
+        if let enableGutmaLog = config?[Keys.enableGutmaLog.rawValue] as? Bool {
+            self.enableGutmaLog = enableGutmaLog
+        }
         if let enableBlackBox = config?[Keys.enableBlackBox.rawValue] as? Bool {
             self.enableBlackBox = enableBlackBox
         }
@@ -396,6 +415,9 @@ public class GroundSdkConfig: NSObject {
         if let flightDataQuotaMb = config?[Keys.flightDataQuotaMb.rawValue] as? Int {
             self.flightDataQuotaMb = flightDataQuotaMb
         }
+        if let gutmaLogQuotaMb = config?[Keys.gutmaLogQuotaMb.rawValue] as? Int {
+            self.gutmaLogQuotaMb = gutmaLogQuotaMb
+        }
         if let crashReportQuotaMb = config?[Keys.crashReportQuotaMb.rawValue] as? Int {
             self.crashReportQuotaMb = crashReportQuotaMb
         }
@@ -416,6 +438,7 @@ public class GroundSdkConfig: NSObject {
         case offlineSettings = "OfflineSettings"
         case enableCrashReport = "CrashReport"
         case enableFlightData = "FlightData"
+        case enableGutmaLog = "GutmaLog"
         case enableFirmwareSynchronization = "FirmwareSync"
         case firmwareServer = "FirmwareServer"
         case supportedDevices = "SupportedDevices"
@@ -430,6 +453,7 @@ public class GroundSdkConfig: NSObject {
         case blackBoxQuotaMb = "BlackBoxQuotaMb"
         case flightLogQuotaMb = "FlightLogQuotaMb"
         case flightDataQuotaMb = "FlightDataQuotaMb"
+        case gutmaLogQuotaMb = "GutmaLogQuotaMb"
         case crashReportQuotaMb = "CrashReportQuotaMb"
         case blackboxPublicFolder = "BlackboxPublicFolder"
     }
@@ -449,7 +473,7 @@ public class GroundSdkConfig: NSObject {
 
     private func checkLocked() {
         if locked {
-            assertionFailure("GroundSdkConfig must me set before starting the first session.")
+            assertionFailure("GroundSdkConfig must be set before starting the first session.")
         }
     }
 }

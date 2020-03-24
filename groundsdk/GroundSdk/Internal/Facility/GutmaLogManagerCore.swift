@@ -28,27 +28,54 @@
 //    SUCH DAMAGE.
 
 import Foundation
-@testable import GroundSdk
 
-class MockGroundSdkCore: GroundSdkCore {
+/// Gutma Log Manager backend
+protocol GutmaLogManagerBackend: class {
+    /// Deletes a gutma log.
+    ///
+    /// - Parameter file: URL of the file gutma log file to delete
+    /// - Returns: `true` if the specified file exists and was successfully deleted, `false` otherwise
+    func delete(file: URL) -> Bool
+}
 
-    var mockEngine: MockEngine?
+/// Core implementation of the Gutma Log Manager facility
+class GutmaLogManagerCore: FacilityCore, GutmaLogManager {
 
-    override init() {
-        super.init()
-        self.setAsInstance()
+    /// Implementation backend
+    private unowned let backend: GutmaLogManagerBackend
+
+    public private(set) var files = Set<URL>()
+
+    /// Constructor
+    ///
+    /// - Parameters:
+    ///   - store: Component store owning this component
+    ///   - backend: FirmwareManagerBackend backend
+    public init(store: ComponentStoreCore, backend: GutmaLogManagerBackend) {
+        self.backend = backend
+        super.init(desc: Facilities.gutmaLogManager, store: store)
     }
 
-    deinit {
-        GroundSdkConfig.reload()
-        close()
+    public func delete(file: URL) -> Bool {
+        guard files.contains(file) else {
+            return false
+        }
+        return backend.delete(file: file)
     }
+}
 
-    internal override func makeEnginesController(utilityRegistry: UtilityCoreRegistry,
-                                                 facilityStore: ComponentStoreCore) -> EnginesControllerCore {
-        let enginesController = EnginesControllerCore(utilityRegistry: utilityRegistry, facilityStore: facilityStore)
-        mockEngine = MockEngine(enginesController: enginesController)
-        enginesController.engines.append(mockEngine!)
-        return enginesController
+/// Backend callback methods
+extension GutmaLogManagerCore {
+    /// Changes current set of converted files.
+    ///
+    /// - Parameter files: new set of files
+    /// - Returns: self to allow call chaining
+    /// - Note: Changes are not notified until notifyUpdated() is called.
+    @discardableResult public func update(files newValue: Set<URL>) -> GutmaLogManagerCore {
+        if files != newValue {
+            files = newValue
+            markChanged()
+        }
+        return self
     }
 }

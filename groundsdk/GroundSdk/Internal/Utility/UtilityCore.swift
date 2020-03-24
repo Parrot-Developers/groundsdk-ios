@@ -43,6 +43,8 @@ public class Utilities: NSObject {
     public static let flightDataStorage = FlightDataStorageCoreDesc()
     /// Flight logs storage utility.
     public static let flightLogStorage = FlightLogStorageCoreDesc()
+    /// Converted logs storage utility.
+    public static let gutmaLogStorage = GutmaLogStorageCoreDesc()
     /// Firmwares stores utility.
     public static let firmwareStore = FirmwareStoreCoreDesc()
     /// Firmware downloader utility.
@@ -83,6 +85,7 @@ enum UtilityUid: Int {
     case userAccount
     case ephemeris
     case flightLogStorage
+    case gutmaLogStorage
 }
 
 /// Describe a Utility

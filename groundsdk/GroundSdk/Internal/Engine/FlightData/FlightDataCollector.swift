@@ -52,7 +52,7 @@ class FlightDataCollector {
     ///
     /// - Parameters:
     ///   - rootDir: url path of the root directory where files are stored
-    ///   - workDir: current work directory where files downloaded from remote devices get stored
+    ///   - flightDataLocalWorkDir: current work directory where files downloaded from remote devices get stored
     init(rootDir: URL, flightDataLocalWorkDir: URL) {
         self.rootDir = rootDir
         self.flightDataLocalWorkDir = flightDataLocalWorkDir

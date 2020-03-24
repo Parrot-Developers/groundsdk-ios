@@ -27,28 +27,32 @@
 //    OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 //    SUCH DAMAGE.
 
-import Foundation
-@testable import GroundSdk
+#import "FileConverterAPI.h"
+#include <log2gutma/log2gutma.hpp>
 
-class MockGroundSdkCore: GroundSdkCore {
+using namespace std;
 
-    var mockEngine: MockEngine?
+@interface FileConverterAPI ()
+@end
 
-    override init() {
-        super.init()
-        self.setAsInstance()
+@implementation FileConverterAPI
+
++ (BOOL)convert:(NSString*)inFile
+        outFile:(NSString*)outFile
+         format:(FileFormat)format {
+    //get std::string from NSString
+    BOOL res;
+    const char *inFileCString = [inFile cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *outFileCString = [outFile cStringUsingEncoding:NSASCIIStringEncoding];
+    if (inFileCString == NULL || outFileCString == NULL) {
+        return false;
     }
-
-    deinit {
-        GroundSdkConfig.reload()
-        close()
+    switch (format) {
+        case FileFormatGutma:
+            res = log2gutma::convert(string(inFileCString), string(outFileCString));
+            break;
     }
-
-    internal override func makeEnginesController(utilityRegistry: UtilityCoreRegistry,
-                                                 facilityStore: ComponentStoreCore) -> EnginesControllerCore {
-        let enginesController = EnginesControllerCore(utilityRegistry: utilityRegistry, facilityStore: facilityStore)
-        mockEngine = MockEngine(enginesController: enginesController)
-        enginesController.engines.append(mockEngine!)
-        return enginesController
-    }
+    return res;
 }
+
+@end

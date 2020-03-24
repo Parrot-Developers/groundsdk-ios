@@ -28,27 +28,12 @@
 //    SUCH DAMAGE.
 
 import Foundation
-@testable import GroundSdk
 
-class MockGroundSdkCore: GroundSdkCore {
-
-    var mockEngine: MockEngine?
-
-    override init() {
-        super.init()
-        self.setAsInstance()
-    }
-
-    deinit {
-        GroundSdkConfig.reload()
-        close()
-    }
-
-    internal override func makeEnginesController(utilityRegistry: UtilityCoreRegistry,
-                                                 facilityStore: ComponentStoreCore) -> EnginesControllerCore {
-        let enginesController = EnginesControllerCore(utilityRegistry: utilityRegistry, facilityStore: facilityStore)
-        mockEngine = MockEngine(enginesController: enginesController)
-        enginesController.engines.append(mockEngine!)
-        return enginesController
-    }
+/// Base protocol for a type that can convert a file from a format to another.
+protocol FileConverter: class {
+    /// Convert a file from a format to another
+    ///
+    /// - Parameter file: the path of the file to convert
+    /// - Returns: `true` if the conversion is successful, `false` otherwise
+    func convert(_ file: URL) -> Bool
 }

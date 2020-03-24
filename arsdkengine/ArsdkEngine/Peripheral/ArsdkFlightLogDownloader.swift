@@ -59,8 +59,9 @@ class HttpFlightLogDownloader: ArsdkFlightLogDownloader {
     /// - Parameters:
     ///     - deviceController: device controller owning this component controller (weak)
     ///     - flightLogStorage: flight Log Storage Utility
-    init(deviceController: DeviceController, flightLogStorage: FlightLogStorageCore) {
-        super.init(deviceController: deviceController, flightLogStorage: flightLogStorage,
+    ///     - converter: converter notified in background thread when flight logs are downloaded
+    init(deviceController: DeviceController, flightLogStorage: FlightLogStorageCore, converter: FileConverter?) {
+        super.init(deviceController: deviceController, flightLogStorage: flightLogStorage, converter: converter,
                    delegate: HttpFlightLogDownloaderDelegate())
     }
 }
@@ -72,9 +73,10 @@ class FtpFlightLogDownloader: ArsdkFlightLogDownloader {
     /// - Parameters:
     ///     - deviceController: device controller owning this component controller (weak)
     ///     - flightLogStorage: flight Log Storage Utility
-    init(deviceController: DeviceController, flightLogStorage: FlightLogStorageCore) {
+    ///     - converter: converter notified in background thread when flight logs are downloaded
+    init(deviceController: DeviceController, flightLogStorage: FlightLogStorageCore, converter: FileConverter?) {
         super.init(deviceController: deviceController, flightLogStorage: flightLogStorage,
-                   delegate: FtpFlightLogDownloaderDelegate())
+                   converter: converter, delegate: FtpFlightLogDownloaderDelegate())
     }
 }
 
@@ -85,6 +87,8 @@ class ArsdkFlightLogDownloader: DeviceComponentController {
     let flightLogDownloader: FlightLogDownloaderCore
     /// Flight Log storage utility
     let flightLogStorage: FlightLogStorageCore
+    /// Converter notified in background thread when flight logs are downloaded
+    let converter: FileConverter?
 
     // swiftlint:disable weak_delegate
     /// Delegate to actually download the flight logs
@@ -99,12 +103,14 @@ class ArsdkFlightLogDownloader: DeviceComponentController {
     /// - Parameters:
     ///     - deviceController: device controller owning this component controller (weak)
     ///     - flightLogStorage: flight Log Storage Utility
+    ///     - converter: converter notified in background thread when flight logs are downloaded
     fileprivate init(deviceController: DeviceController, flightLogStorage: FlightLogStorageCore,
-                     delegate: ArsdkFlightLogDownloaderDelegate) {
+                     converter: FileConverter?, delegate: ArsdkFlightLogDownloaderDelegate) {
         self.delegate = delegate
         self.flightLogStorage = flightLogStorage
         self.flightLogDownloader = FlightLogDownloaderCore(store: deviceController.device.peripheralStore)
-        userAccountUtilityCore =  deviceController.engine.utilities.getUtility(Utilities.userAccount)
+        self.userAccountUtilityCore =  deviceController.engine.utilities.getUtility(Utilities.userAccount)
+        self.converter = converter
         super.init(deviceController: deviceController)
     }
 

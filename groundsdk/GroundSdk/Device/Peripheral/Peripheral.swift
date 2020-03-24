@@ -102,6 +102,8 @@ public class Peripherals: NSObject {
     public static let copilot = CopilotDesc()
     /// Piloting control.
     public static let pilotingControl = PilotingControlDesc()
+    /// Battery gauge updater
+    public static let batteryGaugeUpdater = BatteryGaugeUpdaterDesc()
 }
 
 /// Peripheral uid.
@@ -136,6 +138,7 @@ enum PeripheralUid: Int {
     case leds
     case copilot
     case pilotingControl
+    case batteryGaugeUpdater
 }
 
 /// Objective-C wrapper of Ref<Peripheral>. Required because swift generics can't be used from Objective-C.

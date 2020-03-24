@@ -119,6 +119,7 @@ class DroneInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             addCell("geofence", section: peripheralSection)
             addCell("gimbal", section: peripheralSection)
             addCell("systemInfo", section: peripheralSection)
+            addCell("batteryGaugeFirmwareUpdater", section: peripheralSection)
             addCell("updater", section: peripheralSection)
             addCell("crashReporter", section: peripheralSection)
             addCell("mediaStore", section: peripheralSection)

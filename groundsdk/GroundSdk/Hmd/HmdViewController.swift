@@ -130,10 +130,7 @@ open class HmdViewController: UIViewController {
     /// Minimum refresh rate of the Hud (Hz). In case of poor performance, the refresh rate can be automatically
     /// reduced, but never below this value.
     private var minRefreshHudHz: Double?
-    /// Queue (GCD) used to render the HUD (get a image from a UIView) in a different thread than the main thread.
-    private lazy var hudRenderingQueue: DispatchQueue = {
-        DispatchQueue(label: "hudRenderingQueue", qos: DispatchQoS.default)
-    }()
+
     /// A struct object that checks the refresh rate of the Hud.
     private var hudFrequencyController: HudFrequencyController?
     /// The view containing the Hud. See `setViewForHud`()`
@@ -310,6 +307,7 @@ open class HmdViewController: UIViewController {
         guard let multiLayer = multiLayer else {
             return
         }
+        self.gglView?.resetFpsChecker()
         if origin != .phoneCamera {
             // hide the camera layer + overlay
             if let cameraLayerId = cameraLayerId {
@@ -414,17 +412,21 @@ open class HmdViewController: UIViewController {
         }
     }
 
-    /// Render the Hud view in the multilayer Frame Buffer Object. This function schedules copies of the hud (in an
-    /// other thread). The result (an openGl texture) is then applied to the multilayer Frame Buffer Object
+    /// Render the Hud view in the multilayer Frame Buffer Object. This function schedules copies of the hud
+    /// The result (an openGl texture) is then applied to the multilayer Frame Buffer Object
     private func activeAutoRefreshHud() {
         let samplingHz = Double(100)
         if let hudView  = hudView, hudLayerId != nil, refreshHudHz > 0, let openGlContext = gglView?.context {
             hudFrequencyController = HudFrequencyController(
                 requestedTriggerHz: refreshHudHz, minTriggerHz: minRefreshHudHz, samplingHz: samplingHz)
-            hudTimer = GGLTimer(timeInterval: 1.0 / samplingHz, fireQueue: hudRenderingQueue)
+            hudTimer = GGLTimer(timeInterval: 1.0 / samplingHz, fireQueue: DispatchQueue.main)
             let viewToRender = GGLUtils.getDrawableView(view: hudView) ?? hudView
             hudTimer?.eventHandler = { [weak self] in
                 if let self = self, let trigger = self.hudFrequencyController?.trigger(), trigger == true {
+                    if self.gglView?.badFps == true {
+                        // try to reduce the refresh rate of the hud
+                        self.hudFrequencyController?.askReduce = true
+                    }
                     if self.hudFrequencyController?.badPerf == true && self.gglView?.badFps == true {
                         // set the low res. This value will definitely be set to true
                         self.hudForceLowRes = true
@@ -445,15 +447,13 @@ open class HmdViewController: UIViewController {
                     }
                     UIGraphicsEndImageContext()
 
-                    DispatchQueue.main.async { [weak self, image] in
-                        if let self = self, let hudLayerId = self.hudLayerId, let image = image {
-                            EAGLContext.setCurrent(openGlContext)
-                            if let cgimage = image.cgImage,
-                                let textureInfo = try? GLKTextureLoader.texture(with: cgimage) {
-                                var textureId = GLuint()
-                                textureId = textureInfo.name
-                                self.multiLayer?.setTexture(layerId: hudLayerId, texture: textureId)
-                            }
+                    if let hudLayerId = self.hudLayerId, let image = image {
+                        EAGLContext.setCurrent(openGlContext)
+                        if let cgimage = image.cgImage,
+                            let textureInfo = try? GLKTextureLoader.texture(with: cgimage) {
+                            var textureId = GLuint()
+                            textureId = textureInfo.name
+                            self.multiLayer?.setTexture(layerId: hudLayerId, texture: textureId)
                         }
                     }
                 }
@@ -593,6 +593,8 @@ private struct HudFrequencyController {
     let samplingHz: Double
     /// The initial refresh rate requested for the hud
     let requestedTriggerHz: Double
+    /// if true, the HudFrequencyController will try to reduce the refresh rate
+    var askReduce: Bool = false
     /// true or false whether the refresh rate is lower than the desired one.
     var badPerf = false
     /// current targeted refresh rate
@@ -635,7 +637,7 @@ private struct HudFrequencyController {
             let eventsGoal = checkPeriodTimeSec * activeTriggerHz
             if let minTriggerHz = minTriggerHz, eventsInPeriod < Int(eventsGoal) {
                 // check if the delta is over 10%
-                if eventsGoal / Double(eventsInPeriod) > 1.1 {
+                if eventsGoal / Double(eventsInPeriod) > 1.1 || askReduce {
                     if activeTriggerHz > minTriggerHz {
                         activeTriggerHz *= 0.5
                         if activeTriggerHz < minTriggerHz {
@@ -648,6 +650,7 @@ private struct HudFrequencyController {
                     }
                 }
             }
+            askReduce = false
             currentCheckPeriod = 0
             eventsInPeriod = 0
             startDate = Date()

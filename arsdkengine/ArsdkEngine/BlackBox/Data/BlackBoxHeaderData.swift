@@ -53,7 +53,7 @@ struct BlackBoxHeaderData: Encodable {
     }
 
     /// Black box version
-    let blackBoxVersion = "1.0.5"
+    let blackBoxVersion = "1.0.6"
     /// OS version
     let osVersion = "iOS \(AppInfoCore.systemVersion)"
     /// Device model

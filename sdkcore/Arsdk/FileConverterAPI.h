@@ -27,28 +27,16 @@
 //    OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 //    SUCH DAMAGE.
 
-import Foundation
-@testable import GroundSdk
+#import <Foundation/Foundation.h>
 
-class MockGroundSdkCore: GroundSdkCore {
+typedef NS_ENUM(NSInteger, FileFormat) {
+    FileFormatGutma
+};
 
-    var mockEngine: MockEngine?
+@interface FileConverterAPI : NSObject
 
-    override init() {
-        super.init()
-        self.setAsInstance()
-    }
++ (BOOL)convert:(NSString*)inFile
+        outFile:(NSString*)outFile
+         format:(FileFormat)format;
 
-    deinit {
-        GroundSdkConfig.reload()
-        close()
-    }
-
-    internal override func makeEnginesController(utilityRegistry: UtilityCoreRegistry,
-                                                 facilityStore: ComponentStoreCore) -> EnginesControllerCore {
-        let enginesController = EnginesControllerCore(utilityRegistry: utilityRegistry, facilityStore: facilityStore)
-        mockEngine = MockEngine(enginesController: enginesController)
-        enginesController.engines.append(mockEngine!)
-        return enginesController
-    }
-}
+@end

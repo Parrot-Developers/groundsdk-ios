@@ -29,121 +29,120 @@
 
 import Foundation
 
-/// FlightLog report collector.
-/// This object is in charge of all file system related actions linked to the flightLog reports.
+/// Converted Log (GUTMAs) collector.
+/// This object is in charge of all file system related actions linked to the GUTMA files.
 ///
 /// Indeed, it is in charge of:
-///  - collecting on the iOS device file system a list of flightLogs  that are waiting for upload.
-///  - cleaning the empty former work directories and the not fully downloaded flightLog reports file.
-///  - offering an interface to delete a given flightLog report
-class FlightLogCollector {
+///  - collecting on the iOS device file system a list of converted gutma logs.
+///  - cleaning the empty former work directories and the not fully converted log file.
+///  - offering an interface to delete a given gutma log
+class GutmaLogCollector {
 
     /// Queue where all I/O operations will run into
-    private let ioQueue = DispatchQueue(label: "FlightLogCollectorQueue")
+    private let ioQueue = DispatchQueue(label: "GutmaLogCollectorQueue")
 
-    /// Url path of the root directory where reports are stored on the user device's local file system.
+    /// Url path of the root directory where converted logs are stored on the user device's local file system.
     private let rootDir: URL
 
-    /// Url path of the current work directory where logs downloaded from remote devices get stored.
-    /// This directory should not be scanned nor deleted because reports might be currently downloading in it.
-    private let flightLogsLocalWorkDir: URL
+    /// Url path of the current work directory where converted logs from remote devices get stored.
+    /// This directory should not be scanned or deleted because files might be currently converting in it.
+    private let gutmaLogsLocalWorkDir: URL
 
     /// Constructor
     ///
     /// - Parameters:
-    ///   - rootDir: url path of the root directory where reports are stored
-    ///   - flightLogsLocalWorkDir: current work directory where reports downloaded from remote devices get stored
-    init(rootDir: URL, flightLogsLocalWorkDir: URL) {
+    ///   - rootDir: url path of the root directory where files are stored
+    ///   - gutmaLogsLocalWorkDir: current work directory where files converted from remote devices get stored
+    init(rootDir: URL, gutmaLogsLocalWorkDir: URL) {
         self.rootDir = rootDir
-        self.flightLogsLocalWorkDir = flightLogsLocalWorkDir
+        self.gutmaLogsLocalWorkDir = gutmaLogsLocalWorkDir
     }
 
-    /// Loads the list of local flightLogs in background.
+    /// Loads the list of local converted log files in background.
     ///
     /// - Note:
     ///    - this function will not look into the `workDir` directory.
-    ///    - this function will delete all empty folders and not fully downloaded flightLog that are not located in
+    ///    - this function will delete all empty folders and not fully converted files that are not located in
     ///      `workDir`.
     ///
     /// - Parameters:
-    ///   - completionCallback: callback with the the local flightLogs list
-    ///   - flightLogsUrls: list of the local urls of the logs that are ready to upload
-    func collectFlightLogs(completionCallback: @escaping (_ flightLogsUrls: [URL]) -> Void) {
+    ///   - completionCallback: callback of the local GutmaLog list
+    ///   - gutmaLogs: set of the files url that are ready.
+    func collectGutmaLogs(completionCallback: @escaping (_ gutmaLogs: Set<URL>) -> Void) {
         ioQueue.async {
             do {
                 try FileManager.default.createDirectory(
                     at: self.rootDir, withIntermediateDirectories: true, attributes: nil)
             } catch let err {
-                ULog.e(.flightLogEngineTag, "Failed to create folder at \(self.rootDir.path): \(err)")
+                ULog.e(.gutmaLogEngineTag, "Failed to create folder at \(self.rootDir.path): \(err)")
                 return
             }
 
-            var toUpload: [URL] = []
-            var toDelete: Set<URL> = []
+            var readyFiles = Set<URL>()
+            var toDelete = Set<URL>()
 
-            // For each dirs of the flightLogs dir (these are work dirs and former work dirs
+            // For each dirs of the gutmaLog dir
             let dirs = try? FileManager.default.contentsOfDirectory(
                 at: self.rootDir, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
             dirs?.forEach { dir in
                 // don't look in the work dir for the moment
-                if dir != self.flightLogsLocalWorkDir {
+                if dir != self.gutmaLogsLocalWorkDir {
                     // by default add the directory to the directories to delete. It will be removed from it if we
-                    // discover a finalized flightLog inside
+                    // discover a finalized gutma log inside
                     toDelete.insert(dir)
 
-                    let logUrls = try? FileManager.default.contentsOfDirectory(
+                    let gutmaLogDirs = try? FileManager.default.contentsOfDirectory(
                         at: dir, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-                    logUrls?.forEach { logUrl in
-                        // if the report is finalized
-                        if logUrl.isAFinalizedFlightLog {
+                    gutmaLogDirs?.forEach { gutmaUrl in
+                        // if the gutma log file is finalized
+                        if gutmaUrl.isAFinalizedGutmaLog {
                             // keep the parent folder
                             toDelete.remove(dir)
-
-                            toUpload.append(logUrl)
+                            readyFiles.insert(gutmaUrl)
                         } else {
-                            toDelete.insert(logUrl)
+                            toDelete.insert(gutmaUrl)
                         }
                     }
                 }
             }
 
-            // delete all not finalized reports and empty directories
+            // delete all not finalized files and empty directories
             toDelete.forEach {
-                self.doDeleteFlightLog(at: $0)
+                self.doDeleteGutmaLog(at: $0)
             }
 
             DispatchQueue.main.async {
-                completionCallback(toUpload)
+                completionCallback(readyFiles)
             }
         }
     }
 
-    /// Delete a flightLog report in background.
+    /// Delete a gutma log in background.
     ///
-    /// - Parameter url: url of the flightLog report to delete
-    func deleteFlightLog(at url: URL) {
+    /// - Parameter url: url of the file to delete
+    func deleteGutmaLog(at url: URL) {
         ioQueue.async {
-            self.doDeleteFlightLog(at: url)
+            self.doDeleteGutmaLog(at: url)
         }
     }
 
-    /// Delete a flightLog report
+    /// Delete a gutma log file
     ///
     /// - Note: This function **must** be called from the `ioQueue`.
-    /// - Parameter url: url of the flightLog report to delete
-    private func doDeleteFlightLog(at url: URL) {
+    /// - Parameter url: url of the gutma log to delete
+    private func doDeleteGutmaLog(at url: URL) {
         do {
             try FileManager.default.removeItem(at: url)
         } catch let err {
-            ULog.e(.flightLogEngineTag, "Failed to delete \(url.path): \(err)")
+            ULog.e(.gutmaLogEngineTag, "Failed to delete \(url.path): \(err)")
         }
     }
 }
 
-/// Private extension to URL that adds FlightLogReport recognition functions
+/// Private extension to URL that adds GutmaLog recognition functions
 private extension URL {
-    /// Whether the flightLog report located at this url is finalized (i.e. fully downloaded) or not.
-    var isAFinalizedFlightLog: Bool {
-        return pathExtension == "bin"
+    /// Whether the gutma log located at this url is finalized (i.e. fully gutma) or not.
+    var isAFinalizedGutmaLog: Bool {
+        return pathExtension == "gutma"
     }
 }

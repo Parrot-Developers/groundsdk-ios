@@ -80,6 +80,10 @@ class ArsdkEngineTestBase: XCTestCase {
             utilities.publish(utility: MockFlightLogStorage())
         }
 
+        if GroundSdkConfig.sharedInstance.enableGutmaLog {
+            utilities.publish(utility: MockGutmaLogStorage())
+        }
+
         firmwareStore = FirmwareStoreCoreImpl()
         if GroundSdkConfig.sharedInstance.enableFirmwareSynchronization {
             firmwareStore.droneStore = droneStore
@@ -168,10 +172,10 @@ class ArsdkEngineTestBase: XCTestCase {
     func expectMediaDownload(handle: Int16, media: ArsdkMedia, format: ArsdkMediaResourceFormat,
                              file: String = #file, line: UInt = #line)
         -> MediaDownloadExpectation {
-        let mediaDownloadExpectation = MediaDownloadExpectation(handle: handle, andMedia: media, andFormat: format,
-                                                                inFile: file, atLine: line)
-        mockArsdkCore.expect(mediaDownloadExpectation)
-        return mediaDownloadExpectation
+            let mediaDownloadExpectation = MediaDownloadExpectation(handle: handle, andMedia: media, andFormat: format,
+                                                                    inFile: file, atLine: line)
+            mockArsdkCore.expect(mediaDownloadExpectation)
+            return mediaDownloadExpectation
     }
 
     func expectUpdate(handle: Int16, firmware: String, file: String = #file, line: UInt = #line) -> UpdateExpectation {

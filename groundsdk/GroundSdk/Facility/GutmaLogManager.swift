@@ -28,27 +28,27 @@
 //    SUCH DAMAGE.
 
 import Foundation
-@testable import GroundSdk
 
-class MockGroundSdkCore: GroundSdkCore {
+/// This facility provides access to flight data files converted to GUTMA format.
+/// GUTMA log files are formatted in flight telemetry data logs format defined by the Global UTM Association (GUTMA).
+@objc(GSGutmaLogManager)
+public protocol GutmaLogManager: Facility {
 
-    var mockEngine: MockEngine?
+    /// Lists all GUTMA files.
+    var files: Set<URL> { get }
 
-    override init() {
-        super.init()
-        self.setAsInstance()
-    }
+    /// Deletes a gutma file.
+    ///
+    /// - Parameter file: URL of the file to delete
+    /// - Returns: `true` if the specified file did exist and was successfully deleted, `false` otherwise
+    func delete(file: URL) -> Bool
+}
 
-    deinit {
-        GroundSdkConfig.reload()
-        close()
-    }
-
-    internal override func makeEnginesController(utilityRegistry: UtilityCoreRegistry,
-                                                 facilityStore: ComponentStoreCore) -> EnginesControllerCore {
-        let enginesController = EnginesControllerCore(utilityRegistry: utilityRegistry, facilityStore: facilityStore)
-        mockEngine = MockEngine(enginesController: enginesController)
-        enginesController.engines.append(mockEngine!)
-        return enginesController
-    }
+/// :nodoc:
+/// GutmaLogManager facility descriptor
+@objc(GSGutmaLogManagerDesc)
+public class GutmaLogManagerDesc: NSObject, FacilityClassDesc {
+    public typealias ApiProtocol = GutmaLogManager
+    public let uid = FacilityUid.gutmaLogManager.rawValue
+    public let parent: ComponentDescriptor? = nil
 }

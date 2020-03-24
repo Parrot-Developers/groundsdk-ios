@@ -39,6 +39,8 @@
 		<integer>0</integer>
 		<key>FlightDataQuotaMb</key>
 		<integer>0</integer>
+		<key>GutmaLogQuotaMb</key>
+		<integer>0</integer>
 		<key>CrashReportQuotaMb</key>
 		<integer>0</integer>
 		<key>SupportedDevices</key>

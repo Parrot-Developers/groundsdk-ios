@@ -27,28 +27,17 @@
 //    OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 //    SUCH DAMAGE.
 
-import Foundation
-@testable import GroundSdk
+import GroundSdk
 
-class MockGroundSdkCore: GroundSdkCore {
+class MockGutmaLogStorage: GutmaLogStorageCore {
 
-    var mockEngine: MockEngine?
+    var desc: UtilityCoreDescriptor = Utilities.gutmaLogStorage
 
-    override init() {
-        super.init()
-        self.setAsInstance()
-    }
+    static let mockWorkDir = URL(fileURLWithPath: "/mock-gutmas/work")
 
-    deinit {
-        GroundSdkConfig.reload()
-        close()
-    }
+    var workDir = MockGutmaLogStorage.mockWorkDir
 
-    internal override func makeEnginesController(utilityRegistry: UtilityCoreRegistry,
-                                                 facilityStore: ComponentStoreCore) -> EnginesControllerCore {
-        let enginesController = EnginesControllerCore(utilityRegistry: utilityRegistry, facilityStore: facilityStore)
-        mockEngine = MockEngine(enginesController: enginesController)
-        enginesController.engines.append(mockEngine!)
-        return enginesController
+    func notifyGutmaLogReady(gutmaLogUrl: URL) {
+        // Do nothing
     }
 }

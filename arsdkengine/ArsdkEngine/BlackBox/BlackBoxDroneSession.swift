@@ -179,6 +179,14 @@ extension BlackBoxDroneSession: ArsdkFeatureWifiCallback {
         blackBox.add(event: BlackBoxEvent.wifiBandChange(band.rawValue))
         blackBox.add(event: BlackBoxEvent.wifiChannelChange(Int(channel)))
     }
+
+    func onRssiChanged(rssi: Int) {
+        environmentData.rssi = rssi
+    }
+
+    func onCountryChanged(selectionMode: ArsdkFeatureWifiCountrySelection, code: String!) {
+        blackBox.add(event: BlackBoxEvent.countryChange(countryCode: code))
+    }
 }
 
 extension BlackBoxDroneSession: ArsdkFeatureArdrone3PilotingstateCallback {
@@ -285,10 +293,6 @@ extension BlackBoxDroneSession: ArsdkFeatureCommonCommonstateCallback {
         blackBox.add(event: BlackBoxEvent.batteryLevelChange(Int(percent)))
     }
 
-    func onWifiSignalChanged(rssi: Int) {
-        environmentData.rssi = rssi
-    }
-
     func onBootId(bootid: String!) {
         blackBox.set(bootId: bootid)
     }
@@ -307,10 +311,6 @@ extension BlackBoxDroneSession: ArsdkFeatureCommonRunstateCallback {
     }
 }
 extension BlackBoxDroneSession: ArsdkFeatureCommonSettingsstateCallback {
-    func onCountryChanged(code: String!) {
-        blackBox.add(event: BlackBoxEvent.countryChange(countryCode: code))
-    }
-
     func onProductVersionChanged(software: String!, hardware: String!) {
         blackBox.setProductVersion(software: software, hardware: hardware)
     }

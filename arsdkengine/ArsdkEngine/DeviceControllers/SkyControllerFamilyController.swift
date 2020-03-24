@@ -53,7 +53,7 @@ class SkyControllerFamilyController: RCController {
         }
         if let flightLogStorage = engine.utilities.getUtility(Utilities.flightLogStorage) {
             componentControllers.append(
-                FtpFlightLogDownloader(deviceController: self, flightLogStorage: flightLogStorage))
+                FtpFlightLogDownloader(deviceController: self, flightLogStorage: flightLogStorage, converter: nil))
         }
         if let crashReportStorage = engine.utilities.getUtility(Utilities.crashReportStorage) {
             componentControllers.append(FtpCrashmlDownloader(deviceController: self,

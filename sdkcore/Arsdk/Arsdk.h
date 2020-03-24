@@ -28,6 +28,7 @@
 #include "NSData+zlib.h"
 #include "NSData+Crypto.h"
 
+#include "FileConverterAPI.h"
 #include "NoAckStorage.h"
 
 #include "SdkCore+FileSource.h"
