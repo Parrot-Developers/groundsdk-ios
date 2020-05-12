@@ -136,6 +136,9 @@ public enum RemovableUserStorageState: Int, CustomStringConvertible {
     /// An error occurred, media cannot be used.
     case error
 
+    /// The media file system needs a password for decryption.
+    case passwordNeeded
+
     /// Debug description.
     public var description: String {
         switch self {
@@ -151,6 +154,7 @@ public enum RemovableUserStorageState: Int, CustomStringConvertible {
         case .formattingFailed:     return "formattingFailed"
         case .formattingDenied:     return "formattingDenied"
         case .error:                return "error"
+        case .passwordNeeded:       return "passwordNeeded"
         }
     }
 }

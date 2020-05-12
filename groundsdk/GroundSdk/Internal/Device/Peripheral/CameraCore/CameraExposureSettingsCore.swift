@@ -40,6 +40,7 @@ class CameraExposureSettingsCore: CameraExposureSettings, CustomDebugStringConve
     private static let defaultManualShutterSpeed = CameraShutterSpeed.one
     private static let defaultManualIsoSensitivity = CameraIso.iso50
     private static let defaultMaximumIsoSensitivity = CameraIso.iso3200
+    private static let defaultAutoExposureMeteringMode = CameraAutoExposureMeteringMode.standard
 
     /// Timeout object.
     ///
@@ -51,7 +52,8 @@ class CameraExposureSettingsCore: CameraExposureSettings, CustomDebugStringConve
 
     /// Closure to call to change the value
     private let backend: (_ mode: CameraExposureMode, _ shutterSpeedCameraShutterSpeed: CameraShutterSpeed,
-        _ isoSensitivity: CameraIso, _ maximumIsoSensitivity: CameraIso) -> Bool
+    _ isoSensitivity: CameraIso, _ maximumIsoSensitivity: CameraIso,
+    _ autoExposureMeteringMOde: CameraAutoExposureMeteringMode) -> Bool
 
     /// Supported exposure modes
     private(set) var supportedModes = Set<CameraExposureMode>()
@@ -74,6 +76,18 @@ class CameraExposureSettingsCore: CameraExposureSettings, CustomDebugStringConve
          }
     }
     private var _mode = defaultMode
+
+    var autoExposureMeteringMode: CameraAutoExposureMeteringMode {
+        get {
+            return _autoExposureMeteringMode
+        }
+        set {
+            if _autoExposureMeteringMode != newValue {
+                set(mode: _mode, autoExposureMeteringMode: newValue)
+            }
+        }
+    }
+    private var _autoExposureMeteringMode = defaultAutoExposureMeteringMode
 
     /// Shutter speed when exposure mode is `manualShutterSpeed` or `manual` mode.
     var manualShutterSpeed: CameraShutterSpeed {
@@ -121,7 +135,8 @@ class CameraExposureSettingsCore: CameraExposureSettings, CustomDebugStringConve
     ///   - backend: closure to call to change the setting value
     init(didChangeDelegate: SettingChangeDelegate,
          backend: @escaping (_ mode: CameraExposureMode, _ shutterSpeedCameraShutterSpeed: CameraShutterSpeed,
-        _ isoSensitivity: CameraIso, _ maximumIsoSensitivity: CameraIso) -> Bool) {
+        _ isoSensitivity: CameraIso, _ maximumIsoSensitivity: CameraIso,
+        _ autoExposureMeteringMode: CameraAutoExposureMeteringMode) -> Bool) {
         self.didChangeDelegate = didChangeDelegate
         self.backend = backend
     }
@@ -142,30 +157,59 @@ class CameraExposureSettingsCore: CameraExposureSettings, CustomDebugStringConve
             (maximumIsoSensitivity == nil || supportedMaximumIsoSensitivity.contains(maximumIsoSensitivity!)) {
             sendToBackend(mode: mode, manualShutterSpeed: manualShutterSpeed ?? _manualShutterSpeed,
                           manualIsoSensitivity: manualIsoSensitivity ?? _manualIsoSensitivity,
-                          maximumIsoSensitivity: maximumIsoSensitivity ?? _maximumIsoSensitivity)
+                          maximumIsoSensitivity: maximumIsoSensitivity ?? _maximumIsoSensitivity,
+                          autoExposureMeteringMode: .standard)
+        }
+    }
+
+    /// Change mode, manualShutterSpeed, manualIsoSensitivity and maximumIsoSensitivity
+    ///
+    /// - Parameters:
+    ///   - mode: requested exposire mode
+    ///   - manualShutterSpeed: requested manual shutter speed if mode is `manualShutterSpeed` or `manual`
+    ///   - manualIsoSensitivity: requested iso sensitivity if exposure mode is `manualIsoSensitivity` or `manual`
+    ///   - maximumIsoSensitivity: requested maximum iso sensitivity when exposure mode is `automatic`
+    ///   - autoExposureMeteringMode: requested auto exposure metering mode
+    func set(mode: CameraExposureMode, manualShutterSpeed: CameraShutterSpeed? = nil,
+             manualIsoSensitivity: CameraIso? = nil, maximumIsoSensitivity: CameraIso? = nil,
+             autoExposureMeteringMode: CameraAutoExposureMeteringMode? = nil) {
+
+        if supportedModes.contains(mode) &&
+            (manualShutterSpeed == nil || supportedManualShutterSpeeds.contains(manualShutterSpeed!)) &&
+            (manualIsoSensitivity == nil || supportedManualIsoSensitivity.contains(manualIsoSensitivity!)) &&
+            (maximumIsoSensitivity == nil || supportedMaximumIsoSensitivity.contains(maximumIsoSensitivity!)) {
+            sendToBackend(mode: mode, manualShutterSpeed: manualShutterSpeed ?? _manualShutterSpeed,
+                          manualIsoSensitivity: manualIsoSensitivity ?? _manualIsoSensitivity,
+                          maximumIsoSensitivity: maximumIsoSensitivity ?? _maximumIsoSensitivity,
+                          autoExposureMeteringMode: autoExposureMeteringMode ?? _autoExposureMeteringMode)
         }
     }
 
     private func sendToBackend(mode: CameraExposureMode, manualShutterSpeed: CameraShutterSpeed,
-                               manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso) {
-        if backend(mode, manualShutterSpeed, manualIsoSensitivity, maximumIsoSensitivity) {
+                               manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso,
+                               autoExposureMeteringMode: CameraAutoExposureMeteringMode) {
+        if backend(mode, manualShutterSpeed, manualIsoSensitivity, maximumIsoSensitivity, autoExposureMeteringMode) {
             let oldMode = _mode
             let oldManualShutterSpeed = _manualShutterSpeed
             let oldManualIsoSensitivity = _manualIsoSensitivity
             let oldMaximumIsoSensitivity = _maximumIsoSensitivity
+            let oldAutoExposureMeteringMode = _autoExposureMeteringMode
 
             _mode = mode
             _manualShutterSpeed = manualShutterSpeed
             _manualIsoSensitivity = manualIsoSensitivity
             _maximumIsoSensitivity = maximumIsoSensitivity
+            _autoExposureMeteringMode = autoExposureMeteringMode
             timeout.schedule { [weak self] in
                 if let `self` = self {
                     let modeUpdated = self.update(mode: oldMode)
                     let manualShutterSpeedUpdated = self.update(manualShutterSpeed: oldManualShutterSpeed)
                     let manualIsoSensitivityUpdated = self.update(manualIsoSensitivity: oldManualIsoSensitivity)
                     let maximumIsoSensitivityUpdated = self.update(maximumIsoSensitivity: oldMaximumIsoSensitivity)
+                    let autoExposureMeteringModeUpdated = self.update(autoExposureMeteringMode:
+                        oldAutoExposureMeteringMode)
                     if modeUpdated || manualShutterSpeedUpdated || manualIsoSensitivityUpdated ||
-                        maximumIsoSensitivityUpdated {
+                        maximumIsoSensitivityUpdated || autoExposureMeteringModeUpdated {
 
                         self.didChangeDelegate.userDidChangeSetting()
                     }
@@ -274,6 +318,19 @@ class CameraExposureSettingsCore: CameraExposureSettings, CustomDebugStringConve
         return false
     }
 
+    /// Called by the backend, sets current auto exposure metering mode
+    ///
+    /// - Parameter newAutoExposureMeteringMode: new auto exposure metering mode
+    /// - Returns: true if the setting has been changed, false else
+    func update(autoExposureMeteringMode newAutoExposureMeteringMode: CameraAutoExposureMeteringMode) -> Bool {
+        if updating || _autoExposureMeteringMode != newAutoExposureMeteringMode {
+            _autoExposureMeteringMode = newAutoExposureMeteringMode
+            timeout.cancel()
+            return true
+        }
+        return false
+    }
+
     /// Resets setting values to defaults.
     func reset() {
         supportedModes = []
@@ -284,6 +341,7 @@ class CameraExposureSettingsCore: CameraExposureSettings, CustomDebugStringConve
         _manualShutterSpeed = CameraExposureSettingsCore.defaultManualShutterSpeed
         _manualIsoSensitivity = CameraExposureSettingsCore.defaultManualIsoSensitivity
         _maximumIsoSensitivity = CameraExposureSettingsCore.defaultMaximumIsoSensitivity
+        _autoExposureMeteringMode = CameraAutoExposureMeteringMode.standard
         timeout.cancel()
     }
 
@@ -342,7 +400,8 @@ extension CameraExposureSettingsCore: GSCameraExposureSettings {
         return supportedMaximumIsoSensitivity.contains(iso)
     }
 
-    /// Change exposure mode, manualShutterSpeed, manualIsoSensitivity and maximumIsoSensitivity
+    /// Change exposure mode, manualShutterSpeed, manualIsoSensitivity, maximumIsoSensitivity and
+    /// auto exposure metering mode
     ///
     /// - Parameters:
     ///   - mode: requested exposure mode
@@ -352,10 +411,12 @@ extension CameraExposureSettingsCore: GSCameraExposureSettings {
     ///     -1 to keep the current value
     ///   - maximumIsoSensitivity: requested maximum iso sensitivity when exposure mode is `automatic`, or -1 to keep
     ///     the current value
+    ///   - autoExposureMeteringMode: requested auto exposure metering mode
     func set(mode: CameraExposureMode, manualShutterSpeed: Int, manualIsoSensitivity: Int,
-             maximumIsoSensitivity: Int) {
+             maximumIsoSensitivity: Int, autoExposureMeteringMode: Int) {
         set(mode: mode, manualShutterSpeed: CameraShutterSpeed(rawValue: manualShutterSpeed),
             manualIsoSensitivity: CameraIso(rawValue: manualIsoSensitivity),
-            maximumIsoSensitivity: CameraIso(rawValue: maximumIsoSensitivity))
+            maximumIsoSensitivity: CameraIso(rawValue: maximumIsoSensitivity),
+            autoExposureMeteringMode: CameraAutoExposureMeteringMode(rawValue: autoExposureMeteringMode))
     }
 }

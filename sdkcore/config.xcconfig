@@ -4,12 +4,12 @@
 PREBUILT_DIR = $(BUILT_PRODUCTS_DIR)/prebuilt
 
 // prebuilt headers
-HEADER_SEARCH_PATHS = $(inherited) $(PREBUILT_DIR)/include $(PREBUILT_DIR)/include/libarsdkgen/gen $(PREBUILT_DIR)/include/libpomp $(PREBUILT_DIR)/include/libulog $(PREBUILT_DIR)/include/libpdraw $(PREBUILT_DIR)/include/libARMavlink
+HEADER_SEARCH_PATHS = $(inherited) $(PREBUILT_DIR)/include $(PREBUILT_DIR)/include/libarsdkgen/gen $(PREBUILT_DIR)/include/libpomp $(PREBUILT_DIR)/include/libulog $(PREBUILT_DIR)/include/libpdraw
 
 // prebuilt libs
 LIBRARY_SEARCH_PATHS = $(inherited) $(PREBUILT_DIR)/lib
 
-OTHER_LDFLAGS = $(inherited) -lmux -lpomp -lulog -larsdkctrl -larsdk -larsdkgen -ljson -lz -lvideo-streaming -lh264 -lvideo-metadata -lrtp -lfutils -lpuf -ltar -lpdraw -lvideo-buffers -lvideo-buffers-generic -lvideo-decode -lsdp -lrtsp -lmp4 -force_load $(PREBUILT_DIR)/lib/libarmavlink.a -llz4 -llogextract -llog2gutma
+OTHER_LDFLAGS = $(inherited) -lmux -lpomp -lulog -larsdkctrl -larsdk -larsdkgen -ljson -lz -lvideo-streaming -lh264 -lvideo-metadata -lrtp -lfutils -lpuf -ltar -lpdraw -lvideo-buffers -lvideo-buffers-generic -lvideo-decode -lsdp -lrtsp -lmp4 -llz4 -llogextract -llog2gutma
 
 // add $(PLATFORM_DIR)/Developer/Library/Frameworks to be able to import XCTest.framework
 FRAMEWORK_SEARCH_PATHS = $(inherited) $(PLATFORM_DIR)/Developer/Library/Frameworks

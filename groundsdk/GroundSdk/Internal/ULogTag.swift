@@ -117,4 +117,7 @@ extension ULogTag {
 
     /// tag Hmd
     static let hmdTag = ULogTag(name: "gsdk.hmd")
+
+    /// tag MAVLink
+    static let mavlinkTag = ULogTag(name: "gsdk.mavlink")
 }

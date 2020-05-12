@@ -227,11 +227,12 @@ class CameraFeatureCameraRouter: DeviceComponentController {
 
         override func sendExposureCommand(
             exposureMode: CameraExposureMode, manualShutterSpeed: CameraShutterSpeed, manualIsoSensitivity: CameraIso,
-            maximumIsoSensitivity: CameraIso) -> Bool {
+            maximumIsoSensitivity: CameraIso, autoExposureMeteringMode: CameraAutoExposureMeteringMode) -> Bool {
             router.sendCommand(ArsdkFeatureCamera.setExposureSettingsEncoder(
                 camId: cameraId, mode: exposureMode.arsdkValue!,
                 shutterSpeed: manualShutterSpeed.arsdkValue!, isoSensitivity: manualIsoSensitivity.arsdkValue!,
-                maxIsoSensitivity: maximumIsoSensitivity.arsdkValue!))
+                maxIsoSensitivity: maximumIsoSensitivity.arsdkValue!,
+                meteringMode: autoExposureMeteringMode.arsdkValue!))
             return true
         }
 
@@ -442,14 +443,14 @@ class CameraFeatureCameraRouter: DeviceComponentController {
 // MARK: - ArsdkFeatureCameraCallback
 extension CameraFeatureCameraRouter: ArsdkFeatureCameraCallback {
 
-    func onCameraCapabilities(
-        camId: UInt, model: ArsdkFeatureCameraModel, exposureModesBitField: UInt,
-        exposureLockSupported: ArsdkFeatureCameraSupported, exposureRoiLockSupported: ArsdkFeatureCameraSupported,
-        evCompensationsBitField: UInt64, whiteBalanceModesBitField: UInt,
-        customWhiteBalanceTemperaturesBitField: UInt64, whiteBalanceLockSupported: ArsdkFeatureCameraSupported,
-        stylesBitField: UInt, cameraModesBitField: UInt, hyperlapseValuesBitField: UInt,
-        bracketingPresetsBitField: UInt, burstValuesBitField: UInt, streamingModesBitField: UInt,
-        timelapseIntervalMin: Float, gpslapseIntervalMin: Float) {
+    func onCameraCapabilities(camId: UInt, model: ArsdkFeatureCameraModel,
+        exposureModesBitField: UInt, exposureLockSupported: ArsdkFeatureCameraSupported,
+        exposureRoiLockSupported: ArsdkFeatureCameraSupported, evCompensationsBitField: UInt64,
+        whiteBalanceModesBitField: UInt, customWhiteBalanceTemperaturesBitField: UInt64,
+        whiteBalanceLockSupported: ArsdkFeatureCameraSupported, stylesBitField: UInt, cameraModesBitField: UInt,
+        hyperlapseValuesBitField: UInt, bracketingPresetsBitField: UInt, burstValuesBitField: UInt,
+        streamingModesBitField: UInt, timelapseIntervalMin: Float, gpslapseIntervalMin: Float,
+        autoExposureMeteringModesBitField: UInt) {
         var cameraController = self.cameraControllers[camId]
         if cameraController == nil {
             if let model: Model = Model.from(model: model) {
@@ -561,11 +562,11 @@ extension CameraFeatureCameraRouter: ArsdkFeatureCameraCallback {
         }
     }
 
-    func onExposureSettings(
-        camId: UInt, mode: ArsdkFeatureCameraExposureMode, manualShutterSpeed: ArsdkFeatureCameraShutterSpeed,
-        manualShutterSpeedCapabilitiesBitField: UInt64, manualIsoSensitivity: ArsdkFeatureCameraIsoSensitivity,
-        manualIsoSensitivityCapabilitiesBitField: UInt64, maxIsoSensitivity: ArsdkFeatureCameraIsoSensitivity,
-        maxIsoSensitivitiesCapabilitiesBitField: UInt64) {
+    func onExposureSettings(camId: UInt, mode: ArsdkFeatureCameraExposureMode,
+        manualShutterSpeed: ArsdkFeatureCameraShutterSpeed, manualShutterSpeedCapabilitiesBitField: UInt64,
+        manualIsoSensitivity: ArsdkFeatureCameraIsoSensitivity, manualIsoSensitivityCapabilitiesBitField: UInt64,
+        maxIsoSensitivity: ArsdkFeatureCameraIsoSensitivity,
+        maxIsoSensitivitiesCapabilitiesBitField: UInt64, meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode) {
         if let cameraController = self.cameraControllers[camId] {
             guard let _mode = CameraExposureMode(fromArsdk: mode) else {
                 ULog.w(.cameraTag, "Invalid exposure mode: \(mode.rawValue)")
@@ -608,10 +609,13 @@ extension CameraFeatureCameraRouter: ArsdkFeatureCameraCallback {
             cameraController.capabilitiesDidChange(.exposureMaximumIsoSensitivity(
                 CameraIso.createSetFrom(bitField: maxIsoSensitivitiesCapabilitiesBitField)))
 
+            let _meteringMode = CameraAutoExposureMeteringMode(fromArsdk: meteringMode)
+
             cameraController.settingDidChange(.exposure(mode: _mode,
                                        manualShutterSpeed: _manualShutterSpeed!,
                                        manualIsoSensitivity: _manualIsoSensitivity!,
-                                       maximumIsoSensitivity: _maxIsoSensitivity!))
+                                       maximumIsoSensitivity: _maxIsoSensitivity!,
+                                       autoExposureMeteringMode: _meteringMode!))
             self.cameraControllers[camId] = cameraController
 
         } else {
@@ -1061,6 +1065,28 @@ extension CameraExposureMode: ArsdkMappableEnum {
 }
 
 /// Extension that add conversion from/to arsdk enum
+extension CameraAutoExposureMeteringMode: ArsdkMappableEnum {
+
+    /// Create set of camera auto exposure metering modes from all value set in a bitfield
+    ///
+    /// - Parameter bitField: arsdk bitfield
+    /// - Returns: set containing all camera auto exposure metering modes set in bitField
+    static func createSetFrom(bitField: UInt) -> Set<CameraAutoExposureMeteringMode> {
+        var result = Set<CameraAutoExposureMeteringMode>()
+        ArsdkFeatureCameraAutoExposureMeteringModeBitField.forAllSet(in: bitField) { arsdkValue in
+            if let mode = CameraAutoExposureMeteringMode(fromArsdk: arsdkValue) {
+                result.insert(mode)
+            }
+        }
+        return result
+    }
+
+    static var arsdkMapper = Mapper<CameraAutoExposureMeteringMode, ArsdkFeatureCameraAutoExposureMeteringMode>([
+        .standard: .standard,
+        .centerTop: .centerTop])
+}
+
+/// Extension that add conversion from/to arsdk enum
 extension CameraShutterSpeed: ArsdkMappableEnum {
 
     /// Create set of camera shutter speeds from all value set in a bitfield
@@ -1398,6 +1424,9 @@ extension CameraRecordingFramerate: ArsdkMappableEnum {
     }
 
     static let arsdkMapper = Mapper<CameraRecordingFramerate, ArsdkFeatureCameraFramerate>([
+        .fps9: .fps9,
+        .fps15: .fps15,
+        .fps20: .fps20,
         .fps24: .fps24,
         .fps25: .fps25,
         .fps30: .fps30,
@@ -1407,7 +1436,9 @@ extension CameraRecordingFramerate: ArsdkMappableEnum {
         .fps96: .fps96,
         .fps100: .fps100,
         .fps120: .fps120,
-        .fps9: .fps9])
+        .fps192: .fps192,
+        .fps200: .fps200,
+        .fps240: .fps240])
 }
 
 /// Extension that add conversion from/to arsdk enum

@@ -87,7 +87,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         cameraModes: [ArsdkFeatureCameraCameraMode] = [],
         hyperlapseValues: [ArsdkFeatureCameraHyperlapseValue] = [],
         bracketingPresets: [ArsdkFeatureCameraBracketingPreset] = [],
-        burstValues: [ArsdkFeatureCameraBurstValue] = [], streamingModesBitField: UInt = 0) {
+        burstValues: [ArsdkFeatureCameraBurstValue] = [], streamingModesBitField: UInt = 0,
+        exposureMeteringModes: [ArsdkFeatureCameraAutoExposureMeteringMode] = []) {
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.cameraCameraCapabilitiesEncoder(
                 camId: camId, model: model,
@@ -103,7 +104,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                 hyperlapseValuesBitField: Bitfield.of(hyperlapseValues),
                 bracketingPresetsBitField: Bitfield.of(bracketingPresets),
                 burstValuesBitField: Bitfield.of(burstValues),
-                streamingModesBitField: streamingModesBitField, timelapseIntervalMin: 0.0, gpslapseIntervalMin: 0.0))
+                streamingModesBitField: streamingModesBitField, timelapseIntervalMin: 0.0, gpslapseIntervalMin: 0.0,
+                autoExposureMeteringModesBitField: Bitfield.of(exposureMeteringModes)))
     }
 
     func testPublishUnpublish() {
@@ -220,7 +222,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso320,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
                     camId: 1, mode: .manual,
@@ -229,7 +232,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso320,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
         }
         assertThat(changeCnt, `is`(2))
 
@@ -302,7 +306,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso320,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
             self.sendCapabilitiesCommand(camId: 1, model: .thermal,
                                     exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
@@ -315,7 +320,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso200,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso320,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
@@ -323,7 +329,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             // send the new value (setted offline)
             self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
                 camId: 1, mode: .manualIsoSensitivity, shutterSpeed: .shutter1Over10, isoSensitivity: .iso200,
-                maxIsoSensitivity: .iso320))
+                maxIsoSensitivity: .iso320, meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
         }
 
@@ -345,7 +351,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                 manualIsoSensitivity: .iso100,
                 manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                 maxIsoSensitivity: .iso320,
-                maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
         assertThat(cameraThermal!.exposureSettings, `is`(
             mode: .automatic, shutterSpeed: .oneOver100, isoSensitivity: .iso100, maximumIsoSensitivity: .iso320,
@@ -384,7 +391,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso160,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
                     camId: 1, mode: .manual,
@@ -393,7 +401,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso160,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
         }
         assertThat(changeCnt, `is`(2))
 
@@ -457,7 +466,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso160,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
             self.sendCapabilitiesCommand(camId: 1, model: .thermal,
                                 exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
@@ -470,7 +480,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso160,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
@@ -478,7 +489,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             // send the new value (setted offline)
             self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
                 camId: 1, mode: .manual, shutterSpeed: .shutter1Over100, isoSensitivity: .iso100,
-                maxIsoSensitivity: .iso160))
+                maxIsoSensitivity: .iso160, meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
         }
 
         // 2 for capabilities and Updating
@@ -515,7 +526,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso320,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
                     camId: 1, mode: .manual,
@@ -524,7 +536,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso320,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
         }
         assertThat(changeCnt, `is`(2))
 
@@ -588,7 +601,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso320,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
             self.sendCapabilitiesCommand(camId: 1, model: .thermal,
                                     exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
@@ -601,7 +615,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso320,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
@@ -609,7 +624,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             // send the new value (setted offline)
             self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
                 camId: 1, mode: .manual, shutterSpeed: .shutter1Over10, isoSensitivity: .iso200,
-                maxIsoSensitivity: .iso320))
+                maxIsoSensitivity: .iso320, meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
         }
 
         // 2 for capabilities and Updating
@@ -646,7 +661,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso160,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
                     camId: 1, mode: .manual,
@@ -655,7 +671,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso160,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
         }
         assertThat(changeCnt, `is`(2))
 
@@ -718,7 +735,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso160,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
             self.sendCapabilitiesCommand(camId: 1, model: .thermal,
                                     exposureModes: [.automatic, .manual, .manualIsoSensitivity, .manualShutterSpeed])
@@ -731,7 +749,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     manualIsoSensitivity: .iso100,
                     manualIsoSensitivityCapabilitiesBitField: manualIsoSensitivityBitField,
                     maxIsoSensitivity: .iso160,
-                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField))
+                    maxIsoSensitivitiesCapabilitiesBitField: maxIsoSensitivityBitField,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraCameraStatesEncoder(activeCameras: Bitfield.of([Model.main])))
@@ -739,7 +758,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             // send the new value (setted offline)
             self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
                 camId: 1, mode: .manualIsoSensitivity, shutterSpeed: .shutter1Over10, isoSensitivity: .iso100,
-                maxIsoSensitivity: .iso160))
+                maxIsoSensitivity: .iso160, meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
         }
 
         // 1 for capabilities and Updating
@@ -880,7 +899,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
                 camId: 0, mode: .manual, manualShutterSpeed: .shutter1, manualShutterSpeedCapabilitiesBitField: 0,
                 manualIsoSensitivity: .iso200, manualIsoSensitivityCapabilitiesBitField: 0,
-                maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: 0))
+                maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: 0,
+                meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
         // check that exposure compensation setting is not available, in manual exposure mode
         assertThat(changeCnt, `is`(7))
@@ -890,7 +910,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
                 camId: 1, mode: .manual, manualShutterSpeed: .shutter1, manualShutterSpeedCapabilitiesBitField: 0,
                 manualIsoSensitivity: .iso200, manualIsoSensitivityCapabilitiesBitField: 0,
-                maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: 0))
+                maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: 0,
+                meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
         // check that exposure compensation setting is not available, in manual exposure mode
         assertThat(changeCnt, `is`(8))
@@ -907,7 +928,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
                 camId: 0, mode: .automatic, manualShutterSpeed: .shutter1, manualShutterSpeedCapabilitiesBitField: 0,
                 manualIsoSensitivity: .iso200, manualIsoSensitivityCapabilitiesBitField: 0,
-                maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: 0))
+                maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: 0,
+                meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
         assertThat(changeCnt, `is`(9))
         assertThat(camera!.exposureCompensationSetting,
@@ -919,7 +941,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.cameraExposureSettingsEncoder(
                 camId: 1, mode: .automatic, manualShutterSpeed: .shutter1, manualShutterSpeedCapabilitiesBitField: 0,
                 manualIsoSensitivity: .iso200, manualIsoSensitivityCapabilitiesBitField: 0,
-                maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: 0))
+                maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: 0,
+                meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
 
         assertThat(changeCnt, `is`(10))
         assertThat(cameraThermal!.exposureCompensationSetting,
@@ -2948,7 +2971,8 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
                     camId: 0, mode: .automatic,
                     manualShutterSpeed: .shutter1, manualShutterSpeedCapabilitiesBitField: UInt64.max,
                     manualIsoSensitivity: .iso50, manualIsoSensitivityCapabilitiesBitField: UInt64.max,
-                    maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: UInt64.max))
+                    maxIsoSensitivity: .iso160, maxIsoSensitivitiesCapabilitiesBitField: UInt64.max,
+                    meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
             self.mockArsdkCore.onCommandReceived(
                 1, encoder: CmdEncoder.cameraEvCompensationEncoder(camId: 0, value: .ev0_00))
             self.mockArsdkCore.onCommandReceived(
@@ -3041,9 +3065,9 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
             camId: 0, mode: .manual, shutterSpeed: .shutter1Over10, isoSensitivity: .iso100,
-            maxIsoSensitivity: .iso1200))
+            maxIsoSensitivity: .iso1200, meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
         camera!.exposureSettings.set(mode: .manual, manualShutterSpeed: .oneOver10,
-                                     manualIsoSensitivity: .iso100, maximumIsoSensitivity: .iso1200)
+                                     manualIsoSensitivity: .iso100, maximumIsoSensitivity: .iso1200, autoExposureMeteringMode: .standard)
         assertThat(camera!.exposureSettings,
                    `is`(mode: .manual, shutterSpeed: .oneOver10, isoSensitivity: .iso100,
                         maximumIsoSensitivity: .iso1200, updating: true))
@@ -3072,10 +3096,10 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
             mode: .single, format: .fullFrame, fileFormat: .jpeg, updating: true))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
-            camId: 0, mode: .hyperlapse, resolution: .resDci4k, framerate: .fps120, hyperlapse: .ratio15))
+            camId: 0, mode: .hyperlapse, resolution: .resDci4k, framerate: .fps240, hyperlapse: .ratio15))
         camera!.recordingSettings.mode = .hyperlapse
         assertThat(camera!.recordingSettings, `is`(
-            mode: .hyperlapse, resolution: .resDci4k, framerate: .fps120, hyperlapse: .ratio15, updating: true))
+            mode: .hyperlapse, resolution: .resDci4k, framerate: .fps240, hyperlapse: .ratio15, updating: true))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetAutorecord(camId: 0, state: .inactive))
         camera!.autoRecordSetting?.value = false
@@ -3092,9 +3116,10 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetExposureSettings(
             camId: 0, mode: .automatic, shutterSpeed: .shutter1Over10, isoSensitivity: .iso100,
-            maxIsoSensitivity: .iso1200))
+            maxIsoSensitivity: .iso1200, meteringMode: ArsdkFeatureCameraAutoExposureMeteringMode.standard))
         camera!.exposureSettings.set(mode: .automatic, manualShutterSpeed: .oneOver10,
-                                     manualIsoSensitivity: .iso100, maximumIsoSensitivity: .iso1200)
+                                     manualIsoSensitivity: .iso100, maximumIsoSensitivity: .iso1200,
+                                     autoExposureMeteringMode: .standard)
         assertThat(camera!.exposureSettings,
                    `is`(mode: .automatic, shutterSpeed: .oneOver10, isoSensitivity: .iso100,
                         maximumIsoSensitivity: .iso1200, updating: true))
@@ -3112,7 +3137,7 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         assertThat(camera!.photoSettings, `is`(
             mode: .single, format: .fullFrame, fileFormat: .jpeg, updating: false))
         assertThat(camera!.recordingSettings, `is`(
-            mode: .hyperlapse, resolution: .resDci4k, framerate: .fps120, hyperlapse: .ratio15, updating: false))
+            mode: .hyperlapse, resolution: .resDci4k, framerate: .fps240, hyperlapse: .ratio15, updating: false))
         assertThat(camera!.autoRecordSetting, presentAnd(allOf(`is`(false), isUpToDate())))
         assertThat(camera!.zoom?.velocityQualityDegradationAllowance, presentAnd(allOf(`is`(true), isUpToDate())))
         assertThat(camera!.zoom?.maxSpeed, presentAnd(allOf(`is`(0.0, 6.0, 15.0), isUpToDate())))
@@ -3170,6 +3195,12 @@ class CameraFeatureCameraRouterTests: ArsdkEngineTestBase {
         for rawValue in 0..<Int(ArsdkFeatureCameraIsoSensitivityCnt) {
             let mode = ArsdkFeatureCameraIsoSensitivity(rawValue: rawValue)!
             assertThat(CameraIso(fromArsdk: mode), present())
+        }
+
+        // CameraAutoExposureMode
+        for rawValue in 0..<Int(ArsdkFeatureCameraAutoExposureMeteringModeCnt) {
+            let mode = ArsdkFeatureCameraAutoExposureMeteringMode(rawValue: rawValue)!
+            assertThat(CameraAutoExposureMeteringMode(fromArsdk: mode), present())
         }
 
         // CameraEvCompensation

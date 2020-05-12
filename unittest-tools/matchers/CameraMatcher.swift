@@ -68,7 +68,7 @@ func supports(exposureModes: Set<CameraExposureMode>, shutterSpeeds: Set<CameraS
 }
 
 func `is`(mode: CameraExposureMode? = nil, shutterSpeed: CameraShutterSpeed? = nil, isoSensitivity: CameraIso? = nil,
-          maximumIsoSensitivity: CameraIso? = nil, updating: Bool? = nil)
+          maximumIsoSensitivity: CameraIso? = nil, autoExposureMeteringMode: CameraAutoExposureMeteringMode? = nil, updating: Bool? = nil)
     -> Matcher<CameraExposureSettings> {
         var matchers = [Matcher<CameraExposureSettings>]()
         if let mode = mode {
@@ -89,6 +89,11 @@ func `is`(mode: CameraExposureMode? = nil, shutterSpeed: CameraShutterSpeed? = n
         if let maximumIsoSensitivity = maximumIsoSensitivity {
             matchers.append(Matcher("maximumIsoSensitivity = \(maximumIsoSensitivity)") {
                 $0.maximumIsoSensitivity == maximumIsoSensitivity
+            })
+        }
+        if let autoExposureMeteringMode = autoExposureMeteringMode {
+            matchers.append(Matcher("autoExposureMeteringMode = \(autoExposureMeteringMode)") {
+                $0.autoExposureMeteringMode == autoExposureMeteringMode
             })
         }
         if let updating = updating {

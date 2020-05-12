@@ -368,9 +368,10 @@
     XCTAssertEqual(camera.exposureSettings.maximumIsoSensitivity, GSCameraIso3200);
     XCTAssertEqual(camera.exposureSettings.updating, false);
     [camera.exposureSettings setMode:GSCameraExposureModeManual
-                  manualShutterSpeed:-1
-                manualIsoSensitivity:GSCameraShutterSpeedOneOver3
-               maximumIsoSensitivity:GSCameraIso50];
+                   manualShutterSpeed:-1
+                 manualIsoSensitivity:GSCameraShutterSpeedOneOver3
+                maximumIsoSensitivity:GSCameraIso50
+            autoExposureMeteringMode: GSCameraAutoExposureMeteringModeStandard];
 
     // exposure lock
     XCTAssertEqual(camera.exposureLock.mode, GSCameraExposureLockModeNone);

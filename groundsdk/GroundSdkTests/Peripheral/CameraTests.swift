@@ -222,7 +222,8 @@ class CameraTests: XCTestCase {
 
         // global setter
         camera.exposureSettings.set(mode: .automaticPreferIsoSensitivity, manualShutterSpeed: .oneOver1000,
-                                    manualIsoSensitivity: .iso200, maximumIsoSensitivity: .iso1200)
+                                    manualIsoSensitivity: .iso200,
+                                    maximumIsoSensitivity: .iso1200, autoExposureMeteringMode: .standard)
         assertThat(cnt, `is`(12))
         assertThat(camera.exposureSettings, `is`(
             mode: .automaticPreferIsoSensitivity, shutterSpeed: .oneOver1000,
@@ -297,6 +298,22 @@ class CameraTests: XCTestCase {
         assertThat(camera.exposureSettings, `is`(
             mode: .manualShutterSpeed, shutterSpeed: .one ,
             isoSensitivity: .iso200, maximumIsoSensitivity: .iso1200, updating: false))
+
+        // auto exposure metering mode
+        // Set to default
+        camera.exposureSettings.autoExposureMeteringMode = .standard
+        assertThat(cnt, `is`(20))
+        assertThat(camera.exposureSettings, `is`(autoExposureMeteringMode: .standard, updating: false))
+
+        // Change to center top
+        camera.exposureSettings.autoExposureMeteringMode = .centerTop
+        assertThat(cnt, `is`(21))
+        assertThat(camera.exposureSettings, `is`(autoExposureMeteringMode: .centerTop, updating: true))
+
+        assertThat(backend.autoExposureMeteringMode, presentAnd(`is`(.centerTop)))
+        impl.update(autoExposureMeteringMode: .centerTop).notifyUpdated()
+        assertThat(cnt, `is`(22))
+        assertThat(camera.exposureSettings, `is`(autoExposureMeteringMode: .centerTop, updating: false))
     }
 
     func testIsActive() {
@@ -2169,6 +2186,7 @@ private class Backend: CameraBackend {
     var manualShutterSpeed: CameraShutterSpeed?
     var manualIsoSensitivity: CameraIso?
     var maxIsoSensitivity: CameraIso?
+    var autoExposureMeteringMode: CameraAutoExposureMeteringMode?
     var exposureCompensation: CameraEvCompensation?
     var whiteBalanceMode: CameraWhiteBalanceMode?
     var whiteBalanceLock: Bool?
@@ -2204,11 +2222,13 @@ private class Backend: CameraBackend {
     }
 
     func set(exposureMode: CameraExposureMode, manualShutterSpeed: CameraShutterSpeed,
-             manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso) -> Bool {
+             manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso,
+             autoExposureMeteringMode: CameraAutoExposureMeteringMode) -> Bool {
         self.exposureMode = exposureMode
         self.manualShutterSpeed = manualShutterSpeed
         self.manualIsoSensitivity = manualIsoSensitivity
         self.maxIsoSensitivity = maximumIsoSensitivity
+        self.autoExposureMeteringMode = autoExposureMeteringMode
         return true
     }
 

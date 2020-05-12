@@ -12,5 +12,4 @@ FOUNDATION_EXPORT const unsigned char SdkCoreVersionString[];
 // Mavlink
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Waddress-of-packed-member"
-#import "libARMavlink_ios.h"
 #pragma clang diagnostic pop

@@ -16,7 +16,6 @@
 		1D2194E01EE69F29005A6883 /* ArsdkCore+Crashml.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2194DE1EE69F29005A6883 /* ArsdkCore+Crashml.m */; };
 		1D2560121EF039F8000C11FA /* NSData+zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D2560101EF039F8000C11FA /* NSData+zlib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D2560131EF039F8000C11FA /* NSData+zlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2560111EF039F8000C11FA /* NSData+zlib.m */; };
-		1D60A9FF2049BDBD0028828D /* libARMavlink_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D60A9FE2049BDBD0028828D /* libARMavlink_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DA7BAB4202A04EC006FA9A9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA7BAB3202A04EC006FA9A9 /* CoreMedia.framework */; };
 		1DA7BAB6202A04FE006FA9A9 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA7BAB5202A04FE006FA9A9 /* VideoToolbox.framework */; };
 		68ED066A22280C05007DAECE /* SdkCore+MediaInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 68ED066922280C05007DAECE /* SdkCore+MediaInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -559,7 +558,6 @@
 				7CA04A171CEC637F00A6015A /* ArsdkBleDiscovery.h in Headers */,
 				7C1F09551CEC8BF700398B92 /* ArsdkBleBackend.h in Headers */,
 				F8E011321FDA8A38005A9520 /* ArsdkCore+RcBlackBox.h in Headers */,
-				1D60A9FF2049BDBD0028828D /* libARMavlink_ios.h in Headers */,
 				F8B536881CC1293800277331 /* ArsdkFeatures.h in Headers */,
 				7CEC4AEF1CEDB511000EEF80 /* ArsdkBle.h in Headers */,
 				7CD9C0DD1D756CE10074ABB7 /* ArsdkMuxDiscovery.h in Headers */,
@@ -605,7 +603,6 @@
 				7C68F9611C86F8DD000722CA /* Frameworks */,
 				7C68F9621C86F8DD000722CA /* Headers */,
 				F870409E1F4DBED3004E829C /* Copy consts file header in framework */,
-				1D60A9F72049A38A0028828D /* Copy mavlink headers in framework */,
 				7C68F9631C86F8DD000722CA /* Resources */,
 			);
 			buildRules = (
@@ -696,21 +693,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1D60A9F72049A38A0028828D /* Copy mavlink headers in framework */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy mavlink headers in framework";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "rsync -av --exclude='**/testsuite.h' --exclude='common/version.h' --exclude='common/mavlink.h' ${PREBUILT_DIR}/include/mavlink/ ${BUILT_PRODUCTS_DIR}/SDKCore.framework/Headers/mavlink\n\n";
-			showEnvVarsInLog = 0;
-		};
 		7C45A8291CF879F10030552A /* Simlink prebuilt */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;

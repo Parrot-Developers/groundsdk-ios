@@ -28,10 +28,6 @@ def enum_class_name(feature_strict_name, enum_name):
     splitted_name = enum_name.split('_')
     return class_name(feature_strict_name) + "".join(x.capitalize() for x in splitted_name)
 
-def multiset_class_name(feature_strict_name, multiset_name):
-    splitted_name = multiset_name.split('_')
-    return class_name(feature_strict_name) + "".join(x.capitalize() for x in splitted_name)
-
 def feature_source_file_name(name):
     return class_name(name) + ".m"
 
@@ -64,9 +60,6 @@ def param_name(name):
     components = name.split('_')
     return components[0].lower() + "".join(x[0].upper() + x[1:] for x in components[1:])
 
-def multiset_c_name(ftr, multiset):
-    return "struct arsdk_%s_%s" % (ftr, multiset)
-
 def arg_type(feature_strict_name, arg, is_fun_arg = False):
     args = {
         arsdkparser.ArArgType.I8: "NSInteger",
@@ -90,11 +83,6 @@ def arg_type(feature_strict_name, arg, is_fun_arg = False):
             argType = args[arsdkparser.ArArgType.U64]
         else:
             argType = args[arsdkparser.ArArgType.U32]
-    elif isinstance(arg.argType, arsdkparser.ArMultiSetting):
-        if is_fun_arg:
-            argType = multiset_class_name(feature_strict_name, arg.argType.name) + ' *'
-        else:
-            argType = multiset_class_name(feature_strict_name, arg.argType.name)
     else:
         argType = args[arg.argType]
     return argType
@@ -118,11 +106,6 @@ def arg_c_type(arg, is_fun_arg=False):
         argType = args[arsdkparser.ArArgType.I32]
     elif isinstance(arg.argType, arsdkparser.ArBitfield):
         argType = args[arg.argType.btfType]
-    elif isinstance(arg.argType, arsdkparser.ArMultiSetting):
-        if is_fun_arg:
-            argType = multiset_c_name("generic", arg.argType.name.lower()) + ' *'
-        else:
-            argType = multiset_c_name("generic", arg.argType.name.lower())
     else:
         argType = args[arg.argType]
     return argType
@@ -132,8 +115,6 @@ def arg_name(arg):
         argName = param_name(arg.name)
     elif isinstance(arg.argType, arsdkparser.ArBitfield):
         argName = param_name(arg.name) + "BitField"
-    elif isinstance(arg.argType, arsdkparser.ArMultiSetting):
-        argName = param_name(arg.name)
     else:
         argName = param_name(arg.name)
     return argName
@@ -141,8 +122,6 @@ def arg_name(arg):
 def arg_value_from_c_to_obj_c(feature_strict_name, arg):
     if arg.argType == arsdkparser.ArArgType.STRING:
         return "[NSString stringWithUTF8String:" + arg_name(arg) + "]"
-    elif isinstance(arg.argType, arsdkparser.ArMultiSetting):
-        return "[%s withNative:&%s]" % (multiset_class_name(feature_strict_name, arg.argType.name), arg_name(arg))
     else:
         return arg_name(arg)
 
@@ -150,8 +129,6 @@ def arg_value_from_c_to_obj_c(feature_strict_name, arg):
 def arg_value_from_obj_c_to_c(feature_strict_name, arg):
     if arg.argType == arsdkparser.ArArgType.STRING:
         return "[" + arg_name(arg) + " UTF8String]"
-    elif isinstance(arg.argType, arsdkparser.ArMultiSetting):
-        return "[%s getNativeSettings]" % arg_name(arg)
     elif arg_c_type(arg) != arg_type(feature_strict_name, arg):
         return "(" + arg_c_type(arg) + ")" + arg_name(arg)
     else:
@@ -210,45 +187,6 @@ def gen_feature_enum_declaration(feature_obj, feature_name, enum, out):
         out.write("@end\n")
         out.write("\n")
 
-
-def gen_feature_multiset_declaration(feature_obj, feature_name, multiset, out):
-    out.write("/** %s */\n", multiset.doc)
-
-    # multiset class definition
-    out.write("@interface " + multiset_class_name(feature_obj.name, multiset.name) + " : NSObject\n")
-    out.write("\n")
-    out.write("- (%s *) getNativeSettings;\n", multiset_c_name("generic", multiset.name.lower()))
-    out.write("\n")
-    for msg in multiset.msgs:
-        if msg.cls:
-            setter = method_name("set_%s_%s_%s" % (msg.ftr.name, msg.cls.name, msg.name))
-        else:
-            setter = method_name("set_%s_%s" % (msg.ftr.name, msg.cls.name, msg.name))
-        out.write("- (void) "+setter)
-        if msg.args:
-            arg = msg.args[0]
-            out.write(":(" + arg_type(msg.ftr.name, arg, True) + ")" + arg_name(arg))
-            for arg in msg.args[1:]:
-                out.write(" " + arg_name(arg) + ":(" + arg_type(msg.ftr.name, arg, True) + ")" + arg_name(arg))
-        out.write(";\n")
-        out.write("\n")
-
-        if msg.cls:
-            getter = method_name("get_%s_%s_%s" % (msg.ftr.name, msg.cls.name, msg.name))
-        else:
-            getter = method_name("get_%s_%s" % (msg.ftr.name, msg.cls.name, msg.name))
-        out.write("- (int) "+getter)
-        if msg.args:
-            arg = msg.args[0]
-            out.write(":(" + arg_type(msg.ftr.name, arg, True) + " *)" + arg_name(arg))
-            for arg in msg.args[1:]:
-                out.write(" " + arg_name(arg) + ":(" + arg_type(msg.ftr.name, arg, True) + " *)" + arg_name(arg))
-        out.write(";\n")
-        out.write("\n")
-
-    out.write("@end\n")
-    out.write("\n")
-
 def gen_feature_callback_declaration(feature_obj, feature_name, evts, out):
     out.write("@protocol " + feature_callback_class_name(feature_name) + "<NSObject>\n")
     out.write("\n")
@@ -290,7 +228,6 @@ def gen_decode_declaration(feature_name, out):
     out.write("\n")
 
 
-
 def gen_feature_enum_implementation(feature_obj, feature_name, enum, out):
     if enum.usedLikeBitfield:
         type = 'NSUInteger' if len(enum.values) <= 32 else 'uint64_t'
@@ -309,84 +246,6 @@ def gen_feature_enum_implementation(feature_obj, feature_name, enum, out):
         out.write("}\n\n")
         out.write("@end\n")
         out.write("\n")
-
-def gen_feature_multiset_implementation(feature_obj, feature_name, multiset, out):
-    out.write("@interface " + multiset_class_name(feature_obj.name, multiset.name) + " ()\n")
-    out.write("@property (nonatomic, assign) %s settings;\n", multiset_c_name("generic", multiset.name.lower()))
-    out.write("@end\n")
-    out.write("\n")
-
-    # multiset class implementation
-    out.write("@implementation %s\n\n", multiset_class_name(feature_obj.name, multiset.name))
-
-    out.write("+ (%s *) withNative:(%s *)native {\n", multiset_class_name(feature_obj.name, multiset.name),
-              multiset_c_name("generic", multiset.name.lower()))
-    out.write("    %s *ret  = [[%s alloc] init];\n", multiset_class_name(feature_obj.name, multiset.name),
-              multiset_class_name(feature_obj.name, multiset.name))
-    out.write("    ret.settings = *native;\n")
-    out.write("    return ret;\n")
-    out.write("}\n\n")
-
-    out.write("- (id) init {\n")
-    out.write("    if (self = [super init]) {\n")
-    out.write("        memset(&_settings, 0, sizeof(_settings));\n")
-    out.write("    }\n")
-    out.write("    return self;\n")
-    out.write("}\n\n")
-
-    out.write("- (%s *) getNativeSettings {\n", multiset_c_name("generic", multiset.name.lower()))
-    out.write("    return &_settings;\n")
-    out.write("}\n\n")
-
-    for msg in multiset.msgs:
-        if msg.cls:
-            setter = method_name("set_%s_%s_%s" % (msg.ftr.name, msg.cls.name, msg.name))
-        else:
-            setter = method_name("set_%s_%s" % (msg.ftr.name, msg.cls.name, msg.name))
-        out.write("- (void) "+setter)
-        if msg.args:
-            arg = msg.args[0]
-            out.write(":(" + arg_type(msg.ftr.name, arg, True) + ")" + arg_name(arg))
-            for arg in msg.args[1:]:
-                out.write(" " + arg_name(arg) + ":(" + arg_type(msg.ftr.name, arg, True) + ")" + arg_name(arg))
-        out.write(" {\n")
-        if msg.cls:
-            msg_struct = "%s_%s_%s" % (msg.ftr.name, msg.cls.name, msg.name)
-        else:
-            msg_struct = "%s_%s_%s" % (msg.ftr.name, msg.cls.name, msg.name)
-        for arg in msg.args:
-            out.write("    _settings.%s.%s = %s;\n" % (msg_struct, arg.name,
-                                                       arg_value_from_obj_c_to_c(msg.ftr.name, arg)))
-        out.write("    _settings.%s.is_set = 1;\n" % msg_struct)
-        out.write("}\n\n")
-
-        if msg.cls:
-            getter = method_name("get_%s_%s_%s" % (msg.ftr.name, msg.cls.name, msg.name))
-        else:
-            getter = method_name("get_%s_%s" % (msg.ftr.name, msg.cls.name, msg.name))
-        out.write("- (int) "+getter)
-        if msg.args:
-            arg = msg.args[0]
-            out.write(":(" + arg_type(msg.ftr.name, arg, True) + " *)" + arg_name(arg))
-            for arg in msg.args[1:]:
-                out.write(" " + arg_name(arg) + ":(" + arg_type(msg.ftr.name, arg, True) + " *)" + arg_name(arg))
-        out.write(" {\n")
-        out.write("    if ((_settings.%s.is_set)", msg_struct)
-        for arg in msg.args:
-            out.write(" ||\n        (%s != NULL)", arg_name(arg))
-        out.write(")\n")
-        out.write("        return -EINVAL;\n")
-        if msg.cls:
-            msg_struct = "%s_%s_%s" % (msg.ftr.name, msg.cls.name, msg.name)
-        else:
-            msg_struct = "%s_%s_%s" % (msg.ftr.name, msg.cls.name, msg.name)
-        for arg in msg.args:
-            out.write("    *%s = _settings.%s.%s;\n", arg_value_from_c_to_obj_c(msg.ftr.name, arg), msg_struct, arg.name)
-        out.write("    return 0;\n")
-        out.write("}\n\n")
-
-    out.write("@end\n")
-    out.write("\n")
 
 
 def gen_decode_implementation(feature_name, feature_id, class_id, evts, out):
@@ -518,7 +377,7 @@ def gen_call_callbacks_implementations(feature_obj, feature_name, evts, out):
         out.write("\n")
 
 
-def gen_header_file(feature_obj, feature_name, enums, multisets, cmds, evts, out):
+def gen_header_file(feature_obj, feature_name, enums, cmds, evts, out):
     out.write("/** Generated, do not edit ! */\n")
     out.write("\n")
 
@@ -534,10 +393,6 @@ def gen_header_file(feature_obj, feature_name, enums, multisets, cmds, evts, out
     # Enums
     for enum in enums:
         gen_feature_enum_declaration(feature_obj, feature_name, enum, out)
-
-    # Multisets
-    for multiset in multisets:
-        gen_feature_multiset_declaration(feature_obj, feature_name, multiset, out)
 
     # callbacks
     if evts:
@@ -557,7 +412,7 @@ def gen_header_file(feature_obj, feature_name, enums, multisets, cmds, evts, out
     out.write("\n")
 
 
-def gen_source_file(feature_obj, feature_name, class_id, enums, multisets, cmds, evts, out):
+def gen_source_file(feature_obj, feature_name, class_id, enums, cmds, evts, out):
     out.write("/** Generated, do not edit ! */\n")
     out.write("\n")
 
@@ -571,10 +426,6 @@ def gen_source_file(feature_obj, feature_name, class_id, enums, multisets, cmds,
     # Enums
     for enum in enums:
         gen_feature_enum_implementation(feature_obj, feature_name, enum, out)
-
-    # Multisets
-    for multiset in multisets:
-        gen_feature_multiset_implementation(feature_obj, feature_name, multiset, out)
 
     out.write("@implementation " + class_name(feature_name) +"\n")
     out.write("\n")
@@ -623,7 +474,6 @@ def generate_feature(feature_obj, class_obj, outdir):
     feature_id = feature_obj.featureId
     class_id = 0
     enums = feature_obj.enums
-    multisets = feature_obj.multisets
     cmds = feature_obj.cmds
     evts = feature_obj.evts
     if class_obj:
@@ -634,14 +484,14 @@ def generate_feature(feature_obj, class_obj, outdir):
         evts = [evt for evt in feature_obj.evts if class_id == evt.cls.classId]
 
     with open(filepath, "w") as file_obj:
-        gen_header_file(feature_obj, feature_name, enums, multisets, cmds, evts,
+        gen_header_file(feature_obj, feature_name, enums, cmds, evts,
                         Writer(file_obj))
 
 
     # generate source file
     filepath = os.path.join(outdir, feature_source_file_name(feature_name))
     with open(filepath, "w") as file_obj:
-        gen_source_file(feature_obj, feature_name, class_id, enums, multisets, cmds, evts, Writer(file_obj))
+        gen_source_file(feature_obj, feature_name, class_id, enums, cmds, evts, Writer(file_obj))
 
     return feature_name
 

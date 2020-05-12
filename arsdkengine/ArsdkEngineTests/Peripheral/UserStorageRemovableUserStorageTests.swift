@@ -193,6 +193,14 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
                 monitorEnabled: 0, monitorPeriod: 0))
         assertThat(storage!.state, `is`(.ready))
         assertThat(changeCnt, `is`(13))
+
+        // test passwordNeeded format
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageStateEncoder(
+                physicalState: .available, fileSystemState: .passwordNeeded, attributeBitField: 0,
+                monitorEnabled: 0, monitorPeriod: 0))
+        assertThat(storage!.state, `is`(.passwordNeeded))
+        assertThat(changeCnt, `is`(14))
     }
 
     func testMediaInfo() {

@@ -24,10 +24,6 @@ def enum_class_name(feature_strict_name, enum_name):
     splitted_name = enum_name.split('_')
     return class_name(feature_strict_name) + "".join(x.capitalize() for x in splitted_name)
 
-def multiset_class_name(feature_strict_name, multiset_name):
-    splitted_name = multiset_name.split('_')
-    return class_name(feature_strict_name) + "".join(x.capitalize() for x in splitted_name)
-
 def param_name(name):
     components = name.split('_')
     return components[0].lower() + "".join(x[0].upper() + x[1:] for x in components[1:])
@@ -55,17 +51,9 @@ def arg_type(feature_strict_name, arg, is_fun_arg=False):
             argType = args[arsdkparser.ArArgType.U64]
         else:
             argType = args[arsdkparser.ArArgType.U32]
-    elif isinstance(arg.argType, arsdkparser.ArMultiSetting):
-        if is_fun_arg:
-            argType = multiset_class_name(feature_strict_name, arg.argType.name) + ' *'
-        else:
-            argType = multiset_class_name(feature_strict_name, arg.argType.name)
     else:
         argType = args[arg.argType]
     return argType
-
-def multiset_c_name(ftr, multiset):
-    return "struct arsdk_%s_%s" % (ftr, multiset)
 
 def arg_c_type(arg, is_fun_arg=False):
     args = {
@@ -85,11 +73,6 @@ def arg_c_type(arg, is_fun_arg=False):
         argType = args[arsdkparser.ArArgType.I32]
     elif isinstance(arg.argType, arsdkparser.ArBitfield):
         argType = args[arg.argType.btfType]
-    elif isinstance(arg.argType, arsdkparser.ArMultiSetting):
-        if is_fun_arg:
-            argType = multiset_c_name("generic", arg.argType.name.lower()) + ' *'
-        else:
-            argType = multiset_c_name("generic", arg.argType.name.lower())
     else:
         argType = args[arg.argType]
     return argType
@@ -99,8 +82,6 @@ def arg_name(arg):
         argName = param_name(arg.name)
     elif isinstance(arg.argType, arsdkparser.ArBitfield):
         argName = param_name(arg.name) + "BitField"
-    elif isinstance(arg.argType, arsdkparser.ArMultiSetting):
-        argName = param_name(arg.name)
     else:
         argName = param_name(arg.name)
     return argName
@@ -109,8 +90,6 @@ def arg_name(arg):
 def arg_value_from_obj_c_to_c(feature_strict_name, arg):
     if arg.argType == arsdkparser.ArArgType.STRING:
         return "[" + arg_name(arg) + " UTF8String]"
-    elif isinstance(arg.argType, arsdkparser.ArMultiSetting):
-        return "[%s getNativeSettings]" % arg_name(arg)
     elif arg_c_type(arg) != arg_type(feature_strict_name, arg):
         return "(" + arg_c_type(arg) + ")" + arg_name(arg)
     else:
@@ -297,12 +276,6 @@ def gen_expected_source_file(ctx, out):
                         out.write("        NSString* my%sObj = [NSString stringWithUTF8String:my%s];\n",
                             arg_name(arg).title(), arg_name(arg).title())
                         out.write("        if (![%sObj isEqual:my%sObj]) return false;\n", arg_name(arg), arg_name(arg).title())
-                    elif isinstance(arg.argType, arsdkparser.ArMultiSetting):
-                        out.write("        res = memcmp(&_%s, &my%s, sizeof(my%s));\n", arg.name, arg_name(arg).title(),
-                                  arg_name(arg).title())
-                        out.write("        if (res != 0) {\n")
-                        out.write("            return false;\n")
-                        out.write("        }\n")
                     else:
                         out.write("        if (_%s != my%s) return false;\n", arg_name(arg), arg_name(arg).title())
                     out.write("\n")

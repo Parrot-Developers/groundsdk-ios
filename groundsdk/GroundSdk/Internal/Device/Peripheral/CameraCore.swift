@@ -44,9 +44,11 @@ public protocol CameraBackend: class {
     ///   - manualShutterSpeed: requested shutter speed when mode is `manualShutterSpeed` or `manual`
     ///   - manualIsoSensitivity: requested iso sensitivity when mode is `manualIsoSensitivity` or `manual`
     ///   - maximumIsoSensitivity: maximum iso sensitivity when mode is `automatic`
+    ///   - autoExposureMeteringMode: auto exposure metering mode
     /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
     func set(exposureMode: CameraExposureMode, manualShutterSpeed: CameraShutterSpeed,
-             manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso) -> Bool
+             manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso,
+             autoExposureMeteringMode: CameraAutoExposureMeteringMode) -> Bool
 
     /// Changes the exposure lock mode
     ///
@@ -330,9 +332,10 @@ public class CameraCore: PeripheralCore, Camera {
 
         _exposureSettings = CameraExposureSettingsCore(didChangeDelegate: self) {
             // swiftlint:disable:next closure_parameter_position
-            [unowned self] (mode, shutterSpeed, isoSensitivity, maxIsoSensitivity) in
+            [unowned self] (mode, shutterSpeed, isoSensitivity, maxIsoSensitivity, autoExposureMeteringMode) in
             return self.backend.set(exposureMode: mode, manualShutterSpeed: shutterSpeed,
-                                    manualIsoSensitivity: isoSensitivity, maximumIsoSensitivity: maxIsoSensitivity)
+                                    manualIsoSensitivity: isoSensitivity, maximumIsoSensitivity: maxIsoSensitivity,
+                                    autoExposureMeteringMode: autoExposureMeteringMode)
         }
 
         _exposureCompensationSetting = CameraExposureCompensationSettingCore(didChangeDelegate: self) {
@@ -699,6 +702,19 @@ extension CameraCore {
     /// - Note: Changes are not notified until notifyUpdated() is called.
     @discardableResult public func update(maximumIsoSensitivity newMaximumIsoSensitivity: CameraIso) -> CameraCore {
         if _exposureSettings.update(maximumIsoSensitivity: newMaximumIsoSensitivity) {
+            markChanged()
+        }
+        return self
+    }
+
+    /// Changes camera auto exposure metering mode
+    ///
+    /// - Parameter autoExposureMeteringMode: new camera auto exposure metering mode
+    /// - Returns: self to allow call chaining
+    /// - Note: Changes are not notified until notifyUpdated() is called.
+    @discardableResult public func update(autoExposureMeteringMode
+        newAutoExposureMeteringMode: CameraAutoExposureMeteringMode) -> CameraCore {
+        if _exposureSettings.update(autoExposureMeteringMode: newAutoExposureMeteringMode) {
             markChanged()
         }
         return self

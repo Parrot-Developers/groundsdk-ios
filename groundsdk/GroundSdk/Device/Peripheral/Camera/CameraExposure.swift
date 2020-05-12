@@ -82,6 +82,30 @@ public enum CameraExposureMode: Int, CustomStringConvertible {
     }
 }
 
+/// Camera auto exposure metering mode.
+@objc(GSCameraAutoExposureMeteringMode)
+public enum CameraAutoExposureMeteringMode: Int, CustomStringConvertible, Comparable {
+
+    /// Standard auto exposure metering mode.
+    case standard
+
+    /// centerTop auto exposure metering mode,
+    case centerTop
+
+    /// Debug description.
+    public var description: String {
+        switch self {
+        case .standard:                     return "standard"
+        case .centerTop:                    return "centerTop"
+        }
+    }
+
+    /// Comparable concordance
+    public static func < (lhs: CameraAutoExposureMeteringMode, rhs: CameraAutoExposureMeteringMode) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
+}
+
 /// Camera shutter speed values
 @objc(GSCameraShutterSpeed)
 public enum CameraShutterSpeed: Int, CustomStringConvertible, Comparable {
@@ -348,6 +372,9 @@ public protocol CameraExposureSettings: class {
     /// Value can only be changed to one of the value `supportedMaximumIsoSensitivity`
     var maximumIsoSensitivity: CameraIso { get set }
 
+    /// Current auto exposure metering mode..
+    var autoExposureMeteringMode: CameraAutoExposureMeteringMode { get set }
+
     /// Changes exposure mode, manualShutterSpeed, manualIsoSensitivity and maximumIsoSensitivity.
     ///
     /// - Parameters:
@@ -360,6 +387,21 @@ public protocol CameraExposureSettings: class {
     ///     the current value
     func set(mode: CameraExposureMode, manualShutterSpeed: CameraShutterSpeed?,
              manualIsoSensitivity: CameraIso?, maximumIsoSensitivity: CameraIso?)
+
+    /// Changes exposure mode, manualShutterSpeed, manualIsoSensitivity and maximumIsoSensitivity.
+    ///
+    /// - Parameters:
+    ///   - mode: requested exposure mode
+    ///   - manualShutterSpeed: requested manual shutter speed if mode is `manualShutterSpeed` or `manual`, or `nil` to
+    ///     keep the current value
+    ///   - manualIsoSensitivity: requested iso sensitivity if exposure mode is `manualIsoSensitivity` or `manual`, or
+    ///     `nil` to keep the current value
+    ///   - maximumIsoSensitivity: requested maximum iso sensitivity when exposure mode is `automatic`, or `nil` to keep
+    ///     the current value
+    ///   - autoExposureMeteringMode: requested auto exposure metering mode
+    func set(mode: CameraExposureMode, manualShutterSpeed: CameraShutterSpeed?,
+             manualIsoSensitivity: CameraIso?, maximumIsoSensitivity: CameraIso?,
+             autoExposureMeteringMode: CameraAutoExposureMeteringMode?)
 }
 
 // MARK: - objc compatibility
@@ -381,6 +423,9 @@ public protocol CameraExposureSettings: class {
 
     /// Maximum Iso sensitivity when exposure mode is `automatic`.
     var maximumIsoSensitivity: CameraIso { get set }
+
+    /// Current auto exposure metering mode..
+    var autoExposureMeteringMode: CameraAutoExposureMeteringMode { get set }
 
     /// Checks if a mode is supported.
     ///
@@ -416,7 +461,8 @@ public protocol CameraExposureSettings: class {
     ///     -1 to keep the current value
     ///   - maximumIsoSensitivity: requested maximum iso sensitivity when exposure mode is `automatic`, or -1 to keep
     ///     the current value
-    @objc(setMode:manualShutterSpeed:manualIsoSensitivity:maximumIsoSensitivity:)
+    ///   - autoExposureMeteringMode: requested auto exposure metering mode
+    @objc(setMode:manualShutterSpeed:manualIsoSensitivity:maximumIsoSensitivity:autoExposureMeteringMode:)
     func set(mode: CameraExposureMode, manualShutterSpeed: Int, manualIsoSensitivity: Int,
-             maximumIsoSensitivity: Int)
+             maximumIsoSensitivity: Int, autoExposureMeteringMode: Int)
 }

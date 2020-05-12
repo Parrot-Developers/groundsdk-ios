@@ -13,7 +13,6 @@ custom_categories:
   - name: Guide
     children:
     - Overview
-    - Mavlink
 
   - name: GroundSdk
     children:

@@ -67,6 +67,7 @@ class CameraControllerBase: CameraBackend {
         case exposureManualShutterSpeedValueKey = "exposureManualShutterSpeed"
         case exposureManualIsoSensitivityValueKey = "exposureManualIsoSensitivity"
         case exposureMaximumIsoSensitivityValueKey = "exposureMaximumIsoSensitivity"
+        case autoExposureMeteringModeValueKey = "autoExposureMeteringMode"
         case shutterSpeedKey = "shutterSpeed"
         case whiteBalanceKey = "whiteBalance"
         case whiteBalanceModeValueKey = "whiteBalanceMode"
@@ -94,7 +95,8 @@ class CameraControllerBase: CameraBackend {
         case zoomVelocityQualityDegradation(allowed: Bool)
         case whiteBalance(mode: CameraWhiteBalanceMode, customTemperature: CameraWhiteBalanceTemperature)
         case exposure(mode: CameraExposureMode, manualShutterSpeed: CameraShutterSpeed,
-                      manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso)
+            manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso,
+            autoExposureMeteringMode: CameraAutoExposureMeteringMode)
         case exposureCompensation(CameraEvCompensation)
         case style(activeStyle: CameraStyle, saturation: Int, contrast: Int, sharpness: Int)
         case saturation(min: Int, current: Int, max: Int)
@@ -135,7 +137,8 @@ class CameraControllerBase: CameraBackend {
             .zoomVelocityQualityDegradation(allowed: true),
             .whiteBalance(mode: .automatic, customTemperature: .k1500),
             .exposure(mode: .manual, manualShutterSpeed: .oneOver10000,
-                        manualIsoSensitivity: .iso1200, maximumIsoSensitivity: .iso3200),
+                      manualIsoSensitivity: .iso1200, maximumIsoSensitivity: .iso3200,
+                      autoExposureMeteringMode: .standard),
             .exposureCompensation(.ev0_00),
             .style(activeStyle: .standard, saturation: 0, contrast: 0, sharpness: 0),
             .saturation(min: 0, current: 0, max: 0),
@@ -364,9 +367,11 @@ class CameraControllerBase: CameraBackend {
     ///   - manualShutterSpeed: requested shutter speed when mode is `manualShutterSpeed` or `manual`
     ///   - manualIsoSensitivity: requested iso sensitivity when mode is `manualIsoSensitivity` or `manual`
     ///   - maximumIsoSensitivity: maximum iso sensitivity when mode is `automatic`
+    ///   - autoExposureMeteringMode: requested auto exposure metering mode
     /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
     func set(exposureMode: CameraExposureMode, manualShutterSpeed: CameraShutterSpeed,
-             manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso) -> Bool {
+             manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso,
+             autoExposureMeteringMode: CameraAutoExposureMeteringMode) -> Bool {
 
         let shouldSendCommand = exposureMode != exposurePresets.mode
                                 || manualShutterSpeed != exposurePresets.manualShutterSpeed
@@ -375,15 +380,19 @@ class CameraControllerBase: CameraBackend {
 
         exposurePresets.update(mode: exposureMode, manualShutterSpeed: manualShutterSpeed,
                                manualIsoSensitivity: manualIsoSensitivity,
-                                maximumIsoSensitivity: maximumIsoSensitivity)
+                                maximumIsoSensitivity: maximumIsoSensitivity,
+                                autoExposureMeteringMode: autoExposureMeteringMode)
         presetStore?.write(key: SettingKey.exposureKey, value: exposurePresets.data).commit()
 
         if connected && shouldSendCommand && sendExposureCommand(
             exposureMode: exposureMode, manualShutterSpeed: manualShutterSpeed,
-            manualIsoSensitivity: manualIsoSensitivity, maximumIsoSensitivity: maximumIsoSensitivity) {
+            manualIsoSensitivity: manualIsoSensitivity, maximumIsoSensitivity: maximumIsoSensitivity,
+            autoExposureMeteringMode: autoExposureMeteringMode) {
 
             camera.update(exposureMode: exposureMode).update(manualShutterSpeed: manualShutterSpeed)
-                .update(manualIsoSensitivity: manualIsoSensitivity).update(maximumIsoSensitivity: maximumIsoSensitivity)
+                .update(manualIsoSensitivity: manualIsoSensitivity)
+                .update(maximumIsoSensitivity: maximumIsoSensitivity)
+                .update(autoExposureMeteringMode: autoExposureMeteringMode)
             computeEVCompensationAvailableValues()
             return true
 
@@ -391,6 +400,7 @@ class CameraControllerBase: CameraBackend {
             camera.update(exposureMode: exposureMode).update(manualShutterSpeed: manualShutterSpeed)
                 .update(manualIsoSensitivity: manualIsoSensitivity)
                 .update(maximumIsoSensitivity: maximumIsoSensitivity)
+                .update(autoExposureMeteringMode: autoExposureMeteringMode)
             computeEVCompensationAvailableValues()
             camera.notifyUpdated()
         }
@@ -805,10 +815,11 @@ class CameraControllerBase: CameraBackend {
     ///   - manualShutterSpeed: requested shutter speed
     ///   - manualIsoSensitivity: requested iso sensitivity
     ///   - maximumIsoSensitivity: requested maximum iso sensitivity
+    ///   - autoExposureMeteringMode: requested auto exposure metering mode
     /// - Returns: true if the command has been sent
     func sendExposureCommand(
         exposureMode: CameraExposureMode, manualShutterSpeed: CameraShutterSpeed, manualIsoSensitivity: CameraIso,
-        maximumIsoSensitivity: CameraIso) -> Bool {
+        maximumIsoSensitivity: CameraIso, autoExposureMeteringMode: CameraAutoExposureMeteringMode) -> Bool {
         return false
     }
 
@@ -1092,6 +1103,7 @@ class CameraControllerBase: CameraBackend {
                             .update(manualShutterSpeed: exposurePresets.manualShutterSpeed)
                             .update(manualIsoSensitivity: exposurePresets.manualIsoSensitivity)
                             .update(maximumIsoSensitivity: exposurePresets.maximumIsoSensitivity)
+                            .update(autoExposureMeteringMode: exposurePresets.autoExposureMeteringMode)
                     }
 
                 case .exposureCompensation:
@@ -1197,11 +1209,13 @@ class CameraControllerBase: CameraBackend {
                         whiteBalancePresets.update(mode: mode, customTemperature: customTemperature)
                         presetStore.write(key: setting.key, value: whiteBalancePresets.data)
                     }
-                case .exposure(let mode, let manualShutterSpeed, let manualIsoSensitivity, let maximumIsoSensitivity):
+                case .exposure(let mode, let manualShutterSpeed, let manualIsoSensitivity,
+                               let maximumIsoSensitivity, let autoExposureMeteringMode):
                     if !presetStore.hasEntry(key: setting.key) {
                         exposurePresets.update(mode: mode, manualShutterSpeed: manualShutterSpeed,
                                                manualIsoSensitivity: manualIsoSensitivity,
-                                               maximumIsoSensitivity: maximumIsoSensitivity)
+                                               maximumIsoSensitivity: maximumIsoSensitivity,
+                                               autoExposureMeteringMode: autoExposureMeteringMode)
                         presetStore.write(key: setting.key, value: exposurePresets.data)
                     }
                 case .exposureCompensation(let value):
@@ -1407,13 +1421,15 @@ class CameraControllerBase: CameraBackend {
                         camera.update(customWhiteBalanceTemperature: customTemperature)
                     }
                 }
-            case .exposure(let mode, let manualShutterSpeed, let manualIsoSensitivity, let maximumIsoSensitivity):
+            case .exposure(let mode, let manualShutterSpeed, let manualIsoSensitivity,
+                           let maximumIsoSensitivity, let autoExposureMeteringMode):
                 if let exposurePresetsData: ExposurePresets.Data = presetStore?.read(key: setting.key) {
                     exposurePresets.load(data: exposurePresetsData)
                     let presetMode = exposurePresets.mode
                     let presetManualShutterSpeed = exposurePresets.manualShutterSpeed
                     let presetManualIsoSensitivity = exposurePresets.manualIsoSensitivity
                     let presetMaximumIsoSensitivity = exposurePresets.maximumIsoSensitivity
+                    let presetAutoExposureMeteringMode = exposurePresets.autoExposureMeteringMode
                     if presetMode != mode
                         || ((presetMode == .manual || presetMode == .manualShutterSpeed)
                             && presetManualShutterSpeed != manualShutterSpeed)
@@ -1424,15 +1440,18 @@ class CameraControllerBase: CameraBackend {
                             && presetMaximumIsoSensitivity != maximumIsoSensitivity) {
                         _ = sendExposureCommand(exposureMode: presetMode, manualShutterSpeed: presetManualShutterSpeed,
                                                 manualIsoSensitivity: presetManualIsoSensitivity,
-                                                maximumIsoSensitivity: presetMaximumIsoSensitivity)
+                                                maximumIsoSensitivity: presetMaximumIsoSensitivity,
+                                                autoExposureMeteringMode: presetAutoExposureMeteringMode)
 
                         camera.update(exposureMode: presetMode).update(manualShutterSpeed: presetManualShutterSpeed)
                             .update(manualIsoSensitivity: presetManualIsoSensitivity)
                             .update(maximumIsoSensitivity: presetMaximumIsoSensitivity)
+                        .update(autoExposureMeteringMode: presetAutoExposureMeteringMode)
                     } else {
                         camera.update(exposureMode: mode).update(manualShutterSpeed: manualShutterSpeed)
                             .update(manualIsoSensitivity: manualIsoSensitivity)
                             .update(maximumIsoSensitivity: maximumIsoSensitivity)
+                        .update(autoExposureMeteringMode: autoExposureMeteringMode)
                     }
                 }
             case .exposureCompensation(let value):
@@ -1540,13 +1559,15 @@ class CameraControllerBase: CameraBackend {
         case .whiteBalance(let mode, let customTemperature):
             camera.update(whiteBalanceMode: mode).update(customWhiteBalanceTemperature: customTemperature)
             whiteBalancePresets.update(mode: mode, customTemperature: customTemperature)
-        case .exposure(let mode, let manualShutterSpeed, let manualIsoSensitivity, let maximumIsoSensitivity):
+        case .exposure(let mode, let manualShutterSpeed, let manualIsoSensitivity,
+                       let maximumIsoSensitivity, let autoExposureMeteringMode):
             camera.update(exposureMode: mode).update(manualShutterSpeed: manualShutterSpeed)
                 .update(manualIsoSensitivity: manualIsoSensitivity)
                 .update(maximumIsoSensitivity: maximumIsoSensitivity)
                 exposurePresets.update(mode: mode, manualShutterSpeed: manualShutterSpeed,
                                    manualIsoSensitivity: manualIsoSensitivity,
-                                   maximumIsoSensitivity: maximumIsoSensitivity)
+                                   maximumIsoSensitivity: maximumIsoSensitivity,
+                                   autoExposureMeteringMode: autoExposureMeteringMode)
         case .exposureCompensation(let exposureCompensation):
             camera.update(exposureCompensationValue: exposureCompensation)
             exposureCompensationPresets.update(exposureCompensation: exposureCompensation)
@@ -2006,6 +2027,8 @@ private struct ExposurePresets {
         var manualIsoSensitivity = CameraIso.iso100
         /// Current maximum iso sensitivity
         var maximumIsoSensitivity = CameraIso.iso3200
+        /// Standard auto exposure metering mode
+        var autoExposureMeteringMode = CameraAutoExposureMeteringMode.standard
 
         /// Store keys
         private enum Key {
@@ -2013,6 +2036,8 @@ private struct ExposurePresets {
             static let manualShutterSpeed = "manualShutterSpeed"
             static let manualIsoSensitivity = "manualIsoSensitivity"
             static let maximumIsoSensitivity = "maximumIsoSensitivity"
+            static let autoExposureMeteringMode = "autoExposureMeteringMode"
+
         }
 
         /// Constructor with default data
@@ -2025,15 +2050,17 @@ private struct ExposurePresets {
         init?(from content: AnyObject?) {
 
             if let content = StorableDict<String, AnyStorable>(from: content),
-               let mode = CameraExposureMode(content[Key.mode]),
-               let manualShutterSpeed = CameraShutterSpeed(content[Key.manualShutterSpeed]),
-               let manualIsoSensitivity = CameraIso(content[Key.manualIsoSensitivity]),
-               let maximumIsoSensitivity = CameraIso(content[Key.maximumIsoSensitivity]) {
+                let mode = CameraExposureMode(content[Key.mode]),
+                let manualShutterSpeed = CameraShutterSpeed(content[Key.manualShutterSpeed]),
+                let manualIsoSensitivity = CameraIso(content[Key.manualIsoSensitivity]),
+                let maximumIsoSensitivity = CameraIso(content[Key.maximumIsoSensitivity]),
+                let autoExposureMeteringMode = CameraAutoExposureMeteringMode(
+                    content[Key.autoExposureMeteringMode]) {
                 self.mode = mode
                 self.manualShutterSpeed = manualShutterSpeed.storableValue
                 self.manualIsoSensitivity = manualIsoSensitivity.storableValue
                 self.maximumIsoSensitivity = maximumIsoSensitivity.storableValue
-
+                self.autoExposureMeteringMode = autoExposureMeteringMode.storableValue
             } else {
                 return nil
             }
@@ -2047,7 +2074,9 @@ private struct ExposurePresets {
                 Key.mode: AnyStorable(mode),
                 Key.manualShutterSpeed: AnyStorable(manualShutterSpeed),
                 Key.manualIsoSensitivity: AnyStorable(manualIsoSensitivity),
-                Key.maximumIsoSensitivity: AnyStorable(maximumIsoSensitivity)])
+                Key.maximumIsoSensitivity: AnyStorable(maximumIsoSensitivity),
+                Key.autoExposureMeteringMode: AnyStorable(autoExposureMeteringMode)
+            ])
         }
     }
 
@@ -2079,6 +2108,11 @@ private struct ExposurePresets {
         return data.manualIsoSensitivity
     }
 
+    /// Auto exposure metering mode
+    var autoExposureMeteringMode: CameraAutoExposureMeteringMode {
+        return data.autoExposureMeteringMode
+    }
+
     /// Exposure maximum iso sensitivity
     var maximumIsoSensitivity: CameraIso {
         return data.maximumIsoSensitivity
@@ -2098,12 +2132,15 @@ private struct ExposurePresets {
     ///   - manualShutterSpeed: new manual shutter speed
     ///   - manualIsoSensitivity: new manual iso sensitivity
     ///   - maximumIsoSensitivity: new maximum iso sensitivity
+    ///   - autoExposureMeteringMode: new auto exposure metering mode
     mutating func update(mode: CameraExposureMode, manualShutterSpeed: CameraShutterSpeed,
-                         manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso) {
+                         manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso,
+                         autoExposureMeteringMode: CameraAutoExposureMeteringMode) {
         data.mode = mode
         data.manualShutterSpeed = manualShutterSpeed
         data.manualIsoSensitivity = manualIsoSensitivity
         data.maximumIsoSensitivity = maximumIsoSensitivity
+        data.autoExposureMeteringMode = autoExposureMeteringMode
     }
 }
 
@@ -2403,6 +2440,13 @@ extension CameraExposureMode: StorableEnum {
         ])
 }
 
+extension CameraAutoExposureMeteringMode: StorableEnum {
+    static var storableMapper = Mapper<CameraAutoExposureMeteringMode, String>([
+        .standard: "standard",
+        .centerTop: "centerTop"
+        ])
+}
+
 extension CameraStyle: StorableEnum {
     static var storableMapper = Mapper<CameraStyle, String>([
         .standard: "standard",
@@ -2576,6 +2620,9 @@ extension CameraRecordingResolution: StorableEnum {
 
 extension CameraRecordingFramerate: StorableEnum {
     static let storableMapper = Mapper<CameraRecordingFramerate, String>([
+        .fps9: "9",
+        .fps15: "15",
+        .fps20: "20",
         .fps24: "24",
         .fps25: "25",
         .fps30: "30",
@@ -2585,7 +2632,9 @@ extension CameraRecordingFramerate: StorableEnum {
         .fps96: "96",
         .fps100: "100",
         .fps120: "120",
-        .fps9: "9"])
+        .fps192: "192",
+        .fps200: "200",
+        .fps240: "240"])
 }
 
 extension CameraHyperlapseValue: StorableEnum {

@@ -158,6 +158,8 @@ extension UserStorageRemovableUserStorage: ArsdkFeatureUserStorageCallback {
                 state = .ready
             case .error:
                 state = .error
+            case .passwordNeeded:
+                state = .passwordNeeded
             case .sdkCoreUnknown:
                 ULog.w(.tag, "Unknown fileSystemState, skipping this event.")
                 return

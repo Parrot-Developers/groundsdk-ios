@@ -300,6 +300,33 @@
 		9BF5447F22B7827100452895 /* CopilotCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF5447E22B7827100452895 /* CopilotCore.swift */; };
 		9BF5448322B8BF2400452895 /* Copilot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF5448222B8BF2400452895 /* Copilot.swift */; };
 		9BF5448722BA144900452895 /* CopilotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF5448622BA144900452895 /* CopilotTests.swift */; };
+		9D213611238E880D005BB8B3 /* DelayCommandMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D213610238E880D005BB8B3 /* DelayCommandMatcher.swift */; };
+		9D213613238E8974005BB8B3 /* ChangeSpeedCommandMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D213612238E8974005BB8B3 /* ChangeSpeedCommandMatcher.swift */; };
+		9D213615238EB164005BB8B3 /* SetRoiCommandMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D213614238EB164005BB8B3 /* SetRoiCommandMatcher.swift */; };
+		9D213617238EB2F4005BB8B3 /* MountControlCommandMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D213616238EB2F4005BB8B3 /* MountControlCommandMatcher.swift */; };
+		9D213619238EB45A005BB8B3 /* StartPhotoCaptureCommandMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D213618238EB45A005BB8B3 /* StartPhotoCaptureCommandMatcher.swift */; };
+		9D21361B238EB85A005BB8B3 /* CreatePanoramaCommandMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D21361A238EB85A005BB8B3 /* CreatePanoramaCommandMatcher.swift */; };
+		9D21361D238EBA1A005BB8B3 /* SetViewModeCommandMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D21361C238EBA1A005BB8B3 /* SetViewModeCommandMatcher.swift */; };
+		9D21361F238EBAEB005BB8B3 /* SetStillCaptureModeCommandMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D21361E238EBAEB005BB8B3 /* SetStillCaptureModeCommandMatcher.swift */; };
+		9D24072E238D6D0700233709 /* MavlinkFilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D24072D238D6D0700233709 /* MavlinkFilesTests.swift */; };
+		9D240730238D8D5400233709 /* NavigateToWaypointCommandMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D24072F238D8D5400233709 /* NavigateToWaypointCommandMatcher.swift */; };
+		9D2573942382A4FA009F2C17 /* MavlinkCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2573932382A4FA009F2C17 /* MavlinkCommand.swift */; };
+		9D25739623845DB3009F2C17 /* ChangeSpeedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D25739523845DB3009F2C17 /* ChangeSpeedCommand.swift */; };
+		9D80172E237EFF6E007239E8 /* MavlinkFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80172D237EFF6E007239E8 /* MavlinkFiles.swift */; };
+		9D9A6F8F238698FD00BE6C7C /* CreatePanoramaCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6F8E238698FD00BE6C7C /* CreatePanoramaCommand.swift */; };
+		9D9A6F912386A21100BE6C7C /* DelayCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6F902386A21100BE6C7C /* DelayCommand.swift */; };
+		9D9A6F932386A72100BE6C7C /* LandCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6F922386A72100BE6C7C /* LandCommand.swift */; };
+		9D9A6F952386C45800BE6C7C /* MountControlCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6F942386C45800BE6C7C /* MountControlCommand.swift */; };
+		9D9A6F972386CA9500BE6C7C /* NavigateToWaypointCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6F962386CA9500BE6C7C /* NavigateToWaypointCommand.swift */; };
+		9D9A6F992386D3AC00BE6C7C /* ReturnToLaunchCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6F982386D3AC00BE6C7C /* ReturnToLaunchCommand.swift */; };
+		9D9A6F9B2386D46200BE6C7C /* SetRoiCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6F9A2386D46200BE6C7C /* SetRoiCommand.swift */; };
+		9D9A6F9D2386D7A100BE6C7C /* SetStillCaptureModeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6F9C2386D7A100BE6C7C /* SetStillCaptureModeCommand.swift */; };
+		9D9A6F9F2386E32F00BE6C7C /* SetViewModeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6F9E2386E32F00BE6C7C /* SetViewModeCommand.swift */; };
+		9D9A6FA12388278F00BE6C7C /* StartPhotoCaptureCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6FA02388278F00BE6C7C /* StartPhotoCaptureCommand.swift */; };
+		9D9A6FA32388452300BE6C7C /* StartVideoCaptureCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6FA22388452300BE6C7C /* StartVideoCaptureCommand.swift */; };
+		9D9A6FA5238845BF00BE6C7C /* StopPhotoCaptureCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6FA4238845BF00BE6C7C /* StopPhotoCaptureCommand.swift */; };
+		9D9A6FA72388464F00BE6C7C /* StopVideoCaptureCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6FA62388464F00BE6C7C /* StopVideoCaptureCommand.swift */; };
+		9D9A6FA9238846BB00BE6C7C /* TakeOffCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6FA8238846BB00BE6C7C /* TakeOffCommand.swift */; };
 		B27C8B112132D9A100E05DB4 /* MockFirmwareDownloaderCoreTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27C8B102132D9A100E05DB4 /* MockFirmwareDownloaderCoreTask.swift */; };
 		B27C8B132132E2BE00E05DB4 /* FirmwareManagerEntryMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27C8B122132E2BE00E05DB4 /* FirmwareManagerEntryMatcher.swift */; };
 		F80221802029EFC000BB8D22 /* MockHttpSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F802217F2029EFC000BB8D22 /* MockHttpSession.swift */; };
@@ -918,6 +945,33 @@
 		9BF5447E22B7827100452895 /* CopilotCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopilotCore.swift; sourceTree = "<group>"; };
 		9BF5448222B8BF2400452895 /* Copilot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Copilot.swift; sourceTree = "<group>"; };
 		9BF5448622BA144900452895 /* CopilotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopilotTests.swift; sourceTree = "<group>"; };
+		9D213610238E880D005BB8B3 /* DelayCommandMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayCommandMatcher.swift; sourceTree = "<group>"; };
+		9D213612238E8974005BB8B3 /* ChangeSpeedCommandMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSpeedCommandMatcher.swift; sourceTree = "<group>"; };
+		9D213614238EB164005BB8B3 /* SetRoiCommandMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetRoiCommandMatcher.swift; sourceTree = "<group>"; };
+		9D213616238EB2F4005BB8B3 /* MountControlCommandMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountControlCommandMatcher.swift; sourceTree = "<group>"; };
+		9D213618238EB45A005BB8B3 /* StartPhotoCaptureCommandMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPhotoCaptureCommandMatcher.swift; sourceTree = "<group>"; };
+		9D21361A238EB85A005BB8B3 /* CreatePanoramaCommandMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePanoramaCommandMatcher.swift; sourceTree = "<group>"; };
+		9D21361C238EBA1A005BB8B3 /* SetViewModeCommandMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewModeCommandMatcher.swift; sourceTree = "<group>"; };
+		9D21361E238EBAEB005BB8B3 /* SetStillCaptureModeCommandMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStillCaptureModeCommandMatcher.swift; sourceTree = "<group>"; };
+		9D24072D238D6D0700233709 /* MavlinkFilesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MavlinkFilesTests.swift; sourceTree = "<group>"; };
+		9D24072F238D8D5400233709 /* NavigateToWaypointCommandMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigateToWaypointCommandMatcher.swift; sourceTree = "<group>"; };
+		9D2573932382A4FA009F2C17 /* MavlinkCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MavlinkCommand.swift; sourceTree = "<group>"; };
+		9D25739523845DB3009F2C17 /* ChangeSpeedCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSpeedCommand.swift; sourceTree = "<group>"; };
+		9D80172D237EFF6E007239E8 /* MavlinkFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MavlinkFiles.swift; sourceTree = "<group>"; };
+		9D9A6F8E238698FD00BE6C7C /* CreatePanoramaCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePanoramaCommand.swift; sourceTree = "<group>"; };
+		9D9A6F902386A21100BE6C7C /* DelayCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayCommand.swift; sourceTree = "<group>"; };
+		9D9A6F922386A72100BE6C7C /* LandCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandCommand.swift; sourceTree = "<group>"; };
+		9D9A6F942386C45800BE6C7C /* MountControlCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountControlCommand.swift; sourceTree = "<group>"; };
+		9D9A6F962386CA9500BE6C7C /* NavigateToWaypointCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigateToWaypointCommand.swift; sourceTree = "<group>"; };
+		9D9A6F982386D3AC00BE6C7C /* ReturnToLaunchCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnToLaunchCommand.swift; sourceTree = "<group>"; };
+		9D9A6F9A2386D46200BE6C7C /* SetRoiCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetRoiCommand.swift; sourceTree = "<group>"; };
+		9D9A6F9C2386D7A100BE6C7C /* SetStillCaptureModeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStillCaptureModeCommand.swift; sourceTree = "<group>"; };
+		9D9A6F9E2386E32F00BE6C7C /* SetViewModeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewModeCommand.swift; sourceTree = "<group>"; };
+		9D9A6FA02388278F00BE6C7C /* StartPhotoCaptureCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPhotoCaptureCommand.swift; sourceTree = "<group>"; };
+		9D9A6FA22388452300BE6C7C /* StartVideoCaptureCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVideoCaptureCommand.swift; sourceTree = "<group>"; };
+		9D9A6FA4238845BF00BE6C7C /* StopPhotoCaptureCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopPhotoCaptureCommand.swift; sourceTree = "<group>"; };
+		9D9A6FA62388464F00BE6C7C /* StopVideoCaptureCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopVideoCaptureCommand.swift; sourceTree = "<group>"; };
+		9D9A6FA8238846BB00BE6C7C /* TakeOffCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeOffCommand.swift; sourceTree = "<group>"; };
 		B27C8B102132D9A100E05DB4 /* MockFirmwareDownloaderCoreTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFirmwareDownloaderCoreTask.swift; sourceTree = "<group>"; };
 		B27C8B122132E2BE00E05DB4 /* FirmwareManagerEntryMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareManagerEntryMatcher.swift; sourceTree = "<group>"; };
 		F802217F2029EFC000BB8D22 /* MockHttpSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockHttpSession.swift; sourceTree = "<group>"; };
@@ -1535,6 +1589,7 @@
 				F8C04C8F1FB0A7120020ED18 /* Device */,
 				F8F9CD051FB9A13D00A0CC48 /* Facility */,
 				7037D19322C63DC3002CB93A /* Hmd */,
+				9D80172C237EFEC9007239E8 /* Mavlink */,
 				F8C04D761FB0A7730020ED18 /* Setting */,
 				1DDA087620641E88008B1B9B /* Stream */,
 				F8C04C2B1FB0A7110020ED18 /* Internal */,
@@ -1560,6 +1615,7 @@
 				7C004BEF1CFC5BE9000EC3DE /* DoubleSettingTests.swift */,
 				7C2DFDEB1D59C83C006A68E8 /* IntSettingTests.swift */,
 				F8468C4B1FBDE3AD00B534FD /* Facility */,
+				9D24072C238D6BFF00233709 /* Mavlink */,
 				7C6600151CF8AF7D00712A74 /* PilotingItf */,
 				7C9D32C91CF8A2AA0037FA45 /* instrument */,
 				F8034F991D33D250003A3CFD /* Peripheral */,
@@ -1705,6 +1761,54 @@
 			path = Ephemeris;
 			sourceTree = "<group>";
 		};
+		9D24072C238D6BFF00233709 /* Mavlink */ = {
+			isa = PBXGroup;
+			children = (
+				9D24072D238D6D0700233709 /* MavlinkFilesTests.swift */,
+			);
+			path = Mavlink;
+			sourceTree = "<group>";
+		};
+		9D240731238D8D5A00233709 /* Mavlink */ = {
+			isa = PBXGroup;
+			children = (
+				9D213612238E8974005BB8B3 /* ChangeSpeedCommandMatcher.swift */,
+				9D21361A238EB85A005BB8B3 /* CreatePanoramaCommandMatcher.swift */,
+				9D213610238E880D005BB8B3 /* DelayCommandMatcher.swift */,
+				9D213616238EB2F4005BB8B3 /* MountControlCommandMatcher.swift */,
+				9D24072F238D8D5400233709 /* NavigateToWaypointCommandMatcher.swift */,
+				9D213614238EB164005BB8B3 /* SetRoiCommandMatcher.swift */,
+				9D21361C238EBA1A005BB8B3 /* SetViewModeCommandMatcher.swift */,
+				9D213618238EB45A005BB8B3 /* StartPhotoCaptureCommandMatcher.swift */,
+				9D21361E238EBAEB005BB8B3 /* SetStillCaptureModeCommandMatcher.swift */,
+			);
+			name = Mavlink;
+			sourceTree = "<group>";
+		};
+		9D80172C237EFEC9007239E8 /* Mavlink */ = {
+			isa = PBXGroup;
+			children = (
+				9D80172D237EFF6E007239E8 /* MavlinkFiles.swift */,
+				9D2573932382A4FA009F2C17 /* MavlinkCommand.swift */,
+				9D25739523845DB3009F2C17 /* ChangeSpeedCommand.swift */,
+				9D9A6F8E238698FD00BE6C7C /* CreatePanoramaCommand.swift */,
+				9D9A6F902386A21100BE6C7C /* DelayCommand.swift */,
+				9D9A6F922386A72100BE6C7C /* LandCommand.swift */,
+				9D9A6F942386C45800BE6C7C /* MountControlCommand.swift */,
+				9D9A6F962386CA9500BE6C7C /* NavigateToWaypointCommand.swift */,
+				9D9A6F982386D3AC00BE6C7C /* ReturnToLaunchCommand.swift */,
+				9D9A6F9A2386D46200BE6C7C /* SetRoiCommand.swift */,
+				9D9A6F9C2386D7A100BE6C7C /* SetStillCaptureModeCommand.swift */,
+				9D9A6F9E2386E32F00BE6C7C /* SetViewModeCommand.swift */,
+				9D9A6FA02388278F00BE6C7C /* StartPhotoCaptureCommand.swift */,
+				9D9A6FA22388452300BE6C7C /* StartVideoCaptureCommand.swift */,
+				9D9A6FA4238845BF00BE6C7C /* StopPhotoCaptureCommand.swift */,
+				9D9A6FA62388464F00BE6C7C /* StopVideoCaptureCommand.swift */,
+				9D9A6FA8238846BB00BE6C7C /* TakeOffCommand.swift */,
+			);
+			path = Mavlink;
+			sourceTree = "<group>";
+		};
 		F8034F991D33D250003A3CFD /* Peripheral */ = {
 			isa = PBXGroup;
 			children = (
@@ -1837,6 +1941,7 @@
 			children = (
 				712A9F5F2204A3A800BD4DFC /* Stream */,
 				F89194FA1FC2E7DC002EE4C9 /* Facility */,
+				9D240731238D8D5A00233709 /* Mavlink */,
 				7C1C365C1DD32A0E004BB02B /* PilotingItf */,
 				F8034F9C1D33D57C003A3CFD /* Peripheral */,
 				7CADD7DA1CF8AA5E007BC6CC /* instrument */,
@@ -2705,6 +2810,8 @@
 				9B963313222E6AFA00474651 /* StreamServerCore.swift in Sources */,
 				716788C92201D8350052406E /* GlRenderSink.swift in Sources */,
 				F8C04CF11FB0A7120020ED18 /* BatteryInfoCore.swift in Sources */,
+				9D25739623845DB3009F2C17 /* ChangeSpeedCommand.swift in Sources */,
+				9D9A6F972386CA9500BE6C7C /* NavigateToWaypointCommand.swift in Sources */,
 				F8C04D5B1FB0A7120020ED18 /* NameRef.swift in Sources */,
 				9BBB950C21DDFBBD00CE4322 /* MainCameraCore.swift in Sources */,
 				F8F2B1AC20E4C98B00A1A802 /* CameraExposureLockCore.swift in Sources */,
@@ -2752,6 +2859,7 @@
 				F8F9CD071FB9A15600A0CC48 /* Facility.swift in Sources */,
 				0235EDD120779991006E7C9C /* SystemBarometer.swift in Sources */,
 				0243455C209A02FB008BBE2F /* FlightDataDownloader.swift in Sources */,
+				9D9A6F9F2386E32F00BE6C7C /* SetViewModeCommand.swift in Sources */,
 				F8C04CDF1FB0A7120020ED18 /* IntSettingCore.swift in Sources */,
 				9B042F892226C7AA003F63B0 /* FileSourceCore.swift in Sources */,
 				F8884B5D1FB33A2C00D1E7CC /* CameraPhotoStateCore.swift in Sources */,
@@ -2781,6 +2889,7 @@
 				F8C04D611FB0A7120020ED18 /* SystemInfo.swift in Sources */,
 				F8884B5E1FB33A2C00D1E7CC /* CameraRecordingStateCore.swift in Sources */,
 				F8369C8020A0A004008010AE /* BlacklistedVersionStoreCore.swift in Sources */,
+				9D9A6FA72388464F00BE6C7C /* StopVideoCaptureCommand.swift in Sources */,
 				F8884B5F1FB33A2C00D1E7CC /* CameraPhotoCore.swift in Sources */,
 				F8A21F4B1FCEBE31006E3D2E /* FirmwareEngine.swift in Sources */,
 				703B3C4F22CB676100EE440B /* OffSCreenStreamRender.swift in Sources */,
@@ -2791,6 +2900,7 @@
 				F8766ED91FC5D968007020CE /* CrashReporterCore.swift in Sources */,
 				F877E4EC20235AE7006B0929 /* CloudServerCore.swift in Sources */,
 				F8C04D1A1FB0A7120020ED18 /* WifiScannerCore.swift in Sources */,
+				9D9A6F932386A72100BE6C7C /* LandCommand.swift in Sources */,
 				F8369C8320A0A770008010AE /* BlacklistStoreEntry.swift in Sources */,
 				F8F2B19B20E38F4400A1A802 /* CameraExposureValuesCore.swift in Sources */,
 				F809C2181E82CFA3008B8153 /* FirmwareVersion.swift in Sources */,
@@ -2799,8 +2909,10 @@
 				02AFDFAE200682F70066D6CA /* UserLocationCore.swift in Sources */,
 				F8C7DBD11FC4890E00793D31 /* DeviceStoreUtilityCore.swift in Sources */,
 				7C32F1831FB3654400BFCF1D /* CameraAntiFlickering.swift in Sources */,
+				9D9A6F9D2386D7A100BE6C7C /* SetStillCaptureModeCommand.swift in Sources */,
 				02893A0C204FEE370025E127 /* PoiPilotingItfCore.swift in Sources */,
 				845A3DA12396C3D800EC3871 /* GutmaLogManager.swift in Sources */,
+				9D2573942382A4FA009F2C17 /* MavlinkCommand.swift in Sources */,
 				F8C04CFB1FB0A7120020ED18 /* AnimationCore.swift in Sources */,
 				F8C04D721FB0A7120020ED18 /* Updater.swift in Sources */,
 				7183DB3121A312F8005FCF42 /* CameraLive.swift in Sources */,
@@ -2850,6 +2962,7 @@
 				9B042F872226A049003F63B0 /* MediaSourceCore.swift in Sources */,
 				F8C04D201FB0A7120020ED18 /* VirtualGamepadCore.swift in Sources */,
 				0289AF13204850D600DED63B /* ReverseGeocoderEngine.swift in Sources */,
+				9D9A6FA32388452300BE6C7C /* StartVideoCaptureCommand.swift in Sources */,
 				F877E4E820235094006B0929 /* HttpSessionCore.swift in Sources */,
 				9B193ED22167991D00A8AA41 /* Vertical180PhotoPanoramaAnimation.swift in Sources */,
 				F8C04D081FB0A7120020ED18 /* DeviceStateHolderCore.swift in Sources */,
@@ -2863,6 +2976,7 @@
 				F8C04D2F1FB0A7120020ED18 /* ComponentRefCore.swift in Sources */,
 				7C32F1851FB3654400BFCF1D /* CameraMode.swift in Sources */,
 				9B40FACC215E2A9300CF6690 /* PreciseHome.swift in Sources */,
+				9D80172E237EFF6E007239E8 /* MavlinkFiles.swift in Sources */,
 				9B1914F3214278B9004D0601 /* GenericTwistUpAnimationCore.swift in Sources */,
 				7C3CAEE21E2F97CE001ACDDB /* GroundSdkConfig.swift in Sources */,
 				F8C04CEC1FB0A7120020ED18 /* SpeedometerCore.swift in Sources */,
@@ -2943,14 +3057,17 @@
 				9B1914F52142B38B004D0601 /* TwistUpAnimation.swift in Sources */,
 				7183DB2D21A312DA005FCF42 /* Stream.swift in Sources */,
 				F8A21F471FCEB91B006E3D2E /* FirmwareManager.swift in Sources */,
+				9D9A6FA9238846BB00BE6C7C /* TakeOffCommand.swift in Sources */,
 				71E16AE5217F48CE00CB8D17 /* CameraLiveCore.swift in Sources */,
 				0289AF15204948E700DED63B /* GroundSdkUserDefaults.swift in Sources */,
 				708D7D64213D42FC009DBD12 /* FlightLogReporterCore.swift in Sources */,
 				7060709822C9FBBB00006C80 /* Cockpit.swift in Sources */,
 				02108839209B19C200F013E4 /* FlightDataManager.swift in Sources */,
+				9D9A6F952386C45800BE6C7C /* MountControlCommand.swift in Sources */,
 				F8C04D2D1FB0A7120020ED18 /* Values.swift in Sources */,
 				F8A03118206AA4C600690465 /* FirmwareVersionHolderCore.swift in Sources */,
 				706070BD22CA162900006C80 /* GGLView.swift in Sources */,
+				9D9A6F912386A21100BE6C7C /* DelayCommand.swift in Sources */,
 				F8C04D7E1FB0A7740020ED18 /* StringSetting.swift in Sources */,
 				F8C04CFC1FB0A7120020ED18 /* CandleAnimationCore.swift in Sources */,
 				02155D7D2046F6740078B498 /* ReverseGeocoderCore.swift in Sources */,
@@ -2979,6 +3096,7 @@
 				712A9F4922034A6700BD4DFC /* FileReplayCore.swift in Sources */,
 				0285565320A6D6FF00A898BD /* UserAccountEngine.swift in Sources */,
 				F8ED8B0620441FB3005D9D57 /* CameraZoomCore.swift in Sources */,
+				9D9A6FA12388278F00BE6C7C /* StartPhotoCaptureCommand.swift in Sources */,
 				F8884B611FB33A2C00D1E7CC /* CameraWhiteBalanceSettingsCore.swift in Sources */,
 				7C32F17F1FB3654400BFCF1D /* CameraPhoto.swift in Sources */,
 				F8D993161FFF91890061579B /* MagnetometerWith3StepCalibrationCore.swift in Sources */,
@@ -2988,9 +3106,11 @@
 				68ED06682227EDC7007DAECE /* YuvSinkCore.swift in Sources */,
 				F8C04D4E1FB0A7120020ED18 /* ParabolaAnimation.swift in Sources */,
 				71D766112195CE0D00517136 /* StreamView.swift in Sources */,
+				9D9A6F8F238698FD00BE6C7C /* CreatePanoramaCommand.swift in Sources */,
 				F8C04D0D1FB0A7120020ED18 /* PeripheralCore.swift in Sources */,
 				0271AF1D207BA5D100EE56F1 /* LookAtPilotingItfCore.swift in Sources */,
 				F8C04D511FB0A7120020ED18 /* ActivablePilotingItf.swift in Sources */,
+				9D9A6F9B2386D46200BE6C7C /* SetRoiCommand.swift in Sources */,
 				F8C04D281FB0A7120020ED18 /* MediaItemCore.swift in Sources */,
 				71E16AE3217F415500CB8D17 /* MediaReplayRefCore.swift in Sources */,
 				F8C04D401FB0A7120020ED18 /* Speedometer.swift in Sources */,
@@ -3033,6 +3153,7 @@
 				F8C04D381FB0A7120020ED18 /* Altimeter.swift in Sources */,
 				02CE4462208DE5A1007B9F9F /* SkyCtrl3AxisEvent.swift in Sources */,
 				F8C04D2E1FB0A7120020ED18 /* ComponentStoreCore.swift in Sources */,
+				9D9A6FA5238845BF00BE6C7C /* StopPhotoCaptureCommand.swift in Sources */,
 				F8C04D241FB0A7120020ED18 /* MediaDeleterRefCore.swift in Sources */,
 				0289AF0F2047FAFB00DED63B /* ReverseGeocoderUtilityCore.swift in Sources */,
 				7060709922C9FBBB00006C80 /* GGLDistortionMesh.swift in Sources */,
@@ -3080,6 +3201,7 @@
 				0235EDD52077C46B006E7C9C /* BarometerMeasureMatcher.swift in Sources */,
 				02893A0E205003590025E127 /* PointOfInterestMatcher.swift in Sources */,
 				F8EC9F6B1EF90ED600DD89B3 /* WifiScannerTests.swift in Sources */,
+				9D213615238EB164005BB8B3 /* SetRoiCommandMatcher.swift in Sources */,
 				F8A3D0D1205177CE00AF0126 /* GimbalTests.swift in Sources */,
 				9BDDF1A3214687F5008252BA /* FlightLogEngineTests.swift in Sources */,
 				712A9F612204A3CE00BD4DFC /* FileReplayMatcher.swift in Sources */,
@@ -3106,7 +3228,9 @@
 				F84854691F8F940B0072649F /* AnimationPilotingItfTests.swift in Sources */,
 				F8123B56200D00CD0071672B /* RemovableUserStorageTests.swift in Sources */,
 				9B31E00021C9335B006F389E /* ThermalControlMatcher.swift in Sources */,
+				9D213611238E880D005BB8B3 /* DelayCommandMatcher.swift in Sources */,
 				F884688B1DEEE2F900ACE941 /* SystemInfoTests.swift in Sources */,
+				9D240730238D8D5400233709 /* NavigateToWaypointCommandMatcher.swift in Sources */,
 				7C6BD8771D475B7E005D415A /* BoolSettingMatcher.swift in Sources */,
 				0289AF172049570C00DED63B /* GroundSdkUserDefaultsTests.swift in Sources */,
 				7CEC1A5F1CD37EA2006911B9 /* ComponentStoreTests.swift in Sources */,
@@ -3115,12 +3239,14 @@
 				F8766ED31FC5B04D007020CE /* DeviceStoreUtilityCoreTests.swift in Sources */,
 				F8C1A2532121DF6400813353 /* FirmwareDownloaderTests.swift in Sources */,
 				F868F8BC1CAD65420045DBD1 /* DroneMatchers.swift in Sources */,
+				9D21361B238EB85A005BB8B3 /* CreatePanoramaCommandMatcher.swift in Sources */,
 				F887CC1120ADD8E800B7A3B3 /* ActivationEngineTests.swift in Sources */,
 				7C9EE7981CF8B05D0018160A /* ManualCopterPilotingItfTests.swift in Sources */,
 				B27C8B112132D9A100E05DB4 /* MockFirmwareDownloaderCoreTask.swift in Sources */,
 				F88C31EE1D05CEAA00A3A814 /* CompassTests.swift in Sources */,
 				B27C8B132132E2BE00E05DB4 /* FirmwareManagerEntryMatcher.swift in Sources */,
 				F8BEEEF91CA06BC90022E701 /* GroundSdkDroneListTests.swift in Sources */,
+				9D21361F238EBAEB005BB8B3 /* SetStillCaptureModeCommandMatcher.swift in Sources */,
 				9B73BDCA22170DB2008DA1F7 /* LedsTests.swift in Sources */,
 				7CA8BDB71ECC7B8100B79CCC /* RadioTests.swift in Sources */,
 				0237585A209C9EE90077F63C /* MockFlightDataEngine.swift in Sources */,
@@ -3174,6 +3300,8 @@
 				025FBA0120AC8D3C00D84597 /* BlackBoxEngineTests.swift in Sources */,
 				0285565920A7174900A898BD /* UserAccountUtilityCoreTests.swift in Sources */,
 				02FC4C7B20249C7C00D76490 /* FlightMeterTests.swift in Sources */,
+				9D213613238E8974005BB8B3 /* ChangeSpeedCommandMatcher.swift in Sources */,
+				9D21361D238EBA1A005BB8B3 /* SetViewModeCommandMatcher.swift in Sources */,
 				684DCB1722292EBD001DB681 /* MediaRegistryTests.swift in Sources */,
 				02C1D55C200E354D0057FA06 /* UserLocationGPSTests.swift in Sources */,
 				9B19150A214685E0004D0601 /* MockFlightLogEngine.swift in Sources */,
@@ -3185,6 +3313,7 @@
 				F8F2B1A120E3AD5B00A1A802 /* CameraExposureValuesTests.swift in Sources */,
 				702D4592230FD0F800FEAE56 /* PilotingControlMatcher.swift in Sources */,
 				7C06715D1DBE53DC00C90162 /* DroneFinderTests.swift in Sources */,
+				9D213619238EB45A005BB8B3 /* StartPhotoCaptureCommandMatcher.swift in Sources */,
 				7C2D2DE11DA54BEA00337779 /* RemoteControlTests.swift in Sources */,
 				F8369C8D20A1DB44008010AE /* MockGroundSdkUserDefaults.swift in Sources */,
 				F88C31E61D05BF9D00A3A814 /* GpsTests.swift in Sources */,
@@ -3214,6 +3343,7 @@
 				7C8788FA1DF7047F00D3775E /* LinkedListTests.swift in Sources */,
 				F8468C4D1FBDE3C800B534FD /* AutoConnectionTests.swift in Sources */,
 				F8F2AA1B1FCC28950023F796 /* CrashReportEngineTests.swift in Sources */,
+				9D24072E238D6D0700233709 /* MavlinkFilesTests.swift in Sources */,
 				F8D32CBB1EF0248400074795 /* BatteryInfoTests.swift in Sources */,
 				F8B240341FE3C0500092974F /* BlackBoxReporterTests.swift in Sources */,
 				7C76AAB71C8D759700FC213E /* Hamcrest.swift in Sources */,
@@ -3235,6 +3365,7 @@
 				F8FF144C1D2A5C1400A87DA6 /* CLLocationMatcher.swift in Sources */,
 				7CADD7DC1CF8AA7B007BC6CC /* FlyingIndicatorsMatcher.swift in Sources */,
 				7C33DDE81DF98931007510FB /* MediaStoreTests.swift in Sources */,
+				9D213617238EB2F4005BB8B3 /* MountControlCommandMatcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

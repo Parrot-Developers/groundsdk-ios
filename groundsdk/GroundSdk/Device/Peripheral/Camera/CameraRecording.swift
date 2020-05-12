@@ -113,6 +113,12 @@ public enum CameraRecordingFramerate: Int, CustomStringConvertible, Comparable {
     /// 9 fps - For thermal only, capture triggered by thermal sensor.
     @objc(GSCameraRecordingFramerate9)
     case fps9
+    /// 15 fps.
+    @objc(GSCameraRecordingFramerate15)
+    case fps15
+    /// 20 fps.
+    @objc(GSCameraRecordingFramerate20)
+    case fps20
     /// 23.97 fps.
     @objc(GSCameraRecordingFramerate24)
     case fps24
@@ -140,6 +146,15 @@ public enum CameraRecordingFramerate: Int, CustomStringConvertible, Comparable {
     /// 120 fps.
     @objc(GSCameraRecordingFramerate120)
     case fps120
+    /// 191.81 fps.
+    @objc(GSCameraRecordingFramerate192)
+    case fps192
+    /// 200 fps.
+    @objc(GSCameraRecordingFramerate200)
+    case fps200
+    /// 239.76 fps.
+    @objc(GSCameraRecordingFramerate240)
+    case fps240
 
     /// Comparator.
     public static func < (lhs: CameraRecordingFramerate, rhs: CameraRecordingFramerate) -> Bool {
@@ -150,6 +165,8 @@ public enum CameraRecordingFramerate: Int, CustomStringConvertible, Comparable {
     public var description: String {
         switch self {
         case .fps9:     return "9"
+        case .fps15:    return "15"
+        case .fps20:    return "20"
         case .fps24:    return "24"
         case .fps25:    return "25"
         case .fps30:    return "30"
@@ -159,12 +176,16 @@ public enum CameraRecordingFramerate: Int, CustomStringConvertible, Comparable {
         case .fps96:    return "96"
         case .fps100:   return "100"
         case .fps120:   return "120"
+        case .fps192:   return "192"
+        case .fps200:   return "200"
+        case .fps240:   return "240"
         }
     }
 
     /// Set containing all possible values.
     public static let allCases: Set<CameraRecordingFramerate> = [
-        .fps24, .fps25, .fps30, .fps48, .fps50, .fps60, .fps96, .fps100, .fps120, .fps9]
+        .fps9, .fps15, .fps20, .fps24, .fps25, .fps30, .fps48, .fps50, .fps60, .fps96, .fps100, .fps120, .fps192,
+        .fps200, .fps240]
 }
 
 /// Camera hyperlapse values for recording mode `hyperlapse`.

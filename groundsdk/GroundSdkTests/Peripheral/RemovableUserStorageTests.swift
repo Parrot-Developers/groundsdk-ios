@@ -344,6 +344,17 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(backend.formatName, nilValue())
         assertThat(res, `is`(false))
 
+        impl.update(state: .passwordNeeded).notifyUpdated()
+        assertThat(cnt, `is`(13))
+        res = storage.format(formattingType: .quick, newMediaName: "newName")
+        assertThat(backend.formatCnt, `is`(2))
+        assertThat(backend.formatName, nilValue())
+        assertThat(res, `is`(false))
+        res = storage.format(formattingType: .quick)
+        assertThat(backend.formatCnt, `is`(2))
+        assertThat(backend.formatName, nilValue())
+        assertThat(res, `is`(false))
+
     }
 
     func testSupportedFormattingTypes() {

@@ -243,7 +243,7 @@ public class MockGroundSdk: NSObject {
             camera.update(supportedExposureModes: [.automatic]).update(supportedManualShutterSpeeds: [.one])
                 .update(supportedManualIsoSensitivity: [.iso100]).update(supportedMaximumIsoSensitivity: [.iso3200])
                 .update(exposureMode: .automatic).update(manualShutterSpeed: .one).update(manualIsoSensitivity: .iso100)
-                .update(maximumIsoSensitivity: .iso3200)
+                .update(maximumIsoSensitivity: .iso3200).update(autoExposureMeteringMode: .standard)
             camera.update(supportedExposureCompensationValues: [.ev0_00]).update(exposureCompensationValue: .ev0_00)
             camera.update(supportedWhiteBalanceModes: [.automatic])
                 .update(supportedCustomWhiteBalanceTemperatures: [.k1500])
@@ -532,7 +532,8 @@ public class MockGroundSdk: NSObject {
         }
 
         func set(exposureMode: CameraExposureMode, manualShutterSpeed: CameraShutterSpeed,
-                 manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso) -> Bool {
+                 manualIsoSensitivity: CameraIso, maximumIsoSensitivity: CameraIso,
+                 autoExposureMeteringMode: CameraAutoExposureMeteringMode) -> Bool {
             return false
         }
 

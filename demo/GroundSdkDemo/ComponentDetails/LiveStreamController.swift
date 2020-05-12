@@ -41,6 +41,7 @@ class LiveStreamController: UITableViewController, DeviceViewController {
     @IBOutlet weak var manualShutterSpeed: UILabel!
     @IBOutlet weak var manualIso: UILabel!
     @IBOutlet weak var maximumIso: UILabel!
+    @IBOutlet weak var autoExposureMeteringMode: UILabel!
     @IBOutlet weak var evCompensation: UILabel!
     @IBOutlet weak var exposureLockMode: UILabel!
     @IBOutlet weak var whiteBalanceMode: UILabel!
@@ -143,6 +144,8 @@ class LiveStreamController: UITableViewController, DeviceViewController {
                     } else {
                         self.maximumIso.text = "Not Supported"
                     }
+
+                    self.autoExposureMeteringMode.text = camera.exposureSettings.autoExposureMeteringMode.description
 
                     // exposure compensation
                     self.tableView.enable(section: Section.exposureCompensation.rawValue,
@@ -399,6 +402,17 @@ class LiveStreamController: UITableViewController, DeviceViewController {
                         }
                     ))
 
+                case .autoExposureMeteringMode:
+                    target.initialize(data: ChooseEnumViewController.Data(
+                        dataSource: [CameraAutoExposureMeteringMode.standard,
+                                     CameraAutoExposureMeteringMode.centerTop].sorted(),
+                        selectedValue: camera.exposureSettings.autoExposureMeteringMode.description,
+                        itemDidSelect: { [unowned self] value in
+                            self.camera?.value?.exposureSettings.autoExposureMeteringMode =
+                                value as! CameraAutoExposureMeteringMode
+                        }
+                    ))
+
                 case .evCompensation:
                     target.initialize(data: ChooseEnumViewController.Data(
                         dataSource: [CameraEvCompensation](camera.exposureCompensationSetting.supportedValues).sorted(),
@@ -612,6 +626,7 @@ class LiveStreamController: UITableViewController, DeviceViewController {
         case manualShutterSpeed
         case manualIso
         case maximumIso
+        case autoExposureMeteringMode
         case evCompensation
         case whiteBalanceMode
         case whiteBalanceTemperature
@@ -664,6 +679,8 @@ class LiveStreamController: UITableViewController, DeviceViewController {
                 self = .enumValue(.manualIso)
             case "maximumIso":
                 self = .enumValue(.maximumIso)
+            case "autoExposureMeteringMode":
+                self = .enumValue(.autoExposureMeteringMode)
             case "evCompensation":
                 self = .enumValue(.evCompensation)
             case "exposureLockMode":
