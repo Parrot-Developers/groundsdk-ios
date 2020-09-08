@@ -32,10 +32,12 @@ import GroundSdk
 
 class RemovableUserStorageCell: PeripheralProviderContentCell {
 
-    @IBOutlet weak var state: UILabel!
+    @IBOutlet weak var fileSystemState: UILabel!
+    @IBOutlet weak var physicalState: UILabel!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var capacity: UILabel!
     @IBOutlet weak var availableSpace: UILabel!
+    @IBOutlet weak var isEncryptedLabel: UILabel!
     private var storage: Ref<RemovableUserStorage>?
 
     var viewController: UIViewController?
@@ -45,7 +47,8 @@ class RemovableUserStorageCell: PeripheralProviderContentCell {
         selectionStyle = .none
         storage = provider.getPeripheral(Peripherals.removableUserStorage) { [unowned self] storage in
             if let storage = storage {
-                self.state.text = storage.state.description
+                self.fileSystemState.text = storage.fileSystemState.description
+                self.physicalState.text = storage.physicalState.description
                 self.name.text = storage.mediaInfo?.name ?? "-"
                 if let capacity = storage.mediaInfo?.capacity {
                     self.capacity.text = ByteCountFormatter.string(fromByteCount: Int64(capacity), countStyle: .file)
@@ -58,6 +61,7 @@ class RemovableUserStorageCell: PeripheralProviderContentCell {
                 } else {
                     self.availableSpace.text = "-"
                 }
+                self.isEncryptedLabel.text = storage.isEncrypted ? "Encrypted" : "NOT encrypted"
                 self.show()
             } else {
                 self.hide()

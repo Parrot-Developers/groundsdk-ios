@@ -2184,10 +2184,10 @@ class CameraFeatureCameraTests: ArsdkEngineTestBase {
             mode: .single, format: .fullFrame, fileFormat: .jpeg, updating: true))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetRecordingMode(
-            camId: 0, mode: .hyperlapse, resolution: .resDci4k, framerate: .fps240, hyperlapse: .ratio15))
+            camId: 0, mode: .hyperlapse, resolution: .resUhd8k, framerate: .fps240, hyperlapse: .ratio15))
         camera!.recordingSettings.mode = .hyperlapse
         assertThat(camera!.recordingSettings, `is`(
-            mode: .hyperlapse, resolution: .resDci4k, framerate: .fps240, hyperlapse: .ratio15, updating: true))
+            mode: .hyperlapse, resolution: .resUhd8k, framerate: .fps240, hyperlapse: .ratio15, updating: true))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.cameraSetAutorecord(camId: 0, state: .inactive))
         camera!.autoRecordSetting?.value = false
@@ -2225,7 +2225,7 @@ class CameraFeatureCameraTests: ArsdkEngineTestBase {
         assertThat(camera!.photoSettings, `is`(
             mode: .single, format: .fullFrame, fileFormat: .jpeg, updating: false))
         assertThat(camera!.recordingSettings, `is`(
-            mode: .hyperlapse, resolution: .resDci4k, framerate: .fps240, hyperlapse: .ratio15, updating: false))
+            mode: .hyperlapse, resolution: .resUhd8k, framerate: .fps240, hyperlapse: .ratio15, updating: false))
         assertThat(camera!.autoRecordSetting, presentAnd(allOf(`is`(false), isUpToDate())))
         assertThat(camera!.zoom?.velocityQualityDegradationAllowance, presentAnd(allOf(`is`(true), isUpToDate())))
         assertThat(camera!.zoom?.maxSpeed, presentAnd(allOf(`is`(0.0, 6.0, 15.0), isUpToDate())))

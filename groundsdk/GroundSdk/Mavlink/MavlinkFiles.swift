@@ -70,16 +70,30 @@ public class MavlinkFiles {
     public static func parse(filepath: String) -> [MavlinkCommand] {
         var commands: [MavlinkCommand] = []
         do {
-            let content = try String(contentsOfFile: filepath, encoding: .utf8).components(separatedBy: .newlines)
-            if content[0].range(of: "QGC WPL \\d+", options: .regularExpression) != nil {
-                for line in content[1...] {
-                    if let command = MavlinkCommand.parse(line: line) {
-                        commands.append(command)
-                    }
-                }
-            }
+            let mavlinkString = try String(contentsOfFile: filepath, encoding: .utf8)
+            commands = self.parse(mavlinkString: mavlinkString)
         } catch {
             ULog.e(.mavlinkTag, "Could not parse MAVLink file: \(error)")
+        }
+        return commands
+    }
+
+    /// Parses a MAVLink string into a list of commands.
+    ///
+    /// Any malformed command is simply ignored. If the given string is not properly formatted, this method returns an
+    /// empty list.
+    ///
+    /// - Parameter mavlinkString: MAVLing string to convert
+    /// - Returns: the command list extracted from the string
+    public static func parse(mavlinkString: String) -> [MavlinkCommand] {
+        var commands: [MavlinkCommand] = []
+        let content = mavlinkString.components(separatedBy: .newlines)
+        if content[0].range(of: "QGC WPL \\d+", options: .regularExpression) != nil {
+            for line in content[1...] {
+                if let command = MavlinkCommand.parse(line: line) {
+                    commands.append(command)
+                }
+            }
         }
         return commands
     }

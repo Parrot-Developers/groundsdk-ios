@@ -1396,6 +1396,8 @@ extension CameraRecordingResolution: ArsdkMappableEnum {
     }
 
     static let arsdkMapper = Mapper<CameraRecordingResolution, ArsdkFeatureCameraResolution>([
+        .resUhd8k: .resUhd8k,
+        .res5k: .res5k,
         .resDci4k: .resDci4k,
         .resUhd4k: .resUhd4k,
         .res1080p: .res1080p,
@@ -1424,7 +1426,9 @@ extension CameraRecordingFramerate: ArsdkMappableEnum {
     }
 
     static let arsdkMapper = Mapper<CameraRecordingFramerate, ArsdkFeatureCameraFramerate>([
+        .fps8_6: .fps8_6,
         .fps9: .fps9,
+        .fps10: .fps10,
         .fps15: .fps15,
         .fps20: .fps20,
         .fps24: .fps24,

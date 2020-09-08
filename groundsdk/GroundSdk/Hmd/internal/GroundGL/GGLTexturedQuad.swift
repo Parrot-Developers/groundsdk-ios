@@ -183,7 +183,7 @@ class GGLTexturedQuad: GGLDrawable {
             if let cgiImage = cgiImage {
                 textureInfo = try? GLKTextureLoader.texture(with: cgiImage)
                 if let textureInfo = textureInfo {
-                    print ("Quad Add texture \(textureInfo)")
+                    print("Quad Add texture \(textureInfo)")
                     effect.texture2d0.name = textureInfo.name
                     effect.texture2d0.enabled = GLboolean(UInt8(GL_TRUE))
                 }

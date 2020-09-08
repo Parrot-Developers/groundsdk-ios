@@ -17,3 +17,6 @@ disabled_rules:
   - fallthrough
   - nesting
   - redundant_string_enum_value
+
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Pods

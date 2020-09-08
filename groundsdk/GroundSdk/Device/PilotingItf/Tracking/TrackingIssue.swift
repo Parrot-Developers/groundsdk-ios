@@ -51,6 +51,12 @@ public enum TrackingIssue: Int, CustomStringConvertible {
     case targetBarometerInfoInaccurate
     /// External target detection information is missing.
     case targetDetectionInfoMissing
+    /// Drone is too far from target.
+    case droneTooFarFromTarget
+    /// Target horizontal speed is too high.
+    case targetHorizontalSpeedKO
+    /// Target vertical speed is too high.
+    case targetVerticalSpeedKO
 
     /// Debug description.
     public var description: String {
@@ -63,6 +69,9 @@ public enum TrackingIssue: Int, CustomStringConvertible {
         case .targetGpsInfoInaccurate:          return "targetGpsInfoInaccurate"
         case .targetBarometerInfoInaccurate:    return "targetBarometerInfoInaccurate"
         case .targetDetectionInfoMissing:       return "targetDetectionInfoMissing"
+        case .droneTooFarFromTarget:            return "droneTooFarFromTarget"
+        case .targetHorizontalSpeedKO:          return "targetHorizontalSpeedKO"
+        case .targetVerticalSpeedKO:            return "targetVerticalSpeedKO"
         }
     }
 }

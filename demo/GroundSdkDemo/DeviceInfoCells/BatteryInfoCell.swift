@@ -35,6 +35,8 @@ class BatteryInfoCell: InstrumentProviderContentCell {
     @IBOutlet weak var batteryLevelLabel: UILabel!
     @IBOutlet weak var isChargingLabel: UILabel!
     @IBOutlet weak var batteryHealthLabel: UILabel!
+    @IBOutlet weak var cycleCountLabel: UILabel!
+    @IBOutlet weak var serialLabel: UILabel!
     private var batteryInfo: Ref<BatteryInfo>?
 
     override func set(instrumentProvider provider: InstrumentProvider) {
@@ -48,6 +50,16 @@ class BatteryInfoCell: InstrumentProviderContentCell {
                     self.batteryHealthLabel.text = "\(batteryHealth)%"
                 } else {
                     self.batteryHealthLabel.text = "-"
+                }
+                if let cycleCount = batteryInfo.cycleCount {
+                    self.cycleCountLabel.text = "\(cycleCount)"
+                } else {
+                    self.cycleCountLabel.text = "-"
+                }
+                if let serial = batteryInfo.serial {
+                    self.serialLabel.text = "\(serial)"
+                } else {
+                    self.serialLabel.text = "-"
                 }
                 self.show()
             } else {

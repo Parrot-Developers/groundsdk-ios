@@ -79,4 +79,12 @@ extension CommonBatteryInfo: ArsdkFeatureBatteryCallback {
     func onHealth(stateOfHealth: UInt) {
         batteryInfo.update(batteryHealth: Int(stateOfHealth)).notifyUpdated()
     }
+
+    func onCycleCount(count: UInt) {
+        batteryInfo.update(cycleCount: Int(count)).notifyUpdated()
+    }
+
+    func onSerial(serial: String!) {
+        batteryInfo.update(serial: serial).notifyUpdated()
+    }
 }

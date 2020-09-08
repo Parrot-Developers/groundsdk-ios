@@ -50,31 +50,46 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
     /// Preset store for this piloting interface
     private var presetStore: SettingsStore?
 
+    /// if preferred target has been received.
+    public var preferredTargetReceived = false
+
     /// All settings that can be stored
     enum SettingKey: String, StoreKey {
+        case autoTriggerModeKey = "autoTriggerMode"
         case preferredTargetKey = "preferredTarget"
         case minAltitudeKey = "minAltitude"
+        case endingHoveringAltitudeKey = "endingHoveringAltitude"
         case autoStartOnDisconnectDelayKey = "autoStartOnDisconnectDelay"
+        case endingBehaviorKey = "wantedEndingBehavior"
     }
 
     enum Setting: Hashable {
+        case autoTriggerMode(Bool)
         case preferredTarget(ReturnHomeTarget)
         case minAltitude(Double, Double, Double)
+        case endingHoveringAltitude(Double, Double, Double)
         case autoStartOnDisconnectDelay(Int)
+        case endingBehavior(ReturnHomeEndingBehavior)
 
         /// Setting storage key
         var key: SettingKey {
             switch self {
+            case .autoTriggerMode: return .autoTriggerModeKey
             case .preferredTarget: return .preferredTargetKey
             case .minAltitude: return .minAltitudeKey
+            case .endingHoveringAltitude: return .endingHoveringAltitudeKey
             case .autoStartOnDisconnectDelay: return .autoStartOnDisconnectDelayKey
+            case .endingBehavior: return .endingBehaviorKey
             }
         }
         /// All values to allow enumerating settings
         static let allCases: [Setting] = [
+            .autoTriggerMode(false),
             .preferredTarget(ReturnHomeTarget.takeOffPosition),
             .minAltitude(0, 0, 0),
-            .autoStartOnDisconnectDelay(0)
+            .endingHoveringAltitude(0, 0, 0),
+            .autoStartOnDisconnectDelay(0),
+            .endingBehavior(ReturnHomeEndingBehavior.landing)
             ]
 
         func hash(into hasher: inout Hasher) {
@@ -140,6 +155,20 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
         sendCancelAutoTrigger()
     }
 
+    /// Set a custom location to the drone.
+    /// This location will be used by the drone for the rth
+    ///
+    /// If this method is called while the preferredTarget is not set to `customPosition`,
+    /// it will do nothing
+    ///
+    /// - Parameters:
+    ///   - latitude: latitude of the location (in degrees) to reach
+    ///   - longitude: longitude of the location (in degrees) to reach
+    ///   - altitude: altitude above sea level (in meters) to reach
+    func setCustomLocation(latitude: Double, longitude: Double, altitude: Double) {
+        sendCustomLocationCommand(latitude: latitude, longitude: longitude, altitude: altitude)
+    }
+
     /// Send preferred return home target setting
     ///
     /// - Parameter preferredTarget: new preferred target
@@ -155,6 +184,21 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
         }
     }
 
+    /// Send wanted ending behavior
+    ///
+    /// - Parameter endingBehavior: new wanted ending behavior
+    /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
+    func set(endingBehavior: ReturnHomeEndingBehavior) -> Bool {
+        presetStore?.write(key: SettingKey.endingBehaviorKey, value: endingBehavior).commit()
+        if connected {
+            sendWantedEndingBehaviorCommand(endingBehavior)
+            return true
+        } else {
+            returnHomePilotingItf.update(endingBehavior: endingBehavior).notifyUpdated()
+            return false
+        }
+    }
+
     /// Send return home minimum altitude command
     ///
     /// - Parameter minAltitude: new minimum altitude
@@ -166,6 +210,21 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
             return true
         } else {
             returnHomePilotingItf.update(minAltitude: (nil, minAltitude, nil)).notifyUpdated()
+            return false
+        }
+    }
+
+    /// Send return home ending hovering altitude command
+    ///
+    /// - Parameter endingHoveringAltitude: new ending hovering altitude
+    /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
+    func set(endingHoveringAltitude: Double) -> Bool {
+        presetStore?.write(key: SettingKey.endingHoveringAltitudeKey, value: endingHoveringAltitude).commit()
+        if connected {
+            sendEndingHoveringAltitudeCommand(endingHoveringAltitude)
+            return true
+        } else {
+            returnHomePilotingItf.update(endingHoveringAltitude: (nil, endingHoveringAltitude, nil)).notifyUpdated()
             return false
         }
     }
@@ -188,18 +247,56 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
         }
     }
 
+    /// Set auto trigger mode.
+    ///
+    /// - Parameter autoTriggerMode: the new mode indicating if the drone will auto trigger rth
+    /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
+    func set(autoTriggerMode: Bool) -> Bool {
+        presetStore?.write(key: SettingKey.autoTriggerModeKey, value: autoTriggerMode).commit()
+        if connected {
+            sendAutoTriggerModeCommand(active: autoTriggerMode)
+            return true
+        } else {
+            returnHomePilotingItf.update(autoTriggerMode: autoTriggerMode).notifyUpdated()
+            return false
+        }
+    }
+
     /// Cancels any current auto trigger.
     func sendCancelAutoTrigger() { }
 
-    /// Send set preferred target command
+    /// Send the custom location
+    ///
+    /// - Parameters:
+    ///   - latitude: latitude of the location (in degrees) to reach
+    ///   - longitude: longitude of the location (in degrees) to reach
+    ///   - altitude: altitude above sea level (in meters) to reach
+    func sendCustomLocationCommand(latitude: Double, longitude: Double, altitude: Double) { }
+
+    /// Send preferred target command
     ///
     /// - Parameter preferredTarget: new preferred target
     func sendPreferredTargetCommand(_ preferredTarget: ReturnHomeTarget) { }
 
-    /// Send set min altitude command
+    /// Send the command to activate/deactivate auto trigger return home
+    ///
+    /// - Parameter active: true to activate auto trigger return home, false to deactivate it
+    func sendAutoTriggerModeCommand(active: Bool) { }
+
+    /// Send wanted ending behavior command
+    ///
+    /// - Parameter wantedBehavior: new wanted behavior
+    func sendWantedEndingBehaviorCommand(_ wantedBehavior: ReturnHomeEndingBehavior) { }
+
+    /// Send the min altitude command
     ///
     /// - Parameter minAltitude: new min altitude
     func sendMinAltitudeCommand(_ minAltitude: Double) { }
+
+    /// Send the ending hovering altitude command
+    ///
+    /// - Parameter endingHoveringAltitude: new ending hovering altitude
+    func sendEndingHoveringAltitudeCommand(_ endingHoveringAltitude: Double) { }
 
     /// Send return home delay command
     ///
@@ -228,12 +325,18 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
     /// Drone is about to be connect
     override func willConnect() {
         super.willConnect()
+        preferredTargetReceived = false
         // remove settings stored while connecting. We will get new one on the next connection.
         droneSettings.removeAll()
     }
 
     /// Drone is connected
     override func didConnect() {
+        // We do not received Preferred home type when the drone first boot. So we need to apply
+        // user setting.
+        if !preferredTargetReceived {
+            droneSettings.insert(.preferredTarget(.none))
+        }
         storeNewPresets()
         applyPresets()
         super.didConnect()
@@ -246,7 +349,8 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
         // clear all non saved settings
         returnHomePilotingItf.cancelSettingsRollback()
             .update(homeLocation: nil)
-            .update(currentTarget: .takeOffPosition, gpsFixedOnTakeOff: false)
+            .update(currentTarget: .takeOffPosition)
+            .update(gpsFixedOnTakeOff: false)
         // unpublish if offline settings are disabled
         if GroundSdkConfig.sharedInstance.offlineSettings == .off {
             pilotingItf.unpublish()
@@ -274,15 +378,24 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
         droneSettings.insert(setting)
         if connected {
             switch setting {
+            case let .autoTriggerMode(value):
+                returnHomePilotingItf.update(autoTriggerMode: value)
+                deviceStore?.writeSupportedFlag(key: setting.key)
             case let .preferredTarget(value):
                 returnHomePilotingItf.update(preferredTarget: value)
                 deviceStore?.writeSupportedFlag(key: setting.key)
             case let .minAltitude(min, value, max):
                 returnHomePilotingItf.update(minAltitude: (min, value, max))
                 deviceStore?.writeRange(key: setting.key, min: min, max: max)
+            case let .endingHoveringAltitude(min, value, max):
+                returnHomePilotingItf.update(endingHoveringAltitude: (min, value, max))
+                deviceStore?.writeRange(key: setting.key, min: min, max: max)
             case let .autoStartOnDisconnectDelay(value):
                 returnHomePilotingItf.update(autoStartOnDisconnectDelay:
                     (autoStartOnDisconnectDelayMin, value, autoStartOnDisconnectDelayMax))
+                deviceStore?.writeSupportedFlag(key: setting.key)
+            case let .endingBehavior(value):
+                returnHomePilotingItf.update(endingBehavior: value)
                 deviceStore?.writeSupportedFlag(key: setting.key)
             }
             pilotingItf.notifyUpdated()
@@ -294,6 +407,13 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
     private func loadPresets() {
         for setting in Setting.allCases {
             switch setting {
+            case .autoTriggerMode:
+                if let deviceStore = deviceStore, let presetStore = presetStore,
+                    deviceStore.readSupportedFlag(key: setting.key) {
+                    if let value: Bool = presetStore.read(key: setting.key) {
+                        returnHomePilotingItf.update(autoTriggerMode: value)
+                    }
+                }
             case .preferredTarget:
                 if let deviceStore = deviceStore, let presetStore = presetStore,
                     deviceStore.readSupportedFlag(key: setting.key) {
@@ -307,12 +427,25 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
                     let range: (min: Double, max: Double) = deviceStore.readRange(key: setting.key) {
                     returnHomePilotingItf.update(minAltitude: (range.min, value, range.max))
                 }
+            case .endingHoveringAltitude:
+                if let deviceStore = deviceStore, let presetStore = presetStore,
+                    let value: Double = presetStore.read(key: setting.key),
+                    let range: (min: Double, max: Double) = deviceStore.readRange(key: setting.key) {
+                    returnHomePilotingItf.update(endingHoveringAltitude: (range.min, value, range.max))
+                }
             case .autoStartOnDisconnectDelay:
                 if let deviceStore = deviceStore, let presetStore = presetStore,
                     deviceStore.readSupportedFlag(key: setting.key) {
                     if let value: Int = presetStore.read(key: setting.key) {
                         returnHomePilotingItf.update(autoStartOnDisconnectDelay:
                             (autoStartOnDisconnectDelayMin, value, autoStartOnDisconnectDelayMax))
+                    }
+                }
+            case .endingBehavior:
+                if let deviceStore = deviceStore, let presetStore = presetStore,
+                    deviceStore.readSupportedFlag(key: setting.key) {
+                    if let value: ReturnHomeEndingBehavior = presetStore.read(key: setting.key) {
+                        returnHomePilotingItf.update(endingBehavior: value)
                     }
                 }
             }
@@ -326,11 +459,17 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
         if let deviceStore = deviceStore {
             for setting in droneSettings {
                 switch setting {
+                case .autoTriggerMode:
+                    deviceStore.writeSupportedFlag(key: setting.key)
                 case .preferredTarget:
                     deviceStore.writeSupportedFlag(key: setting.key)
                 case let .minAltitude(min, _, max):
                     deviceStore.writeRange(key: setting.key, min: min, max: max)
+                case let .endingHoveringAltitude(min, _, max):
+                    deviceStore.writeRange(key: setting.key, min: min, max: max)
                 case .autoStartOnDisconnectDelay:
+                    deviceStore.writeSupportedFlag(key: setting.key)
+                case .endingBehavior:
                     deviceStore.writeSupportedFlag(key: setting.key)
                 }
             }
@@ -345,6 +484,15 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
         // iterate settings received during the connection
         for setting in droneSettings {
             switch setting {
+            case let .autoTriggerMode(value):
+                if let preset: Bool = presetStore?.read(key: setting.key) {
+                    if preset != value {
+                        _ = sendAutoTriggerModeCommand(active: preset)
+                    }
+                    returnHomePilotingItf.update(autoTriggerMode: preset)
+                } else {
+                    returnHomePilotingItf.update(autoTriggerMode: value)
+                }
             case let .preferredTarget(value):
                 if let preset: ReturnHomeTarget = presetStore?.read(key: setting.key) {
                     if preset != value {
@@ -363,6 +511,15 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
                 } else {
                     returnHomePilotingItf.update(minAltitude: (min: min, value: value, max: max))
                 }
+            case let .endingHoveringAltitude(min, value, max):
+                if let preset: Double = presetStore?.read(key: setting.key) {
+                    if preset != value {
+                        sendMinAltitudeCommand(preset)
+                    }
+                    returnHomePilotingItf.update(endingHoveringAltitude: (min: min, value: preset, max: max))
+                } else {
+                    returnHomePilotingItf.update(endingHoveringAltitude: (min: min, value: value, max: max))
+                }
             case let .autoStartOnDisconnectDelay(value):
                 if let preset: Int = presetStore?.read(key: setting.key) {
                     if preset != value {
@@ -373,6 +530,15 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
                 } else {
                     returnHomePilotingItf.update(autoStartOnDisconnectDelay:
                         (autoStartOnDisconnectDelayMin, value, autoStartOnDisconnectDelayMax))
+                }
+            case let .endingBehavior(value):
+                if let preset: ReturnHomeEndingBehavior = presetStore?.read(key: setting.key) {
+                    if preset != value {
+                        sendWantedEndingBehaviorCommand(preset)
+                    }
+                    returnHomePilotingItf.update(endingBehavior: preset)
+                } else {
+                    returnHomePilotingItf.update(endingBehavior: value)
                 }
             }
         }
@@ -394,5 +560,13 @@ extension ReturnHomeTarget: StorableEnum {
     static let storableMapper = Mapper<ReturnHomeTarget, String>([
         .takeOffPosition: "takeOff",
         .controllerPosition: "controller",
-        .trackedTargetPosition: "trackedTargetPosition"])
+        .trackedTargetPosition: "trackedTargetPosition",
+        .customPosition: "customPosition",
+        .none: "none"])
+}
+
+extension ReturnHomeEndingBehavior: StorableEnum {
+    static let storableMapper = Mapper<ReturnHomeEndingBehavior, String>([
+        .landing: "landing",
+        .hovering: "hovering"])
 }

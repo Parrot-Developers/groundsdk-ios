@@ -114,13 +114,13 @@ class ThermalControllerTests: ArsdkEngineTestBase {
     func testMode() {
         connect(drone: drone, handle: 1) {
             self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.thermalCapabilitiesEncoder(
-                modesBitField: Bitfield<ArsdkFeatureThermalMode>.of(.standard, .disabled)))
+                modesBitField: Bitfield<ArsdkFeatureThermalMode>.of(.standard, .disabled, .blended)))
         }
         assertThat(thermalControl, `is`(present()))
         assertThat(changeCnt, `is`(1))
 
         // initial values
-        assertThat(thermalControl!.setting, supports(modes: [.standard, .disabled]))
+        assertThat(thermalControl!.setting, supports(modes: [.standard, .disabled, .blended]))
         assertThat(thermalControl!.setting, `is`(mode: .disabled, updating: false))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.thermalSetMode(mode: .standard))
@@ -141,27 +141,30 @@ class ThermalControllerTests: ArsdkEngineTestBase {
         assertThat(changeCnt, `is`(5))
         assertThat(thermalControl!.setting, `is`(mode: .disabled, updating: false))
 
-        expectCommand(handle: 1, expectedCmd: ExpectedCmd.thermalSetMode(mode: .standard))
-        thermalControl!.setting.mode = .standard
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.thermalSetMode(mode: .blended))
+        thermalControl!.setting.mode = .blended
         assertThat(changeCnt, `is`(6))
+        assertThat(thermalControl!.setting, `is`(mode: .blended, updating: true))
 
-        assertThat(thermalControl!.setting, `is`(mode: .standard, updating: true))
+        self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.thermalModeEncoder(mode: .blended))
+        assertThat(changeCnt, `is`(7))
+        assertThat(thermalControl!.setting, `is`(mode: .blended, updating: false))
 
         disconnect(drone: drone, handle: 1)
 
         // setting should be updated to user value and other values are reset
         assertThat(thermalControl!.setting, `is`(mode: .disabled, updating: false))
-        assertThat(changeCnt, `is`(7))
+        assertThat(changeCnt, `is`(8))
 
         resetArsdkEngine()
-        assertThat(thermalControl!.setting, `is`(mode: .standard, updating: false))
+        assertThat(thermalControl!.setting, `is`(mode: .blended, updating: false))
 
         // apply mode on connection
         connect(drone: drone, handle: 1) {
             self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.thermalCapabilitiesEncoder(
                 modesBitField: Bitfield<ArsdkFeatureThermalMode>.of(.standard, .disabled)))
             self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.thermalModeEncoder(mode: .disabled))
-            self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.thermalSetMode(mode: .standard))
+            self.expectCommand(handle: 1, expectedCmd: ExpectedCmd.thermalSetMode(mode: .blended))
         }
 
         self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.thermalModeEncoder(mode: .standard))

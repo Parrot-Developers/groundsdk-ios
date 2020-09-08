@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iKH-oJ-KpC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iKH-oJ-KpC">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="e5t-wZ-cgl">
-                                <rect key="frame" x="16" y="52" width="343" height="175"/>
+                                <rect key="frame" x="16" y="52" width="343" height="286"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VDU-4a-Tnh" userLabel="minAltitude" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="64"/>
@@ -57,6 +57,28 @@
                                             <action selector="preferredTargetDidChange:" destination="Yee-S6-zI2" eventType="valueChanged" id="iYc-Uy-QjC"/>
                                         </connections>
                                     </segmentedControl>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QVL-LR-u2F" userLabel="minAltitude" customClass="NumSettingView" customModule="GroundSdkDemo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="183" width="343" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="UhG-xo-QEp"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="label" value="Ending Hovering Altitude"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="endingHoveringAltitudeDidChange:" destination="Yee-S6-zI2" eventType="valueChanged" id="Db4-Vg-U4F"/>
+                                        </connections>
+                                    </view>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="5Xo-TK-ad8">
+                                        <rect key="frame" x="0.0" y="255" width="343" height="32"/>
+                                        <segments>
+                                            <segment title="Landing"/>
+                                            <segment title="Hovering"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="endingBehaviorDidChange:" destination="Yee-S6-zI2" eventType="valueChanged" id="NR8-e2-KPP"/>
+                                        </connections>
+                                    </segmentedControl>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -71,6 +93,8 @@
                     <splitViewDetailSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="autoStartDisconnectDelay" destination="U6q-Az-UeP" id="zxs-ta-0rD"/>
+                        <outlet property="endingBehavior" destination="5Xo-TK-ad8" id="o2m-tM-EPu"/>
+                        <outlet property="endingHoveringAltitude" destination="QVL-LR-u2F" id="YpS-jq-WeP"/>
                         <outlet property="minAltitude" destination="VDU-4a-Tnh" id="mYz-lH-AYt"/>
                         <outlet property="preferredTarget" destination="dMD-xV-V2H" id="uTo-4w-qd2"/>
                         <segue destination="ozF-wx-7a2" kind="unwind" identifier="exit" unwindAction="showDefaultDetailWithUnwindSegue:" id="CeJ-TG-iVu"/>

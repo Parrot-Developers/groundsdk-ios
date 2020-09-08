@@ -67,6 +67,22 @@ public enum FormattingStep: Int, Codable {
     }
 }
 
+/// Password usage when transmitting password to unlock file system
+public enum PasswordUsage: Int, Codable {
+    /// Send password for record requirement.
+    case record
+    /// Send password for usb mass storage requirement
+    case usb
+
+    /// Debug description.
+    public var description: String {
+        switch self {
+        case .record: return "record"
+        case .usb: return "usb"
+        }
+    }
+}
+
 /// Progress state of the formatting process.
 @objcMembers
 @objc(GSFormattingState)
@@ -85,9 +101,10 @@ public class FormattingState: NSObject {
     }
 }
 
-/// State of the removable storage.
-@objc(GSRemovableUserStorageState)
-public enum RemovableUserStorageState: Int, CustomStringConvertible {
+/// Physical state of the user storage.
+@objc(GSUserStoragePhysicalState)
+public enum UserStoragePhysicalState: Int, CustomStringConvertible {
+
     /// No media detected.
     case noMedia
 
@@ -97,9 +114,27 @@ public enum RemovableUserStorageState: Int, CustomStringConvertible {
     /// Media rejected because it is too slow for operation.
     case mediaTooSlow
 
+    /// Media is available
+    case available
+
     /// Media cannot be mounted since the drone acts as a USB mass-storage device.
     case usbMassStorage
 
+    /// Debug description.
+    public var description: String {
+        switch self {
+        case .noMedia:              return "noMedia"
+        case .mediaTooSmall:        return "mediaTooSmall"
+        case .mediaTooSlow:         return "mediaTooSlow"
+        case .available:            return "available"
+        case .usbMassStorage:       return "usbMassStorage"
+        }
+    }
+}
+
+/// File system state of the user storage.
+@objc(GSUserStorageFileSystemState)
+public enum UserStorageFileSystemState: Int, CustomStringConvertible {
     /// Media is being mounted.
     case mounting
 
@@ -133,19 +168,31 @@ public enum RemovableUserStorageState: Int, CustomStringConvertible {
     /// `.needFormat` or `.ready` immediately after formatting result is notified.
     case formattingDenied
 
+    /// The transmitted password for decryption is wrong
+    case decryptionWrongPassword
+
+    /// The usage specified with the password does not match with the current
+    /// drone context (RECORD or MASS STORAGE (USB))
+    case decryptionWrongUsage
+
+    /// The transmitted password is correct
+    case decryptionSucceeded
+
     /// An error occurred, media cannot be used.
     case error
 
     /// The media file system needs a password for decryption.
     case passwordNeeded
 
+    /// Media is being checked.
+    case checking
+
+    /// The media file system is not managed by the drone itself but accessible by external means.
+    case externalAccessOk
+
     /// Debug description.
     public var description: String {
         switch self {
-        case .noMedia:              return "noMedia"
-        case .mediaTooSmall:        return "mediaTooSmall"
-        case .mediaTooSlow:         return "mediaTooSlow"
-        case .usbMassStorage:       return "usbMassStorage"
         case .mounting:             return "mounting"
         case .needFormat:           return "needFormat"
         case .formatting:           return "formatting"
@@ -155,6 +202,11 @@ public enum RemovableUserStorageState: Int, CustomStringConvertible {
         case .formattingDenied:     return "formattingDenied"
         case .error:                return "error"
         case .passwordNeeded:       return "passwordNeeded"
+        case .decryptionWrongPassword:  return "decryptionWrongPassword"
+        case .decryptionWrongUsage:     return "decryptionWrongUsage"
+        case .decryptionSucceeded:      return "decryptionSucceeded"
+        case .checking:                 return "checking"
+        case .externalAccessOk:         return "externalAccessOk"
         }
     }
 }
@@ -177,8 +229,11 @@ public protocol RemovableUserStorageMediaInfo: class {
 /// ```
 public protocol RemovableUserStorage: Peripheral {
 
-    /// Current state of removable user storage.
-    var state: RemovableUserStorageState { get }
+    /// Current physical state of user storage.
+    var physicalState: UserStoragePhysicalState { get }
+
+    /// Current file system state of user storage.
+    var fileSystemState: UserStorageFileSystemState { get }
 
     /// Information about the current media.
     ///
@@ -194,6 +249,13 @@ public protocol RemovableUserStorage: Peripheral {
 
     /// Supported formatting types.
     var supportedFormattingTypes: Set<FormattingType> { get }
+
+    /// Tells whether a sd card encryption is supported.
+    /// 'true' if the media can be encrypted, otherwise 'false'
+    var isEncryptionSupported: Bool { get }
+
+    /// Tells whether the card is encrypted
+    var isEncrypted: Bool { get }
 
     /// Formatting state.
     var formattingState: FormattingState? { get }
@@ -227,6 +289,50 @@ public protocol RemovableUserStorage: Peripheral {
     /// - Parameter formattingType: type of formatting for the current media
     /// - Returns: `true` if the format has been asked, `false` otherwise
     func format(formattingType: FormattingType) -> Bool
+
+    /// sdcard uuid.
+    var uuid: String? { get }
+
+    /// Requests a format with encryption of the media. The formatted media will get a default name.
+    ///
+    /// Should be called only when `canFormat` is `true`.
+    /// - Note: If you want to set a name, use `formatWithEncryption(password:formattingType:newMediaName:)`.
+    ///
+    /// When formatting starts, the current state becomes `.formatting`.
+    ///
+    /// The formatting result is indicated with the transient state `.formattingSucceeded`,
+    /// `.formattingFailed`, or `.formattingDenied`.
+    ///
+    /// - Parameters:
+    ///     - password: password used for encryption
+    ///     - formattingType: type of formatting
+    /// - Returns: `true` if the format has been asked, `false` otherwise
+    func formatWithEncryption(password: String, formattingType: FormattingType) -> Bool
+
+    /// Requests a format with encryption of the media. The formatted media will get a default name.
+    ///
+    /// Should be called only when `canFormat` is `true`.
+    ///
+    /// When formatting starts, the current state becomes `.formatting`.
+    ///
+    /// The formatting result is indicated with the transient state `.formattingSucceeded`,
+    /// `.formattingFailed`, or `.formattingDenied`.
+    ///
+    /// - Parameters:
+    ///     - password: password used for encryption
+    ///     - formattingType: type of formatting
+    ///     - newMediaName: the new name that should be given to the media. If you pass an empty string, the
+    ///                           a default name will be assigned.
+    /// - Returns: `true` if the format has been asked, `false` otherwise
+    func formatWithEncryption(password: String, formattingType: FormattingType, newMediaName: String) -> Bool
+
+    /// Sends the password to the drone to access an encypted sd card.
+    ///
+    /// - Parameters:
+    ///     - password: password used to access encrypted card
+    ///     - usage: password usage
+    /// - Returns: `true` if the password has been sent, `false` otherwise
+    func sendPassword(password: String, usage: PasswordUsage) -> Bool
 }
 
 /// :nodoc:
@@ -243,8 +349,11 @@ public class RemovableUserStorageDesc: NSObject, PeripheralClassDesc {
 /// Removable user storage.
 /// - Note: This protocol is for Objective-C compatibility only.
 @objc public protocol GSRemovableUserStorage {
-    /// Current state of removable user storage.
-    var state: RemovableUserStorageState { get }
+    /// Current physical state of user storage.
+    var physicalState: UserStoragePhysicalState { get }
+
+    /// Current file system state of user storage.
+    var fileSystemState: UserStorageFileSystemState { get }
 
     /// Information about the current media.
     ///

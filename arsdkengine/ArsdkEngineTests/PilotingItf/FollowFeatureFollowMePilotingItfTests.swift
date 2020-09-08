@@ -185,6 +185,27 @@ class FollowFeatureFollowMePilotingItfTests: ArsdkEngineTestBase {
         assertThat(followMePilotingItf!.availabilityIssues, `is`(issuesSetImage))
         assertThat(followMePilotingItf!.qualityIssues, `is`(issuesEmptySet))
         assertThat(changeCnt, `is`(8))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.followMeModeInfoEncoder(
+            mode: .geographic,
+            missingRequirementsBitField: ~(Bitfield<ArsdkFeatureFollowMeInput>.of(.droneCloseEnough)),
+            improvementsBitField: emptyBitfield))
+
+        assertThat(followMePilotingItf!.state, `is`(.unavailable))
+        assertThat(followMePilotingItf!.availabilityIssues, `is`([.droneTooFarFromTarget]))
+
+        assertThat(changeCnt, `is`(9))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.followMeModeInfoEncoder(
+            mode: .geographic,
+            missingRequirementsBitField: ~(Bitfield<ArsdkFeatureFollowMeInput>.of(.targetGoodSpeed)),
+            improvementsBitField: emptyBitfield))
+
+        assertThat(followMePilotingItf!.availabilityIssues, `is`([.targetHorizontalSpeedKO, .targetVerticalSpeedKO]))
+
+        assertThat(changeCnt, `is`(10))
     }
 
     func testFollowMeAndPilot() {

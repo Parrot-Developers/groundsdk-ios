@@ -34,6 +34,24 @@ import XCTest
 class MavlinkFilesTests: XCTestCase {
 
     private let filepath = NSHomeDirectory().appending("/mavlink.txt")
+    private let mavlinkString: String = """
+        QGC WPL 120
+        0\t0\t3\t16\t0.000000\t5.000000\t0.000000\t45.000000\t48.800000\t2.300000\t3.000000\t1
+        1\t0\t3\t20\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
+        2\t0\t3\t21\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
+        3\t0\t3\t22\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
+        4\t0\t3\t112\t3.500000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
+        5\t0\t3\t178\t1.000000\t7.500000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
+        6\t0\t3\t201\t3.000000\t0.000000\t0.000000\t0.000000\t48.900000\t2.400000\t5.300000\t1
+        7\t0\t3\t205\t45.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t2.000000\t1
+        8\t0\t3\t2000\t3.500000\t5.000000\t12.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
+        9\t0\t3\t2001\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
+        10\t0\t3\t2500\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
+        11\t0\t3\t2501\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
+        12\t0\t3\t2800\t2.000000\t4.000000\t3.000000\t6.000000\t0.000000\t0.000000\t0.000000\t1
+        13\t0\t3\t50000\t2.000000\t7.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
+        14\t0\t3\t50001\t1.000000\t4.500000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
+        """
 
     override func tearDown() {
         let fileManager = FileManager.default
@@ -97,28 +115,32 @@ class MavlinkFilesTests: XCTestCase {
                    `is`("14\t0\t3\t50001\t1.000000\t4.500000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1"))
     }
 
-    func testParse() {
-        let content = """
-            QGC WPL 120
-            0\t0\t3\t16\t0.000000\t5.000000\t0.000000\t45.000000\t48.800000\t2.300000\t3.000000\t1
-            1\t0\t3\t20\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
-            2\t0\t3\t21\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
-            3\t0\t3\t22\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
-            4\t0\t3\t112\t3.500000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
-            5\t0\t3\t178\t1.000000\t7.500000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
-            6\t0\t3\t201\t3.000000\t0.000000\t0.000000\t0.000000\t48.900000\t2.400000\t5.300000\t1
-            7\t0\t3\t205\t45.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t2.000000\t1
-            8\t0\t3\t2000\t3.500000\t5.000000\t12.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
-            9\t0\t3\t2001\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
-            10\t0\t3\t2500\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
-            11\t0\t3\t2501\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
-            12\t0\t3\t2800\t2.000000\t4.000000\t3.000000\t6.000000\t0.000000\t0.000000\t0.000000\t1
-            13\t0\t3\t50000\t2.000000\t7.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
-            14\t0\t3\t50001\t1.000000\t4.500000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t1
-            """
-        try? content.write(toFile: filepath, atomically: false, encoding: .utf8)
+    func testParseFile() {
+        try? self.mavlinkString.write(toFile: filepath, atomically: false, encoding: .utf8)
 
         let commands = MavlinkFiles.parse(filepath: filepath)
+
+        assertThat(commands[0], instanceOfAnd(
+            `is`(latitude: 48.8, longitude: 2.3, altitude: 3, yaw: 45, holdTime: 0, acceptanceRadius: 5)))
+        assertThat(commands[1], instanceOf(ReturnToLaunchCommand.self))
+        assertThat(commands[2], instanceOf(LandCommand.self))
+        assertThat(commands[3], instanceOf(TakeOffCommand.self))
+        assertThat(commands[4], instanceOfAnd(`is`(delay: 3.5)))
+        assertThat(commands[5], instanceOfAnd(`is`(speedType: .groundSpeed, speed: 7.5)))
+        assertThat(commands[6], instanceOfAnd(`is`(latitude: 48.9, longitude: 2.4, altitude: 5.3)))
+        assertThat(commands[7], instanceOfAnd(`is`(tiltAngle: 45)))
+        assertThat(commands[8], instanceOfAnd(`is`(interval: 3.5, count: 5, format: .rectilinear)))
+        assertThat(commands[9], instanceOf(StopPhotoCaptureCommand.self))
+        assertThat(commands[10], instanceOf(StartVideoCaptureCommand.self))
+        assertThat(commands[11], instanceOf(StopVideoCaptureCommand.self))
+        assertThat(commands[12], instanceOfAnd(
+            `is`(horizontalAngle: 2, horizontalSpeed: 3, verticalAngle: 4, verticalSpeed: 6)))
+        assertThat(commands[13], instanceOfAnd(`is`(mode: .roi, roiIndex: 7)))
+        assertThat(commands[14], instanceOfAnd(`is`(mode: .gpslapse, interval: 4.5)))
+    }
+
+    func testParseString() {
+        let commands = MavlinkFiles.parse(mavlinkString: self.mavlinkString)
 
         assertThat(commands[0], instanceOfAnd(
             `is`(latitude: 48.8, longitude: 2.3, altitude: 3, yaw: 45, holdTime: 0, acceptanceRadius: 5)))

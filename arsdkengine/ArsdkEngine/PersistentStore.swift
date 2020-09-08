@@ -51,6 +51,9 @@ class PersistentStore {
     /// Key of a device firmware version
     static let deviceFirmwareVersion = "firmwareVersion"
 
+    /// Key of a device board identifier
+    static let deviceBoardId = "boardId"
+
     /// Key of a device preset uid
     static let devicePresetUid = "preset"
 

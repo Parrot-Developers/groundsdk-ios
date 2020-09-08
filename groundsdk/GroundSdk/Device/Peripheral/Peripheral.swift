@@ -58,6 +58,8 @@ public class Peripherals: NSObject {
     public static let mainCamera = MainCameraDesc()
     /// Thermal camera peripheral.
     public static let thermalCamera = ThermalCameraDesc()
+    /// Blended thermal camera peripheral.
+    public static let blendedThermalCamera = BlendedThermalCameraDesc()
     /// System info peripheral.
     public static let systemInfo = SystemInfoDesc()
     /// Media store peripheral.
@@ -104,6 +106,12 @@ public class Peripherals: NSObject {
     public static let pilotingControl = PilotingControlDesc()
     /// Battery gauge updater
     public static let batteryGaugeUpdater = BatteryGaugeUpdaterDesc()
+    /// Dri.
+    public static let dri = DriDesc()
+    /// Log Control.
+    public static let logControl = LogControlDesc()
+    /// Certificate Uploader
+    public static let certificateUploader = CertificateUploaderDesc()
 }
 
 /// Peripheral uid.
@@ -115,6 +123,7 @@ enum PeripheralUid: Int {
     case streamServer
     case mainCamera
     case thermalCamera
+    case blendedThermalCamera
     case systemInfo
     case mediaStore
     case virtualGamepad
@@ -139,6 +148,9 @@ enum PeripheralUid: Int {
     case copilot
     case pilotingControl
     case batteryGaugeUpdater
+    case dri
+    case logControl
+    case certificateUploader
 }
 
 /// Objective-C wrapper of Ref<Peripheral>. Required because swift generics can't be used from Objective-C.

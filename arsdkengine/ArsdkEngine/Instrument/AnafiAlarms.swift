@@ -65,7 +65,8 @@ class AnafiAlarms: DeviceComponentController {
                                                    .motorError, .batteryTooHot, .batteryTooCold,
                                                    .hoveringDifficultiesNoGpsTooDark, .hoveringDifficultiesNoGpsTooHigh,
                                                    .automaticLandingBatteryIssue, .wind, .verticalCamera,
-                                                   .strongVibrations])
+                                                   .strongVibrations, .magnetometerLowEarthField,
+                                                   .magnetometerPertubation, .unreliableControllerLocation])
     }
 
     /// Drone is connected
@@ -90,6 +91,8 @@ class AnafiAlarms: DeviceComponentController {
             ArsdkFeatureBattery.decode(command, callback: self)
         } else if ArsdkCommand.getFeatureId(command) == kArsdkFeatureCommonCommonstateUid {
             ArsdkFeatureCommonCommonstate.decode(command, callback: self)
+        } else if ArsdkCommand.getFeatureId(command) == kArsdkFeatureControllerInfoUid {
+            ArsdkFeatureControllerInfo.decode(command, callback: self)
         }
     }
 
@@ -122,11 +125,15 @@ extension AnafiAlarms: ArsdkFeatureArdrone3PilotingstateCallback {
             }
             alarms.update(level: .off, forAlarm: .motorCutOut)
                 .update(level: .off, forAlarm: .userEmergency)
+                .update(level: .off, forAlarm: .magnetometerPertubation)
+                .update(level: .off, forAlarm: .magnetometerLowEarthField)
                 .notifyUpdated()
         case .cutOut:
             // remove only non-persistent alarms
             alarms.update(level: .critical, forAlarm: .motorCutOut)
                 .update(level: .off, forAlarm: .userEmergency)
+                .update(level: .off, forAlarm: .magnetometerPertubation)
+                .update(level: .off, forAlarm: .magnetometerLowEarthField)
                 .notifyUpdated()
         case .tooMuchAngle:
             // Nothing to do since we don't provide an alarm in the API for this alert
@@ -135,12 +142,16 @@ extension AnafiAlarms: ArsdkFeatureArdrone3PilotingstateCallback {
             // remove only non-persistent alarms
             alarms.update(level: .off, forAlarm: .motorCutOut)
                 .update(level: .critical, forAlarm: .userEmergency)
+                .update(level: .off, forAlarm: .magnetometerPertubation)
+                .update(level: .off, forAlarm: .magnetometerLowEarthField)
                 .notifyUpdated()
         case .criticalBattery, .almostEmptyBattery:
             if !batteryFeatureSupported {
                 alarms.update(level: .critical, forAlarm: .power)
                     .update(level: .off, forAlarm: .motorCutOut)
                     .update(level: .off, forAlarm: .userEmergency)
+                    .update(level: .off, forAlarm: .magnetometerPertubation)
+                    .update(level: .off, forAlarm: .magnetometerLowEarthField)
                     .notifyUpdated()
             }
         case .lowBattery:
@@ -148,8 +159,22 @@ extension AnafiAlarms: ArsdkFeatureArdrone3PilotingstateCallback {
                 alarms.update(level: .warning, forAlarm: .power)
                     .update(level: .off, forAlarm: .motorCutOut)
                     .update(level: .off, forAlarm: .userEmergency)
+                    .update(level: .off, forAlarm: .magnetometerPertubation)
+                    .update(level: .off, forAlarm: .magnetometerLowEarthField)
                     .notifyUpdated()
             }
+        case .magnetoPertubation:
+            alarms.update(level: .critical, forAlarm: .magnetometerPertubation)
+            alarms.update(level: .off, forAlarm: .magnetometerLowEarthField)
+            .update(level: .off, forAlarm: .motorCutOut)
+            .update(level: .off, forAlarm: .userEmergency)
+            .notifyUpdated()
+        case .magnetoLowEarthField:
+            alarms.update(level: .critical, forAlarm: .magnetometerLowEarthField)
+            alarms.update(level: .off, forAlarm: .magnetometerPertubation)
+            .update(level: .off, forAlarm: .motorCutOut)
+            .update(level: .off, forAlarm: .userEmergency)
+            .notifyUpdated()
         case .sdkCoreUnknown:
             // don't change anything if value is unknown
             ULog.w(.tag, "Unknown alert state, skipping this event.")
@@ -306,5 +331,14 @@ extension AnafiAlarms: ArsdkFeatureCommonCommonstateCallback {
         default:
             return
         }
+    }
+}
+
+/// Contoller information decode callback implementation.
+extension AnafiAlarms: ArsdkFeatureControllerInfoCallback {
+    func onValidityFromDrone(isValid: UInt) {
+        let level: Alarm.Level = isValid == 1 ? .off : .warning
+        alarms.update(level: level, forAlarm: .unreliableControllerLocation)
+            .notifyUpdated()
     }
 }

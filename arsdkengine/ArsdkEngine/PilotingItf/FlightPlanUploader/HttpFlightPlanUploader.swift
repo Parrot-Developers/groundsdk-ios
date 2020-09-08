@@ -50,9 +50,9 @@ class HttpFlightPlanUploader: ArsdkFlightplanUploader {
     func uploadFlightPlan(filepath: String, completion: @escaping (Bool, String?) -> Void) -> CancelableCore? {
         return flightPlanApi?.upload(filepath: filepath, completion: { success, flightPlanUid in
             if success {
-                completion (true, flightPlanUid)
+                completion(true, flightPlanUid)
             } else {
-                completion (false, nil)
+                completion(false, nil)
                 ULog.w(.flightPlanTag, "HTTP - Upload of mavlink file failed")
             }
         })

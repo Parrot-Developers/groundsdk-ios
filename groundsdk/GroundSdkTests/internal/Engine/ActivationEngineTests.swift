@@ -84,6 +84,64 @@ class ActivationEngineTests: XCTestCase {
         assertThat(httpSession.popLastTask(), nilValue())
     }
 
+    func testRegistrableBoardId() {
+        engine.start()
+
+        internetConnectivity.mockInternetAvailable = true
+
+        // devices with board identifier that shall not be registered
+        let nilBoardIdDrone = MockDrone(uid: "nilBoardIdDrone", boardId: nil)
+        nilBoardIdDrone.mockPersisted(true)
+        let hexBoardIdDrone1 = MockDrone(uid: "hexBoardIdDrone1", boardId: "0x1234")
+        hexBoardIdDrone1.mockPersisted(true)
+
+        droneStore.add(nilBoardIdDrone)
+        droneStore.add(hexBoardIdDrone1)
+        assertThat(httpSession.popLastTask(), nilValue())
+
+        // devices with board identifier that shall be registered
+        let emptyBoardIdDrone = MockDrone(uid: "emptyBoardIdDrone", boardId: "")
+        emptyBoardIdDrone.mockPersisted(true)
+        let notHexBoardIdDrone1 = MockDrone(uid: "notHexBoardIdDrone1", boardId: "1234")
+        notHexBoardIdDrone1.mockPersisted(true)
+        let notHexBoardIdDrone2 = MockDrone(uid: "notHexBoardIdDrone2", boardId: "0xghij")
+        notHexBoardIdDrone2.mockPersisted(true)
+        let hexBoardIdDrone2 = MockDrone(uid: "hexBoardIdDrone2", boardId: "0x0000")
+        hexBoardIdDrone2.mockPersisted(true)
+
+        droneStore.add(emptyBoardIdDrone)
+        var expectedBody = """
+        [{"serial":"emptyBoardIdDrone","firmware":"0.0.0"}]
+        """
+        var task = httpSession.popLastTask() as! MockDataTask
+        assertThat(String(data: task.request.httpBody!, encoding: .utf8), presentAnd(`is`(expectedBody)))
+        task.mockCompletionSuccess(data: nil)
+
+        droneStore.add(notHexBoardIdDrone1)
+        expectedBody = """
+        [{"serial":"notHexBoardIdDrone1","firmware":"0.0.0"}]
+        """
+        task = httpSession.popLastTask() as! MockDataTask
+        assertThat(String(data: task.request.httpBody!, encoding: .utf8), presentAnd(`is`(expectedBody)))
+        task.mockCompletionSuccess(data: nil)
+
+        droneStore.add(notHexBoardIdDrone2)
+        expectedBody = """
+        [{"serial":"notHexBoardIdDrone2","firmware":"0.0.0"}]
+        """
+        task = httpSession.popLastTask() as! MockDataTask
+        assertThat(String(data: task.request.httpBody!, encoding: .utf8), presentAnd(`is`(expectedBody)))
+        task.mockCompletionSuccess(data: nil)
+
+        droneStore.add(hexBoardIdDrone2)
+        expectedBody = """
+        [{"serial":"hexBoardIdDrone2","firmware":"0.0.0"}]
+        """
+        task = httpSession.popLastTask() as! MockDataTask
+        assertThat(String(data: task.request.httpBody!, encoding: .utf8), presentAnd(`is`(expectedBody)))
+        task.mockCompletionSuccess(data: nil)
+    }
+
     func testRegisterSuccess() {
         engine.start()
 

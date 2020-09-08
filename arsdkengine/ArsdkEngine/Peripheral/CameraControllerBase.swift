@@ -276,6 +276,9 @@ class CameraControllerBase: CameraBackend {
 
         case .thermal:
             camera = ThermalCameraCore(store: peripheralStore, backend: self)
+
+        case .blendedThermal:
+            camera = BlendedThermalCameraCore(store: peripheralStore, backend: self)
         default:
             break
         }
@@ -2426,7 +2429,8 @@ extension CameraMode: StorableEnum {
 extension Model: StorableEnum {
     static var storableMapper = Mapper<Model, String>([
         .main: "main",
-        .thermal: "thermal"])
+        .thermal: "thermal",
+        .blendedThermal: "blendedThermal"])
 }
 
 extension CameraExposureMode: StorableEnum {
@@ -2608,6 +2612,8 @@ extension CameraRecordingMode: StorableEnum {
 
 extension CameraRecordingResolution: StorableEnum {
     static var storableMapper = Mapper<CameraRecordingResolution, String>([
+        .resUhd8k: "uhd8k",
+        .res5k: "5k",
         .resDci4k: "dci4k",
         .resUhd4k: "uhd4k",
         .res2_7k: "2.7k",
@@ -2620,7 +2626,9 @@ extension CameraRecordingResolution: StorableEnum {
 
 extension CameraRecordingFramerate: StorableEnum {
     static let storableMapper = Mapper<CameraRecordingFramerate, String>([
+        .fps8_6: "fps8_6",
         .fps9: "9",
+        .fps10: "fps10",
         .fps15: "15",
         .fps20: "20",
         .fps24: "24",
@@ -2634,7 +2642,8 @@ extension CameraRecordingFramerate: StorableEnum {
         .fps120: "120",
         .fps192: "192",
         .fps200: "200",
-        .fps240: "240"])
+        .fps240: "240"
+        ])
 }
 
 extension CameraHyperlapseValue: StorableEnum {

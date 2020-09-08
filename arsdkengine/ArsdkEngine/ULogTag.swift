@@ -84,4 +84,7 @@ extension ULogTag {
 
     /// tag myparrot debug
     static let myparrot = ULogTag(name: "MYPARROT-arsdkv1-")
+
+    /// Logging tag of arsdk credentials
+    static let credentialTag = ULogTag(name: "arsdkengine.credential")
 }

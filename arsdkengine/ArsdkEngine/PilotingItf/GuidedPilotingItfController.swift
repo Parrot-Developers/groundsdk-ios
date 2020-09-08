@@ -46,10 +46,10 @@ class GuidedPilotingItfController: ActivablePilotingItfController, GuidedPilotin
     }
 
     /// the initial Relative Move Request (used for information in the `latestFinishedFlightInfo`)
-    var initialRelativeMove: RelativeMoveDirectiveCore?
+    var initialRelativeMove: RelativeMoveDirective?
     /// For successive Relative Move requests, the 'n-1' request is saved.
     /// This information will be used in the `latestFinishedFlightInfo` when a Relative move is interrupted by a new one
-    var previousRelativeMove: RelativeMoveDirectiveCore?
+    var previousRelativeMove: RelativeMoveDirective?
 
     /// The piloting interface from which this object is the delegate
     internal var guidedPilotingItf: GuidedPilotingItfCore {
@@ -95,14 +95,13 @@ class GuidedPilotingItfController: ActivablePilotingItfController, GuidedPilotin
 
     override func requestActivation() {
         // check if we have a pending command received before activation sate
-        if let pendingGuidedDirectiveRequested = pendingGuidedDirectiveRequested {
+        if let pendingGuidedDirectiveRequested = self.pendingGuidedDirectiveRequested {
             switch pendingGuidedDirectiveRequested.guidedType {
             case .absoluteLocation:
-                let pendingLocationDirective = pendingGuidedDirectiveRequested as! LocationDirectiveCore
-                sendMoveToLocationCommand(locationDirective: pendingLocationDirective)
+                sendMoveToLocationCommand(locationDirective: pendingGuidedDirectiveRequested as! LocationDirective)
             case .relativeMove:
-                let pendingRelativeDirective = pendingGuidedDirectiveRequested as! RelativeMoveDirectiveCore
-                sendRelativeMoveCommand(relativeMoveDirective: pendingRelativeDirective)
+                sendRelativeMoveCommand(
+                    relativeMoveDirective: pendingGuidedDirectiveRequested as! RelativeMoveDirective)
             }
             self.pendingGuidedDirectiveRequested = nil
         }
@@ -126,10 +125,10 @@ class GuidedPilotingItfController: ActivablePilotingItfController, GuidedPilotin
             // send the command now
             switch guidedDirective.guidedType {
             case .absoluteLocation:
-                let locationDirective = guidedDirective as! LocationDirectiveCore
+                let locationDirective = guidedDirective as! LocationDirective
                 sendMoveToLocationCommand(locationDirective: locationDirective)
             case .relativeMove:
-                 let relativeMoveDirective = guidedDirective as! RelativeMoveDirectiveCore
+                 let relativeMoveDirective = guidedDirective as! RelativeMoveDirective
                 sendRelativeMoveCommand(relativeMoveDirective: relativeMoveDirective)
             }
         } else {
@@ -143,7 +142,7 @@ class GuidedPilotingItfController: ActivablePilotingItfController, GuidedPilotin
     /// Subclass must override this function to send the drone specific command.
     ///
     /// - Parameter locationDirective: the directive that describes the moveTo Location
-    func sendMoveToLocationCommand(locationDirective: LocationDirectiveCore) {}
+    func sendMoveToLocationCommand(locationDirective: LocationDirective) {}
 
     /// Send the command to cancel a MoveTo location.
     /// Subclass must override this function to send the drone specific command.
@@ -157,5 +156,6 @@ class GuidedPilotingItfController: ActivablePilotingItfController, GuidedPilotin
     /// Subclass must override this function to send the drone specific command.
     ///
     /// - Parameter relativeMoveDirective: the directive that describes the relative move
-    func sendRelativeMoveCommand(relativeMoveDirective: RelativeMoveDirectiveCore) {}
+    func sendRelativeMoveCommand(relativeMoveDirective: RelativeMoveDirective) {}
+
 }

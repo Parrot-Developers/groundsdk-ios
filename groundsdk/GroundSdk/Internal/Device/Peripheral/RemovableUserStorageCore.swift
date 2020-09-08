@@ -36,6 +36,24 @@ public protocol RemovableUserStorageCoreBackend: class {
     /// - Parameter newMediaName: the new name that should be given to the media.
     /// - Returns: true if the format has been asked, false otherwise.
     func format(formattingType: FormattingType, newMediaName: String?) -> Bool
+
+    /// Request a format with encryption of the media.
+    ///
+    /// - Parameters:
+    ///     - password: password used for encryption
+    ///     - formattingType: type of formatting
+    ///     - newMediaName: the new name that should be given to the media. If you pass an empty string, the
+    ///                           a default name will be assigned.
+    /// - Returns: `true` if the format has been asked, `false` otherwise
+    func formatWithEncryption(password: String, formattingType: FormattingType, newMediaName: String?) -> Bool
+
+    /// Sends the password to the drone to access an encypted sd card.
+    ///
+    /// - Parameters:
+    ///     - password: password used to access encrypted card
+    ///     - usage: password usage
+    /// - Returns: `true` if the password has been sent, `false` otherwise
+    func sendPassword(password: String, usage: PasswordUsage) -> Bool
 }
 
 /// Internal removable user storage peripheral implementation
@@ -58,7 +76,9 @@ public class RemovableUserStorageCore: PeripheralCore, RemovableUserStorage {
         }
     }
 
-    private(set) public var state = RemovableUserStorageState.noMedia
+    private(set) public var physicalState = UserStoragePhysicalState.noMedia
+
+    private(set) public var fileSystemState = UserStorageFileSystemState.error
 
     public var mediaInfo: RemovableUserStorageMediaInfo? {
         return _mediaInfo
@@ -69,6 +89,13 @@ public class RemovableUserStorageCore: PeripheralCore, RemovableUserStorage {
     private(set) public var availableSpace: Int64 = -1
 
     private(set) public var canFormat = false
+
+    private(set) public var isEncryptionSupported = false
+
+    private(set) public var isEncrypted = false
+
+    /// uuid of the sdcard
+    private(set) public var uuid: String?
 
     private(set) public var supportedFormattingTypes: Set<FormattingType> = [.full]
 
@@ -100,6 +127,28 @@ public class RemovableUserStorageCore: PeripheralCore, RemovableUserStorage {
         }
         return false
     }
+
+    public func formatWithEncryption(password: String, formattingType: FormattingType) -> Bool {
+        if canFormat && isEncryptionSupported {
+            return backend.formatWithEncryption(password: password, formattingType: formattingType, newMediaName: nil)
+        }
+        return false
+    }
+
+    public func formatWithEncryption(password: String, formattingType: FormattingType, newMediaName: String) -> Bool {
+        if canFormat && isEncryptionSupported {
+            return backend.formatWithEncryption(password: password, formattingType: formattingType,
+                                                newMediaName: newMediaName)
+        }
+        return false
+    }
+
+    public func sendPassword(password: String, usage: PasswordUsage) -> Bool {
+        if isEncryptionSupported {
+            return backend.sendPassword(password: password, usage: usage)
+        }
+        return false
+    }
 }
 
 /// Objc support
@@ -112,19 +161,34 @@ extension RemovableUserStorageCore: GSRemovableUserStorage {
 /// Backend callback methods
 extension RemovableUserStorageCore {
 
-    /// Updates the user storage state
+    /// Updates the user storage physical state
     ///
-    /// - Parameter state: the new state
+    /// - Parameter physicalState: the new physical state
     /// - Returns: self to allow call chaining
     /// - Note: Changes are not notified until notifyUpdated() is called.
-    @discardableResult public func update(state newState: RemovableUserStorageState) -> RemovableUserStorageCore {
-        if state != newState {
-            state = newState
-            if state == .noMedia {
+    @discardableResult public func update(physicalState newPhysicalState: UserStoragePhysicalState)
+        -> RemovableUserStorageCore {
+        if physicalState != newPhysicalState {
+            physicalState = newPhysicalState
+            if physicalState == .noMedia {
                 _mediaInfo = nil
                 availableSpace = -1
             }
-            if state != .formatting {
+            markChanged()
+        }
+        return self
+    }
+
+    /// Updates the user storage file system state
+    ///
+    /// - Parameter fileSystemState: the new file system state
+    /// - Returns: self to allow call chaining
+    /// - Note: Changes are not notified until notifyUpdated() is called.
+    @discardableResult public func update(fileSystemState newFileSystemState: UserStorageFileSystemState)
+        -> RemovableUserStorageCore {
+        if fileSystemState != newFileSystemState {
+            fileSystemState = newFileSystemState
+            if fileSystemState != .formatting {
                 formattingState = nil
             }
             markChanged()
@@ -153,6 +217,24 @@ extension RemovableUserStorageCore {
         return self
     }
 
+    /// Updates the sdcard uuid
+    ///
+    /// - Parameter uuid : the uuid of the sdcard
+    /// - Returns: self to allow call chaining
+    /// - Note: Changes are not notified until notifyUpdated() is called.
+    @discardableResult public func update(uuid newValue: String) -> RemovableUserStorageCore {
+        if let uuid = uuid {
+            if uuid != newValue {
+                self.uuid = newValue
+                markChanged()
+            }
+        } else {
+            uuid = newValue
+            markChanged()
+        }
+        return self
+    }
+
     /// Updates the available space on the media
     ///
     /// - Parameter availableSpace: the new available space
@@ -174,6 +256,19 @@ extension RemovableUserStorageCore {
     @discardableResult public func update(canFormat: Bool) -> RemovableUserStorageCore {
         if canFormat != self.canFormat {
             self.canFormat = canFormat
+            markChanged()
+        }
+        return self
+    }
+
+    /// Updates current ability to encrypt the media.
+    ///
+    /// - Parameter isEncryptionSupported: `true` if the media can be formatted
+    /// - Returns: self to allow call chaining
+    /// - Note: Changes are not notified until notifyUpdated() is called.
+    @discardableResult public func update(isEncryptionSupported: Bool) -> RemovableUserStorageCore {
+        if isEncryptionSupported != self.isEncryptionSupported {
+            self.isEncryptionSupported = isEncryptionSupported
             markChanged()
         }
         return self
@@ -215,4 +310,18 @@ extension RemovableUserStorageCore {
             }
         return self
     }
+
+    /// Updates current info indicating if card is encrypted.
+    ///
+    /// - Parameter isEncrypted: `true` if the media is encrypted
+    /// - Returns: self to allow call chaining
+    /// - Note: Changes are not notified until notifyUpdated() is called.
+    @discardableResult public func update(isEncrypted: Bool) -> RemovableUserStorageCore {
+        if isEncrypted != self.isEncrypted {
+            self.isEncrypted = isEncrypted
+            markChanged()
+        }
+        return self
+    }
+
 }

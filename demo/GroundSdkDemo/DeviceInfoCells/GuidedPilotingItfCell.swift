@@ -33,6 +33,7 @@ import GroundSdk
 class GuidedPilotingItfCell: PilotingItfProviderContentCell {
 
     @IBOutlet weak var stateLabel: UILabel!
+    @IBOutlet weak var availabilityIssuesLabel: UILabel!
     @IBOutlet weak var currentDirectiveLabel: UILabel!
     @IBOutlet weak var latestFlightInfoLabel: UILabel!
 
@@ -55,6 +56,15 @@ class GuidedPilotingItfCell: PilotingItfProviderContentCell {
                     self?.latestFlightInfoLabel.text = "\(latest)"
                 } else {
                     self?.latestFlightInfoLabel.text = "none"
+                }
+                if pilotingItf.unavailabilityReasons == nil {
+                    self?.availabilityIssuesLabel.text = "Availability Issues: notSupported"
+                } else if pilotingItf.unavailabilityReasons!.isEmpty {
+                    self?.availabilityIssuesLabel.text = "Availability Issues: -"
+                } else {
+                    self?.availabilityIssuesLabel.text = "Availability Issues: "
+                        + pilotingItf.unavailabilityReasons!.map { $0.description }
+                    .joined(separator: ", ")
                 }
             } else {
                 self?.hide()

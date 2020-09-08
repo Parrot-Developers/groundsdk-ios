@@ -35,14 +35,17 @@ import SdkCore
 public enum Model: Int, CustomStringConvertible {
     /// Main, usually front, camera
     case main
-    ///  Thermal camera
+    ///  Thermal camera, for photo and/or video.
     case thermal
+    ///  Blended camera, for photo and/or video.
+    case blendedThermal
 
     /// Debug description.
     public var description: String {
         switch self {
         case .main: return "main"
         case .thermal: return "thermal"
+        case .blendedThermal: return "blendedThermal"
         }
     }
 
@@ -50,6 +53,7 @@ public enum Model: Int, CustomStringConvertible {
         switch model {
         case .main: return .main
         case .thermal: return .thermal
+        case .thermalBlended: return .blendedThermal
         case .sdkCoreUnknown: return nil
         }
     }

@@ -34,14 +34,17 @@ import Foundation
 public enum ThermalControlMode: Int, CustomStringConvertible {
     /// Thermal control is off.
     case disabled
-    /// Thermal control is enabled, in standard mode.
+    /// Thermal control is enabled, in standard mode, blending on device.
     case standard
+    /// Thermal control is enabled, blending on drone.
+    case blended
 
     /// Debug description.
     public var description: String {
         switch self {
         case .disabled: return "disabled"
         case .standard: return "standard"
+        case .blended: return "blended"
         }
     }
 }

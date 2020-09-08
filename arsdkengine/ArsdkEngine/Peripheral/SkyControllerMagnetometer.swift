@@ -88,8 +88,17 @@ extension SkyControllerMagnetometer: ArsdkFeatureSkyctrlCalibrationstateCallback
             let rollProgress = Int(percentInterval.clamp((xQuality*100)/arsdkMaxCalibrationQuality))
             let pitchProgress = Int(percentInterval.clamp((yQuality*100)/arsdkMaxCalibrationQuality))
             let yawProgress = Int(percentInterval.clamp((zQuality*100)/arsdkMaxCalibrationQuality))
+            var calibratedStatus: MagnetometerCalibrationState = .required
+            switch status {
+            case .calibrated:
+                calibratedStatus = .calibrated
+            case .assessing, .unreliable:
+                calibratedStatus = .required
+            default:
+                calibratedStatus = .required
+            }
             magnetometer.update(rollProgress: rollProgress, pitchProgress: pitchProgress, yawProgress: yawProgress)
-                .update(calibrated: status == .calibrated).notifyUpdated()
+                .update(calibrated: calibratedStatus).notifyUpdated()
         }
     }
 }

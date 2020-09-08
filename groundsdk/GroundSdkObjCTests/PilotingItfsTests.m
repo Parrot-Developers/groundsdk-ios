@@ -95,7 +95,7 @@
     id<GSReturnHomePreferredTarget> preferedTarget = pilotingItf.preferredTarget;
     XCTAssertNotNil(preferedTarget);
     XCTAssertFalse(preferedTarget.updating);
-    XCTAssertEqual(preferedTarget.target, GSReturnHomeTargetTrackedTargetPosition);
+    XCTAssertEqual(preferedTarget.target, GSReturnHomeTargetTakeOffPosition);
     id<GSIntSetting> delay = pilotingItf.autoStartOnDisconnectDelay;
     XCTAssertNotNil(delay);
     XCTAssertEqual(pilotingItf.homeReachability, GSHomeReachabilityUnknown);
@@ -198,11 +198,13 @@
 
     // test OBJ C members  - Finished Relative
     id<GSFinishedRelativeMoveFlightInfo> finishedRelativeMoveFlightInfo = nil;
-    id<GSRelativeMoveDirective> moveDirective = finishedRelativeMoveFlightInfo.directive;
-    gsGuidedType = finishedRelativeMoveFlightInfo.guidedType ;
+    GSRelativeMoveDirective *moveDirective = finishedRelativeMoveFlightInfo.directive;
+    gsGuidedType = finishedRelativeMoveFlightInfo.guidedType;
     double d = moveDirective.downwardComponent;
 
     // send commands
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [pilotingItf moveToLocationWithLatitude:1.1
                                   longitude:2.2
                                    altitude:3.3
@@ -212,6 +214,7 @@
                                              rightComponent:2.2
                                           downwardComponent:3.3
                                             headingRotation:4.4];
+    #pragma clang diagnostic pop
     [pilotingItf state];
 }
 

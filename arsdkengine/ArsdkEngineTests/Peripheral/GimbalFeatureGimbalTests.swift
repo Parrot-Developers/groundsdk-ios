@@ -1015,7 +1015,7 @@ class GimbalFeatureGimbalTests: ArsdkEngineTestBase {
                 yawRelative: 1, pitchRelative: 2, rollRelative: 3,
                 yawAbsolute: 10, pitchAbsolute: 20, rollAbsolute: 30))
 
-        /// test lowerBound and upperBounds for relative attitude
+        // test lowerBound and upperBounds for relative attitude
         gimbal?.control(mode: .velocity, yaw: nil, pitch: 120, roll: nil)
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.gimbalSetTarget(
             gimbalId: 0, controlMode: .velocity,

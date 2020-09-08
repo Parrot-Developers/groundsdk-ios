@@ -80,7 +80,7 @@ class EphemerisRestApi {
                 switch result {
                 case .success:
                     ULog.w(.ephemerisTag, "ephemeris success upload")
-                    completion (.success)
+                    completion(.success)
                 case .error, .httpError:
                     ULog.w(.ephemerisTag, "ephemeris error upload")
                     completion(.error)

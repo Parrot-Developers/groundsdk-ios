@@ -118,13 +118,86 @@ class ReturnHomePilotingItfTest: XCTestCase {
         assertThat(returnHome.gpsWasFixedOnTakeOff, `is`(false))
 
         // change current target
-        impl.update(currentTarget: .controllerPosition, gpsFixedOnTakeOff: false).notifyUpdated()
+        impl.update(currentTarget: .controllerPosition).notifyUpdated()
         assertThat(returnHome.currentTarget, `is`(.controllerPosition))
+        assertThat(cnt, `is`(1))
 
         // change current target
-        impl.update(currentTarget: .takeOffPosition, gpsFixedOnTakeOff: true).notifyUpdated()
+        impl.update(currentTarget: .takeOffPosition).notifyUpdated()
         assertThat(returnHome.currentTarget, `is`(.takeOffPosition))
+        assertThat(returnHome.gpsWasFixedOnTakeOff, `is`(false))
+        assertThat(cnt, `is`(2))
+
+        impl.update(gpsFixedOnTakeOff: true).notifyUpdated()
         assertThat(returnHome.gpsWasFixedOnTakeOff, `is`(true))
+        assertThat(cnt, `is`(3))
+    }
+
+    func testautoTriggerMode() {
+        impl.publish()
+        var cnt = 0
+        let returnHome = store.get(PilotingItfs.returnHome)!
+        _ = store.register(desc: PilotingItfs.returnHome) {
+            cnt += 1
+        }
+
+        // test initial value
+        assertThat(returnHome.autoTriggerMode, nilValue())
+
+        // enable auto trigger behavior
+        impl.update(autoTriggerMode: true).notifyUpdated()
+        assertThat(cnt, `is`(1))
+        assertThat(returnHome.autoTriggerMode, present())
+        assertThat(returnHome.autoTriggerMode!, `is`(true))
+
+        // disable auto trigger behavior
+        impl.update(autoTriggerMode: false).notifyUpdated()
+        assertThat(cnt, `is`(2))
+        assertThat(returnHome.autoTriggerMode, present())
+        assertThat(returnHome.autoTriggerMode!, `is`(false))
+
+        // Use same value
+        impl.update(autoTriggerMode: false).notifyUpdated()
+        assertThat(cnt, `is`(2))
+        assertThat(returnHome.autoTriggerMode, present())
+        assertThat(returnHome.autoTriggerMode!, `is`(false))
+    }
+
+    func testEndingBehaviorAndHoveringAltitude() {
+        impl.publish()
+        var cnt = 0
+        let returnHome = store.get(PilotingItfs.returnHome)!
+        _ = store.register(desc: PilotingItfs.returnHome) {
+            cnt += 1
+        }
+
+        // test initial value
+        assertThat(returnHome.endingBehavior.behavior, present())
+        assertThat(returnHome.endingBehavior.behavior, `is`(.landing))
+
+        // Force landing behavior
+        impl.update(endingBehavior: .landing).notifyUpdated()
+        assertThat(cnt, `is`(0))
+        assertThat(returnHome.endingBehavior, present())
+        assertThat(returnHome.endingBehavior.behavior, `is`(.landing))
+
+        // Force hovering behavior
+        impl.update(endingBehavior: .hovering).notifyUpdated()
+        assertThat(cnt, `is`(1))
+        assertThat(returnHome.endingBehavior, present())
+        assertThat(returnHome.endingBehavior.behavior, `is`(.hovering))
+
+        // Set hovering altitude
+        impl.update(endingHoveringAltitude: (10.0, 30.0, 50.0)).notifyUpdated()
+        assertThat(cnt, `is`(2))
+        assertThat(returnHome.endingHoveringAltitude, present())
+        assertThat(returnHome.endingHoveringAltitude?.value, `is`(30.0))
+
+        // Use same value
+        impl.update(endingHoveringAltitude: (10.0, 30.0, 50.0)).notifyUpdated()
+        assertThat(cnt, `is`(2))
+        assertThat(returnHome.endingHoveringAltitude, present())
+        assertThat(returnHome.endingHoveringAltitude?.value, `is`(30.0))
     }
 
     func testPreferredTarget() {
@@ -136,7 +209,7 @@ class ReturnHomePilotingItfTest: XCTestCase {
         }
 
         // test initial value
-        assertThat(returnHome.preferredTarget, `is`(preferredTarget: .trackedTargetPosition, updating: false))
+        assertThat(returnHome.preferredTarget, `is`(preferredTarget: .takeOffPosition, updating: false))
 
         // notify new backend values
         impl.update(preferredTarget: .controllerPosition).notifyUpdated()
@@ -180,6 +253,48 @@ class ReturnHomePilotingItfTest: XCTestCase {
         (returnHome.preferredTarget as? TimeoutableSetting)?.mockTimeout()
         assertThat(cnt, `is`(7))
         assertThat(returnHome.preferredTarget, `is`(preferredTarget: .controllerPosition, updating: false))
+    }
+
+    func testWantedEndingBehavior() {
+        impl.publish()
+        var cnt = 0
+        let returnHome = store.get(PilotingItfs.returnHome)!
+        _ = store.register(desc: PilotingItfs.returnHome) {
+            cnt += 1
+        }
+
+        // test initial value
+        assertThat(returnHome.endingBehavior, `is`(endingBehavior: .landing, updating: false))
+
+        // notify new backend values
+        impl.update(endingBehavior: .hovering).notifyUpdated()
+        assertThat(cnt, `is`(1))
+        assertThat(returnHome.endingBehavior, `is`(endingBehavior: .hovering,
+                                                                updating: false))
+
+        // change setting
+        returnHome.endingBehavior.behavior = .landing
+        assertThat(cnt, `is`(2))
+        assertThat(returnHome.endingBehavior, `is`(endingBehavior: .landing, updating: true))
+        impl.update(endingBehavior: .landing).notifyUpdated()
+        assertThat(cnt, `is`(3))
+        assertThat(returnHome.endingBehavior, `is`(endingBehavior: .landing, updating: false))
+
+        // timeout should not do anything
+        (returnHome.endingBehavior as? TimeoutableSetting)?.mockTimeout()
+        assertThat(cnt, `is`(3))
+        assertThat(returnHome.endingBehavior, `is`(endingBehavior: .landing, updating: false))
+
+        // change setting
+        returnHome.endingBehavior.behavior = .hovering
+        assertThat(cnt, `is`(4))
+        assertThat(returnHome.endingBehavior, `is`(endingBehavior: .hovering, updating: true))
+
+        // mock timeout
+        (returnHome.endingBehavior as? TimeoutableSetting)?.mockTimeout()
+        assertThat(cnt, `is`(4))
+        assertThat(returnHome.endingBehavior, `is`(endingBehavior: .hovering,
+                                                                updating: true))
     }
 
     func testMinimumAltitude() {
@@ -333,6 +448,44 @@ class ReturnHomePilotingItfTest: XCTestCase {
         returnHome.cancelAutoTrigger()
         assertThat(backend.cancelAutoTriggerCnt, `is`(1))
     }
+
+    func testSendCustomPosition() {
+        impl.publish()
+        var cnt = 0
+        let returnHome = store.get(PilotingItfs.returnHome)!
+        _ = store.register(desc: PilotingItfs.returnHome) {
+            cnt += 1
+        }
+
+        returnHome.preferredTarget.target = .customPosition
+        assertThat(cnt, `is`(1))
+        assertThat(returnHome.preferredTarget, `is`(preferredTarget: .customPosition, updating: true))
+        impl.update(preferredTarget: .customPosition).notifyUpdated()
+        assertThat(cnt, `is`(2))
+        assertThat(returnHome.preferredTarget, `is`(preferredTarget: .customPosition, updating: false))
+
+        // Set same value
+        impl.update(preferredTarget: .customPosition).notifyUpdated()
+        assertThat(cnt, `is`(2))
+        assertThat(returnHome.preferredTarget, `is`(preferredTarget: .customPosition, updating: false))
+
+        returnHome.setCustomLocation(latitude: 40, longitude: 40, altitude: 20)
+        assertThat(cnt, `is`(2))
+        impl.update(homeLocation: (latitude: 40,
+                                   longitude: 40,
+                                   altitude: 20)).notifyUpdated()
+        assertThat(cnt, `is`(3))
+        assertThat(returnHome.homeLocation, presentAnd(
+        `is`(latitude: 40, longitude: 40, altitude: 20, hAcc: -1, vAcc: -1)))
+
+        // Set same value
+        impl.update(homeLocation: (latitude: 40,
+                                   longitude: 40,
+                                   altitude: 20)).notifyUpdated()
+        assertThat(cnt, `is`(3))
+        assertThat(returnHome.homeLocation, presentAnd(
+        `is`(latitude: 40, longitude: 40, altitude: 20, hAcc: -1, vAcc: -1)))
+    }
 }
 
 private class Backend: ReturnHomePilotingItfBackend {
@@ -346,4 +499,8 @@ private class Backend: ReturnHomePilotingItfBackend {
     func cancelAutoTrigger() {
         cancelAutoTriggerCnt += 1
     }
+    func set(endingBehavior: ReturnHomeEndingBehavior) -> Bool { return true }
+    func set(autoTriggerMode: Bool) -> Bool { return true }
+    func set(endingHoveringAltitude: Double) -> Bool { return true }
+    func setCustomLocation(latitude: Double, longitude: Double, altitude: Double) { }
 }

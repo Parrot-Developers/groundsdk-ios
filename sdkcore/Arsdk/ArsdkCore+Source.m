@@ -94,6 +94,8 @@ extern ULogTag *TAG;
             switch (info->type) {
                 case ARSDK_DEVICE_TYPE_ANAFI4K:
                 case ARSDK_DEVICE_TYPE_ANAFI_THERMAL:
+                case ARSDK_DEVICE_TYPE_ANAFI_UA:
+                case ARSDK_DEVICE_TYPE_ANAFI_USA:
                     res = asprintf(&rtsp_url, "rtsp://%s/%s", info->addr, [_url UTF8String]);
                     if (res <= 0) {
                         res = -ENOMEM;
@@ -120,6 +122,7 @@ extern ULogTag *TAG;
             
             switch(info->type) {
                 case ARSDK_DEVICE_TYPE_SKYCTRL_3:
+                case ARSDK_DEVICE_TYPE_SKYCTRL_UA:
                     res = arsdk_device_create_tcp_proxy(device, info->type, 554, &_rtspProxy);
                     if (res < 0)
                         break;

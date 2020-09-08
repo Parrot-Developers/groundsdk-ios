@@ -106,7 +106,17 @@ extension AnafiMagnetometer: ArsdkFeatureCommonCalibrationstateCallback {
     }
 
     func onMagnetoCalibrationRequiredState(required: UInt) {
-        magnetometer.update(calibrated: (required == 0)).notifyUpdated()
+        switch required {
+        case 0:
+            magnetometer.update(calibrated: .calibrated).notifyUpdated()
+        case 1:
+            magnetometer.update(calibrated: .required).notifyUpdated()
+        case 2:
+            magnetometer.update(calibrated: .recommended).notifyUpdated()
+        default:
+            // don't change anything if value is unknown
+            ULog.w(.tag, "Unknown state, skipping this calibration required state event.")
+        }
     }
 
     func onMagnetoCalibrationAxisToCalibrateChanged(

@@ -66,6 +66,8 @@ public class DeviceCore: CustomStringConvertible, Equatable {
     public let stateHolder: DeviceStateHolderCore
     /// Holder of the mutable device firmware version, that notifies firmware version changes
     public let firmwareVersionHolder: FirmwareVersionHolderCore
+    /// Holder of the mutable device board identifier, that notifies board identifier changes
+    public let boardIdHolder: BoardIdHolderCore
     /// Piloting interfaces store
     public let pilotingItfStore = ComponentStoreCore()
     /// Instruments store
@@ -93,9 +95,10 @@ public class DeviceCore: CustomStringConvertible, Equatable {
         self.uid = uid
         self.deviceModel = model
         self.delegate = delegate
-        self.nameHolder = NameHolderCore(name: name)
-        self.stateHolder = DeviceStateHolderCore()
-        self.firmwareVersionHolder = FirmwareVersionHolderCore()
+        nameHolder = NameHolderCore(name: name)
+        stateHolder = DeviceStateHolderCore()
+        firmwareVersionHolder = FirmwareVersionHolderCore()
+        boardIdHolder = BoardIdHolderCore()
     }
 
     /// Get the device name and register an observer notified each time it changes
@@ -238,6 +241,7 @@ public class DeviceCore: CustomStringConvertible, Equatable {
     func clear() {
         nameHolder.clear()
         stateHolder.clear()
+        boardIdHolder.clear()
         instrumentStore.clear()
         pilotingItfStore.clear()
         peripheralStore.clear()

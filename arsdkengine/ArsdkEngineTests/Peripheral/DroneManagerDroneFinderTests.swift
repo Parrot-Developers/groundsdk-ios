@@ -113,10 +113,33 @@ class DroneManagerDroneFinderTests: ArsdkEngineTestBase {
                 serial: "2",
                 model: UInt(Drone.Model.anafiThermal.internalId), name: "AnafiThermal", connectionOrder: 1,
                 active: 0, visible: 1, security: ArsdkFeatureDroneManagerSecurity.wpa2, hasSavedKey: 0, rssi: -50,
+                listFlagsBitField: Bitfield<ArsdkFeatureGenericListFlags>.of()))
+
+        // should not be notified until "Last"
+        assertThat(changeCnt, `is`(1))
+        mockArsdkCore.onCommandReceived(
+            1,
+            encoder: CmdEncoder.droneManagerDroneListItemEncoder(
+                serial: "3",
+                model: UInt(Drone.Model.anafiUa.internalId), name: "AnafiUa", connectionOrder: 0,
+                active: 0, visible: 1, security: ArsdkFeatureDroneManagerSecurity.none, hasSavedKey: 0, rssi: -52,
                 listFlagsBitField: Bitfield<ArsdkFeatureGenericListFlags>.of(.last)))
 
         assertThat(changeCnt, `is`(2))
-        assertThat(droneFinder!.discoveredDrones, hasCount(2))
+        assertThat(droneFinder!.discoveredDrones, hasCount(3))
+
+        // should not be notified until "Last"
+        assertThat(changeCnt, `is`(2))
+        mockArsdkCore.onCommandReceived(
+            1,
+            encoder: CmdEncoder.droneManagerDroneListItemEncoder(
+                serial: "5",
+                model: UInt(Drone.Model.anafiUsa.internalId), name: "AnafiUsa", connectionOrder: 0,
+                active: 0, visible: 1, security: ArsdkFeatureDroneManagerSecurity.none, hasSavedKey: 0, rssi: -52,
+                listFlagsBitField: Bitfield<ArsdkFeatureGenericListFlags>.of(.last)))
+
+        assertThat(changeCnt, `is`(3))
+        assertThat(droneFinder!.discoveredDrones, hasCount(4))
 
         // expect drones sorted by rssi, then name
         assertThat(droneFinder!.discoveredDrones[0], allOf(
@@ -135,6 +158,22 @@ class DroneManagerDroneFinderTests: ArsdkEngineTestBase {
             `is`(known: true),
             has(connectionSecurity: .password)))
 
+        assertThat(droneFinder!.discoveredDrones[2], allOf(
+            has(uid: "3"),
+            `is`(Drone.Model.anafiUa),
+            has(name: "AnafiUa"),
+            has(rssi: -52),
+            `is`(known: false),
+            has(connectionSecurity: .none)))
+
+        assertThat(droneFinder!.discoveredDrones[3], allOf(
+            has(uid: "5"),
+            `is`(Drone.Model.anafiUsa),
+            has(name: "AnafiUsa"),
+            has(rssi: -52),
+            `is`(known: false),
+            has(connectionSecurity: .none)))
+
         // remove
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.droneManagerDroneListItemEncoder(
@@ -142,8 +181,8 @@ class DroneManagerDroneFinderTests: ArsdkEngineTestBase {
                 active: 0,
                 visible: 1, security: ArsdkFeatureDroneManagerSecurity.none, hasSavedKey: 0, rssi: -20,
                 listFlagsBitField: Bitfield<ArsdkFeatureGenericListFlags>.of(.remove, .last)))
-        assertThat(changeCnt, `is`(3))
-        assertThat(droneFinder!.discoveredDrones, hasCount(1))
+        assertThat(changeCnt, `is`(4))
+        assertThat(droneFinder!.discoveredDrones, hasCount(3))
         assertThat(droneFinder!.discoveredDrones[0], has(uid: "2"))
 
         // empty
@@ -153,7 +192,7 @@ class DroneManagerDroneFinderTests: ArsdkEngineTestBase {
                 active: 0,
                 visible: 1, security: ArsdkFeatureDroneManagerSecurity.none, hasSavedKey: 0, rssi: -20,
                 listFlagsBitField: Bitfield<ArsdkFeatureGenericListFlags>.of(.empty)))
-        assertThat(changeCnt, `is`(4))
+        assertThat(changeCnt, `is`(5))
         assertThat(droneFinder!.discoveredDrones, `is`(empty()))
 
         // first
@@ -170,7 +209,7 @@ class DroneManagerDroneFinderTests: ArsdkEngineTestBase {
                 model: UInt(Drone.Model.anafiThermal.internalId), name: "AnafiThermal", connectionOrder: 1, active: 0,
                 visible: 1, security: ArsdkFeatureDroneManagerSecurity.wpa2, hasSavedKey: 0, rssi: -50,
                 listFlagsBitField: Bitfield<ArsdkFeatureGenericListFlags>.of(.first, .last)))
-        assertThat(changeCnt, `is`(5))
+        assertThat(changeCnt, `is`(6))
         assertThat(droneFinder!.discoveredDrones, hasCount(1))
         assertThat(droneFinder!.discoveredDrones[0], has(uid: "2"))
 

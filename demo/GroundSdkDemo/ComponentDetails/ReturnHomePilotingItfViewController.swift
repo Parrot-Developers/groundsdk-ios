@@ -35,6 +35,8 @@ class ReturnHomePilotingItfViewController: UIViewController, DeviceViewControlle
     @IBOutlet weak var minAltitude: NumSettingView!
     @IBOutlet weak var autoStartDisconnectDelay: NumSettingView!
     @IBOutlet weak var preferredTarget: UISegmentedControl!
+    @IBOutlet weak var endingBehavior: UISegmentedControl!
+    @IBOutlet weak var endingHoveringAltitude: NumSettingView!
 
     private let groundSdk = GroundSdk()
     private var droneUid: String?
@@ -53,6 +55,11 @@ class ReturnHomePilotingItfViewController: UIViewController, DeviceViewControlle
                     self?.autoStartDisconnectDelay.updateWith(intSetting: pilotingItf.autoStartOnDisconnectDelay)
                     self?.preferredTarget.selectedSegmentIndex = pilotingItf.preferredTarget.target.rawValue
                     self?.preferredTarget.isEnabled = !pilotingItf.preferredTarget.updating
+                    self?.endingBehavior.selectedSegmentIndex =
+                        pilotingItf.endingBehavior.behavior.rawValue
+                    self?.endingBehavior.isEnabled = !pilotingItf.endingBehavior.updating
+                    self?.endingHoveringAltitude.updateWith(doubleSetting: pilotingItf.endingHoveringAltitude)
+                    self?.endingHoveringAltitude.isEnabled = pilotingItf.endingBehavior.behavior == .hovering
                 } else {
                     self?.performSegue(withIdentifier: "exit", sender: self)
                 }
@@ -73,5 +80,16 @@ class ReturnHomePilotingItfViewController: UIViewController, DeviceViewControlle
         if let target = target {
             pilotingItf?.value?.preferredTarget.target = target
         }
+    }
+
+    @IBAction func endingBehaviorDidChange(_ sender: AnyObject) {
+        let behavior = ReturnHomeEndingBehavior(rawValue: sender.selectedSegmentIndex)
+        if let behavior = behavior {
+            pilotingItf?.value?.endingBehavior.behavior = behavior
+        }
+    }
+
+    @IBAction func endingHoveringAltitudeDidChange(_ sender: NumSettingView) {
+        pilotingItf?.value?.endingHoveringAltitude?.value = Double(sender.value)
     }
 }

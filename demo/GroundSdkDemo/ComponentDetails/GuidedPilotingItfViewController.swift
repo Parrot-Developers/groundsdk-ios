@@ -47,7 +47,13 @@ class GuidedPilotingItfViewController: UIViewController, DeviceViewController {
 
     @IBOutlet var headingLocation: UITextField!
     @IBOutlet var altitudeValue: UILabel!
+    @IBOutlet var horizontalSpeedValue: UILabel!
+    @IBOutlet var verticalSpeedValue: UILabel!
+    @IBOutlet var yawSpeedValue: UILabel!
     @IBOutlet var altitudeSlider: UISlider!
+    @IBOutlet var horizontalSpeedSlider: UISlider!
+    @IBOutlet var verticalSpeedSlider: UISlider!
+    @IBOutlet var yawSpeedSlider: UISlider!
 
     @IBOutlet var forwardField: UITextField!
     @IBOutlet var rightField: UITextField!
@@ -118,13 +124,28 @@ class GuidedPilotingItfViewController: UIViewController, DeviceViewController {
         altitudeValue.text = String(format: "%.2f", sender.value )
     }
 
+    // Horizontal speed
+    @IBAction func horizontalSpeedDidChange(_ sender: UISlider) {
+        horizontalSpeedValue.text = String(format: "%.2f", sender.value )
+    }
+
+    // Vertical speed
+    @IBAction func verticalSpeedDidChange(_ sender: UISlider) {
+        verticalSpeedValue.text = String(format: "%.2f", sender.value )
+    }
+
+    // Yaw speed
+    @IBAction func yawSpeedDidChange(_ sender: UISlider) {
+        yawSpeedValue.text = String(format: "%.2f", sender.value )
+    }
+
     // Tap on Go To Locatoin Button
     @IBAction func goToLocation(_ sender: Any) {
 
         if let locationDestination = locationDestination {
 
             let selectedOrientation = pickerDataSource[orientationPicker.selectedRow(inComponent: 0)].value
-            let headingValue = Double (headingLocation.text ?? "0") ?? 0
+            let headingValue = Double(headingLocation.text ?? "0") ?? 0
             let orientation: OrientationDirective
             switch selectedOrientation {
             case .none:
@@ -136,19 +157,39 @@ class GuidedPilotingItfViewController: UIViewController, DeviceViewController {
             case .headingDuring:
                 orientation = .headingDuring(headingValue)
             }
-            pilotingItf?.value?.moveToLocation(
-                latitude: locationDestination.latitude, longitude: locationDestination.longitude,
-                altitude: Double(altitudeSlider.value), orientation: orientation)
+
+            // Add speed
+            let locationDirective = LocationDirective(latitude: locationDestination.latitude,
+                                                      longitude: locationDestination.longitude,
+                                                      altitude: Double(altitudeSlider.value),
+                                                      orientation: orientation, speed: getSpeed())
+            pilotingItf?.value?.move(directive: locationDirective)
         }
     }
 
     @IBAction func goRelative(_ sender: Any) {
-        let forward = Double (forwardField.text ?? "0") ?? 0
-        let downward = Double (downwardField.text ?? "0") ?? 0
-        let heading = Double (headingField.text ?? "0") ?? 0
-        let right = Double (rightField.text ?? "0") ?? 0
-        pilotingItf?.value?.moveToRelativePosition(
-            forwardComponent: forward, rightComponent: right, downwardComponent: downward, headingRotation: heading)
+        let forward = Double(forwardField.text ?? "0") ?? 0
+        let right = Double(rightField.text ?? "0") ?? 0
+        let downward = Double(downwardField.text ?? "0") ?? 0
+        let heading = Double(headingField.text ?? "0") ?? 0
+
+        // Add speed
+        let relativeDirective = RelativeMoveDirective(forwardComponent: forward,
+                                                      rightComponent: right,
+                                                      downwardComponent: downward,
+                                                      headingRotation: heading, speed: getSpeed())
+        pilotingItf?.value?.move(directive: relativeDirective)
+    }
+
+    func getSpeed() -> GuidedPilotingSpeed? {
+        let horizontalSpeed = Double(horizontalSpeedSlider.value)
+        let verticalSpeed = Double(verticalSpeedSlider.value)
+        let yawSpeed = Double(yawSpeedSlider.value)
+        if horizontalSpeed > 0 || verticalSpeed > 0 || yawSpeed > 0 {
+            return GuidedPilotingSpeed(horizontalSpeed: horizontalSpeed, verticalSpeed: verticalSpeed,
+                                       yawRotationSpeed: yawSpeed)
+        }
+        return nil
     }
 }
 

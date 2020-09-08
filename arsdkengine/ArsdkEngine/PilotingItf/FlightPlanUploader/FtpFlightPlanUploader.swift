@@ -56,9 +56,9 @@ class FtpFlightPlanUploader: ArsdkFlightplanUploader {
             progress: { _ in },
             completion: { status in
                 if status == .ok {
-                    completion (true, remoteFilepath)
+                    completion(true, remoteFilepath)
                 } else {
-                    completion (false, nil)
+                    completion(false, nil)
                     ULog.w(.flightPlanTag, "Upload of mavlink file failed with error \(status.rawValue)")
                 }
         })

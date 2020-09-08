@@ -83,6 +83,10 @@ class SkyCtrl3MappingListViewController: UIViewController, DeviceViewController 
                 image = #imageLiteral(resourceName: "anafi.png")
             case .anafiThermal:
                 image = #imageLiteral(resourceName: "anafi.png")
+            case .anafiUa:
+                image = #imageLiteral(resourceName: "anafi.png")
+            case .anafiUsa:
+                image = #imageLiteral(resourceName: "anafi.png")
             default:
                 image = nil
             }

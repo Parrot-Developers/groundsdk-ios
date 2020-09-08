@@ -64,9 +64,9 @@ class ThermalControlTests: XCTestCase {
         assertThat(thermalControl.setting, `is`(mode: .disabled, updating: false))
 
         // change capabilities
-        impl.update(supportedModes: [.disabled, .standard]).notifyUpdated()
+        impl.update(supportedModes: [.disabled, .standard, .blended]).notifyUpdated()
         assertThat(cnt, `is`(1))
-        assertThat(thermalControl.setting, supports(modes: [.disabled, .standard]))
+        assertThat(thermalControl.setting, supports(modes: [.disabled, .standard, .blended]))
 
         // change mode
         impl.update(mode: .standard).notifyUpdated()
@@ -77,6 +77,17 @@ class ThermalControlTests: XCTestCase {
         impl.update(mode: .standard).notifyUpdated()
         assertThat(cnt, `is`(2))
         assertThat(thermalControl.setting, `is`(mode: .standard, updating: false))
+
+        // change mode
+        impl.update(mode: .blended).notifyUpdated()
+        assertThat(cnt, `is`(3))
+        assertThat(thermalControl.setting, `is`(mode: .blended, updating: false))
+
+        // same mode should not change count
+        impl.update(mode: .blended).notifyUpdated()
+        assertThat(cnt, `is`(3))
+        assertThat(thermalControl.setting, `is`(mode: .blended, updating: false))
+
     }
 
     func testEmissivity() {

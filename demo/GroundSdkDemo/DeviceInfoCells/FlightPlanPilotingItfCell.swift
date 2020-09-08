@@ -83,13 +83,18 @@ class FlightPlanPilotingItfCell: PilotingItfProviderContentCell {
     }
 
     @IBAction func uploadPushed(_ sender: Any) {
+
+        let fileManager = FileManager.default
+        let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let flightPlanFolderPath = documentPath.appendingPathComponent("flightPlans")
+
+        // create flightPlan directory if needed
+        try? fileManager.createDirectory(at: flightPlanFolderPath, withIntermediateDirectories: false, attributes: nil)
+
         let alert = UIAlertController(title: "Flight plan file", message: "Chose the flight plan file to use.\n" +
             "Files should be put in Documents/flightPlans.",
                                       preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let flightPlanFolderPath = documentPath.appendingPathComponent("flightPlans")
-        let fileManager = FileManager.default
         let handler: (UIAlertAction) -> Void = { action in
             if let filename = action.title {
                 self.pilotingItf?.value?.uploadFlightPlan(

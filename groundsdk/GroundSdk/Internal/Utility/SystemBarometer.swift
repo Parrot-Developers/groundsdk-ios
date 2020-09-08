@@ -206,6 +206,7 @@ class SystemBarometerCoreImpl: SystemBarometerCore {
         barometerMeasure = measure
         return true
     }
+
 }
 
 /// System Barometer utility description

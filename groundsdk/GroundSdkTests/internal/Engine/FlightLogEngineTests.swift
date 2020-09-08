@@ -79,6 +79,13 @@ class FlightLogEngineTests: XCTestCase {
 
     override func tearDown() {
         GroundSdkConfig.sharedInstance.flightLogQuotaMb = nil
+        if let listFiles = try? FileManager.listFiles(directoryUrl: engine.engineDir, fileExt: nil) {
+            for url in listFiles {
+                if FileManager.default.fileExists(atPath: url.path) {
+                    try? FileManager.default.removeItem(at: url)
+                }
+            }
+        }
     }
 
     func testPublishUnpublish() {

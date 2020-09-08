@@ -2,8 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -47,7 +51,10 @@
 		<array>
 			<string>anafi4k</string>
 			<string>anafiThermal</string>
+			<string>anafiUa</string>
+			<string>anafiUsa</string>
 			<string>skyCtrl3</string>
+			<string>skyCtrlUA</string>
 		</array>
 		<key>FirmwareServer</key>
 		<string>$(GSDK_INTERNAL_UPDATE_URL)</string>

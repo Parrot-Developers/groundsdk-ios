@@ -71,7 +71,7 @@ class SkyControllerMagnetometerTests: ArsdkEngineTestBase {
     func testCalibrationState() {
         connect(remoteControl: remoteControl, handle: 1)
         // check default values
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, nilValue())
         assertThat(changeCnt, `is`(1))
 
@@ -79,20 +79,22 @@ class SkyControllerMagnetometerTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.skyctrlCalibrationstateMagnetocalibrationstateEncoder(
                 status: .calibrated, xQuality: 0, yQuality: 0, zQuality: 0))
         assertThat(changeCnt, `is`(2))
-        assertThat(magnetometer!.calibrated, `is`(true))
+        assertThat(magnetometer!.calibrationState, `is`(.calibrated))
         assertThat(magnetometer!.calibrationProcessState, nilValue())
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.skyctrlCalibrationstateMagnetocalibrationstateEncoder(
                 status: .unreliable, xQuality: 0, yQuality: 0, zQuality: 0))
         assertThat(changeCnt, `is`(3))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, nilValue())
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.skyctrlCalibrationstateMagnetocalibrationstateEncoder(
                 status: .assessing, xQuality: 0, yQuality: 0, zQuality: 0))
         assertThat(changeCnt, `is`(3))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
+        assertThat(magnetometer!.calibrationProcessState, nilValue())
     }
 
     func testCalibrationProcess() {
@@ -104,14 +106,14 @@ class SkyControllerMagnetometerTests: ArsdkEngineTestBase {
             handle: 1, expectedCmd: ExpectedCmd.skyctrlCalibrationEnablemagnetocalibrationqualityupdates(enable: 1))
         magnetometer?.startCalibrationProcess()
         assertThat(changeCnt, `is`(2))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(
             rollProgress: 0, pitchProgress: 0, yawProgress: 0)))
 
         // starting it again should not send a new command
         magnetometer?.startCalibrationProcess()
         assertThat(changeCnt, `is`(2))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(
             rollProgress: 0, pitchProgress: 0, yawProgress: 0)))
 
@@ -119,7 +121,7 @@ class SkyControllerMagnetometerTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.skyctrlCalibrationstateMagnetocalibrationstateEncoder(
                 status: .assessing, xQuality: 128, yQuality: 0, zQuality: 0))
         assertThat(changeCnt, `is`(3))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(
             rollProgress: 50, pitchProgress: 0, yawProgress: 0)))
 
@@ -127,7 +129,7 @@ class SkyControllerMagnetometerTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.skyctrlCalibrationstateMagnetocalibrationstateEncoder(
                 status: .assessing, xQuality: 128, yQuality: 26, zQuality: 0))
         assertThat(changeCnt, `is`(4))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(
             rollProgress: 50, pitchProgress: 10, yawProgress: 0)))
 
@@ -135,7 +137,7 @@ class SkyControllerMagnetometerTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.skyctrlCalibrationstateMagnetocalibrationstateEncoder(
                 status: .assessing, xQuality: 255, yQuality: 255, zQuality: 255))
         assertThat(changeCnt, `is`(5))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(
             rollProgress: 100, pitchProgress: 100, yawProgress: 100)))
 
@@ -143,7 +145,7 @@ class SkyControllerMagnetometerTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.skyctrlCalibrationstateMagnetocalibrationstateEncoder(
                 status: .calibrated, xQuality: 255, yQuality: 255, zQuality: 255))
         assertThat(changeCnt, `is`(6))
-        assertThat(magnetometer!.calibrated, `is`(true))
+        assertThat(magnetometer!.calibrationState, `is`(.calibrated))
         // calibrationProcessState is still here until we call cancelCalibrationProcess
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(
             rollProgress: 100, pitchProgress: 100, yawProgress: 100)))
@@ -158,7 +160,7 @@ class SkyControllerMagnetometerTests: ArsdkEngineTestBase {
             handle: 1, expectedCmd: ExpectedCmd.skyctrlCalibrationEnablemagnetocalibrationqualityupdates(enable: 1))
         magnetometer?.startCalibrationProcess()
         assertThat(changeCnt, `is`(2))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(
             rollProgress: 0, pitchProgress: 0, yawProgress: 0)))
 
@@ -167,13 +169,13 @@ class SkyControllerMagnetometerTests: ArsdkEngineTestBase {
             handle: 1, expectedCmd: ExpectedCmd.skyctrlCalibrationEnablemagnetocalibrationqualityupdates(enable: 0))
         magnetometer?.cancelCalibrationProcess()
         assertThat(changeCnt, `is`(3))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, nilValue())
 
         // starting it again should not send a new command
         magnetometer?.cancelCalibrationProcess()
         assertThat(changeCnt, `is`(3))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, nilValue())
     }
 }

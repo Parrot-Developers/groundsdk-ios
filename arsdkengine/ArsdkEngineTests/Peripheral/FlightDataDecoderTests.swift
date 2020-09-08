@@ -78,7 +78,7 @@ class FlightDataDecoderTests: XCTestCase {
         }
         assertThat(nbError, `is`(0))
 
-        print ("Pud generated file \(pudWriter.resultUrl)")
+        print("Pud generated file \(pudWriter.resultUrl)")
 
         let okJson = compareFilesJson(documentFileName: resultName, bundleFileName: expectedResultName)
         assertThat(okJson, `is`(true))
@@ -121,7 +121,7 @@ class FlightDataDecoderTests: XCTestCase {
         }
         assertThat(nbError, `is`(0))
 
-        print ("Pud generated file \(pudWriter.resultUrl)")
+        print("Pud generated file \(pudWriter.resultUrl)")
 
         let okJson = compareFilesJson(documentFileName: resultName, bundleFileName: expectedResultName)
         assertThat(okJson, `is`(true))

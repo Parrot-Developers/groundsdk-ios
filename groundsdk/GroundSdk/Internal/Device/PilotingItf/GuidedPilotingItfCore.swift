@@ -29,70 +29,6 @@
 
 import Foundation
 
-/// Implementation of a LocationDirective
-public class LocationDirectiveCore: LocationDirective {
-
-    public static func == (lhs: LocationDirectiveCore, rhs: LocationDirectiveCore) -> Bool {
-        return (lhs.altitude == rhs.altitude &&
-            lhs.longitude == rhs.longitude &&
-            lhs.latitude == rhs.latitude &&
-            lhs.orientation == rhs.orientation)
-    }
-    /// Debug description.
-    override public var description: String {
-        return "lat(\(latitude))-lon(\(longitude))-alt(\(altitude))-ori(\(orientation))"
-    }
-
-    override public init(latitude: Double, longitude: Double, altitude: Double, orientation: OrientationDirective) {
-        super.init(latitude: latitude, longitude: longitude, altitude: altitude, orientation: orientation)
-    }
-}
-
-/// Implementation of a RelativeMoveDirective
-public class RelativeMoveDirectiveCore: RelativeMoveDirective, Equatable, CustomStringConvertible {
-
-    public let guidedType = GuidedType.relativeMove
-
-    public let forwardComponent: Double
-
-    public let rightComponent: Double
-
-    public let downwardComponent: Double
-
-    public let headingRotation: Double
-
-    /// Constructor
-    ///
-    /// - Parameters:
-    ///   - forwardComponent: relative movement along the drone front axis, in meters.
-    ///   - rightComponent: relative movement on the drone right axis, in meters.
-    ///   - downwardComponent: relative movement along the down axis, in meters.
-    ///   - headingRotation: relative rotation of heading, in degrees (clockwise).
-    public init(forwardComponent: Double, rightComponent: Double, downwardComponent: Double, headingRotation: Double) {
-        self.forwardComponent = forwardComponent
-        self.rightComponent = rightComponent
-        self.downwardComponent = downwardComponent
-        self.headingRotation = headingRotation
-    }
-
-    /// Debug description.
-    public var description: String {
-        let dx = String(format: "%.2f", forwardComponent)
-        let dy = String(format: "%.2f", rightComponent)
-        let dz = String(format: "%.2f", downwardComponent)
-        let headingString = String(format: "%.2f", headingRotation)
-        return "dx: \(dx) dy: \(dy) dz: \(dz) heading: \(headingString)"
-    }
-
-    /// Equatable concordance
-    public static func == (lhs: RelativeMoveDirectiveCore, rhs: RelativeMoveDirectiveCore) -> Bool {
-        return (lhs.forwardComponent == rhs.forwardComponent &&
-            lhs.rightComponent == rhs.rightComponent &&
-            lhs.downwardComponent == rhs.downwardComponent &&
-            lhs.headingRotation == rhs.headingRotation)
-    }
-}
-
 /// Implementation of a FinishedLocationFlightInfo
 public class FinishedLocationFlightInfoCore: FinishedLocationFlightInfo, CustomStringConvertible, Equatable {
 
@@ -103,14 +39,14 @@ public class FinishedLocationFlightInfoCore: FinishedLocationFlightInfo, CustomS
     /// Retrieves the parameters of the guided flight directive (these parameters are given by the drone).
     public var directive: LocationDirective { return _directive }
     /// Internal implementation of location flight directive.
-    private let _directive: LocationDirectiveCore
+    private let _directive: LocationDirective
 
     /// Constructor
     ///
     /// - Parameters:
     ///   - directive: the location directive done
     ///   - wasSuccessful: true if the location directive was successful
-    public init(directive: LocationDirectiveCore, wasSuccessful: Bool) {
+    public init(directive: LocationDirective, wasSuccessful: Bool) {
         self._directive = directive
         self.wasSuccessful = wasSuccessful
     }
@@ -149,7 +85,7 @@ public class FinishedRelativeMoveFlightInfoCore: FinishedRelativeMoveFlightInfo,
     /// Retrieves the initial guided flight directive.
     public var directive: RelativeMoveDirective? { return _directive }
     /// Internal implementation of relative mode directive.
-    public var _directive: RelativeMoveDirectiveCore?
+    public var _directive: RelativeMoveDirective?
 
     /// Constructor
     ///
@@ -160,7 +96,7 @@ public class FinishedRelativeMoveFlightInfoCore: FinishedRelativeMoveFlightInfo,
     ///   - actualRightComponent: right movement done
     ///   - actualDownwardComponent: downward movement done
     ///   - actualHeadingRotation: heading rotation done
-    public init(wasSuccessful: Bool, directive: RelativeMoveDirectiveCore?, actualForwardComponent: Double,
+    public init(wasSuccessful: Bool, directive: RelativeMoveDirective?, actualForwardComponent: Double,
                 actualRightComponent: Double, actualDownwardComponent: Double, actualHeadingRotation: Double) {
         self.wasSuccessful = wasSuccessful
         self._directive = directive
@@ -197,6 +133,7 @@ public protocol GuidedPilotingItfBackend: ActivablePilotingItfBackend {
 
     /// Starts a guided flight.
     func moveWithGuidedDirective(guidedDirective: GuidedDirective)
+
 }
 
 /// Internal GuidedPilotingItf implementation
@@ -205,6 +142,13 @@ public class GuidedPilotingItfCore: ActivablePilotingItfCore, GuidedPilotingItf 
     public private (set) var currentDirective: GuidedDirective?
 
     public private (set) var latestFinishedFlightInfo: FinishedFlightInfo?
+
+    public var unavailabilityReasons: Set<GuidedIssue>? {
+        return _unavailabilityReasons
+    }
+
+    /// Unavailability reasons
+    private var _unavailabilityReasons: Set<GuidedIssue>?
 
     /// Constructor
     ///
@@ -215,12 +159,10 @@ public class GuidedPilotingItfCore: ActivablePilotingItfCore, GuidedPilotingItf 
         super.init(desc: PilotingItfs.guided, store: store, backend: backend)
     }
 
-    /// Starts a location guided flight.
-    public func moveToLocation(
-        latitude: Double, longitude: Double, altitude: Double, orientation: OrientationDirective) {
+    /// Starts a guided flight.
+    public func move(directive: GuidedDirective) {
         if state != .unavailable {
-            guidedBackend.moveWithGuidedDirective(guidedDirective: LocationDirectiveCore(
-                latitude: latitude, longitude: longitude, altitude: altitude, orientation: orientation))
+            guidedBackend.moveWithGuidedDirective(guidedDirective: directive)
         }
     }
 
@@ -229,13 +171,26 @@ public class GuidedPilotingItfCore: ActivablePilotingItfCore, GuidedPilotingItf 
         return backend as! GuidedPilotingItfBackend
     }
 
+    /// Starts a location guided flight.
+    /// Deprecated method. Only for compatibility.
+    public func moveToLocation(latitude: Double, longitude: Double, altitude: Double,
+                               orientation: OrientationDirective) {
+        let locationDirective = LocationDirective(latitude: latitude,
+                                                   longitude: longitude,
+                                                   altitude: altitude,
+                                                   orientation: orientation, speed: nil)
+        move(directive: locationDirective)
+    }
+
+    /// Starts a relative guided flight.
+    /// Deprecated method. Only for compatibility.
     public func moveToRelativePosition(
         forwardComponent: Double, rightComponent: Double, downwardComponent: Double, headingRotation: Double) {
-        if state != .unavailable {
-            guidedBackend.moveWithGuidedDirective(guidedDirective: RelativeMoveDirectiveCore(
-                forwardComponent: forwardComponent, rightComponent: rightComponent,
-                downwardComponent: downwardComponent, headingRotation: headingRotation))
-        }
+        let relativeDirective = RelativeMoveDirective(forwardComponent: forwardComponent,
+                                                      rightComponent: rightComponent,
+                                                      downwardComponent: downwardComponent,
+                                                      headingRotation: headingRotation, speed: nil)
+        move(directive: relativeDirective)
     }
 }
 
@@ -254,8 +209,8 @@ extension GuidedPilotingItfCore {
 
             switch updatedGuidedDirective.guidedType {
             case .absoluteLocation:
-                let currentDirectiveAsLocation = currentDirective as? LocationDirectiveCore
-                let updatedLocationDirective = updatedGuidedDirective as!LocationDirectiveCore
+                let currentDirectiveAsLocation = currentDirective as? LocationDirective
+                let updatedLocationDirective = updatedGuidedDirective as!LocationDirective
 
                 if currentDirectiveAsLocation != updatedLocationDirective {
                     currentDirective = updatedLocationDirective
@@ -263,15 +218,14 @@ extension GuidedPilotingItfCore {
                 }
 
             case .relativeMove:
-                let currentDirectiveAsRelative = currentDirective as? RelativeMoveDirectiveCore
-                let updatedRelativeDirective = updatedGuidedDirective as! RelativeMoveDirectiveCore
+                let currentDirectiveAsRelative = currentDirective as? RelativeMoveDirective
+                let updatedRelativeDirective = updatedGuidedDirective as! RelativeMoveDirective
 
                 if currentDirectiveAsRelative != updatedRelativeDirective {
                     currentDirective = updatedRelativeDirective
                     markChanged()
                 }
             }
-
         } else {
             if currentDirective != nil {
                 // updatedGuidedDirective is nil and a current exists
@@ -320,7 +274,21 @@ extension GuidedPilotingItfCore {
             markChanged()
             latestFinishedFlightInfo = updatedLatestFinishedFlightInfo
         }
+        return self
+    }
 
+    /// Updates the unavailability reasons.
+    ///
+    /// - Parameter unavailabilityReasons: new set of unavailability reasons
+    /// - Returns: self to allow call chaining
+    /// - Note: Changes are not notified until notifyUpdated() is called.
+    @discardableResult public func update(
+        unavailabilityReasons newValue: Set<GuidedIssue>?) -> GuidedPilotingItfCore {
+
+        if _unavailabilityReasons != newValue {
+            _unavailabilityReasons = newValue
+            markChanged()
+        }
         return self
     }
 }
@@ -345,5 +313,9 @@ extension GuidedPilotingItfCore: GSGuidedPilotingItf {
         }
         // call the swift method in interface
         moveToLocation(latitude: latitude, longitude: longitude, altitude: altitude, orientation: swiftOrientation)
+    }
+
+    public func hasUnavailabilityReason(_ reason: GuidedIssue) -> Bool {
+        return unavailabilityReasons != nil ? unavailabilityReasons!.contains(reason) : false
     }
 }

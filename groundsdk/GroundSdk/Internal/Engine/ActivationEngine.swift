@@ -129,7 +129,6 @@ class ActivationEngine: EngineBaseCore {
 
         droneStoreMonitor.stop()
         connectivityMonitor.stop()
-
     }
 
     /// Gets the already registered devices.
@@ -152,7 +151,22 @@ class ActivationEngine: EngineBaseCore {
     ///            phone).
     private func deviceNeedToBeRegistered(_ device: DeviceCore) -> Bool {
         let uid = device.uid
-        return device.stateHolder.state.persisted && !registeredDevices.contains(uid) && !excludedUids.contains(uid)
+        return device.stateHolder.state.persisted &&
+            !registeredDevices.contains(uid) &&
+            !excludedUids.contains(uid) &&
+            hasRegistrableBoardId(device)
+    }
+
+    /// Tells whether the given device may be registered based on his board id.
+    ///
+    /// - Parameter device: device to test
+    /// - Returns: `true` if the device may be registered, otherwise `false`
+    private func hasRegistrableBoardId(_ device: DeviceCore) -> Bool {
+        guard let boardId = device.boardIdHolder.boardId else {
+            return false
+        }
+        return !boardId.starts(with: "0x") ||
+            Int(boardId.suffix(2), radix: 16) ?? 0 == 0
     }
 
     /// Gets the list of the devices (drones and rcs) to register

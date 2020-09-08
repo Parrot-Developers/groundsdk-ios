@@ -444,6 +444,9 @@ class DeviceController: NSObject {
             let firmwareVersion = FirmwareVersion.parse(versionStr: firmwareVersionStr) {
             self.device.firmwareVersionHolder.update(version: firmwareVersion)
         }
+        if let boardId: String = deviceStore.read(key: PersistentStore.deviceBoardId) {
+            self.device.boardIdHolder.update(boardId: boardId)
+        }
         self.device.stateHolder.state.update(persisted: !deviceStore.new).notifyUpdated()
     }
 
@@ -749,6 +752,10 @@ class DeviceController: NSObject {
             protocolDidConnect()
             // now we can notify the component controllers about the new data sync allowance
             dataSyncAllowanceMightHaveChanged()
+            // if board identifier not received during connection, we know board identifier is unavailable
+            if device.boardIdHolder.boardId == nil {
+                device.boardIdHolder.update(boardId: "")
+            }
             // store the device
             deviceStore.write(key: PersistentStore.deviceName, value: device.nameHolder.name) // needed for the rc
             deviceStore.write(key: PersistentStore.deviceType, value: deviceModel.internalId)

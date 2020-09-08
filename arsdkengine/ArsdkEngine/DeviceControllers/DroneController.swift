@@ -60,25 +60,6 @@ class DroneController: DeviceController {
                 return
             }
             dataSyncAllowanceMightHaveChanged()
-            if isLanded {
-                // remove any "suspend" request for the user Location
-                // (do nothing if the current value is false)
-                userLocationUnwanted = false
-            } else {
-                // the drone is not landed
-                // check if the connection with the phone is wifi
-                // Note: the first level (phone's App) is the first provider without parent
-                // (meaning: provider!.connector.connectorType is `.local` and not a `.remoteControl`)
-                var provider = activeProvider
-                while let parent = provider?.parent {
-                    provider = parent
-                }
-                if provider?.connector.technology == .wifi {
-                    // the phone's GPS service disturbs the wifi connection.
-                    // Ask (if possible) to suspend the GPS continuous update
-                    userLocationUnwanted = true
-                }
-            }
         }
     }
 
@@ -87,29 +68,10 @@ class DroneController: DeviceController {
     /// Monitor the userLocation (with systemPositionUtility)
     private var userLocationMonitor: MonitorCore?
 
-    /// Indicates whether or not the connected drone stops updating the GPS position of the user.
-    /// Indeed, the phone's GPS service disturbs the wifi connection.
-    /// The conditions to suspend are:
-    /// - that the drone or the remote is directly connected via wifi
-    /// - and the drone is flying.
-    ///
-    /// Using a USB remote control avoids the suspend request
-    /// - Note: a 'requestSuspendUpdating()' does not guarantee a stop of the location updating. Indeed, the location
-    /// updating can be forced by other requests
-    private var userLocationUnwanted = false {
-        didSet {
-            guard userLocationUnwanted != oldValue else {
-                return
-            }
-            if let systemPositionCore = engine.utilities.getUtility(Utilities.systemPosition) {
-                if userLocationUnwanted {
-                    systemPositionCore.requestSuspendUpdating()
-                } else {
-                    systemPositionCore.unrequestSuspendUpdating()
-                }
-            }
-        }
-    }
+    /// Utility for device's barometer services.
+    private var systemBarometerUtility: SystemBarometerCore?
+    /// Monitor the barometer (with systemBarometerUtility)
+    private var userBarometerMonitor: MonitorCore?
 
     override var dataSyncAllowed: Bool {
         return super.dataSyncAllowed && isLanded
@@ -222,6 +184,19 @@ class DroneController: DeviceController {
                     }
                 }, stoppedDidChange: {_ in }, authorizedDidChange: {_ in })
         }
+
+        systemBarometerUtility = engine.utilities.getUtility(Utilities.systemBarometer)
+        if let systemBarometerUtility = systemBarometerUtility {
+            // monitoring the barometer
+            userBarometerMonitor = systemBarometerUtility.startMonitoring(
+                measureDidChange: { [unowned self] barometerMeasure in
+                    if let barometerMeasure = barometerMeasure {
+                        self.sendCommand(ArsdkFeatureControllerInfo.barometerEncoder(
+                            pressure: Float(barometerMeasure.pressure),
+                            timestamp: barometerMeasure.timestamp.timeIntervalSince1970 * 1000))
+                    }
+            })
+        }
         uploadEphemerisIfAllowed()
     }
 
@@ -230,10 +205,11 @@ class DroneController: DeviceController {
         userLocationMonitor?.stop()
         userLocationMonitor = nil
 
+        // stop monitoring barometer
+        userBarometerMonitor?.stop()
+        userBarometerMonitor = nil
+
         pilotingItfActivationController.didDisconnect()
-        // remove any "suspend" request for the user Location
-        // (do nothing if the current value is false)
-        userLocationUnwanted = false
         super.protocolDidDisconnect()
     }
 
@@ -293,7 +269,7 @@ class DroneController: DeviceController {
             latitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude,
             altitude: Float(newLocation.altitude), horizontalAccuracy: Float( newLocation.horizontalAccuracy),
             verticalAccuracy: Float(newLocation.verticalAccuracy), northSpeed: Float(northSpeed),
-            eastSpeed: Float(eastSpeed), downSpeed: 0, timestamp: newLocation.timestamp.timeIntervalSince1970))
+            eastSpeed: Float(eastSpeed), downSpeed: 0, timestamp: newLocation.timestamp.timeIntervalSince1970 * 1000))
     }
 }
 
@@ -315,6 +291,11 @@ extension DroneController: ArsdkFeatureCommonSettingsstateCallback {
             device.firmwareVersionHolder.update(version: firmwareVersion)
             deviceStore.write(key: PersistentStore.deviceFirmwareVersion, value: software).commit()
         }
+    }
+
+    func onBoardIdChanged(id: String!) {
+        device.boardIdHolder.update(boardId: id)
+        deviceStore.write(key: PersistentStore.deviceBoardId, value: id).commit()
     }
 }
 

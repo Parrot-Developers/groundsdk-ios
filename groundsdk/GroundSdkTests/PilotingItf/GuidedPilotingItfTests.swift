@@ -64,8 +64,8 @@ class GuidedPilotingItfTest: XCTestCase {
         assertThat(guidedItf.latestFinishedFlightInfo, nilValue())
 
         // update from low level -- no notification expected
-        let aLocationDirective = LocationDirectiveCore(latitude: 1.1, longitude: 2.2, altitude: 3.3,
-                                                       orientation: .headingStart(66.66))
+        let aLocationDirective = LocationDirective(latitude: 1.1, longitude: 2.2, altitude: 3.3,
+                                                       orientation: .headingStart(66.66), speed: nil)
 
         impl.update(currentGuidedDirective: aLocationDirective)
         assertThat(cnt, `is`(0))
@@ -74,9 +74,39 @@ class GuidedPilotingItfTest: XCTestCase {
         assertThat(theNewLocationDirective, `is`(latitude: 1.1, longitude: 2.2, altitude: 3.3,
                                                  orientation: .headingStart(66.66)))
     }
+
+    func testUnavailabilityReasons() {
+        impl.publish()
+        var cnt = 0
+        let guidedItf = store.get(PilotingItfs.guided)!
+        _ = store.register(desc: PilotingItfs.guided) {
+            cnt += 1
+        }
+        // test initial value
+        assertThat(cnt, `is`(0))
+        assertThat(guidedItf.unavailabilityReasons, nilValue())
+
+        impl.update(unavailabilityReasons: []).notifyUpdated()
+        assertThat(cnt, `is`(1))
+        assertThat(guidedItf.unavailabilityReasons, `is`([]))
+
+        impl.update(unavailabilityReasons: [.droneGpsInfoInaccurate, .droneNotFlying]).notifyUpdated()
+        assertThat(cnt, `is`(2))
+        assertThat(guidedItf.unavailabilityReasons!, containsInAnyOrder(.droneGpsInfoInaccurate, .droneNotFlying))
+
+        impl.update(unavailabilityReasons: [.droneGpsInfoInaccurate, .droneNotFlying]).notifyUpdated()
+        assertThat(cnt, `is`(2))
+        assertThat(guidedItf.unavailabilityReasons!, containsInAnyOrder(.droneGpsInfoInaccurate, .droneNotFlying))
+
+        impl.update(unavailabilityReasons: nil).notifyUpdated()
+        assertThat(cnt, `is`(3))
+        assertThat(guidedItf.unavailabilityReasons, nilValue())
+
+    }
 }
 
 private class Backend: GuidedPilotingItfBackend {
+
     func moveWithGuidedDirective(guidedDirective: GuidedDirective) {}
 
     func activate() -> Bool {

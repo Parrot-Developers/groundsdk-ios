@@ -26,7 +26,7 @@ Install the following Python module
 
 .. code-block:: console
 
-    $ pip3 install requests
+    $ pip3 install requests pyparsing
 
 Configure git with your real name and email address
 

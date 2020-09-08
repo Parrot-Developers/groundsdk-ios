@@ -62,6 +62,11 @@ class FollowFeatureTrackingPilotingItf: ActivablePilotingItfController {
                     returnSet.insert(.droneTooCloseToGround)
                 case .imageDetection:
                     returnSet.insert(.targetDetectionInfoMissing)
+                case .droneCloseEnough:
+                    returnSet.insert(.droneTooFarFromTarget)
+                case .targetGoodSpeed:
+                    returnSet.insert(.targetHorizontalSpeedKO)
+                    returnSet.insert(.targetVerticalSpeedKO)
                 case .sdkCoreUnknown:
                     ULog.w(.tag, "Unknown ArsdkFeatureFollowMeInputBitField, skipping this value.")
                 }

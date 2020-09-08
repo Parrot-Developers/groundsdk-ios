@@ -75,20 +75,33 @@ class AnafiMagnetometerTests: ArsdkEngineTestBase {
     func testCalibrationState() {
         connect(drone: drone, handle: 1)
         // check default values
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, nilValue())
         assertThat(changeCnt, `is`(1))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationrequiredstateEncoder(required: 0))
         assertThat(changeCnt, `is`(2))
-        assertThat(magnetometer!.calibrated, `is`(true))
+        assertThat(magnetometer!.calibrationState, `is`(.calibrated))
+        assertThat(magnetometer!.calibrationProcessState, nilValue())
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationrequiredstateEncoder(required: 2))
+        assertThat(changeCnt, `is`(3))
+        assertThat(magnetometer!.calibrationState, `is`(.recommended))
         assertThat(magnetometer!.calibrationProcessState, nilValue())
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationrequiredstateEncoder(required: 1))
-        assertThat(changeCnt, `is`(3))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(changeCnt, `is`(4))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
+        assertThat(magnetometer!.calibrationProcessState, nilValue())
+
+        // Receive same event
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationrequiredstateEncoder(required: 1))
+        assertThat(changeCnt, `is`(4))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, nilValue())
     }
 
@@ -100,13 +113,13 @@ class AnafiMagnetometerTests: ArsdkEngineTestBase {
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.commonCalibrationMagnetocalibration(calibrate: 1))
         magnetometer?.startCalibrationProcess()
         assertThat(changeCnt, `is`(2))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.none, [], false)))
 
         // starting it again should not send a new command
         magnetometer?.startCalibrationProcess()
         assertThat(changeCnt, `is`(2))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.none, [], false)))
 
         // receiving this command should not change anything
@@ -114,58 +127,58 @@ class AnafiMagnetometerTests: ArsdkEngineTestBase {
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationstartedchangedEncoder(started: 1))
         assertThat(changeCnt, `is`(2))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.none, [], false)))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationaxistocalibratechangedEncoder(axis: .xaxis))
         assertThat(changeCnt, `is`(3))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.roll, [], false)))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationaxistocalibratechangedEncoder(axis: .yaxis))
         assertThat(changeCnt, `is`(4))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.pitch, [], false)))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationstatechangedEncoder(
                 xaxiscalibration: 1, yaxiscalibration: 0, zaxiscalibration: 0, calibrationfailed: 0))
         assertThat(changeCnt, `is`(5))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.pitch, [.roll], false)))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationaxistocalibratechangedEncoder(axis: .zaxis))
         assertThat(changeCnt, `is`(6))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.yaw, [.roll], false)))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationstatechangedEncoder(
                 xaxiscalibration: 1, yaxiscalibration: 1, zaxiscalibration: 0, calibrationfailed: 0))
         assertThat(changeCnt, `is`(7))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.yaw, [.roll, .pitch], false)))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationaxistocalibratechangedEncoder(axis: .none))
         assertThat(changeCnt, `is`(8))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.none, [.roll, .pitch], false)))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationstatechangedEncoder(
                 xaxiscalibration: 1, yaxiscalibration: 1, zaxiscalibration: 1, calibrationfailed: 0))
         assertThat(changeCnt, `is`(9))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.none, [.roll, .pitch, .yaw], false)))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationstartedchangedEncoder(started: 0))
         assertThat(changeCnt, `is`(10))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, nilValue())
     }
 
@@ -177,7 +190,7 @@ class AnafiMagnetometerTests: ArsdkEngineTestBase {
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.commonCalibrationMagnetocalibration(calibrate: 1))
         magnetometer?.startCalibrationProcess()
         assertThat(changeCnt, `is`(2))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.none, [], false)))
         assertThat(latestFailed, `is`(false))
 
@@ -188,7 +201,7 @@ class AnafiMagnetometerTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationstartedchangedEncoder(started: 0))
         assertThat(changeCnt, `is`(4)) // 2 calls : currentProcess.failed, then currentProcess is nil
         assertThat(latestFailed, `is`(true))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, nilValue())
     }
 
@@ -200,20 +213,20 @@ class AnafiMagnetometerTests: ArsdkEngineTestBase {
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.commonCalibrationMagnetocalibration(calibrate: 1))
         magnetometer?.startCalibrationProcess()
         assertThat(changeCnt, `is`(2))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.none, [], false)))
 
         // cancel the calibration process
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.commonCalibrationMagnetocalibration(calibrate: 0))
         magnetometer?.cancelCalibrationProcess()
         assertThat(changeCnt, `is`(3))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, nilValue())
 
         // starting it again should not send a new command
         magnetometer?.cancelCalibrationProcess()
         assertThat(changeCnt, `is`(3))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, nilValue())
     }
 
@@ -225,7 +238,7 @@ class AnafiMagnetometerTests: ArsdkEngineTestBase {
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.commonCalibrationMagnetocalibration(calibrate: 1))
         magnetometer?.startCalibrationProcess()
         assertThat(changeCnt, `is`(2))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.none, [], false)))
 
         // receive all axes ok
@@ -233,14 +246,14 @@ class AnafiMagnetometerTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationstatechangedEncoder(
                 xaxiscalibration: 1, yaxiscalibration: 1, zaxiscalibration: 1, calibrationfailed: 0))
         assertThat(changeCnt, `is`(3))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.none, [.pitch, .yaw, .roll], false)))
 
         // current axe is yaw
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationaxistocalibratechangedEncoder(axis: .zaxis))
         assertThat(changeCnt, `is`(4))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.yaw, [.pitch, .yaw, .roll], false)))
 
         // current yaw not calibrated
@@ -248,7 +261,7 @@ class AnafiMagnetometerTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationstatechangedEncoder(
                 xaxiscalibration: 1, yaxiscalibration: 1, zaxiscalibration: 0, calibrationfailed: 0))
         assertThat(changeCnt, `is`(5))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.yaw, [.roll, .pitch], false)))
 
         // receive "all axes are ok"
@@ -256,7 +269,7 @@ class AnafiMagnetometerTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationstatechangedEncoder(
                 xaxiscalibration: 1, yaxiscalibration: 1, zaxiscalibration: 1, calibrationfailed: 0))
         assertThat(changeCnt, `is`(6))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.yaw, [.pitch, .yaw, .roll], false)))
 
         // the receive "all axes are ok" but calibrationfailed is true (all axes must be considered as uncalibrated)
@@ -266,7 +279,7 @@ class AnafiMagnetometerTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationstatechangedEncoder(
                 xaxiscalibration: 1, yaxiscalibration: 1, zaxiscalibration: 1, calibrationfailed: 1))
         assertThat(changeCnt, `is`(7))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, presentAnd(`is`(.yaw, [], false)))
         assertThat(latestFailed, `is`(false))
 
@@ -275,7 +288,7 @@ class AnafiMagnetometerTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.commonCalibrationstateMagnetocalibrationstartedchangedEncoder(started: 0))
         assertThat(changeCnt, `is`(9)) // 2 calls: failed, then nil
         assertThat(latestFailed, `is`(true))
-        assertThat(magnetometer!.calibrated, `is`(false))
+        assertThat(magnetometer!.calibrationState, `is`(.required))
         assertThat(magnetometer!.calibrationProcessState, nilValue())
     }
 

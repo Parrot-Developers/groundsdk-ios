@@ -41,14 +41,17 @@ class UserStorageRemovableUserStorage: DeviceComponentController {
     /// `true` if formatting result event is supported by the drone.
     private var formatResultEvtSupported = false
 
+    /// `true` if encryption event is supported by the drone.
+    private var encryptionSupported = false
+
     /// `true` when a format request was sent and a formatting result event is expected.
     private var waitingFormatResult = false
 
     /// Latest state received from device.
-    private var latestState: RemovableUserStorageState?
+    private var latestState: UserStorageFileSystemState?
 
     /// State received during formatting, that will be notified after formatting result.
-    private var pendingState: RemovableUserStorageState?
+    private var pendingState: UserStorageFileSystemState?
 
     /// `true` if formatting type is supported by the drone.
     private var formattingTypeSupported = false
@@ -85,14 +88,19 @@ class UserStorageRemovableUserStorage: DeviceComponentController {
     /// Updates state and formatting capability according to this state and notify changes
     ///
     /// - Parameter state: new state to set
-    private func updateState(_ state: RemovableUserStorageState) {
-        removableUserStorage.update(state: state)
-            .update(canFormat: (state == .needFormat || (formatWhenReadyAllowed && state == .ready)))
+    private func updateState(_ state: UserStorageFileSystemState) {
+        removableUserStorage.update(fileSystemState: state)
+            .update(canFormat: (state == .needFormat || (formatWhenReadyAllowed && state == .ready)
+                || state == .passwordNeeded))
             .notifyUpdated()
     }
 
     private func updateFormattingType(_ formattingType: Set<FormattingType>) {
         removableUserStorage.update(supportedFormattingTypes: formattingType).notifyUpdated()
+    }
+
+    private func updateEncryptionSupported(_ isEncryptionSupported: Bool) {
+        removableUserStorage.update(isEncryptionSupported: isEncryptionSupported).notifyUpdated()
     }
 
     private func updateFormatProgress(formattingStep: FormattingStep, formattingProgress: Int) {
@@ -120,6 +128,34 @@ extension UserStorageRemovableUserStorage: RemovableUserStorageCoreBackend {
         }
         return true
     }
+
+    func formatWithEncryption(password: String, formattingType: FormattingType, newMediaName: String?) -> Bool {
+        if encryptionSupported {
+            switch formattingType {
+            case .quick:
+                sendCommand(ArsdkFeatureUserStorage.formatWithEncryptionEncoder(label: newMediaName ?? "",
+                                                                                password: password, type: .quick))
+            case .full:
+                sendCommand(ArsdkFeatureUserStorage.formatWithEncryptionEncoder(label: newMediaName ?? "",
+                                                                                password: password, type: .full))
+            }
+        }
+        if formatResultEvtSupported {
+            waitingFormatResult = true
+            updateState(.formatting)
+        }
+        return true
+    }
+
+    func sendPassword(password: String, usage: PasswordUsage) -> Bool {
+        switch usage {
+        case .record:
+            sendCommand(ArsdkFeatureUserStorage.encryptionPasswordEncoder(password: password, type: .record))
+        case .usb:
+            sendCommand(ArsdkFeatureUserStorage.encryptionPasswordEncoder(password: password, type: .usb))
+        }
+        return true
+    }
 }
 
 /// User storage decode callback implementation
@@ -132,61 +168,106 @@ extension UserStorageRemovableUserStorage: ArsdkFeatureUserStorageCallback {
         removableUserStorage.update(availableSpace: Int64(availableBytes)).notifyUpdated()
     }
 
+    func onSdcardUuid(uuid: String!) {
+        removableUserStorage.update(uuid: uuid).notifyUpdated()
+    }
+
+    func onDecryption(result: ArsdkFeatureUserStoragePasswordResult) {
+        switch result {
+        case .wrongPassword:
+            updateState(.decryptionWrongPassword)
+            if let lastState = latestState {
+                // since in that case the device will not send another state,
+                // restore latest state received before formatting
+                updateState(lastState)
+            }
+        case .wrongUsage:
+            updateState(.decryptionWrongUsage)
+            if let lastState = latestState {
+                // since in that case the device will not send another state,
+                // restore latest state received before formatting
+                updateState(lastState)
+            }
+        case .success:
+            updateState(.decryptionSucceeded)
+        case .sdkCoreUnknown:
+            ULog.w(.tag, "Unknown result, skipping this event.")
+        }
+    }
+
     func onState(
         physicalState: ArsdkFeatureUserStoragePhyState, fileSystemState: ArsdkFeatureUserStorageFsState,
         attributeBitField: UInt, monitorEnabled: UInt, monitorPeriod: UInt) {
 
-        var state = RemovableUserStorageState.noMedia
+        removableUserStorage.update(isEncrypted: ArsdkFeatureUserStorageAttributeBitField.isSet(.encrypted,
+        inBitField: attributeBitField))
+
+        var newPhysicalState = UserStoragePhysicalState.noMedia
+        var newFileSystemState = UserStorageFileSystemState.error
+
         switch physicalState {
         case .undetected:
-            state = .noMedia
+            newPhysicalState = .noMedia
         case .tooSmall:
-            state = .mediaTooSmall
+            newPhysicalState = .mediaTooSmall
         case .tooSlow:
-            state = .mediaTooSlow
+            newPhysicalState = .mediaTooSlow
         case .usbMassStorage:
-            state = .usbMassStorage
+            newPhysicalState = .usbMassStorage
         case .available:
-            switch fileSystemState {
-            case .unknown:
-                state = .mounting
-            case .formatNeeded:
-                state = .needFormat
-            case .formatting:
-                state = .formatting
-            case .ready:
-                state = .ready
-            case .error:
-                state = .error
-            case .passwordNeeded:
-                state = .passwordNeeded
-            case .sdkCoreUnknown:
-                ULog.w(.tag, "Unknown fileSystemState, skipping this event.")
-                return
-            }
+            newPhysicalState = .available
         case .sdkCoreUnknown:
+            fallthrough
+        @unknown default:
             ULog.w(.tag, "Unknown physicalState, skipping this event.")
             return
         }
+
+        removableUserStorage.update(physicalState: newPhysicalState)
+
+        switch fileSystemState {
+        case .unknown:
+            newFileSystemState = .mounting
+        case .formatNeeded:
+            newFileSystemState = .needFormat
+        case .formatting:
+            newFileSystemState = .formatting
+        case .ready:
+            newFileSystemState = .ready
+        case .error:
+            newFileSystemState = .error
+        case .passwordNeeded:
+            newFileSystemState = .passwordNeeded
+        case .checking:
+            newFileSystemState = .checking
+        case .externalAccessOk:
+            newFileSystemState = .externalAccessOk
+        case .sdkCoreUnknown:
+            fallthrough
+        @unknown default:
+            ULog.w(.tag, "Unknown fileSystemState, skipping this event.")
+            return
+        }
+
         if !formatResultEvtSupported && latestState == .formatting {
             // format result when the drone does not support the format result event
-            if state == .ready {
+            if newFileSystemState == .ready {
                 updateState(.formattingSucceeded)
-            } else if state == .needFormat || state == .error {
+            } else if newFileSystemState == .needFormat || newFileSystemState == .error {
                 updateState(.formattingFailed)
             }
         }
 
-        if waitingFormatResult && state != .formatting {
+        if waitingFormatResult && newFileSystemState != .formatting {
             // new state will be notified after reception of formatting result
-            pendingState = state
+            pendingState = newFileSystemState
         } else {
-            updateState(state)
+            updateState(newFileSystemState)
         }
-        latestState = state
-        if state == .ready && monitorEnabled == 0 {
+        latestState = newFileSystemState
+        if newFileSystemState == .ready && monitorEnabled == 0 {
             sendCommand(ArsdkFeatureUserStorage.startMonitoringEncoder(period: 0))
-        } else if state != .ready && monitorEnabled == 1 {
+        } else if newFileSystemState != .ready && monitorEnabled == 1 {
             sendCommand(ArsdkFeatureUserStorage.stopMonitoringEncoder())
         }
     }
@@ -219,6 +300,9 @@ extension UserStorageRemovableUserStorage: ArsdkFeatureUserStorageCallback {
                                                                                 inBitField: supportedFeaturesBitField)
         formatWhenReadyAllowed = ArsdkFeatureUserStorageFeatureBitField.isSet(.formatWhenReadyAllowed,
                                                                                 inBitField: supportedFeaturesBitField)
+        encryptionSupported = ArsdkFeatureUserStorageFeatureBitField.isSet(.encryptionSupported,
+                                                                           inBitField: supportedFeaturesBitField)
+        updateEncryptionSupported(encryptionSupported)
         if let latestState = latestState {
             updateState(latestState)
         }

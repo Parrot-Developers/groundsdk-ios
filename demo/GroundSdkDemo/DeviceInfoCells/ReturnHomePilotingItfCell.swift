@@ -33,6 +33,8 @@ import GroundSdk
 class ReturnHomePilotingItfCell: PilotingItfProviderContentCell {
 
     @IBOutlet weak var stateLabel: UILabel!
+    @IBOutlet weak var autoTriggerEnabledLabel: UILabel!
+    @IBOutlet weak var autoTriggerModeBt: UIButton!
     @IBOutlet weak var reasonLabel: UILabel!
     @IBOutlet weak var latitude: UILabel!
     @IBOutlet weak var longitude: UILabel!
@@ -96,6 +98,19 @@ class ReturnHomePilotingItfCell: PilotingItfProviderContentCell {
                     self?.activationBt.isEnabled = false
                 }
 
+                if let autoTriggerEnabled = pilotingItf.autoTriggerMode {
+                    if autoTriggerEnabled.value {
+                        self?.autoTriggerEnabledLabel.text = "ON"
+                        self?.autoTriggerModeBt.setTitle("Disable auto trigger", for: .normal)
+                    } else {
+                        self?.autoTriggerEnabledLabel.text = "OFF"
+                        self?.autoTriggerModeBt.setTitle("Enable auto trigger", for: .normal)
+                    }
+                } else {
+                    self?.autoTriggerEnabledLabel.text = "ON"
+                    self?.autoTriggerModeBt.isEnabled = false
+                }
+
                 self?.homeReachability.text = pilotingItf.homeReachability.description
                 if pilotingItf.homeReachability == .warning {
                     self?.delayValue.text = self?.delayFormatter.string(from: pilotingItf.autoTriggerDelay)
@@ -123,6 +138,12 @@ class ReturnHomePilotingItfCell: PilotingItfProviderContentCell {
     @IBAction func cancelAutoTriggerPushed(_ sender: Any) {
         if let pilotingItf = pilotingItf?.value {
             pilotingItf.cancelAutoTrigger()
+        }
+    }
+
+    @IBAction func autoTriggerPushed(_ sender: Any) {
+        if let pilotingItf = pilotingItf?.value, let autoTriggerEnabled = pilotingItf.autoTriggerMode {
+            pilotingItf.autoTriggerMode?.value = !autoTriggerEnabled.value
         }
     }
 }

@@ -61,7 +61,7 @@
 
     id<GSMagnetometer> magnetometer = (id<GSMagnetometer>) [drone getPeripheral:GSPeripherals.magnetometer];
     XCTAssertNotNil(magnetometer);
-    XCTAssertFalse(magnetometer.calibrated);
+    XCTAssertEqual(magnetometer.calibrationState, GSMagnetometerCalibrationStateRequired);
 }
 
 - (void)testMagnetometerWith3StepCalibration {
@@ -73,7 +73,7 @@
                                               GSPeripherals.magnetometerWith3StepCalibration];
     XCTAssertNotNil(magnetometer);
     XCTAssertNil(magnetometer.calibrationProcessState);
-    XCTAssertFalse(magnetometer.calibrated);
+    XCTAssertEqual(magnetometer.calibrationState, GSMagnetometerCalibrationStateRequired);
 
     XCTAssertEqual(magnetometer.calibrationProcessState.currentAxis, GSMagnetometerAxisNone);
     XCTAssertFalse(magnetometer.calibrationProcessState.failed);
@@ -91,7 +91,7 @@
     (id<GSMagnetometerWith1StepCalibration>) [drone getPeripheral:
                                               GSPeripherals.magnetometerWith1StepCalibration];
     XCTAssertNotNil(magnetometer);
-    XCTAssertFalse(magnetometer.calibrated);
+    XCTAssertEqual(magnetometer.calibrationState, GSMagnetometerCalibrationStateRequired);
     XCTAssertEqual(magnetometer.calibrationProcessState.rollProgress, 0);
     XCTAssertEqual(magnetometer.calibrationProcessState.pitchProgress, 0);
     XCTAssertEqual(magnetometer.calibrationProcessState.yawProgress, 0);
@@ -262,7 +262,8 @@
     (id<GSRemovableUserStorage>) [drone getPeripheral:GSPeripherals.removableUserStorage];
     XCTAssertNotNil(removableUserStorage);
 
-    XCTAssertEqual(removableUserStorage.state, GSRemovableUserStorageStateNoMedia);
+    XCTAssertEqual(removableUserStorage.physicalState, GSUserStoragePhysicalStateNoMedia);
+    XCTAssertEqual(removableUserStorage.fileSystemState, GSUserStorageFileSystemStateError);
     XCTAssertNotNil(removableUserStorage.mediaInfo);
     XCTAssertEqual(removableUserStorage.availableSpace, 5);
     XCTAssertEqual(removableUserStorage.canFormat, YES);

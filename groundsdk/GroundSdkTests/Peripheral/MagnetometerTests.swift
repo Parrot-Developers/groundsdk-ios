@@ -60,17 +60,27 @@ class MagnetometerTests: XCTestCase {
         }
 
         // test initial value
-        assertThat(magnetometer.calibrated, `is`(false))
+        assertThat(magnetometer.calibrationState, `is`(.required))
 
         // change calibration status
-        impl.update(calibrated: true).notifyUpdated()
+        impl.update(calibrated: .recommended).notifyUpdated()
         assertThat(cnt, `is`(1))
-        assertThat(magnetometer.calibrated, `is`(true))
+        assertThat(magnetometer.calibrationState, `is`(.recommended))
 
         // change calibration status
-        impl.update(calibrated: false).notifyUpdated()
+        impl.update(calibrated: .calibrated).notifyUpdated()
         assertThat(cnt, `is`(2))
-        assertThat(magnetometer.calibrated, `is`(false))
+        assertThat(magnetometer.calibrationState, `is`(.calibrated))
+
+        // change calibration status
+        impl.update(calibrated: .required).notifyUpdated()
+        assertThat(cnt, `is`(3))
+        assertThat(magnetometer.calibrationState, `is`(.required))
+
+        // calibration same status
+        impl.update(calibrated: .required).notifyUpdated()
+        assertThat(cnt, `is`(3))
+        assertThat(magnetometer.calibrationState, `is`(.required))
     }
 }
 

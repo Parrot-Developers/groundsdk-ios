@@ -211,12 +211,15 @@ class MockDrone: DroneCore, MockDevice {
 
     var impl: MockDeviceImpl<MockDrone>!
 
-    required init(uid: String, model: Drone.Model? = nil, name: String? = nil) {
+    required init(uid: String, model: Drone.Model? = nil, name: String? = nil, boardId: String? = "") {
         let delegate = MockDeviceDelegate<MockDrone>()
         super.init(uid: uid,
                    model: model ?? .anafi4k,
                    name: name ?? "drone-\(uid)",
             delegate: delegate)
+        if let boardId = boardId {
+            boardIdHolder.update(boardId: boardId)
+        }
         impl = MockDeviceImpl(device: self, delegate: delegate)
     }
 
@@ -274,12 +277,15 @@ class MockRemoteControl: RemoteControlCore, MockDevice {
 
     var impl: MockDeviceImpl<MockRemoteControl>!
 
-    required init(uid: String, model: RemoteControl.Model? = nil, name: String? = nil) {
+    required init(uid: String, model: RemoteControl.Model? = nil, name: String? = nil, boardId: String? = "") {
         let delegate = MockDeviceDelegate<MockRemoteControl>()
         super.init(uid: uid,
                    model: model ?? .skyCtrl3,
                    name: name ?? "rc-\(uid)",
             delegate: delegate)
+        if let boardId = boardId {
+            boardIdHolder.update(boardId: boardId)
+        }
         impl = MockDeviceImpl(device: self, delegate: delegate)
     }
 

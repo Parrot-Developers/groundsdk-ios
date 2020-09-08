@@ -113,7 +113,7 @@ public class DeviceStoreUtilityCore<Device: DeviceCore>: NSObject {
         if devices[device.uid] == nil {
             devices[device.uid] = device
             notifyDeviceAdded(device)
-            // register ourself as device name and state change listener
+            // register ourself as device name, state, firmware version and board identifier change listener
             _ = device.nameHolder.register { [unowned self] _ in
                 self.notifyDeviceInfoChanged(device)
             }
@@ -121,6 +121,9 @@ public class DeviceStoreUtilityCore<Device: DeviceCore>: NSObject {
                 self.notifyDeviceInfoChanged(device)
             }
             _ = device.firmwareVersionHolder.register { [unowned self] _ in
+                self.notifyDeviceInfoChanged(device)
+            }
+            _ = device.boardIdHolder.register { [unowned self] _ in
                 self.notifyDeviceInfoChanged(device)
             }
         }

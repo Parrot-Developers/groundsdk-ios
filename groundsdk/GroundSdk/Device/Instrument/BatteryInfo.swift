@@ -50,6 +50,13 @@ public protocol BatteryInfo: Instrument {
     /// From 100 to 0.
     /// `nil` if not available. This can happen if the drone does not know or provide this information.
     var batteryHealth: Int? { get }
+
+    /// Device's current battery cycle count, as an integer
+    /// `nil` if not available. This can happen if the drone does not know or provide this information.
+    var cycleCount: Int? { get }
+
+    /// Battery serial number or `nil` if not available.
+    var serial: String? { get }
 }
 
 // MARK: Objective-C API

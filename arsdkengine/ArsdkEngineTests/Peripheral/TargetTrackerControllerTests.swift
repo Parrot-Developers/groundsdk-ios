@@ -106,6 +106,29 @@ class TargetTrackerControllerTests: ArsdkEngineTestBase {
         assertThat(targetTrackerCnt, `is`(4))
     }
 
+    func testAlwaysRunning() {
+        connect(drone: drone, handle: 1)
+
+        // check that barometer is always started
+        let measureDate = Date()
+        let testBarometerMeasure = BarometerMeasure(pressure: 101325, timestamp: measureDate)
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.controllerInfoBarometer(
+            pressure: 101325,
+            timestamp: measureDate.timeIntervalSince1970 * 1000))
+        var isStarted = systemeBarometer.mockBarometerMeasure(testBarometerMeasure)
+        assertThat(isStarted, equalTo(true))
+
+        // barometer is always started
+        let measureDate2 = Date()
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.controllerInfoBarometer(
+            pressure: 101335,
+            timestamp: measureDate2.timeIntervalSince1970 * 1000))
+
+        let testBarometerMeasure2 = BarometerMeasure(pressure: 101335, timestamp: measureDate2)
+        isStarted = systemeBarometer.mockBarometerMeasure(testBarometerMeasure2)
+        assertThat(isStarted, equalTo(true))
+    }
+
     func testUseOfControllerAsLocation() {
         connect(drone: drone, handle: 1)
         // start
@@ -114,11 +137,6 @@ class TargetTrackerControllerTests: ArsdkEngineTestBase {
 
         // check that force location not used
         assertThat(systemePosition.forcedUpdates, `is`(false))
-        // check that barometer is not started
-        let measureDate = Date()
-        let testBarometerMeasure = BarometerMeasure(pressure: 101325, timestamp: measureDate)
-        var isStarted = systemeBarometer.mockBarometerMeasure(testBarometerMeasure)
-        assertThat(isStarted, equalTo(false))
 
         // uses the controller as target
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.followMeSetTargetIsController(targetIsController: 1))
@@ -129,12 +147,6 @@ class TargetTrackerControllerTests: ArsdkEngineTestBase {
 
         // force updating location is ON
         assertThat(systemePosition.forcedUpdates, `is`(true))
-
-        // send a mock barometer measurement
-        expectCommand(handle: 1, expectedCmd: ExpectedCmd.controllerInfoBarometer(
-            pressure: 101325, timestamp: measureDate.timeIntervalSince1970))
-        isStarted = systemeBarometer.mockBarometerMeasure(testBarometerMeasure)
-        assertThat(isStarted, equalTo(true))
 
         // stop
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.followMeSetTargetIsController(targetIsController: 0))
@@ -163,11 +175,6 @@ class TargetTrackerControllerTests: ArsdkEngineTestBase {
 
         // location is not forced
         assertThat(systemePosition.forcedUpdates, `is`(false))
-        // barometer is not started
-        let measureDate2 = Date()
-        let testBarometerMeasure2 = BarometerMeasure(pressure: 101325, timestamp: measureDate2)
-        isStarted = systemeBarometer.mockBarometerMeasure(testBarometerMeasure2)
-        assertThat(isStarted, equalTo(false))
 
         disconnect(drone: drone, handle: 1)
         assertThat(targetTracker!.targetIsController, `is`(false))

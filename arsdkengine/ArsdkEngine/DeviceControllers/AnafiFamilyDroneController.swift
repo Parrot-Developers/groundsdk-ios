@@ -120,6 +120,9 @@ class AnafiFamilyDroneController: DroneController {
         componentControllers.append(PhotoProgressIndicatorController(deviceController: self))
         componentControllers.append(AnafiPilotingControl(deviceController: self))
         componentControllers.append(BatteryGaugeUpdaterController(deviceController: self))
+        componentControllers.append(DriController(deviceController: self))
+        componentControllers.append(LogControlController(deviceController: self))
+        componentControllers.append(CertificateUploaderController(deviceController: self))
         sendDateAndTime = { [weak self] in
             let dateFormatter = DateFormatter()
             dateFormatter.timeZone = NSTimeZone.system

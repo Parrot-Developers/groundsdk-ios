@@ -130,8 +130,10 @@ class WebSocketClientSession: WebSocketSession {
     ///
     /// - Returns: web socket key
     private func generateKey() -> String {
-        let bytes = (0..<4).map { _ in arc4random() }
-        return Data(bytes: UnsafePointer(bytes), count: bytes.count * MemoryLayout<UInt32>.size).base64EncodedString()
+        let bytes: [UInt32] = (0..<4).map { _ in arc4random() }
+        return withUnsafePointer(to: bytes) {
+            return Data(bytes: $0, count: bytes.count * MemoryLayout<UInt32>.size).base64EncodedString()
+        }
     }
 
     /// Process received data

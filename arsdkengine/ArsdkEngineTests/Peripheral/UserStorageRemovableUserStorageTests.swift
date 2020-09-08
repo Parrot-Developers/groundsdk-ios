@@ -41,7 +41,7 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
     var storageRef: Ref<RemovableUserStorage>?
     var changeCnt = 0
     var transiantStateTester: (() -> Void)?
-    var expectedState: RemovableUserStorageState?
+    var expectedState: UserStorageFileSystemState?
 
     override func setUp() {
         super.setUp()
@@ -85,31 +85,43 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
         }
 
         // check default values
-        assertThat(storage!.state, `is`(.noMedia))
+        assertThat(storage!.physicalState, `is`(.noMedia))
         assertThat(changeCnt, `is`(1))
 
         // Format denied
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.userStorageFormatResultEncoder(result: .denied))
-        assertThat(storage!.state, `is`(.formattingDenied))
+        assertThat(storage!.fileSystemState, `is`(.formattingDenied))
         assertThat(changeCnt, `is`(2))
+
+        // test decryptionWrongPassword
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageDecryptionEncoder(result: .wrongPassword))
+        assertThat(storage!.fileSystemState, `is`(.decryptionWrongPassword))
+        assertThat(changeCnt, `is`(3))
+
+        // test decryptionWrongUsage
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageDecryptionEncoder(result: .wrongUsage))
+        assertThat(storage!.fileSystemState, `is`(.decryptionWrongUsage))
+        assertThat(changeCnt, `is`(4))
 
         // Format success
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.userStorageFormatResultEncoder(result: .success))
-        assertThat(storage!.state, `is`(.formattingSucceeded))
-        assertThat(changeCnt, `is`(3))
+        assertThat(storage!.fileSystemState, `is`(.formattingSucceeded))
+        assertThat(changeCnt, `is`(5))
 
         // Format error
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.userStorageFormatResultEncoder(result: .error))
-        assertThat(storage!.state, `is`(.formattingFailed))
-        assertThat(changeCnt, `is`(4))
+        assertThat(storage!.fileSystemState, `is`(.formattingFailed))
+        assertThat(changeCnt, `is`(6))
 
         // check that all arsdk state have their corresponding gsdk states
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .tooSmall, fileSystemState: .error, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.mediaTooSmall))
-        assertThat(changeCnt, `is`(5))
+        assertThat(storage!.physicalState, `is`(.mediaTooSmall))
+        assertThat(changeCnt, `is`(7))
 
         // since monitor will be declared as enabled, we should stop monitoring
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageStopMonitoring())
@@ -117,65 +129,65 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .tooSlow, fileSystemState: .formatNeeded, attributeBitField: 0,
                 monitorEnabled: 1, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.mediaTooSlow))
-        assertThat(changeCnt, `is`(6))
+        assertThat(storage!.physicalState, `is`(.mediaTooSlow))
+        assertThat(changeCnt, `is`(8))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .usbMassStorage, fileSystemState: .unknown, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.usbMassStorage))
-        assertThat(changeCnt, `is`(7))
+        assertThat(storage!.physicalState, `is`(.usbMassStorage))
+        assertThat(changeCnt, `is`(9))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .undetected, fileSystemState: .formatting, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.noMedia))
-        assertThat(changeCnt, `is`(8))
+        assertThat(storage!.physicalState, `is`(.noMedia))
+        assertThat(changeCnt, `is`(10))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .error, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.error))
-        assertThat(changeCnt, `is`(9))
+        assertThat(storage!.fileSystemState, `is`(.error))
+        assertThat(changeCnt, `is`(11))
 
         // sdkCoreUnknown should be skipped
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .sdkCoreUnknown, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.error))
-        assertThat(changeCnt, `is`(9))
+        assertThat(storage!.fileSystemState, `is`(.error))
+        assertThat(changeCnt, `is`(11))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .unknown, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.mounting))
-        assertThat(changeCnt, `is`(10))
+        assertThat(storage!.fileSystemState, `is`(.mounting))
+        assertThat(changeCnt, `is`(12))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatNeeded, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.needFormat))
-        assertThat(changeCnt, `is`(11))
+        assertThat(storage!.fileSystemState, `is`(.needFormat))
+        assertThat(changeCnt, `is`(13))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatting, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.formatting))
-        assertThat(changeCnt, `is`(12))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
+        assertThat(changeCnt, `is`(14))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
                 monitorEnabled: 1, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.ready))
-        assertThat(changeCnt, `is`(13))
+        assertThat(storage!.fileSystemState, `is`(.ready))
+        assertThat(changeCnt, `is`(15))
 
         // since monitor will be declared as disabled, we should start monitoring
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageStartMonitoring(period: 0))
@@ -183,24 +195,57 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.ready))
-        assertThat(changeCnt, `is`(13))
+        assertThat(storage!.fileSystemState, `is`(.ready))
+        assertThat(changeCnt, `is`(15))
 
         // sdkCoreUnknown should be skipped
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .sdkCoreUnknown, fileSystemState: .unknown, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.ready))
-        assertThat(changeCnt, `is`(13))
+        assertThat(storage!.fileSystemState, `is`(.ready))
+        assertThat(storage!.isEncrypted, `is`(false))
+        assertThat(changeCnt, `is`(15))
+
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageStartMonitoring(period: 0))
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageStateEncoder(
+                physicalState: .available, fileSystemState: .ready,
+                attributeBitField: Bitfield<ArsdkFeatureUserStorageAttribute>.of([.encrypted]),
+                monitorEnabled: 0, monitorPeriod: 0))
+        assertThat(storage!.fileSystemState, `is`(.ready))
+        assertThat(storage!.isEncrypted, `is`(true))
+        assertThat(changeCnt, `is`(16))
 
         // test passwordNeeded format
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .passwordNeeded, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.passwordNeeded))
-        assertThat(changeCnt, `is`(14))
+        assertThat(storage!.fileSystemState, `is`(.passwordNeeded))
+        assertThat(changeCnt, `is`(17))
+
+        // test decryptionSucceeded
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageDecryptionEncoder(result: .success))
+        assertThat(storage!.fileSystemState, `is`(.decryptionSucceeded))
+        assertThat(changeCnt, `is`(18))
+
+        // test checking
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageStateEncoder(
+                physicalState: .available, fileSystemState: .checking, attributeBitField: 0,
+                monitorEnabled: 0, monitorPeriod: 0))
+        assertThat(storage!.fileSystemState, `is`(.checking))
+        assertThat(changeCnt, `is`(19))
+
+        // test external access ok
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageStateEncoder(
+                physicalState: .usbMassStorage, fileSystemState: .externalAccessOk, attributeBitField: 0,
+                monitorEnabled: 0, monitorPeriod: 0))
+        assertThat(storage!.fileSystemState, `is`(.externalAccessOk))
+        assertThat(changeCnt, `is`(20))
     }
 
     func testMediaInfo() {
@@ -215,7 +260,7 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
                 monitorEnabled: 1, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.ready))
+        assertThat(storage!.fileSystemState, `is`(.ready))
         assertThat(changeCnt, `is`(2))
 
         // Mock media ready from low level
@@ -263,7 +308,7 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
                 monitorEnabled: 1, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.ready))
+        assertThat(storage!.fileSystemState, `is`(.ready))
         assertThat(changeCnt, `is`(2))
 
         // mock available space received
@@ -299,7 +344,7 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
         }
 
         // check initial values
-        assertThat(storage!.state, `is`(.noMedia))
+        assertThat(storage!.physicalState, `is`(.noMedia))
         assertThat(changeCnt, `is`(1))
 
         // only test when the state is .needFormat. The other tests have been checked in the gsdk tests.
@@ -307,19 +352,19 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatNeeded, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.needFormat))
+        assertThat(storage!.fileSystemState, `is`(.needFormat))
         assertThat(changeCnt, `is`(2))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageFormat(label: "MediaName"))
         var res = storage?.format(formattingType: .quick, newMediaName: "MediaName")
         assertThat(res, presentAnd(`is`(true)))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(changeCnt, `is`(3))
 
         // FormatResult received before StorageState
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageFormatResultEncoder(result: .success))
-        assertThat(storage!.state, `is`(.formattingSucceeded))
+        assertThat(storage!.fileSystemState, `is`(.formattingSucceeded))
         assertThat(changeCnt, `is`(4))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageStartMonitoring(period: 0))
@@ -327,7 +372,7 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.ready))
+        assertThat(storage!.fileSystemState, `is`(.ready))
         assertThat(changeCnt, `is`(5))
 
         // check that passing nil sends the command with an empty string
@@ -335,13 +380,13 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatNeeded, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.needFormat))
+        assertThat(storage!.fileSystemState, `is`(.needFormat))
         assertThat(changeCnt, `is`(6))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageFormat(label: ""))
         res = storage?.format(formattingType: .quick)
         assertThat(res, presentAnd(`is`(true)))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(changeCnt, `is`(7))
 
         // FormatResult received after StorageState
@@ -351,27 +396,27 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(changeCnt, `is`(7))
 
         transiantStateTester = {
-            assertThat(self.storage!.state, `is`(.formattingSucceeded))
+            assertThat(self.storage!.fileSystemState, `is`(.formattingSucceeded))
             assertThat(self.changeCnt, `is`(8))
         }
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageFormatResultEncoder(result: .success))
-        assertThat(storage!.state, `is`(.ready))
+        assertThat(storage!.fileSystemState, `is`(.ready))
         assertThat(changeCnt, `is`(9))
 
         // FormatResult is denied
         // Transient state should be issued, then state should be back at the latests state
         transiantStateTester = {
-            assertThat(self.storage!.state, `is`(.formattingDenied))
+            assertThat(self.storage!.fileSystemState, `is`(.formattingDenied))
             assertThat(self.changeCnt, `is`(10))
         }
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageFormatResultEncoder(result: .denied))
-        assertThat(storage!.state, `is`(.ready))
+        assertThat(storage!.fileSystemState, `is`(.ready))
         assertThat(changeCnt, `is`(11))
     }
 
@@ -379,7 +424,7 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
         connect(drone: drone, handle: 1)
 
         // check initial values
-        assertThat(storage!.state, `is`(.noMedia))
+        assertThat(storage!.physicalState, `is`(.noMedia))
         assertThat(changeCnt, `is`(1))
 
         // only test when the state is .needFormat. The other tests have been checked in the gsdk tests.
@@ -387,13 +432,13 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatNeeded, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.needFormat))
+        assertThat(storage!.fileSystemState, `is`(.needFormat))
         assertThat(changeCnt, `is`(2))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageFormat(label: "MediaName"))
         var res = storage?.format(formattingType: .quick, newMediaName: "MediaName")
         assertThat(res, presentAnd(`is`(true)))
-        assertThat(storage!.state, `is`(.needFormat))
+        assertThat(storage!.fileSystemState, `is`(.needFormat))
         assertThat(changeCnt, `is`(2))
 
         // FormatResult received StorageState formatting
@@ -401,11 +446,11 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatting, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(changeCnt, `is`(3))
 
         transiantStateTester = {
-            assertThat(self.storage!.state, `is`(.formattingSucceeded))
+            assertThat(self.storage!.fileSystemState, `is`(.formattingSucceeded))
             assertThat(self.changeCnt, `is`(4))
         }
 
@@ -414,7 +459,7 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.ready))
+        assertThat(storage!.fileSystemState, `is`(.ready))
         assertThat(changeCnt, `is`(5))
 
         // check that passing nil sends the command with an empty string
@@ -422,13 +467,13 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatNeeded, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.needFormat))
+        assertThat(storage!.fileSystemState, `is`(.needFormat))
         assertThat(changeCnt, `is`(6))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageFormat(label: ""))
         res = storage?.format(formattingType: .quick)
         assertThat(res, presentAnd(`is`(true)))
-        assertThat(storage!.state, `is`(.needFormat))
+        assertThat(storage!.fileSystemState, `is`(.needFormat))
         assertThat(changeCnt, `is`(6))
 
         // FormatResult received StorageState formatting
@@ -436,11 +481,11 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatting, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(changeCnt, `is`(7))
 
         transiantStateTester = {
-            assertThat(self.storage!.state, `is`(.formattingSucceeded))
+            assertThat(self.storage!.fileSystemState, `is`(.formattingSucceeded))
             assertThat(self.changeCnt, `is`(8))
         }
 
@@ -449,7 +494,7 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.ready))
+        assertThat(storage!.fileSystemState, `is`(.ready))
         assertThat(changeCnt, `is`(9))
 
         // format without label
@@ -457,13 +502,13 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatNeeded, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.needFormat))
+        assertThat(storage!.fileSystemState, `is`(.needFormat))
         assertThat(changeCnt, `is`(10))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageFormat(label: ""))
         res = storage?.format(formattingType: .quick)
         assertThat(res, presentAnd(`is`(true)))
-        assertThat(storage!.state, `is`(.needFormat))
+        assertThat(storage!.fileSystemState, `is`(.needFormat))
         assertThat(changeCnt, `is`(10))
 
         // FormatResult received StorageState formatting
@@ -471,21 +516,119 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatting, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(changeCnt, `is`(11))
 
         // FormatResult is failed by the receipt of state .formatNeeded instead of .ready
         // Transient state should be issued, then state should be back at the state received
         transiantStateTester = {
-            assertThat(self.storage!.state, `is`(.formattingFailed))
+            assertThat(self.storage!.fileSystemState, `is`(.formattingFailed))
             assertThat(self.changeCnt, `is`(12))
         }
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatNeeded, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.needFormat))
+        assertThat(storage!.fileSystemState, `is`(.needFormat))
         assertThat(changeCnt, `is`(13))
+    }
+
+    func testFormatWithEncryption() {
+        connect(drone: drone, handle: 1) {
+            self.mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.userStorageCapabilitiesEncoder(
+                supportedFeaturesBitField: Bitfield<ArsdkFeatureUserStorageFeature>.of(
+                    .formatResultEvtSupported, .formatWhenReadyAllowed, .encryptionSupported)))
+        }
+
+        // check initial values
+        assertThat(storage!.physicalState, `is`(.noMedia))
+        assertThat(changeCnt, `is`(1))
+
+        // only test when the state is .needFormat. The other tests have been checked in the gsdk tests.
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageStateEncoder(
+                physicalState: .available, fileSystemState: .formatNeeded, attributeBitField: 0,
+                monitorEnabled: 0, monitorPeriod: 0))
+        assertThat(storage!.fileSystemState, `is`(.needFormat))
+        assertThat(changeCnt, `is`(2))
+
+        // Format with encrytion with quick type
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageFormatWithEncryption(
+            label: "MediaName", password: "password", type: .quick))
+        var res = storage?.formatWithEncryption(password: "password", formattingType: .quick, newMediaName: "MediaName")
+        assertThat(res, presentAnd(`is`(true)))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
+        assertThat(changeCnt, `is`(3))
+
+        // sd card uuid received
+        mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.userStorageSdcardUuidEncoder(uuid: "uuid"))
+        assertThat(storage!.uuid, `is`("uuid"))
+        assertThat(changeCnt, `is`(4))
+
+        // FormatResult received before StorageState
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageFormatResultEncoder(result: .success))
+        assertThat(storage!.fileSystemState, `is`(.formattingSucceeded))
+        assertThat(changeCnt, `is`(5))
+
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageStartMonitoring(period: 0))
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageStateEncoder(
+                physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
+                monitorEnabled: 0, monitorPeriod: 0))
+        assertThat(storage!.fileSystemState, `is`(.ready))
+        assertThat(changeCnt, `is`(6))
+
+        // check that passing nil sends the command with an empty string
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageStateEncoder(
+                physicalState: .available, fileSystemState: .formatNeeded, attributeBitField: 0,
+                monitorEnabled: 0, monitorPeriod: 0))
+        assertThat(storage!.fileSystemState, `is`(.needFormat))
+        assertThat(changeCnt, `is`(7))
+
+        // Format with encrytion with full type
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageFormatWithEncryption(
+            label: "MediaName", password: "password", type: .full))
+        res = storage?.formatWithEncryption(password: "password", formattingType: .full, newMediaName: "MediaName")
+        assertThat(res, presentAnd(`is`(true)))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
+        assertThat(changeCnt, `is`(8))
+
+        // sd card uuid received without having changed
+        mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.userStorageSdcardUuidEncoder(uuid: "uuid"))
+        assertThat(storage!.uuid, `is`("uuid"))
+        assertThat(changeCnt, `is`(8))
+
+        // FormatResult received after StorageState
+        // State pending and no change
+        expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageStartMonitoring(period: 0))
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageStateEncoder(
+                physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
+                monitorEnabled: 0, monitorPeriod: 0))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
+        assertThat(changeCnt, `is`(8))
+
+        transiantStateTester = {
+            assertThat(self.storage!.fileSystemState, `is`(.formattingSucceeded))
+            assertThat(self.changeCnt, `is`(9))
+        }
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageFormatResultEncoder(result: .success))
+        assertThat(storage!.fileSystemState, `is`(.ready))
+        assertThat(changeCnt, `is`(10))
+
+        // FormatResult is denied
+        // Transient state should be issued, then state should be back at the latests state
+        transiantStateTester = {
+            assertThat(self.storage!.fileSystemState, `is`(.formattingDenied))
+            assertThat(self.changeCnt, `is`(11))
+        }
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.userStorageFormatResultEncoder(result: .denied))
+        assertThat(storage!.fileSystemState, `is`(.ready))
+        assertThat(changeCnt, `is`(12))
     }
 
     func testFormattingType() {
@@ -498,7 +641,7 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
                 supportedFeaturesBitField: Bitfield<ArsdkFeatureUserStorageFeature>.of(.formatResultEvtSupported,
                                                                                        .formatWhenReadyAllowed)))
         }
-        assertThat(storage!.state, `is`(.noMedia))
+        assertThat(storage!.physicalState, `is`(.noMedia))
         assertThat(changeCnt, `is`(1))
         assertThat(storage!, supports(formattingTypes: [.quick, .full]))
 
@@ -532,13 +675,13 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .formatNeeded, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.needFormat))
+        assertThat(storage!.fileSystemState, `is`(.needFormat))
         assertThat(changeCnt, `is`(5))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageFormatWithType(label: "MediaName", type: .quick))
         let res = storage?.format(formattingType: .quick, newMediaName: "MediaName")
         assertThat(res, presentAnd(`is`(true)))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(changeCnt, `is`(6))
     }
 
@@ -549,20 +692,20 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
                                                                                        .formatWhenReadyAllowed)))
         }
 
-        assertThat(storage!.state, `is`(.noMedia))
+        assertThat(storage!.physicalState, `is`(.noMedia))
         assertThat(changeCnt, `is`(1))
 
         mockArsdkCore.onCommandReceived(
             1, encoder: CmdEncoder.userStorageStateEncoder(
                 physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
                 monitorEnabled: 1, monitorPeriod: 0))
-        assertThat(storage!.state, `is`(.ready))
+        assertThat(storage!.fileSystemState, `is`(.ready))
         assertThat(changeCnt, `is`(2))
 
         expectCommand(handle: 1, expectedCmd: ExpectedCmd.userStorageFormat(label: "MediaName"))
         let res = storage?.format(formattingType: .quick, newMediaName: "MediaName")
         assertThat(res, presentAnd(`is`(true)))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(changeCnt, `is`(3))
 
         mockArsdkCore.onCommandReceived(
@@ -574,35 +717,35 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
         assertThat(storage!.formattingState, nilValue())
         self.mockArsdkCore.onCommandReceived(1, encoder:
             CmdEncoder.userStorageFormatProgressEncoder(step: .partitioning, percentage: 0))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(storage!.formattingState?.step, `is`(.partitioning))
         assertThat(storage!.formattingState?.progress, `is`(0))
         assertThat(changeCnt, `is`(4))
 
         self.mockArsdkCore.onCommandReceived(1, encoder:
             CmdEncoder.userStorageFormatProgressEncoder(step: .partitioning, percentage: 20))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(storage!.formattingState?.step, `is`(.partitioning))
         assertThat(storage!.formattingState?.progress, `is`(20))
         assertThat(changeCnt, `is`(5))
 
         self.mockArsdkCore.onCommandReceived(1, encoder:
             CmdEncoder.userStorageFormatProgressEncoder(step: .creatingFs, percentage: 30))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(storage!.formattingState?.step, `is`(.creatingFs))
         assertThat(storage!.formattingState?.progress, `is`(30))
         assertThat(changeCnt, `is`(6))
 
         self.mockArsdkCore.onCommandReceived(1, encoder:
             CmdEncoder.userStorageFormatProgressEncoder(step: .clearingData, percentage: 50))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(storage!.formattingState?.step, `is`(.clearingData))
         assertThat(storage!.formattingState?.progress, `is`(50))
         assertThat(changeCnt, `is`(7))
 
         self.mockArsdkCore.onCommandReceived(1, encoder:
             CmdEncoder.userStorageFormatProgressEncoder(step: .clearingData, percentage: 100))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(storage!.formattingState?.step, `is`(.clearingData))
         assertThat(storage!.formattingState?.progress, `is`(100))
         assertThat(changeCnt, `is`(8))
@@ -610,13 +753,13 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
         // same command received, should not change count.
         self.mockArsdkCore.onCommandReceived(1, encoder:
             CmdEncoder.userStorageFormatProgressEncoder(step: .clearingData, percentage: 100))
-        assertThat(storage!.state, `is`(.formatting))
+        assertThat(storage!.fileSystemState, `is`(.formatting))
         assertThat(storage!.formattingState?.step, `is`(.clearingData))
         assertThat(storage!.formattingState?.progress, `is`(100))
         assertThat(changeCnt, `is`(8))
 
         transiantStateTester = {
-            assertThat(self.storage!.state, `is`(.formattingSucceeded))
+            assertThat(self.storage!.fileSystemState, `is`(.formattingSucceeded))
             assertThat(self.changeCnt, `is`(9))
         }
         mockArsdkCore.onCommandReceived(1, encoder: CmdEncoder.userStorageFormatResultEncoder(result: .success))
@@ -627,7 +770,7 @@ class UserStorageRemovableUserStorageTests: ArsdkEngineTestBase {
                 physicalState: .available, fileSystemState: .ready, attributeBitField: 0,
                 monitorEnabled: 0, monitorPeriod: 0))
 
-        assertThat(storage!.state, `is`(.ready))
+        assertThat(storage!.fileSystemState, `is`(.ready))
         assertThat(changeCnt, `is`(10))
         assertThat(storage!.formattingState, nilValue())
     }

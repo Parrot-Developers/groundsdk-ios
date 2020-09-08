@@ -14,3 +14,6 @@ disabled_rules:
   - large_tuple
   - vertical_parameter_alignment
   - cyclomatic_complexity
+
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+- Pods

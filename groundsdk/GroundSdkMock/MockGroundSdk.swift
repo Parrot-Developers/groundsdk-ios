@@ -326,6 +326,10 @@ public class MockGroundSdk: NSObject {
         case Peripherals.copilot.uid:
             let copilot = CopilotCore(store: drone.peripheralStore, backend: copilotMockBackend)
             copilot.publish()
+        case Peripherals.dri.uid:
+            let dri = DriCore(
+                store: drone.peripheralStore, backend: driMockBackend)
+            dri.publish()
         default:
             print("Adding peripheral interface \(uid) is not implemented in MockGroundSdk")
         }
@@ -339,7 +343,7 @@ public class MockGroundSdk: NSObject {
                 store: rc.peripheralStore,
                 backend: skyCtrl3GamepadMockBackend)
             // mock the supported drone models
-            skyCtrl3Gamepad.updateSupportedDroneModels([.anafi4k, .anafiThermal])
+            skyCtrl3Gamepad.updateSupportedDroneModels([.anafi4k, .anafiThermal, .anafiUa, .anafiUsa])
             skyCtrl3Gamepad.publish()
         default:
             print("Adding peripheral interface \(uid) is not implemented in MockGroundSdk")
@@ -380,6 +384,10 @@ public class MockGroundSdk: NSObject {
         func set(preferredTarget: ReturnHomeTarget) -> Bool { return false }
         func set(minAltitude: Double) -> Bool { return false }
         func set(autoStartOnDisconnectDelay: Int) -> Bool { return false }
+        func set(endingBehavior: ReturnHomeEndingBehavior) -> Bool { return false }
+        func set(autoTriggerMode: Bool) -> Bool { return false }
+        func set(endingHoveringAltitude: Double) -> Bool { return false }
+        func setCustomLocation(latitude: Double, longitude: Double, altitude: Double) { }
     }
     let returnHomePilotingItfMockBackend = ReturnHomePilotingItfMockBackend()
 
@@ -762,7 +770,17 @@ public class MockGroundSdk: NSObject {
 
     let removableUserStorageBackend = RemovableUserStorageMockBackend()
     class RemovableUserStorageMockBackend: RemovableUserStorageCoreBackend {
+        func formatWithEncryption(password: String, formattingType: FormattingType,
+                                  newMediaName: String?) -> Bool { return true }
+
+        func sendPassword(password: String, usage: PasswordUsage) -> Bool { return true }
+
         func format(formattingType: FormattingType, newMediaName: String?) -> Bool { return true }
+    }
+
+    let driMockBackend = DriMockBackend()
+    class DriMockBackend: DriBackend {
+        func set(mode: Bool) -> Bool {  return true }
     }
 }
 
@@ -878,6 +896,7 @@ class TestPeripheralCore: ComponentCore, TestPeripheral {
 
 extension MockGroundSdk: ManualCopterPilotingItfBackend, ReturnHomePilotingItfBackend,
 GuidedPilotingItfBackend {
+
     public func moveWithGuidedDirective(guidedDirective: GuidedDirective) {}
     public func set(roll: Int) { }
     public func set(pitch: Int) { }
@@ -905,4 +924,8 @@ GuidedPilotingItfBackend {
     public func set(autoStartOnDisconnectDelay: Int) -> Bool { return false }
     public func set(useThrownTakeOffForSmartTakeOff: Bool) -> Bool { return false }
     public func cancelAutoTrigger() { }
+    public func set(endingBehavior: ReturnHomeEndingBehavior) -> Bool { return false }
+    public func set(autoTriggerMode: Bool) -> Bool { return false }
+    public func set(endingHoveringAltitude: Double) -> Bool { return false }
+    public func setCustomLocation(latitude: Double, longitude: Double, altitude: Double) { }
 }

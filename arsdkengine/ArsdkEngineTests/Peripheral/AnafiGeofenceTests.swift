@@ -268,23 +268,41 @@ class AnafiGeofenceTests: ArsdkEngineTestBase {
         assertThat(geofence?.center, nilValue())
         assertThat(changeCnt, `is`(1))
 
-        // update center
-        mockArsdkCore.onCommandReceived(
-            1, encoder: CmdEncoder.ardrone3GpssettingsstateHomechangedEncoder(
-                latitude: 1.1, longitude: 2.2, altitude: 3.3))
+        connect(drone: drone, handle: 1) {
+            // send a max altitide setting at connection in order to have some range values in the deviceStore
+            // Otherwise, the interface will not be published after the resetArsdkEngine
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.ardrone3PilotingsettingsstateMaxaltitudechangedEncoder(
+                    current: 50, min: 0, max: 150))
+        }
 
-        assertThat(geofence?.center, presentAnd(`is`(latitude: 1.1, longitude: 2.2)))
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3GpssettingsstateGeofencecenterchangedEncoder(latitude: 2.5, longitude: 3.5))
+        assertThat(geofence?.center, presentAnd(`is`(latitude: 2.5, longitude: 3.5)))
         assertThat(changeCnt, `is`(2))
 
-        // update same value
         mockArsdkCore.onCommandReceived(
-            1, encoder: CmdEncoder.ardrone3GpssettingsstateHomechangedEncoder(
-                latitude: 1.1, longitude: 2.2, altitude: 4.4))
+            1, encoder: CmdEncoder.ardrone3GpssettingsstateGeofencecenterchangedEncoder(latitude: 8.5, longitude: 2.5))
+        assertThat(geofence?.center, presentAnd(`is`(latitude: 8.5, longitude: 2.5)))
+        assertThat(changeCnt, `is`(3))
 
-        assertThat(geofence?.center, presentAnd(`is`(latitude: 1.1, longitude: 2.2)))
-        assertThat(changeCnt, `is`(3)) // '3' because the CLLocation has a new timestamp
-        // disconnect
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3GpssettingsstateGeofencecenterchangedEncoder(latitude: 8.5, longitude: 2.5))
+        assertThat(geofence?.center, presentAnd(`is`(latitude: 8.5, longitude: 2.5)))
+        assertThat(changeCnt, `is`(4)) // '6' because the CLLocation has a new timestamp
+
         disconnect(drone: drone, handle: 1)
-        assertThat(geofence?.center, presentAnd(`is`(latitude: 1.1, longitude: 2.2)))
+
+        connect(drone: drone, handle: 1) {
+            // send a max altitude setting at connection in order to have some range values in the deviceStore
+            // Otherwise, the interface will not be published after the resetArsdkEngine
+            self.mockArsdkCore.onCommandReceived(
+                1, encoder: CmdEncoder.ardrone3PilotingsettingsstateMaxaltitudechangedEncoder(
+                current: 50, min: 0, max: 150))
+        }
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3GpssettingsstateGeofencecenterchangedEncoder(latitude: 8, longitude: 9))
+        assertThat(geofence?.center, presentAnd(`is`(latitude: 8, longitude: 9)))
+        assertThat(changeCnt, `is`(5))
     }
 }

@@ -34,26 +34,49 @@ import GroundSdk
 class AnafiGuidedPilotingItf: GuidedPilotingItfController {
 
     // Send the command for a MoveTo location
-    override func sendMoveToLocationCommand(locationDirective: LocationDirectiveCore) {
-        let orientationModeValue: ArsdkFeatureArdrone3PilotingMovetoOrientationMode
-        var heading = 0.0
+    override func sendMoveToLocationCommand(locationDirective: LocationDirective) {
 
-        switch locationDirective.orientation {
-        case .none:
-            orientationModeValue = .none
-        case .toTarget:
-            orientationModeValue = .toTarget
-        case .headingStart(let headingValue):
-            orientationModeValue = .headingStart
-            heading = headingValue
-        case .headingDuring(let headingValue):
-            orientationModeValue = .headingDuring
-            heading = headingValue
+        if let speed = locationDirective.speed {
+            let orientationModeValue: ArsdkFeatureMoveOrientationMode
+            var heading = 0.0
+
+            switch locationDirective.orientation {
+            case .none:
+                orientationModeValue = .none
+            case .toTarget:
+                orientationModeValue = .toTarget
+            case .headingStart(let headingValue):
+                orientationModeValue = .headingStart
+                heading = headingValue
+            case .headingDuring(let headingValue):
+                orientationModeValue = .headingDuring
+                heading = headingValue
+            }
+            sendCommand(ArsdkFeatureMove.extendedMoveToEncoder(
+                latitude: locationDirective.latitude, longitude: locationDirective.longitude,
+                altitude: locationDirective.altitude, orientationMode: orientationModeValue,
+                heading: Float(heading), maxHorizontalSpeed: Float(speed.horizontalSpeed),
+                maxVerticalSpeed: Float(speed.verticalSpeed), maxYawRotationSpeed: Float(speed.yawRotationSpeed)))
+        } else {
+            let orientationModeValue: ArsdkFeatureArdrone3PilotingMovetoOrientationMode
+            var heading = 0.0
+
+            switch locationDirective.orientation {
+            case .none:
+                orientationModeValue = .none
+            case .toTarget:
+                orientationModeValue = .toTarget
+            case .headingStart(let headingValue):
+                orientationModeValue = .headingStart
+                heading = headingValue
+            case .headingDuring(let headingValue):
+                orientationModeValue = .headingDuring
+                heading = headingValue
+            }
+            sendCommand(ArsdkFeatureArdrone3Piloting.moveToEncoder(
+                latitude: locationDirective.latitude, longitude: locationDirective.longitude,
+                altitude: locationDirective.altitude, orientationMode: orientationModeValue, heading: Float(heading)))
         }
-
-        sendCommand(ArsdkFeatureArdrone3Piloting.moveToEncoder(
-            latitude: locationDirective.latitude, longitude: locationDirective.longitude,
-            altitude: locationDirective.altitude, orientationMode: orientationModeValue, heading: Float(heading)))
     }
 
     // Send the command to cancel a MoveTo location
@@ -67,21 +90,37 @@ class AnafiGuidedPilotingItf: GuidedPilotingItfController {
     }
 
     // Send the command for a Relative Move
-    override func sendRelativeMoveCommand(relativeMoveDirective: RelativeMoveDirectiveCore) {
+    override func sendRelativeMoveCommand(relativeMoveDirective: RelativeMoveDirective) {
         // save this Directitive as an Initial Directive. This value will be used in the `latestFinishedFlightInfo`
         previousRelativeMove = initialRelativeMove
         initialRelativeMove = relativeMoveDirective
 
         let headingRadians = Float(relativeMoveDirective.headingRotation.toRadians())
-        sendCommand(ArsdkFeatureArdrone3Piloting.moveByEncoder(
-            dx: Float(relativeMoveDirective.forwardComponent),
-            dy: Float(relativeMoveDirective.rightComponent),
-            dz: Float(relativeMoveDirective.downwardComponent),
-            dpsi: headingRadians))
+        if let speed = relativeMoveDirective.speed {
+            sendCommand(ArsdkFeatureMove.extendedMoveByEncoder(
+                dX: Float(relativeMoveDirective.forwardComponent),
+                dY: Float(relativeMoveDirective.rightComponent),
+                dZ: Float(relativeMoveDirective.downwardComponent),
+                dPsi: headingRadians,
+                maxHorizontalSpeed: Float(speed.horizontalSpeed),
+                maxVerticalSpeed: Float(speed.verticalSpeed),
+                maxYawRotationSpeed: Float(speed.yawRotationSpeed)))
+        } else {
+            sendCommand(ArsdkFeatureArdrone3Piloting.moveByEncoder(
+                dx: Float(relativeMoveDirective.forwardComponent),
+                dy: Float(relativeMoveDirective.rightComponent),
+                dz: Float(relativeMoveDirective.downwardComponent),
+                dpsi: headingRadians))
+        }
         // Temporary : considers the drone is in a `running`  state
         currentGuidedDirective = relativeMoveDirective
         // the .notifyUpdated() will be done in the  notifyActive()
         notifyActive()
+    }
+
+    override func didDisconnect() {
+        guidedPilotingItf.update(unavailabilityReasons: nil)
+        super.didDisconnect()
     }
 
     /// A command has been received
@@ -92,6 +131,8 @@ class AnafiGuidedPilotingItf: GuidedPilotingItfController {
             ArsdkFeatureArdrone3Pilotingstate.decode(command, callback: self)
         } else if ArsdkCommand.getFeatureId(command) == kArsdkFeatureArdrone3PilotingeventUid {
             ArsdkFeatureArdrone3Pilotingevent.decode(command, callback: self)
+        } else if ArsdkCommand.getFeatureId(command) == kArsdkFeatureMoveUid {
+            ArsdkFeatureMove.decode(command, callback: self)
         }
     }
 }
@@ -131,8 +172,8 @@ extension AnafiGuidedPilotingItf: ArsdkFeatureArdrone3PilotingstateCallback {
             return
         }
 
-        let onMoveChangedDirective = LocationDirectiveCore (
-            latitude: latitude, longitude: longitude, altitude: altitude, orientation: orientationDirective)
+        let onMoveChangedDirective = LocationDirective(
+            latitude: latitude, longitude: longitude, altitude: altitude, orientation: orientationDirective, speed: nil)
         switch status {
         case .running:
             currentGuidedDirective = onMoveChangedDirective
@@ -146,7 +187,8 @@ extension AnafiGuidedPilotingItf: ArsdkFeatureArdrone3PilotingstateCallback {
             let latestFinish = FinishedLocationFlightInfoCore(
                 directive: onMoveChangedDirective, wasSuccessful: status == .done )
             guidedPilotingItf.update(latestFinishedFlightInfo: latestFinish)
-            if pilotingItf.state == .active {
+            if pilotingItf.state == .active
+                 && (guidedPilotingItf.unavailabilityReasons?.count ?? 0) == 0 {
                 // the .notifyUpdated() will be done in the  notifyIdle()
                 notifyIdle()
             } else {
@@ -162,19 +204,25 @@ extension AnafiGuidedPilotingItf: ArsdkFeatureArdrone3PilotingstateCallback {
 
     /// Piloting State decode callback implementation
     func onFlyingStateChanged(state: ArsdkFeatureArdrone3PilotingstateFlyingstatechangedState) {
-        switch state {
-        case .landed, .emergency, .usertakeoff, .motorRamping, .takingoff, .landing, .emergencyLanding:
-            notifyUnavailable()
+        /// if onInfo event (from ArsdkFeatureMoveCallback) is supported, listening to the flying state is of no use.
+        /// This event is dropped.
+        if guidedPilotingItf.unavailabilityReasons == nil {
+            switch state {
+            case .landed, .emergency, .usertakeoff, .motorRamping, .takingoff, .landing, .emergencyLanding:
+                notifyUnavailable()
 
-        case .hovering, .flying:
-            if pilotingItf.state != .active {
-                notifyIdle()
+            case .hovering, .flying:
+                if pilotingItf.state != .active {
+                    notifyIdle()
+                }
+
+            case .sdkCoreUnknown:
+                fallthrough
+            @unknown default:
+                // don't change anything if value is unknown
+                ULog.w(.tag, "Unknown flying state, skipping this event.")
+                return
             }
-
-        case .sdkCoreUnknown:
-            // don't change anything if value is unknown
-            ULog.w(.tag, "Unknown flying state, skipping this event.")
-            return
         }
     }
 }
@@ -214,7 +262,8 @@ extension AnafiGuidedPilotingItf: ArsdkFeatureArdrone3PilotingeventCallback {
             // clean the initialDirective
             initialRelativeMove = nil
             // create a final information for the guidedPilotingtf
-            if pilotingItf.state == .active {
+            if pilotingItf.state == .active
+                && (guidedPilotingItf.unavailabilityReasons?.count ?? 0) == 0 {
                 notifyIdle()
             } else {
                 pilotingItf.notifyUpdated()
@@ -227,4 +276,45 @@ extension AnafiGuidedPilotingItf: ArsdkFeatureArdrone3PilotingeventCallback {
         }
 
     }
+}
+
+// Anafi move decode callback implementation
+extension AnafiGuidedPilotingItf: ArsdkFeatureMoveCallback {
+    func onInfo(missingInputsBitField: UInt) {
+        guidedPilotingItf.update(
+            unavailabilityReasons: GuidedIssue.createSetFrom(bitField: missingInputsBitField))
+        if guidedPilotingItf.unavailabilityReasons!.isEmpty {
+            if guidedPilotingItf.state != .active {
+                notifyIdle()
+            }
+        } else {
+            notifyUnavailable()
+        }
+        guidedPilotingItf.notifyUpdated()
+    }
+}
+
+extension GuidedIssue: ArsdkMappableEnum {
+
+    /// Create set of guided issues from all value set in a bitfield
+    ///
+    /// - Parameter bitField: arsdk bitfield
+    /// - Returns: set containing all guided issues set in bitField
+    static func createSetFrom(bitField: UInt) -> Set<GuidedIssue> {
+        var result = Set<GuidedIssue>()
+        ArsdkFeatureMoveIndicatorBitField.forAllSet(in: bitField) { arsdkValue in
+            if let missing = GuidedIssue(fromArsdk: arsdkValue) {
+                result.insert(missing)
+            }
+        }
+        return result
+    }
+    static var arsdkMapper = Mapper<GuidedIssue, ArsdkFeatureMoveIndicator>([
+        .droneGpsInfoInaccurate: .droneGps,
+        .droneNotCalibrated: .droneMagneto,
+        .droneNotFlying: .droneFlying,
+        .droneOutOfGeofence: .droneGeofence,
+        .droneTooCloseToGround: .droneMinAltitude,
+        .droneAboveMaxAltitude: .droneMaxAltitude
+        ])
 }

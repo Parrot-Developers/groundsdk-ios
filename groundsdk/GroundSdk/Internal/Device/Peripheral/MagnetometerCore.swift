@@ -42,7 +42,7 @@ public protocol MagnetometerBackend: class {
 public class MagnetometerCore: PeripheralCore, Magnetometer {
 
     /// Whether the magnetometer is calibrated or not.
-    private(set) public var calibrated = false
+    private(set) public var calibrationState: MagnetometerCalibrationState = .required
 
     /// implementation backend
     private unowned let backend: MagnetometerBackend
@@ -73,13 +73,13 @@ public class MagnetometerCore: PeripheralCore, Magnetometer {
 extension MagnetometerCore {
     /// Changes the info about the calibration state of the magnetometer.
     ///
-    /// - Parameter calibrated: whether or not the drone is calibrated
+    /// - Parameter calibrated: the calibration state of the magnometer
     /// - Returns: self to allow call chaining
     /// - Note: Changes are not notified until notifyUpdated() is called.
-    @discardableResult public func update(calibrated newValue: Bool) -> MagnetometerCore {
-        if calibrated != newValue {
+    @discardableResult public func update(calibrated newValue: MagnetometerCalibrationState) -> MagnetometerCore {
+        if calibrationState != newValue {
             markChanged()
-            calibrated = newValue
+            calibrationState = newValue
         }
         return self
     }

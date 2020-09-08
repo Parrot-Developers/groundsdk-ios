@@ -345,6 +345,7 @@ class GimbalFeatureGimbal: DeviceComponentController {
         // clear all non saved settings
         gimbal.update(lockedAxes: GimbalAxis.allCases)
             .update(currentErrors: [])
+            .update(calibrationProcessState: .none)
             .cancelSettingsRollback()
         GimbalAxis.allCases.forEach {
             gimbal.update(absoluteAttitude: nil, onAxis: $0)

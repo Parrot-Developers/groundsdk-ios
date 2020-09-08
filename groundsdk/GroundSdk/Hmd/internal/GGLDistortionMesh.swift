@@ -204,7 +204,7 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
             phoneOffsetY = 0
         }
 
-        zoomForAspectFit = min (1, zoomForHeight, zoomForWidth)
+        zoomForAspectFit = min(1, zoomForHeight, zoomForWidth)
     }
 
     func drawableWillSetupGl(_ context: EAGLContext) {

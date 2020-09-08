@@ -29,6 +29,35 @@
 
 import Foundation
 
+/// Magnetometer calibration state
+@objc(GSMagnetometerCalibrationState)
+public enum MagnetometerCalibrationState: Int {
+    /// Magnetometer is calibrated.
+    case calibrated
+
+    /// Magnetometer calibration is required.
+    case required
+
+    /// Magnetometer calibration is recommanded.
+    case recommended
+
+    /// Debug description.
+    public var description: String {
+        switch self {
+        case .calibrated:
+            return "calibrated"
+        case .required:
+            return "required"
+        case .recommended:
+            return "recommended"
+        }
+    }
+
+    /// Set containing all possible cases.
+    public static let allCases: Set<MagnetometerCalibrationState> = [.calibrated,
+        .required, .recommended]
+}
+
 /// Magnetometer peripheral.
 ///
 /// Base class telling whether the magnetometer is calibrated or not.
@@ -42,11 +71,11 @@ import Foundation
 @objc(GSMagnetometer)
 public protocol Magnetometer: Peripheral {
 
-    /// Whether the magnetometer is calibrated.
+    /// Indicates the magnetometer calibration state.
     ///
     /// - Note: The magnetometer should be calibrated to make positioning related actions,
     /// such as ReturnToHome, FlightPlan...
-    var calibrated: Bool { get }
+    var calibrationState: MagnetometerCalibrationState { get }
 }
 
 /// :nodoc:

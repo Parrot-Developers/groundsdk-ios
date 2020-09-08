@@ -196,7 +196,7 @@ class BatteryGaugeUpdaterControllerTests: ArsdkEngineTestBase {
                 encoder: CmdEncoder.gaugeFwUpdaterStatusEncoder(diag: .updatable,
                 missingRequirementsBitField: emptyBitfield, state: .updateInProgress))
         assertThat(changeCnt, `is`(7))
-        /// drone will be disconnect while updating so there will be no progress.
+        // drone will be disconnect while updating so there will be no progress.
         disconnect(drone: drone, handle: 1)
 
         assertThat(batteryGaugeUpdater, `is`(nilValue()))

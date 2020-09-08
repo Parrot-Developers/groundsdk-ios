@@ -51,7 +51,7 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(store!.get(Peripherals.removableUserStorage), nilValue())
     }
 
-    func testState() {
+    func testPhysicalState() {
         impl.publish()
         var cnt = 0
         let storage = store.get(Peripherals.removableUserStorage)!
@@ -60,23 +60,61 @@ class StorableUserStorageTests: XCTestCase {
         }
 
         // test initial value
-        assertThat(storage.state, `is`(.noMedia))
+        assertThat(storage.physicalState, `is`(.noMedia))
         assertThat(cnt, `is`(0))
 
         // update the state
-        impl.update(state: .mediaTooSlow).notifyUpdated()
-        assertThat(storage.state, `is`(.mediaTooSlow))
+        impl.update(physicalState: .mediaTooSlow).notifyUpdated()
+        assertThat(storage.physicalState, `is`(.mediaTooSlow))
         assertThat(cnt, `is`(1))
 
         // update with the same state should not change anything
-        impl.update(state: .mediaTooSlow).notifyUpdated()
-        assertThat(storage.state, `is`(.mediaTooSlow))
+        impl.update(physicalState: .mediaTooSlow).notifyUpdated()
+        assertThat(storage.physicalState, `is`(.mediaTooSlow))
         assertThat(cnt, `is`(1))
 
         // update the state
-        impl.update(state: .ready).notifyUpdated()
-        assertThat(storage.state, `is`(.ready))
+        impl.update(physicalState: .mediaTooSmall).notifyUpdated()
+        assertThat(storage.physicalState, `is`(.mediaTooSmall))
         assertThat(cnt, `is`(2))
+    }
+
+    func testFileSystemState() {
+        impl.publish()
+        var cnt = 0
+        let storage = store.get(Peripherals.removableUserStorage)!
+        _ = store.register(desc: Peripherals.removableUserStorage) {
+            cnt += 1
+        }
+
+        // test initial value
+        assertThat(storage.fileSystemState, `is`(.error))
+        assertThat(cnt, `is`(0))
+
+        // update the state
+        impl.update(fileSystemState: .ready).notifyUpdated()
+        assertThat(storage.fileSystemState, `is`(.ready))
+        assertThat(cnt, `is`(1))
+
+        // update with the same state should not change anything
+        impl.update(fileSystemState: .ready).notifyUpdated()
+        assertThat(storage.fileSystemState, `is`(.ready))
+        assertThat(cnt, `is`(1))
+
+        // update the state
+        impl.update(fileSystemState: .decryptionSucceeded).notifyUpdated()
+        assertThat(storage.fileSystemState, `is`(.decryptionSucceeded))
+        assertThat(cnt, `is`(2))
+
+        // update the state
+        impl.update(fileSystemState: .checking).notifyUpdated()
+        assertThat(storage.fileSystemState, `is`(.checking))
+        assertThat(cnt, `is`(3))
+
+        // update the state to external access ok
+        impl.update(fileSystemState: .externalAccessOk).notifyUpdated()
+        assertThat(storage.fileSystemState, `is`(.externalAccessOk))
+        assertThat(cnt, `is`(4))
     }
 
     func testAvailableSpace() {
@@ -187,6 +225,64 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(cnt, `is`(1))
     }
 
+    func testFormattingWithEncryption() {
+        impl.publish()
+        var cnt = 0
+        let storage = store.get(Peripherals.removableUserStorage)!
+        _ = store.register(desc: Peripherals.removableUserStorage) {
+            cnt += 1
+        }
+
+        // test initial value
+        assertThat(storage.physicalState, `is`(.noMedia))
+        assertThat(backend.formatCnt, `is`(0))
+        assertThat(cnt, `is`(0))
+
+        // calling format while being in noMedia should return false
+        var res = storage.formatWithEncryption(password: "password",
+                                               formattingType: .full, newMediaName: "newName")
+        assertThat(res, `is`(false))
+        assertThat(backend.formatCnt, `is`(0))
+        assertThat(backend.formatName, nilValue())
+        assertThat(cnt, `is`(0))
+
+        // update canFormat to true
+        impl.update(canFormat: true).notifyUpdated()
+        assertThat(storage.physicalState, `is`(.noMedia))
+        assertThat(cnt, `is`(1))
+
+        // update isEncryptionSupported to true
+        impl.update(isEncryptionSupported: true).notifyUpdated()
+        assertThat(storage.physicalState, `is`(.noMedia))
+        assertThat(cnt, `is`(2))
+
+        // calling format while being in canFormat true should return true
+        res = storage.formatWithEncryption(password: "password",
+                                           formattingType: .full, newMediaName: "newName")
+        assertThat(res, `is`(true))
+        assertThat(backend.formatCnt, `is`(1))
+        assertThat(backend.formatName, presentAnd(`is`("newName")))
+        assertThat(backend.passwordValue, presentAnd(`is`("password")))
+        assertThat(cnt, `is`(2))
+
+        // test that is canFormat is `false`, the returned value is false and backend is not called
+        impl.update(canFormat: false).notifyUpdated()
+        assertThat(cnt, `is`(3))
+        res = storage.formatWithEncryption(password: "password",
+                                           formattingType: .full, newMediaName: "newName")
+        assertThat(backend.formatCnt, `is`(1))
+        assertThat(res, `is`(false))
+
+        // update passwordNeeded to true and uuid
+        impl.update(fileSystemState: .passwordNeeded).notifyUpdated()
+        assertThat(cnt, `is`(4))
+        impl.update(uuid: "uuid").notifyUpdated()
+        assertThat(cnt, `is`(5))
+
+        res = storage.sendPassword(password: "password", usage: .usb)
+        assertThat(res, `is`(true))
+    }
+
     func testFormat() {
         impl.publish()
         var cnt = 0
@@ -196,7 +292,7 @@ class StorableUserStorageTests: XCTestCase {
         }
 
         // test initial value
-        assertThat(storage.state, `is`(.noMedia))
+        assertThat(storage.physicalState, `is`(.noMedia))
         assertThat(backend.formatCnt, `is`(0))
         assertThat(cnt, `is`(0))
 
@@ -209,7 +305,7 @@ class StorableUserStorageTests: XCTestCase {
 
         // update canFormat to true
         impl.update(canFormat: true).notifyUpdated()
-        assertThat(storage.state, `is`(.noMedia))
+        assertThat(storage.physicalState, `is`(.noMedia))
         assertThat(cnt, `is`(1))
 
         // calling format while being in canFormat true should return true
@@ -234,7 +330,7 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(backend.formatName, nilValue())
         assertThat(res, `is`(false))
 
-        impl.update(state: .needFormat).notifyUpdated()
+        impl.update(fileSystemState: .needFormat).notifyUpdated()
         assertThat(cnt, `is`(3))
         res = storage.format(formattingType: .quick, newMediaName: "newName")
         assertThat(backend.formatCnt, `is`(2))
@@ -245,7 +341,7 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(backend.formatName, nilValue())
         assertThat(res, `is`(false))
 
-        impl.update(state: .mediaTooSmall).notifyUpdated()
+        impl.update(physicalState: .mediaTooSmall).notifyUpdated()
         assertThat(cnt, `is`(4))
         res = storage.format(formattingType: .quick, newMediaName: "newName")
         assertThat(backend.formatCnt, `is`(2))
@@ -256,7 +352,7 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(backend.formatName, nilValue())
         assertThat(res, `is`(false))
 
-        impl.update(state: .mounting).notifyUpdated()
+        impl.update(fileSystemState: .mounting).notifyUpdated()
         assertThat(cnt, `is`(5))
         res = storage.format(formattingType: .quick, newMediaName: "newName")
         assertThat(backend.formatCnt, `is`(2))
@@ -267,7 +363,7 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(backend.formatName, nilValue())
         assertThat(res, `is`(false))
 
-        impl.update(state: .formatting).notifyUpdated()
+        impl.update(fileSystemState: .formatting).notifyUpdated()
         assertThat(cnt, `is`(6))
         res = storage.format(formattingType: .quick, newMediaName: "newName")
         assertThat(backend.formatCnt, `is`(2))
@@ -278,7 +374,7 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(backend.formatName, nilValue())
         assertThat(res, `is`(false))
 
-        impl.update(state: .formattingSucceeded).notifyUpdated()
+        impl.update(fileSystemState: .formattingSucceeded).notifyUpdated()
         assertThat(cnt, `is`(7))
         res = storage.format(formattingType: .quick, newMediaName: "newName")
         assertThat(backend.formatCnt, `is`(2))
@@ -289,7 +385,7 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(backend.formatName, nilValue())
         assertThat(res, `is`(false))
 
-        impl.update(state: .formattingFailed).notifyUpdated()
+        impl.update(fileSystemState: .formattingFailed).notifyUpdated()
         assertThat(cnt, `is`(8))
         res = storage.format(formattingType: .quick, newMediaName: "newName")
         assertThat(backend.formatCnt, `is`(2))
@@ -300,7 +396,7 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(backend.formatName, nilValue())
         assertThat(res, `is`(false))
 
-        impl.update(state: .formattingDenied).notifyUpdated()
+        impl.update(fileSystemState: .formattingDenied).notifyUpdated()
         assertThat(cnt, `is`(9))
         res = storage.format(formattingType: .quick, newMediaName: "newName")
         assertThat(backend.formatCnt, `is`(2))
@@ -311,7 +407,7 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(backend.formatName, nilValue())
         assertThat(res, `is`(false))
 
-        impl.update(state: .error).notifyUpdated()
+        impl.update(fileSystemState: .error).notifyUpdated()
         assertThat(cnt, `is`(10))
         res = storage.format(formattingType: .quick, newMediaName: "newName")
         assertThat(backend.formatCnt, `is`(2))
@@ -322,7 +418,7 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(backend.formatName, nilValue())
         assertThat(res, `is`(false))
 
-        impl.update(state: .needFormat).notifyUpdated()
+        impl.update(fileSystemState: .needFormat).notifyUpdated()
         assertThat(cnt, `is`(11))
         res = storage.format(formattingType: .quick, newMediaName: "newName")
         assertThat(backend.formatCnt, `is`(2))
@@ -333,7 +429,7 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(backend.formatName, nilValue())
         assertThat(res, `is`(false))
 
-        impl.update(state: .ready).notifyUpdated()
+        impl.update(fileSystemState: .ready).notifyUpdated()
         assertThat(cnt, `is`(12))
         res = storage.format(formattingType: .quick, newMediaName: "newName")
         assertThat(backend.formatCnt, `is`(2))
@@ -344,7 +440,7 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(backend.formatName, nilValue())
         assertThat(res, `is`(false))
 
-        impl.update(state: .passwordNeeded).notifyUpdated()
+        impl.update(fileSystemState: .passwordNeeded).notifyUpdated()
         assertThat(cnt, `is`(13))
         res = storage.format(formattingType: .quick, newMediaName: "newName")
         assertThat(backend.formatCnt, `is`(2))
@@ -366,7 +462,7 @@ class StorableUserStorageTests: XCTestCase {
         }
 
         // test initial value
-        assertThat(storage.state, `is`(.noMedia))
+        assertThat(storage.physicalState, `is`(.noMedia))
         assertThat(backend.formatCnt, `is`(0))
         assertThat(cnt, `is`(0))
         assertThat(backend.formattingType, nilValue())
@@ -382,7 +478,7 @@ class StorableUserStorageTests: XCTestCase {
 
         // update canFormat to true
         impl.update(canFormat: true).notifyUpdated()
-        assertThat(storage.state, `is`(.noMedia))
+        assertThat(storage.physicalState, `is`(.noMedia))
         assertThat(cnt, `is`(1))
 
         // calling format while being in canFormat true should return true
@@ -413,13 +509,13 @@ class StorableUserStorageTests: XCTestCase {
             cnt += 1
         }
         // test initial value
-        assertThat(storage.state, `is`(.noMedia))
+        assertThat(storage.physicalState, `is`(.noMedia))
         assertThat(backend.formatCnt, `is`(0))
         assertThat(cnt, `is`(0))
 
         // update canFormat to true
         impl.update(canFormat: true).notifyUpdated()
-        assertThat(storage.state, `is`(.noMedia))
+        assertThat(storage.physicalState, `is`(.noMedia))
         assertThat(cnt, `is`(1))
 
         // calling format while being in canFormat true should return true
@@ -429,7 +525,7 @@ class StorableUserStorageTests: XCTestCase {
         assertThat(backend.formatName, presentAnd(`is`("newName")))
         assertThat(cnt, `is`(1))
 
-        impl.update(state: .formatting).notifyUpdated()
+        impl.update(fileSystemState: .formatting).notifyUpdated()
         assertThat(cnt, `is`(2))
 
         assertThat(impl.formattingState, nilValue())
@@ -458,9 +554,25 @@ class StorableUserStorageTests: XCTestCase {
 }
 
 private class Backend: RemovableUserStorageCoreBackend {
+    func formatWithEncryption(password: String, formattingType: FormattingType, newMediaName: String?) -> Bool {
+        formatCnt += 1
+        formatName = newMediaName
+        passwordValue = password
+        self.formattingType = formattingType
+        return true
+    }
+
+    func sendPassword(password: String, usage: PasswordUsage) -> Bool {
+        passwordValue = password
+        passwordUsage = usage
+        return true
+    }
+
     var formatCnt = 0
     var formatName: String?
     var formattingType: FormattingType?
+    var passwordValue: String?
+    var passwordUsage: PasswordUsage?
 
     func format(formattingType: FormattingType, newMediaName: String?) -> Bool {
         formatCnt += 1

@@ -1238,7 +1238,7 @@ class CameraTests: XCTestCase {
         }
 
         // test capabilities values
-        assertThat (camera.photoSettings, supports(
+        assertThat(camera.photoSettings, supports(
             photoModes: [.single, .burst, .gpsLapse, .timeLapse],
             burstValues: [.burst10Over2s, .burst14Over1s, .burst4Over1s],
             bracketingValues: [.preset1ev, .preset1ev2ev, .preset1ev2ev3ev]))

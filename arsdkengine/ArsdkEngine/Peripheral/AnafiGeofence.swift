@@ -392,13 +392,24 @@ extension AnafiGeofence: ArsdkFeatureArdrone3GpssettingsstateCallback {
     /// Special value returned by `latitude` or `longitude` when the coordinate is not known.
     private static let UnknownCoordinate: Double = 500
 
-    func onHomeChanged(latitude: Double, longitude: Double, altitude: Double) {
-        ULog.d(.ctrlTag, "ReturnHome: onHomeChanged: latitude=\(latitude) longitude=\(longitude) altitude =\(altitude)")
+    func onGeofenceCenterChanged(latitude: Double, longitude: Double) {
+        updateGeofenceCenter(latitude: latitude, longitude: longitude)
+    }
+
+    /// Updates geofence center.
+    ///
+    /// Clears current peripheral geofence center in case any of the coordinate is UnknownCoordinate.
+    ///
+    /// - Parameters:
+    ///     - latitude: new latitude
+    ///     - longitude: new longitude
+    private func updateGeofenceCenter(latitude: Double, longitude: Double) {
         if latitude != AnafiGeofence.UnknownCoordinate && longitude != AnafiGeofence.UnknownCoordinate {
-            geofence.update(center: CLLocation(latitude: latitude, longitude: longitude)).notifyUpdated()
+            geofence.update(center: CLLocation(latitude: latitude, longitude: longitude))
         } else {
-            geofence.update(center: nil).notifyUpdated()
+            geofence.update(center: nil)
         }
+        geofence.notifyUpdated()
     }
 }
 

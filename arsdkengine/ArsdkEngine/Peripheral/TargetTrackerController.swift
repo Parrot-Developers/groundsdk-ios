@@ -54,12 +54,11 @@ class TargetTrackerController: DeviceComponentController {
 
     /// Latest targetIsController value received from the drone
     ///
-    /// If true, system barometer will be monitored and sent to the drone, if available. The SystemPosition
-    /// will be used with the `forceUpdating()` option (in order to force continuous location updates)
+    /// The SystemPosition will be used with the `forceUpdating()` option
+    /// (in order to force continuous location updates)
     private var receivedTargetIsController = false {
         didSet {
             if connected {
-                useControllerBarometer = receivedTargetIsController
                 useControllerLocation = receivedTargetIsController
                 targetTracker.update(targetIsController: receivedTargetIsController).notifyUpdated()
             }
@@ -88,30 +87,10 @@ class TargetTrackerController: DeviceComponentController {
         }
     }
 
-    /// Uses or not the controller Barometer. Barometer utility will be monitored accordingly.
-    private var useControllerBarometer = false {
-        didSet {
-            if oldValue != useControllerBarometer {
-                if useControllerBarometer {
-                    startMonitoringBarometer()
-                } else {
-                    stopMonitoringBarometer()
-                }
-            }
-        }
-    }
-
     /// System Position utility (used to force the used of location services)
     private lazy var systemPosition: SystemPositionCore? = {
         return deviceController.engine.utilities.getUtility(Utilities.systemPosition)
     }()
-
-    /// System Barometer utility (will be monitored to send the barometer measurements)
-    private lazy var systemBarometer: SystemBarometerCore? = {
-        return deviceController.engine.utilities.getUtility(Utilities.systemBarometer)
-    }()
-    /// System Barometer Monitor
-    private var barometerMonitor: MonitorCore?
 
     /// Constructor
     ///
@@ -143,8 +122,7 @@ class TargetTrackerController: DeviceComponentController {
 
     /// Drone is disconnected
     override func didDisconnect() {
-        // stop using location and barometer services
-        useControllerBarometer = false
+        // stop using location
         useControllerLocation = false
         targetTracker.update(targetTrajectory: nil).cancelSettingsRollback().notifyUpdated()
     }
@@ -153,27 +131,6 @@ class TargetTrackerController: DeviceComponentController {
     override func willForget() {
         targetTracker.unpublish()
         super.willForget()
-    }
-
-    /// Start Monitoring the System Barometer in order to send pressures updates to the drone
-    private func startMonitoringBarometer() {
-        guard barometerMonitor == nil else {
-            return
-        }
-        // monitoring the barometer
-        barometerMonitor = systemBarometer?.startMonitoring(measureDidChange: { [unowned self] barometerMeasure in
-            if let barometerMeasure = barometerMeasure {
-                self.sendCommand(ArsdkFeatureControllerInfo.barometerEncoder(
-                    pressure: Float(barometerMeasure.pressure),
-                    timestamp: barometerMeasure.timestamp.timeIntervalSince1970))
-            }
-        })
-    }
-
-    /// Stop to monitor the barometer utility
-    private func stopMonitoringBarometer() {
-        barometerMonitor?.stop()
-        barometerMonitor = nil
     }
 
     /// Sends the TargetIsController choice to the drone if the value requested from the interface is not the current

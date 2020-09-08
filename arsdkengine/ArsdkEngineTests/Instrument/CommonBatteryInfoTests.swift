@@ -91,4 +91,36 @@ class CommonBatteryInfoTests: ArsdkEngineTestBase {
         assertThat(batteryInfo!.batteryHealth, `is`(60))
         assertThat(changeCnt, `is`(2))
     }
+
+    func testCycleCount() {
+        connect(drone: drone, handle: 1)
+        // check default values
+        assertThat(batteryInfo!.cycleCount, nilValue())
+        assertThat(changeCnt, `is`(1))
+
+        // check battery health received
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.batteryCycleCountEncoder(count: 5))
+        assertThat(batteryInfo!.cycleCount, `is`(5))
+        assertThat(changeCnt, `is`(2))
+
+        // check battery health received with same value, changeCnt may not change
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.batteryCycleCountEncoder(count: 5))
+        assertThat(batteryInfo!.cycleCount, `is`(5))
+        assertThat(changeCnt, `is`(2))
+
+        // check battery health received with new value, changeCnt should increase
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.batteryCycleCountEncoder(count: 6))
+        assertThat(batteryInfo!.cycleCount, `is`(6))
+        assertThat(changeCnt, `is`(3))
+
+        // check battery serial
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.batterySerialEncoder(serial: "1234"))
+        assertThat(batteryInfo!.serial, `is`("1234"))
+        assertThat(changeCnt, `is`(4))
+    }
+
 }

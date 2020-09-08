@@ -42,7 +42,16 @@ class MagnetometerCell: PeripheralProviderContentCell {
         peripheralProvider = provider
         magnetometer = provider.getPeripheral(Peripherals.magnetometer) {  [unowned self] magnetometer in
             if let magnetometer = magnetometer {
-                self.calibrated.text = (magnetometer.calibrated) ? "Calibrated" : "Not calibrated"
+                var calibratedText = "Not calibrated"
+                switch magnetometer.calibrationState {
+                case .calibrated:
+                    calibratedText = "Calibrated"
+                case .recommended:
+                    calibratedText = "Calibration recommanded"
+                case .required:
+                    calibratedText = "Not calibrated"
+                }
+                self.calibrated.text = calibratedText
                 self.show()
             } else {
                 self.hide()

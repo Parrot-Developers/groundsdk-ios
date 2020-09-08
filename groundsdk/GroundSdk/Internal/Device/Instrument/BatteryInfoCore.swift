@@ -45,6 +45,12 @@ public class BatteryInfoCore: InstrumentCore, BatteryInfo {
     /// From 100 to 0.
     private (set) public var batteryHealth: Int?
 
+    /// Device's current battery cycle count
+    private (set) public var cycleCount: Int?
+
+    /// Device's battery serial
+    private (set) public var serial: String?
+
     /// Debug description
     public override var description: String {
         return "BatteryInfo: level = \(batteryLevel)"
@@ -96,6 +102,32 @@ extension BatteryInfoCore {
         if batteryHealth != newValue {
             markChanged()
             batteryHealth = newValue
+        }
+        return self
+    }
+
+    /// Changes battery cycle count.
+    ///
+    /// - Parameter cycleCount: the cycle count to set
+    /// - Returns: self to allow call chaining
+    /// - Note: Changes are not notified until notifyUpdated() is called.
+    @discardableResult public func update(cycleCount newValue: Int?) -> BatteryInfoCore {
+        if cycleCount != newValue {
+            markChanged()
+            cycleCount = newValue
+        }
+        return self
+    }
+
+    /// Changes battery serial.
+    ///
+    /// - Parameter serial: the serial to set
+    /// - Returns: self to allow call chaining
+    /// - Note: Changes are not notified until notifyUpdated() is called.
+    @discardableResult public func update(serial newValue: String) -> BatteryInfoCore {
+        if serial != newValue {
+            markChanged()
+            serial = newValue
         }
         return self
     }

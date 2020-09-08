@@ -91,5 +91,27 @@ class BatteryInfoTests: XCTestCase {
         // test notify without changes
         impl.notifyUpdated()
         assertThat(cnt, `is`(3))
+
+        // check set cycle count
+        impl.update(cycleCount: 5).notifyUpdated()
+        assertThat(cnt, `is`(4))
+        assertThat(batteryInfo.cycleCount, `is`(5))
+
+        // check setting the same value does not change anything
+        impl.update(cycleCount: 5).notifyUpdated()
+        assertThat(cnt, `is`(4))
+
+        // check set battery serial
+        impl.update(serial: "1234").notifyUpdated()
+        assertThat(cnt, `is`(5))
+        assertThat(batteryInfo.serial, `is`("1234"))
+
+        // check setting the same value does not change anything
+        impl.update(serial: "1234").notifyUpdated()
+        assertThat(cnt, `is`(5))
+
+        // test notify without changes
+        impl.notifyUpdated()
+        assertThat(cnt, `is`(5))
     }
 }

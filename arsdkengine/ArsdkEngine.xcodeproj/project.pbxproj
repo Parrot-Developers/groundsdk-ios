@@ -172,6 +172,15 @@
 		9BDDF1AF2147A5C6008252BA /* MockFlightLogStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDDF1AE2147A5C6008252BA /* MockFlightLogStorage.swift */; };
 		9BF5447D22B772DC00452895 /* SkyControllerCopilot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF5447C22B772DC00452895 /* SkyControllerCopilot.swift */; };
 		9BF5448522B8ED6000452895 /* CopilotControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF5448422B8ED6000452895 /* CopilotControllerTests.swift */; };
+		F76FA25124336B3A006DD7F4 /* DriController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76FA25024336B3A006DD7F4 /* DriController.swift */; };
+		F78564C52440CC4600273CAA /* ReturnHomeEndingMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78564C42440CC4600273CAA /* ReturnHomeEndingMatcher.swift */; };
+		F7893BE1248E9C34009A89FB /* LogControlController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7893BE0248E9C33009A89FB /* LogControlController.swift */; };
+		F7893BE3248F5DC7009A89FB /* LogControlControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7893BE2248F5DC7009A89FB /* LogControlControllerTests.swift */; };
+		F7DB2D79249A13EA00F09AAA /* CertificateUploaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DB2D78249A13EA00F09AAA /* CertificateUploaderController.swift */; };
+		F7E5CE1124991A3800766252 /* CertificateUploaderRestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5CE1024991A3800766252 /* CertificateUploaderRestApi.swift */; };
+		F7E5CE1424991A5A00766252 /* HttpCertificateUploaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5CE1324991A5900766252 /* HttpCertificateUploaderDelegate.swift */; };
+		F7E5CE1724991A6F00766252 /* CertificateUploaderControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5CE1624991A6F00766252 /* CertificateUploaderControllerTests.swift */; };
+		F7F67FA22434918D00EEF06B /* DriControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F67FA12434918D00EEF06B /* DriControllerTests.swift */; };
 		F8034F981D33CD6F003A3CFD /* AnafiMagnetometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8034F971D33CD6F003A3CFD /* AnafiMagnetometer.swift */; };
 		F804B01920D979FC00BE2CF7 /* AppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F804B01820D979FB00BE2CF7 /* AppDefaults.swift */; };
 		F809C23F1E851CEF008B8153 /* UpdaterControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F809C23E1E851CEF008B8153 /* UpdaterControllerTests.swift */; };
@@ -481,6 +490,15 @@
 		9BDDF1AE2147A5C6008252BA /* MockFlightLogStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlightLogStorage.swift; sourceTree = "<group>"; };
 		9BF5447C22B772DC00452895 /* SkyControllerCopilot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyControllerCopilot.swift; sourceTree = "<group>"; };
 		9BF5448422B8ED6000452895 /* CopilotControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopilotControllerTests.swift; sourceTree = "<group>"; };
+		F76FA25024336B3A006DD7F4 /* DriController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriController.swift; sourceTree = "<group>"; };
+		F78564C42440CC4600273CAA /* ReturnHomeEndingMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnHomeEndingMatcher.swift; sourceTree = "<group>"; };
+		F7893BE0248E9C33009A89FB /* LogControlController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogControlController.swift; sourceTree = "<group>"; };
+		F7893BE2248F5DC7009A89FB /* LogControlControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogControlControllerTests.swift; sourceTree = "<group>"; };
+		F7DB2D78249A13EA00F09AAA /* CertificateUploaderController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateUploaderController.swift; sourceTree = "<group>"; };
+		F7E5CE1024991A3800766252 /* CertificateUploaderRestApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateUploaderRestApi.swift; sourceTree = "<group>"; };
+		F7E5CE1324991A5900766252 /* HttpCertificateUploaderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpCertificateUploaderDelegate.swift; sourceTree = "<group>"; };
+		F7E5CE1624991A6F00766252 /* CertificateUploaderControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateUploaderControllerTests.swift; sourceTree = "<group>"; };
+		F7F67FA12434918D00EEF06B /* DriControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriControllerTests.swift; sourceTree = "<group>"; };
 		F8034F971D33CD6F003A3CFD /* AnafiMagnetometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnafiMagnetometer.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F804B01820D979FB00BE2CF7 /* AppDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDefaults.swift; sourceTree = "<group>"; };
 		F809C23E1E851CEF008B8153 /* UpdaterControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdaterControllerTests.swift; sourceTree = "<group>"; };
@@ -574,7 +592,7 @@
 		F8D32CD81EF1877400074795 /* CopterMotorsMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopterMotorsMatcher.swift; sourceTree = "<group>"; };
 		F8D82B541E00628D0047ABF1 /* MapperVirtualGamepad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MapperVirtualGamepad.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F8D878491F1CAD2E00991465 /* Bitfield.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bitfield.swift; sourceTree = "<group>"; };
-		F8D9B4A61CC7CFE7006DEDF8 /* SdkCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SdkCore.framework; path = "../Debug-iphonesimulator/SdkCore.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8D9B4A61CC7CFE7006DEDF8 /* SdkCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8DB46401D33EA7000297E15 /* AnafiMagnetometerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiMagnetometerTests.swift; sourceTree = "<group>"; };
 		F8DB46421D33ECCB00297E15 /* MagnetometerCalibrationProcessStateMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagnetometerCalibrationProcessStateMatcher.swift; sourceTree = "<group>"; };
 		F8E011241FD98A16005A9520 /* BlackBoxRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxRecorder.swift; sourceTree = "<group>"; };
@@ -807,6 +825,7 @@
 				F8034F961D33CD43003A3CFD /* Peripheral */,
 				F8F974A51CD3837B0060318C /* PilotingItf */,
 				F8BFCDBC1FE95ED80060D6A0 /* RestApi */,
+				F7E5CE1224991A5900766252 /* SecurityEdition */,
 				025FB9F920AC8AED00D84597 /* Util */,
 				7CCBC75F2099C52A006C3378 /* WebSocket */,
 				7CA1C9701C807AC200FE9ED4 /* ArsdkEngine.h */,
@@ -818,6 +837,7 @@
 		7CA1C97B1C807AC200FE9ED4 /* ArsdkEngineTests */ = {
 			isa = PBXGroup;
 			children = (
+				F7E5CE1524991A6F00766252 /* SecurityEngine */,
 				7C29CB5C1D58E0EB006BF0BE /* .swiftlint.yml */,
 				F8B240301FE2EB350092974F /* BlackBox */,
 				9B2B789821426BDC0045ED0F /* Ephemeris */,
@@ -924,9 +944,27 @@
 			path = Camera;
 			sourceTree = "<group>";
 		};
+		F7E5CE1224991A5900766252 /* SecurityEdition */ = {
+			isa = PBXGroup;
+			children = (
+				F7E5CE1324991A5900766252 /* HttpCertificateUploaderDelegate.swift */,
+			);
+			path = SecurityEdition;
+			sourceTree = "<group>";
+		};
+		F7E5CE1524991A6F00766252 /* SecurityEngine */ = {
+			isa = PBXGroup;
+			children = (
+				F7E5CE1624991A6F00766252 /* CertificateUploaderControllerTests.swift */,
+			);
+			path = SecurityEngine;
+			sourceTree = "<group>";
+		};
 		F8034F961D33CD43003A3CFD /* Peripheral */ = {
 			isa = PBXGroup;
 			children = (
+				F7DB2D78249A13EA00F09AAA /* CertificateUploaderController.swift */,
+				F76FA25024336B3A006DD7F4 /* DriController.swift */,
 				02D12B27202899A1002C00BB /* AnafiBeeper.swift */,
 				F8D32CCA1EF12CE800074795 /* AnafiCopterMotors.swift */,
 				021D82232093219500C53EC3 /* AnafiGeofence.swift */,
@@ -969,6 +1007,7 @@
 				F8E9E7871EF423ED00A5BE86 /* Wifi */,
 				0226198D2069340E005587B2 /* WifiAccessPointController */,
 				0226198B206933F8005587B2 /* WifiAccessPointController.swift */,
+				F7893BE0248E9C33009A89FB /* LogControlController.swift */,
 			);
 			path = Peripheral;
 			sourceTree = "<group>";
@@ -1001,6 +1040,7 @@
 		F868F8C11CAD658F0045DBD1 /* matchers */ = {
 			isa = PBXGroup;
 			children = (
+				F78564C42440CC4600273CAA /* ReturnHomeEndingMatcher.swift */,
 				9B31E00121C93545006F389E /* ThermalControlMatcher.swift */,
 				9BDDF1AC2147A050008252BA /* FlightLogDownloaderMatcher.swift */,
 				F86BA98A21231DFC004DFAB2 /* FirmwareInfoMatcher.swift */,
@@ -1095,6 +1135,7 @@
 		F8BFCDBC1FE95ED80060D6A0 /* RestApi */ = {
 			isa = PBXGroup;
 			children = (
+				F7E5CE1024991A3800766252 /* CertificateUploaderRestApi.swift */,
 				F877E4ED20246BE0006B0929 /* DroneServer.swift */,
 				9B2B789621426B940045ED0F /* EphemerisRestApi.swift */,
 				9BDDF1A42146920E008252BA /* FlightLogRestApi.swift */,
@@ -1121,6 +1162,8 @@
 		F8DB463F1D33E97600297E15 /* Peripheral */ = {
 			isa = PBXGroup;
 			children = (
+				F7F67FA12434918D00EEF06B /* DriControllerTests.swift */,
+				F7893BE2248F5DC7009A89FB /* LogControlControllerTests.swift */,
 				02D12B2B2028A3CD002C00BB /* AnafiBeeperControllerTests.swift */,
 				1DA626EE1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift */,
 				02375855209C9C8A0077F63C /* ArsdkFlightDataDownloaderTests.swift */,
@@ -1390,7 +1433,9 @@
 				F88C31E41D05B81E00A3A814 /* AnafiGps.swift in Sources */,
 				70F73FDB2136A820006E27BB /* HttpFlightLogDownloaderDelegate.swift in Sources */,
 				70F73FDA2136A820006E27BB /* FtpFlightLogDownloaderDelegate.swift in Sources */,
+				F7DB2D79249A13EA00F09AAA /* CertificateUploaderController.swift in Sources */,
 				9B40FAD1215E557400CF6690 /* PreciseHomeController.swift in Sources */,
+				F7893BE1248E9C34009A89FB /* LogControlController.swift in Sources */,
 				F87C037B1D1303A0007B2391 /* AnafiAttitudeIndicator.swift in Sources */,
 				7C9005191E0C0A8D00B9EE2B /* ArsdkMediaStore.swift in Sources */,
 				7C5FA4E71DAF8BEB001B68A3 /* DroneManagerDroneFinder.swift in Sources */,
@@ -1438,6 +1483,7 @@
 				F86A81641F8BC83700F7EE60 /* AnimFeaturePilotingItfController.swift in Sources */,
 				F8E9E7891EF4240D00A5BE86 /* WifiChannel.swift in Sources */,
 				F8ED95501FDEB2C2004300DE /* BlackBoxCircularArray.swift in Sources */,
+				F7E5CE1424991A5A00766252 /* HttpCertificateUploaderDelegate.swift in Sources */,
 				F8ED95561FDEDE17004300DE /* BlackBoxLocationData.swift in Sources */,
 				7C6947B91CD8F92B001FE253 /* AnafiFlyingIndicators.swift in Sources */,
 				9B2B789721426B940045ED0F /* EphemerisRestApi.swift in Sources */,
@@ -1470,10 +1516,12 @@
 				F8F974A71CD3837B0060318C /* AnafiCopterManualPilotingItf.swift in Sources */,
 				F87D5A3F1FFFEA24005AF079 /* SkyControllerMagnetometer.swift in Sources */,
 				F8A11A9820AC619D0062253D /* RcUpdaterEventReceiver.swift in Sources */,
+				F7E5CE1124991A3800766252 /* CertificateUploaderRestApi.swift in Sources */,
 				02D12B28202899A1002C00BB /* AnafiBeeper.swift in Sources */,
 				F8EE9F642084EBDE001A2860 /* AnafiAlarms.swift in Sources */,
 				F8ED48B61E81320100C0FFC0 /* FtpFirmwareUploader.swift in Sources */,
 				F8FB2E661FEBF3FC0037B930 /* ReportRestApi.swift in Sources */,
+				F76FA25124336B3A006DD7F4 /* DriController.swift in Sources */,
 				F8123B54200CFA9B0071672B /* UserStorageRemovableUserStorage.swift in Sources */,
 				F88C31F41D06BF7300A3A814 /* AnafiAltimeter.swift in Sources */,
 				F85CF0901E9E6B2200C82969 /* AnafiFamilyDroneController.swift in Sources */,
@@ -1497,15 +1545,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F78564C52440CC4600273CAA /* ReturnHomeEndingMatcher.swift in Sources */,
 				7C895B09207798F900DD689C /* CameraFeatureCameraTests.swift in Sources */,
 				7C7406A82050144400D1CD78 /* AntiflickerMatcher.swift in Sources */,
 				F8EE9F662085D847001A2860 /* AnafiAlarmsTests.swift in Sources */,
 				9BDDF1AD2147A050008252BA /* FlightLogDownloaderMatcher.swift in Sources */,
 				F86BA987212308E9004DFAB2 /* MockFirmwareDownloader.swift in Sources */,
 				7CA47FA02057E44400A5843A /* MockReverseGeocoder.swift in Sources */,
+				F7893BE3248F5DC7009A89FB /* LogControlControllerTests.swift in Sources */,
 				F89D8FA51EE8344E0094C524 /* CommonFlightPlanPilotingItfNoOfflineSettingsTests.swift in Sources */,
 				1DA626EF1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift in Sources */,
 				02375856209C9C8A0077F63C /* ArsdkFlightDataDownloaderTests.swift in Sources */,
+				F7E5CE1724991A6F00766252 /* CertificateUploaderControllerTests.swift in Sources */,
 				F87D5A47200387FC005AF079 /* SkyControllerMagnetometerTests.swift in Sources */,
 				7C76AB5C1C8D75BF00FC213E /* MatchResult.swift in Sources */,
 				7C0366E61E3B88A20041D71E /* AnafiReturnHomePilotingItfNoOfflineSettingsTests.swift in Sources */,
@@ -1589,6 +1640,7 @@
 				02C5D0121FD860040028DFEE /* GuidedDirectiveMatcher.swift in Sources */,
 				7C76AB5E1C8D75BF00FC213E /* OperatorMatchers.swift in Sources */,
 				F8C9C4311D18287F00DB1647 /* AnafiCompassTests.swift in Sources */,
+				F7F67FA22434918D00EEF06B /* DriControllerTests.swift in Sources */,
 				849ADB0623A3FCAF00D9F722 /* MockGutmaLogStorage.swift in Sources */,
 				02CA284720513274005AB316 /* PointOfInterestMatcher.swift in Sources */,
 				9B5D350A23CF54090098016D /* BatteryGaugeUpdaterControllerTests.swift in Sources */,

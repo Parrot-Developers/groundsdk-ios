@@ -30,7 +30,7 @@
 import UIKit
 import GroundSdk
 
-class RemoveUserStorageViewController: UIViewController, DeviceViewController {
+class RemoveUserStorageViewController: UIViewController, DeviceViewController, UITextFieldDelegate {
     @IBOutlet var formattingNameTextField: UITextField!
     @IBOutlet var formattingTypesSegmentedControl: UISegmentedControl!
     @IBOutlet var formatButton: UIButton!
@@ -38,18 +38,32 @@ class RemoveUserStorageViewController: UIViewController, DeviceViewController {
     @IBOutlet var formattingProgressView: UIProgressView!
     @IBOutlet var viewFormattingType: UIView!
     @IBOutlet var viewFormattingState: UIView!
+    @IBOutlet var encryptionSwitch: UISwitch!
+    @IBOutlet var formattingWithEncryptionPasswordTextField: UITextField!
     private let groundSdk = GroundSdk()
     private var droneUid: String?
     private var storage: Ref<RemovableUserStorage>?
     private var supportedFormattingTypes: Set<FormattingType>?
     private var arraySegmented: [FormattingType]?
+    @IBOutlet var uuidLabel: UILabel!
+    @IBOutlet var decryptionUsageSegmentedControl: UISegmentedControl!
+    @IBOutlet var decryptButton: UIButton!
+    private var arraySegmentedUsage: [PasswordUsage] = [.record, .usb]
+    @IBOutlet var physicalStateLabel: UILabel!
+    @IBOutlet var fileSystemStateLabel: UILabel!
 
     func setDeviceUid(_ uid: String) {
         droneUid = uid
     }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.encryptionSwitch.isOn = false
         if let drone = groundSdk.getDrone(uid: droneUid!) {
             storage = drone.getPeripheral(
             Peripherals.removableUserStorage) { [weak self] storage in
@@ -68,20 +82,42 @@ class RemoveUserStorageViewController: UIViewController, DeviceViewController {
                     self.formattingNameTextField.isEnabled = storage.canFormat
                     self.formattingTypesSegmentedControl.isEnabled = storage.canFormat
                     self.formatButton.isEnabled = storage.canFormat
-                    if let formattingState = storage.formattingState, storage.state == .formatting {
+                    if let formattingState = storage.formattingState, storage.fileSystemState == .formatting {
                         self.viewFormattingState.isHidden = false
                         self.formattingProgressView.progress = Float(formattingState.progress / 100)
                         self.formattingStep.text = formattingState.step.description
                     } else {
                         self.viewFormattingState.isHidden = true
                     }
+                    self.encryptionSwitch.isEnabled = storage.isEncryptionSupported
+                    self.decryptionUsageSegmentedControl.removeAllSegments()
+                    for (index, type) in self.arraySegmentedUsage.enumerated() {
+                        self.decryptionUsageSegmentedControl
+                            .insertSegment(withTitle: type.description, at: index, animated: false)
+                    }
+                    self.decryptionUsageSegmentedControl.selectedSegmentIndex = 0
+                    if let uuid = storage.uuid {
+                        self.uuidLabel.text = uuid
+                    }
+                    self.physicalStateLabel.text = storage.physicalState.description
+                    self.fileSystemStateLabel.text = storage.fileSystemState.description
                 }
             }
         }
     }
+    @IBAction func encryptionSwitchChanged(_ sender: UISwitch) {
+        formattingWithEncryptionPasswordTextField.isEnabled = encryptionSwitch.isOn
+    }
 
-    @IBAction func format(_ sender: UIButton) {
-        formattingNameTextField.resignFirstResponder()
+    @IBAction func formatButtonTapped(_ sender: UIButton) {
+        if encryptionSwitch.isOn {
+            formatWithEncryption(sender)
+        } else {
+            format(sender)
+        }
+    }
+
+    func format(_ sender: UIButton) {
         if let storageValue = storage?.value {
             var formattingType: FormattingType = .full
             if let arraySegmented = self.arraySegmented {
@@ -89,6 +125,7 @@ class RemoveUserStorageViewController: UIViewController, DeviceViewController {
                      formattingType = arraySegmented[formattingTypesSegmentedControl.selectedSegmentIndex]
                 }
             }
+
             if let formattingNameTextField = formattingNameTextField.text, !formattingNameTextField.isEmpty {
                 _ = storageValue.format(formattingType: formattingType,
                                                      newMediaName: formattingNameTextField)
@@ -96,5 +133,68 @@ class RemoveUserStorageViewController: UIViewController, DeviceViewController {
                 _ = storageValue.format(formattingType: formattingType)
             }
         }
+    }
+
+    func formatWithEncryption(_ sender: UIButton) {
+        guard let formattingPasswordTextField = formattingWithEncryptionPasswordTextField.text,
+            !formattingPasswordTextField.isEmpty else {
+            let alert = UIAlertController(title: "Password required",
+                                          message: "You must enter a passord for formatting encryption",
+                                          preferredStyle: UIAlertController.Style.alert)
+
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
+                // No action
+            }))
+
+            self.present(alert, animated: true, completion: nil)
+
+            return
+        }
+
+        if let storageValue = storage?.value {
+            var formattingType: FormattingType = .full
+            if let arraySegmented = self.arraySegmented {
+                if  0...arraySegmented.count ~= formattingTypesSegmentedControl.selectedSegmentIndex {
+                     formattingType = arraySegmented[formattingTypesSegmentedControl.selectedSegmentIndex]
+                }
+            }
+            if let formattingNameTextField = formattingNameTextField.text,
+                !formattingNameTextField.isEmpty {
+                _ = storageValue.formatWithEncryption(password: formattingPasswordTextField,
+                                                      formattingType: formattingType,
+                                                      newMediaName: formattingNameTextField)
+            } else {
+                _ = storageValue.formatWithEncryption(password: formattingPasswordTextField,
+                                                      formattingType: formattingType)
+            }
+        }
+    }
+
+    @IBAction func decryptionButtonTapped(_ sender: UIButton) {
+        guard let formattingPasswordTextField = formattingWithEncryptionPasswordTextField.text,
+            !formattingPasswordTextField.isEmpty else {
+            let alert = UIAlertController(title: "Password required",
+                                          message: "You must enter a passord for decryption",
+                                          preferredStyle: UIAlertController.Style.alert)
+
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
+                // No action
+            }))
+
+            self.present(alert, animated: true, completion: nil)
+
+            return
+        }
+
+        var decryptionUsage: PasswordUsage = .record
+        if let arraySegmented = self.arraySegmented {
+            if  0...arraySegmented.count ~= decryptionUsageSegmentedControl.selectedSegmentIndex {
+                 decryptionUsage = arraySegmentedUsage[decryptionUsageSegmentedControl.selectedSegmentIndex]
+            }
+        }
+        if let storageValue = storage?.value {
+            _ = storageValue.sendPassword(password: formattingPasswordTextField, usage: decryptionUsage)
+        }
+
     }
 }

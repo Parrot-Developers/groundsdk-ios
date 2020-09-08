@@ -112,6 +112,7 @@ class DroneInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             addCell("hmd", section: peripheralSection)
             addCell("camera", section: peripheralSection)
             addCell("thermal", section: peripheralSection)
+            addCell("blendedThermal", section: peripheralSection)
             addCell("antiflickering", section: peripheralSection)
             addCell("preciseHome", section: peripheralSection)
             addCell("thermalControl", section: peripheralSection)
@@ -129,10 +130,13 @@ class DroneInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             addCell("removableUserStorage", section: peripheralSection)
             addCell("beeper", section: peripheralSection)
             addCell("leds", section: peripheralSection)
+            addCell("dri", section: peripheralSection)
             addCell("targetTracker", section: peripheralSection)
             addCell("crashReporter", section: peripheralSection)
             addCell("flightDataDownloader", section: peripheralSection)
             addCell("flightLogDownloader", section: peripheralSection)
+            addCell("logControl", section: peripheralSection)
+            addCell("certificateUploader", section: peripheralSection)
         }
     }
 

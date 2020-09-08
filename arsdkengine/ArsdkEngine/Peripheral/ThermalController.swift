@@ -429,6 +429,9 @@ class ThermalController: DeviceComponentController, ThermalControlBackend {
         case .disabled:
             sendCommand(ArsdkFeatureThermal.setModeEncoder(mode: .disabled))
             commandSent = true
+        case .blended:
+            sendCommand(ArsdkFeatureThermal.setModeEncoder(mode: .blended))
+            commandSent = true
         }
         return commandSent
     }
@@ -581,7 +584,8 @@ class ThermalController: DeviceComponentController, ThermalControlBackend {
 extension ThermalControlMode: StorableEnum {
     static var storableMapper = Mapper<ThermalControlMode, String>([
         .standard: "standard",
-        .disabled: "disabled"])
+        .disabled: "disabled",
+        .blended: "blended"])
 }
 
 // Extension to make Thermal sensitivity range storable
@@ -607,6 +611,8 @@ extension ThermalController: ArsdkFeatureThermalCallback {
             settingDidChange(.mode(.standard))
         case .disabled:
             settingDidChange(.mode(.disabled))
+        case .blended:
+            settingDidChange(.mode(.blended))
         case .sdkCoreUnknown:
             // don't change the thermal control modes
             ULog.w(.tag, "Unknown thermal control mode, skipping this event.")
@@ -620,6 +626,9 @@ extension ThermalController: ArsdkFeatureThermalCallback {
         }
         if ArsdkFeatureThermalModeBitField.isSet(.standard, inBitField: modesBitField) {
             availableMode.insert(.standard)
+        }
+        if ArsdkFeatureThermalModeBitField.isSet(.blended, inBitField: modesBitField) {
+            availableMode.insert(.blended)
         }
         capabilitiesDidChange(.mode(availableMode))
         thermalControl.notifyUpdated()

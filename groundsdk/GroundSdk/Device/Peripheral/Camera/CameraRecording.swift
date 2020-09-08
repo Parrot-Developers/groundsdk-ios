@@ -58,6 +58,12 @@ public enum CameraRecordingMode: Int, CustomStringConvertible {
 /// Camera recording resolutions.
 @objc(GSCameraRecordingResolution)
 public enum CameraRecordingResolution: Int, CustomStringConvertible, Comparable {
+    // 7680x4320 pixels (UHD)
+    @objc(GSCameraRecordingResolutionUhd8k)
+    case resUhd8k
+    /// 5120x2880 pixels
+    @objc(GSCameraRecordingResolution5k)
+    case res5k
     /// 4096x2160 pixels (4k cinema)
     @objc(GSCameraRecordingResolutionDci4k)
     case resDci4k
@@ -91,6 +97,8 @@ public enum CameraRecordingResolution: Int, CustomStringConvertible, Comparable 
     /// Debug description.
     public var description: String {
         switch self {
+        case .resUhd8k:     return "UHD 8k"
+        case .res5k:        return "5k"
         case .resDci4k:     return "DCI 4k"
         case .resUhd4k:     return "UHD 4k"
         case .res2_7k:      return "2.7k"
@@ -104,15 +112,21 @@ public enum CameraRecordingResolution: Int, CustomStringConvertible, Comparable 
 
     /// Set containing all possible values.
     public static let allCases: Set<CameraRecordingResolution> = [
-        .resDci4k, .resUhd4k, .res2_7k, .res1080p, .res1080pSd, .res720p, .res720pSd, .res480p]
+        .resUhd8k, .res5k, .resDci4k, .resUhd4k, .res2_7k, .res1080p, .res1080pSd, .res720p, .res720pSd, .res480p]
 }
 
 /// Camera recording frame rates.
 @objc(GSCameraRecordingFramerate)
 public enum CameraRecordingFramerate: Int, CustomStringConvertible, Comparable {
+    /// 8.57 fps. For thermal only, capture triggered by thermal sensor.
+    @objc(GSCameraRecordingFramerate8dot6)
+    case fps8_6
     /// 9 fps - For thermal only, capture triggered by thermal sensor.
     @objc(GSCameraRecordingFramerate9)
     case fps9
+    /// 10 fps. For thermal only, capture triggered by thermal sensor.
+    @objc(GSCameraRecordingFramerate10)
+    case fps10
     /// 15 fps.
     @objc(GSCameraRecordingFramerate15)
     case fps15
@@ -164,7 +178,9 @@ public enum CameraRecordingFramerate: Int, CustomStringConvertible, Comparable {
     /// Debug description.
     public var description: String {
         switch self {
+        case .fps8_6:   return "8.6"
         case .fps9:     return "9"
+        case .fps10:    return "10"
         case .fps15:    return "15"
         case .fps20:    return "20"
         case .fps24:    return "24"
@@ -184,8 +200,8 @@ public enum CameraRecordingFramerate: Int, CustomStringConvertible, Comparable {
 
     /// Set containing all possible values.
     public static let allCases: Set<CameraRecordingFramerate> = [
-        .fps9, .fps15, .fps20, .fps24, .fps25, .fps30, .fps48, .fps50, .fps60, .fps96, .fps100, .fps120, .fps192,
-        .fps200, .fps240]
+        .fps8_6, .fps9, .fps10, .fps15, .fps20, .fps24, .fps25, .fps30, .fps48, .fps50, .fps60, .fps96, .fps100,
+        .fps120, .fps192, .fps200, .fps240]
 }
 
 /// Camera hyperlapse values for recording mode `hyperlapse`.

@@ -99,6 +99,15 @@ public class Alarm: NSObject {
         ///     fly properly, indicating a serious drone malfunction.
         case strongVibrations
 
+        /// A magnetic element disturbs the drone's magnetometer and alters the drone ability to fly safely.
+        case magnetometerPertubation
+
+        /// The local terrestrial magnetic field is too weak to allow to fly safely.
+        case magnetometerLowEarthField
+
+        /// Location information sent by the controller is unreliable.
+        case unreliableControllerLocation
+
         /// Debug description.
         public var description: String {
             switch self {
@@ -114,6 +123,9 @@ public class Alarm: NSObject {
             case .wind:                             return "wind"
             case .verticalCamera:                   return "verticalCamera"
             case .strongVibrations:                 return "strongVibrations"
+            case .magnetometerPertubation:          return "magnetometerPertubation"
+            case .magnetometerLowEarthField:        return "magnetometerLowEarthField"
+            case .unreliableControllerLocation:     return "unreliableControllerLocation"
             }
         }
 
@@ -122,7 +134,8 @@ public class Alarm: NSObject {
                                                  .batteryTooCold, .hoveringDifficultiesNoGpsTooDark,
                                                  .hoveringDifficultiesNoGpsTooHigh,
                                                  .automaticLandingBatteryIssue, .wind,
-                                                 .verticalCamera, .strongVibrations]
+                                                 .verticalCamera, .strongVibrations, .magnetometerPertubation,
+                                                 .magnetometerLowEarthField, .unreliableControllerLocation]
     }
 
     /// Alarm level.
