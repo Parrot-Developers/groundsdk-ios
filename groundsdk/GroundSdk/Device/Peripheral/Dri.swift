@@ -30,7 +30,7 @@
 import Foundation
 
 /// Identifier type.
-public enum DriIdType: Int, CustomStringConvertible {
+public enum DriIdType: Int, CustomStringConvertible, CaseIterable {
     /// French 30 bytes format.
     case FR_30_Octets
     /// ANSI CTA 2063 format on 40 bytes.

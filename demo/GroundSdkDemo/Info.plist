@@ -99,5 +99,16 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>camera authorization - for HMD</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>We need to access your local network to detect your drone over WiFi</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_arsdk-mux._tcp.</string>
+		<string>_arsdk-0919._udp.</string>
+		<string>_arsdk-091a._udp.</string>
+		<string>_arsdk-091e._udp.</string>
+		<string>_arsdk-091b._udp.</string>
+		<string>_arsdk-0914._udp.</string>
+	</array>
 </dict>
 </plist>

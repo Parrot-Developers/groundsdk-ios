@@ -1,4 +1,4 @@
-// Copyright (C) 2019 Parrot Drones SAS
+// Copyright (C) 2020 Parrot Drones SAS
 //
 //    Redistribution and use in source and binary forms, with or without
 //    modification, are permitted provided that the following conditions
@@ -35,13 +35,53 @@ import XCTest
 import SdkCore
 import SdkCoreTesting
 
-class CameraStorableEmumTests: XCTestCase {
+class StorableEnumTests: XCTestCase {
 
     // Check that all storable enum are mapped
     func testMappers() {
         // CameraMode
         assertThat(CameraMode.recording, present())
         assertThat(CameraMode.photo, present())
+
+        // CameraMode
+        for val in CameraMode.allCases {
+            assertThat(CameraMode.storableMapper.map(from: val), present())
+        }
+
+        // CameraExposureMode
+        for val in CameraExposureMode.allCases {
+            assertThat(CameraExposureMode.storableMapper.map(from: val), present())
+        }
+
+        // CameraAutoExposureMeteringMode
+        for val in CameraAutoExposureMeteringMode.allCases {
+            assertThat(CameraAutoExposureMeteringMode.storableMapper.map(from: val), present())
+        }
+
+        // CameraStyle
+        for val in CameraStyle.allCases {
+            assertThat(CameraStyle.storableMapper.map(from: val), present())
+        }
+
+        // CameraShutterSpeed
+        for val in CameraShutterSpeed.allCases {
+            assertThat(CameraShutterSpeed.storableMapper.map(from: val), present())
+        }
+
+        // CameraIso
+        for val in CameraIso.allCases {
+            assertThat(CameraIso.storableMapper.map(from: val), present())
+        }
+
+        // CameraWhiteBalanceMode
+        for val in CameraWhiteBalanceMode.allCases {
+            assertThat(CameraWhiteBalanceMode.storableMapper.map(from: val), present())
+        }
+
+        // CameraWhiteBalanceTemperature
+        for val in CameraWhiteBalanceTemperature.allCases {
+            assertThat(CameraWhiteBalanceTemperature.storableMapper.map(from: val), present())
+        }
 
         // CameraRecordingMode
         for val in CameraRecordingMode.allCases {
@@ -86,6 +126,66 @@ class CameraStorableEmumTests: XCTestCase {
         // CameraBracketingValue
         for val in CameraBracketingValue.allCases {
             assertThat(CameraBracketingValue.storableMapper.map(from: val), present())
+        }
+
+        // CameraEvCompensation
+        for val in CameraEvCompensation.allCases {
+            assertThat(CameraEvCompensation.storableMapper.map(from: val), present())
+        }
+
+        // DriIdType
+        for val in DriIdType.allCases {
+            assertThat(DriIdType.storableMapper.map(from: val), present())
+        }
+
+        // GeofenceMode
+        for val in GeofenceMode.allCases {
+            assertThat(GeofenceMode.storableMapper.map(from: val), present())
+        }
+
+        // AntiflickerMode
+        for val in AntiflickerMode.allCases {
+            assertThat(AntiflickerMode.storableMapper.map(from: val), present())
+        }
+
+        // GimbalAxis
+        for val in GimbalAxis.allCases {
+            assertThat(GimbalAxis.storableMapper.map(from: val), present())
+        }
+
+        // PreciseHomeMode
+        for val in PreciseHomeMode.allCases {
+            assertThat(PreciseHomeMode.storableMapper.map(from: val), present())
+        }
+
+        // CopilotSource
+        for val in CopilotSource.allCases {
+            assertThat(CopilotSource.storableMapper.map(from: val), present())
+        }
+
+        // ThermalControlMode
+        for val in ThermalControlMode.allCases {
+            assertThat(ThermalControlMode.storableMapper.map(from: val), present())
+        }
+
+        // ThermalSensitivityRange
+        for val in ThermalSensitivityRange.allCases {
+            assertThat(ThermalSensitivityRange.storableMapper.map(from: val), present())
+        }
+
+        // ThermalCalibrationMode
+        for val in ThermalCalibrationMode.allCases {
+            assertThat(ThermalCalibrationMode.storableMapper.map(from: val), present())
+        }
+
+        // ReturnHomeTarget
+        for val in ReturnHomeTarget.allCases {
+            assertThat(ReturnHomeTarget.storableMapper.map(from: val), present())
+        }
+
+        // ReturnHomeEndingBehavior
+        for val in ReturnHomeEndingBehavior.allCases {
+            assertThat(ReturnHomeEndingBehavior.storableMapper.map(from: val), present())
         }
     }
 }

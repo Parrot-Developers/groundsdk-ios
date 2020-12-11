@@ -31,7 +31,7 @@ import Foundation
 
 /// Thermal control modes.
 @objc(GSThermalControlMode)
-public enum ThermalControlMode: Int, CustomStringConvertible {
+public enum ThermalControlMode: Int, CustomStringConvertible, CaseIterable {
     /// Thermal control is off.
     case disabled
     /// Thermal control is enabled, in standard mode, blending on device.
@@ -51,7 +51,7 @@ public enum ThermalControlMode: Int, CustomStringConvertible {
 
 /// Thermal sensitivity ranges.
 @objc(GSThermalSensitivityRange)
-public enum ThermalSensitivityRange: Int, CustomStringConvertible {
+public enum ThermalSensitivityRange: Int, CustomStringConvertible, CaseIterable {
     /// Thermal sensitivity range is high (from -10 to 400°C).
     case high
     /// Thermal sensitivity range is low (from -10 to 140°C).
@@ -68,7 +68,7 @@ public enum ThermalSensitivityRange: Int, CustomStringConvertible {
 
 /// Thermal camera calibration modes.
 @objc(GSThermalCalibrationMode)
-public enum ThermalCalibrationMode: Int, CustomStringConvertible {
+public enum ThermalCalibrationMode: Int, CustomStringConvertible, CaseIterable {
     /// Calibration triggered automatically.
     case automatic
     /// Calibration triggered manually.
@@ -85,7 +85,7 @@ public enum ThermalCalibrationMode: Int, CustomStringConvertible {
 
 /// Thermal rendering modes.
 @objc(GSThermalRenderingMode)
-public enum ThermalRenderingMode: Int, CustomStringConvertible {
+public enum ThermalRenderingMode: Int, CustomStringConvertible, CaseIterable {
     /// Visible image only.
     case visible
     /// Thermal image only.

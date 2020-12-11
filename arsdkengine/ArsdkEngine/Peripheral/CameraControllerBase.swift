@@ -998,8 +998,35 @@ class CameraControllerBase: CameraBackend {
         }
     }
 
+    /// Apply early presets
+    ///
+    /// Iterate settings received during connection
+    /// These setting should be applied before any other
+    private func applyEarlyPresets() {
+        // iterate settings received during the connection
+        for setting in droneSettings {
+            switch setting {
+            case .hdr(let hdr):
+                if let preset: Bool = presetStore?.read(key: setting.key) {
+                    if preset != hdr {
+                        _ = sendHdrSettingCommand(preset)
+                    }
+                    camera.update(hdrSetting: preset)
+                } else {
+                    camera.update(hdrSetting: hdr)
+                }
+            default:
+                break
+            }
+        }
+    }
+
     /// Apply all presets
     private func applyAllPresets() {
+        // NOTE: due to possible race condition on the firmware side, apply auto HDR first,
+        //       before any photo and (in particular) recording configuration
+        applyEarlyPresets()
+
         // first configure settings for the mode the drone is NOT in, to avoid extraneous pipeline reconfiguration
         let cameraModeBeforeSwitch = self.camera.modeSetting.mode
         if cameraModeBeforeSwitch != .photo {
@@ -1368,15 +1395,6 @@ class CameraControllerBase: CameraBackend {
         // iterate settings received during the connection
         for setting in droneSettings {
             switch setting {
-            case .hdr(let hdr):
-                if let preset: Bool = presetStore?.read(key: setting.key) {
-                    if preset != hdr {
-                        _ = sendHdrSettingCommand(preset)
-                    }
-                    camera.update(hdrSetting: preset)
-                } else {
-                    camera.update(hdrSetting: hdr)
-                }
             case .autoRecord (let autoRecord):
                 if let preset: Bool = presetStore?.read(key: setting.key) {
                     if preset != autoRecord {
@@ -2532,6 +2550,7 @@ extension CameraWhiteBalanceMode: StorableEnum {
         .halogen: "halogen",
         .fluorescent: "fluorescent",
         .coolWhiteFluorescent: "coolWhiteFluorescent",
+        .flash: "flash",
         .daylight: "daylight",
         .sunny: "sunny",
         .cloudy: "cloudy",

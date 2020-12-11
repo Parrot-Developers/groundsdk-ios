@@ -68,7 +68,8 @@ typedef enum
 @property (nonatomic, strong) ArsdkMuxDiscovery *discovery;
 /** Timer to restart startaccessory */
 @property (nonatomic, strong) NSTimer *timerStartAccessory;
-
+/** Flag to prevent calls to enterFroreground without a previous background notification */
+@property (nonatomic) BOOL isAppInBackground;
 
 @end
 
@@ -80,6 +81,7 @@ static NSString* ACCESSORY_PROTOCOL = @"com.parrot.dronesdk";
 - (instancetype)initWithSupportedDeviceTypes:(NSSet<NSNumber*>*)deviceTypes {
     self = [super init];
     if (self) {
+        self.isAppInBackground = FALSE;
         _deviceTypes = deviceTypes;
     }
     return self;
@@ -172,6 +174,11 @@ static NSString* ACCESSORY_PROTOCOL = @"com.parrot.dronesdk";
  A new ArsdkMux will be instantiated on foreground event (if an acessory is present).
  */
 - (void)enteredBackground:(NSNotification*)notification {
+    // guard isAppInBackground is FALSE
+    if (self.isAppInBackground){
+        return;
+    }
+    self.isAppInBackground = TRUE;
     [_timerStartAccessory invalidate];
     _timerStartAccessory = nil;
 
@@ -197,6 +204,11 @@ static NSString* ACCESSORY_PROTOCOL = @"com.parrot.dronesdk";
  A ArsdkMux will be instantiated on this event (if an acessory is present).
  */
 - (void)enterForeground:(NSNotification*)notification {
+    // guard isAppInBackground is TRUE
+    if (!self.isAppInBackground){
+        return;
+    }
+    self.isAppInBackground = FALSE;
     [self.arsdkCore dispatch_sync:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [self startConnectedAccessory];

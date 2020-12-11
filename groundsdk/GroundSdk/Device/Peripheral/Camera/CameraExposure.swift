@@ -31,7 +31,7 @@ import Foundation
 
 /// Camera exposure mode.
 @objc(GSCameraExposureMode)
-public enum CameraExposureMode: Int, CustomStringConvertible {
+public enum CameraExposureMode: Int, CustomStringConvertible, CaseIterable {
     /// Automatic exposure mode balanced.
     ///
     /// Both shutter speed and ISO sensitivity are automatically configured by the camera, with respect to some
@@ -84,7 +84,7 @@ public enum CameraExposureMode: Int, CustomStringConvertible {
 
 /// Camera auto exposure metering mode.
 @objc(GSCameraAutoExposureMeteringMode)
-public enum CameraAutoExposureMeteringMode: Int, CustomStringConvertible, Comparable {
+public enum CameraAutoExposureMeteringMode: Int, CustomStringConvertible, Comparable, CaseIterable {
 
     /// Standard auto exposure metering mode.
     case standard

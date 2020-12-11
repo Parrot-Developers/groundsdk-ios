@@ -282,8 +282,8 @@
     [_mockGsdk addPeripheralWithUid:GSPeripherals.skyCtrl3Gamepad.uid rcUid:@"333"];
 
     GSPeripheralRef *gamepadRef = [rc getPeripheral:GSPeripherals.skyCtrl3Gamepad
-                                           observer:(^(id <GSSkyCtrl3Gamepad> newGamepad) {
-        gamepad = newGamepad;
+                                           observer:(^(id <GSPeripheral> newGamepad) {
+        gamepad = (id<GSSkyCtrl3Gamepad>) newGamepad;
         nbCalls++;
     })];
     SkyCtrl3GamepadCore *impl = (SkyCtrl3GamepadCore*) [rc getPeripheral:GSPeripherals.skyCtrl3Gamepad];

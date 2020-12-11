@@ -51,6 +51,9 @@ extern ULogTag* TAG;
 /** Array of service found. Only here to have a retain on all services */
 @property (nonatomic, strong) NSMutableArray* servicesFound;
 
+/** Flag to indicate if servicesbrowser is started */
+@property (nonatomic) BOOL serviceBrowsersStarted;
+
 @end
 
 
@@ -61,6 +64,7 @@ extern ULogTag* TAG;
 {
     self = [super initWithArsdkCore:arsdk backend:backend andName:@"bonjour"];
     if (self) {
+        self.serviceBrowsersStarted = FALSE;
         NSMutableDictionary *browsers = [NSMutableDictionary dictionaryWithCapacity:types.count];
         NSMutableDictionary *services = [NSMutableDictionary dictionaryWithCapacity:types.count];
         for (NSNumber *typeAsNumber in types) {
@@ -101,16 +105,27 @@ extern ULogTag* TAG;
  Start the discovery and the bonjour discovery for all service types
  */
 - (void)startServiceBrowsers {
+    // guard serviceBrowsersStarted is false
+    // Prevents the servicesbrowser from being started twice in a row (for example in the case of foreground /
+    // background notifications)
+    if (self.serviceBrowsersStarted) {
+        return;
+    }
     for (NSString *serviceType in [_browsers allKeys]) {
         NSNetServiceBrowser *browser = [_browsers objectForKey:serviceType];
         [browser searchForServicesOfType:serviceType inDomain:kServiceNetDomain];
     }
+    self.serviceBrowsersStarted = TRUE;
 }
 
 /**
  Stop the discovery and the bonjour discovery for all service types
  */
 - (void)stopServiceBrowsers {
+    // guard serviceBrowsersStarted is true
+    if (!self.serviceBrowsersStarted) {
+        return;
+    }
     for (NSString *serviceType in [_browsers allKeys]) {
         NSNetServiceBrowser *browser = [_browsers objectForKey:serviceType];
         [browser stop];
@@ -121,6 +136,7 @@ extern ULogTag* TAG;
         [self removeDeviceFromService:service];
     }
     [_servicesFound removeAllObjects];
+    self.serviceBrowsersStarted = FALSE;
 }
 
 /**

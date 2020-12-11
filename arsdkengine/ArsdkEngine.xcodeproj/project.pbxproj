@@ -123,7 +123,6 @@
 		7CA47FA02057E44400A5843A /* MockReverseGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA47F9F2057E44400A5843A /* MockReverseGeocoder.swift */; };
 		7CA52A9D1FDEB70900C118FB /* CameraFeatureCameraRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA52A9C1FDEB70900C118FB /* CameraFeatureCameraRouter.swift */; };
 		7CA52AA41FDEEF7E00C118FB /* ArsdkMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA52AA31FDEEF7E00C118FB /* ArsdkMapper.swift */; };
-		7CA52AA61FDFDD1400C118FB /* CameraStorableEmumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA52AA51FDFDD1400C118FB /* CameraStorableEmumTests.swift */; };
 		7CA8BDB91ECC7E0A00B79CCC /* CommonRadio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA8BDB81ECC7E0A00B79CCC /* CommonRadio.swift */; };
 		7CA8BDBD1ECC880100B79CCC /* CommonRadioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA8BDBC1ECC880100B79CCC /* CommonRadioTests.swift */; };
 		7CAF16321D47A3580014F2E4 /* ManualCopterPilotingItfController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF16311D47A3580014F2E4 /* ManualCopterPilotingItfController.swift */; };
@@ -160,6 +159,7 @@
 		9B5D350A23CF54090098016D /* BatteryGaugeUpdaterControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5D350923CF54090098016D /* BatteryGaugeUpdaterControllerTests.swift */; };
 		9B6ACC7621F0CBBF0024B837 /* CameraFeatureCameraRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6ACC7521F0CBBF0024B837 /* CameraFeatureCameraRouterTests.swift */; };
 		9B73BDC8221707C2008DA1F7 /* LedsControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B73BDC7221707C2008DA1F7 /* LedsControllerTests.swift */; };
+		9B75F1DD255447F50002E9E8 /* StorableEnumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B75F1DC255447F50002E9E8 /* StorableEnumTests.swift */; };
 		9BBAAFC22215B48B00E1E5BF /* LedsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBAAFC12215B48B00E1E5BF /* LedsController.swift */; };
 		9BBD4151222EAF700006CBAF /* PhotoProgressIndicatorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBD4150222EAF700006CBAF /* PhotoProgressIndicatorController.swift */; };
 		9BBD4159222ED5CD0006CBAF /* PhotoProgressIndicatorControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBD4158222ED5CD0006CBAF /* PhotoProgressIndicatorControllerTests.swift */; };
@@ -440,7 +440,6 @@
 		7CA47F9F2057E44400A5843A /* MockReverseGeocoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockReverseGeocoder.swift; sourceTree = "<group>"; };
 		7CA52A9C1FDEB70900C118FB /* CameraFeatureCameraRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraFeatureCameraRouter.swift; sourceTree = "<group>"; };
 		7CA52AA31FDEEF7E00C118FB /* ArsdkMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkMapper.swift; sourceTree = "<group>"; };
-		7CA52AA51FDFDD1400C118FB /* CameraStorableEmumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraStorableEmumTests.swift; sourceTree = "<group>"; };
 		7CA8BDB81ECC7E0A00B79CCC /* CommonRadio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonRadio.swift; sourceTree = "<group>"; };
 		7CA8BDBC1ECC880100B79CCC /* CommonRadioTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonRadioTests.swift; sourceTree = "<group>"; };
 		7CAF16311D47A3580014F2E4 /* ManualCopterPilotingItfController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualCopterPilotingItfController.swift; sourceTree = "<group>"; };
@@ -478,6 +477,7 @@
 		9B5D350923CF54090098016D /* BatteryGaugeUpdaterControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryGaugeUpdaterControllerTests.swift; sourceTree = "<group>"; };
 		9B6ACC7521F0CBBF0024B837 /* CameraFeatureCameraRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFeatureCameraRouterTests.swift; sourceTree = "<group>"; };
 		9B73BDC7221707C2008DA1F7 /* LedsControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedsControllerTests.swift; sourceTree = "<group>"; };
+		9B75F1DC255447F50002E9E8 /* StorableEnumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorableEnumTests.swift; sourceTree = "<group>"; };
 		9BBAAFC12215B48B00E1E5BF /* LedsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedsController.swift; sourceTree = "<group>"; };
 		9BBD4150222EAF700006CBAF /* PhotoProgressIndicatorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProgressIndicatorController.swift; sourceTree = "<group>"; };
 		9BBD4158222ED5CD0006CBAF /* PhotoProgressIndicatorControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProgressIndicatorControllerTests.swift; sourceTree = "<group>"; };
@@ -851,6 +851,7 @@
 				7C9CFB271DABE00900F3915B /* DroneManagerFeatureTests.swift */,
 				7C2C7ABF1D3F7AC3009D47C7 /* PersistentStoreTests.swift */,
 				7C73110F200609AD0048BA89 /* SettingsStoreTests.swift */,
+				9B75F1DC255447F50002E9E8 /* StorableEnumTests.swift */,
 				7C76AB451C8D75BF00FC213E /* unittest-tools */,
 				7C25FB261DFEDA880028585B /* Asserts.xcassets */,
 				7CA1C97E1C807AC200FE9ED4 /* Info.plist */,
@@ -992,7 +993,6 @@
 				9BBAAFC12215B48B00E1E5BF /* LedsController.swift */,
 				F828CB3E1E081B6400270F73 /* Mappers */,
 				F8D82B541E00628D0047ABF1 /* MapperVirtualGamepad.swift */,
-				9BAF3DDC228D488F00234BE6 /* OnboardTrackerController.swift */,
 				9B40FAD0215E557300CF6690 /* PreciseHomeController.swift */,
 				02CE4466208E0038007B9F9F /* Sc3Gamepad.swift */,
 				9BF5447C22B772DC00452895 /* SkyControllerCopilot.swift */,
@@ -1174,7 +1174,6 @@
 				021D8225209367D500C53EC3 /* AnafiGeofenceTests.swift */,
 				7C7406A92050250700D1CD78 /* CameraFeatureAntiflickerTests.swift */,
 				702D4595230FD4A100FEAE56 /* AnafiPilotingControlTests.swift */,
-				7CA52AA51FDFDD1400C118FB /* CameraStorableEmumTests.swift */,
 				7C895B08207798F900DD689C /* CameraFeatureCameraTests.swift */,
 				9B6ACC7521F0CBBF0024B837 /* CameraFeatureCameraRouterTests.swift */,
 				F88468941DEF23CC00ACE941 /* AnafiSystemInfoTests.swift */,
@@ -1204,7 +1203,6 @@
 				9B31E00521C93E9A006F389E /* ThermalControllerTests.swift */,
 				9B73BDC7221707C2008DA1F7 /* LedsControllerTests.swift */,
 				9B5D350923CF54090098016D /* BatteryGaugeUpdaterControllerTests.swift */,
-				686583C2231EA07400272549 /* SykControllerRadioControlTests.swift */, peripheral
 			);
 			path = Peripheral;
 			sourceTree = "<group>";
@@ -1324,7 +1322,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1210;
 				ORGANIZATIONNAME = "Parrot SA";
 				TargetAttributes = {
 					7CA1C96C1C807AC200FE9ED4 = {
@@ -1680,10 +1678,10 @@
 				7CE137231CFCA06A0041E197 /* ArsdkEngineTestBase.swift in Sources */,
 				7CA8BDBD1ECC880100B79CCC /* CommonRadioTests.swift in Sources */,
 				F8E1F1F020DA8CC5009379D6 /* AppDefaultsTests.swift in Sources */,
-				7CA52AA61FDFDD1400C118FB /* CameraStorableEmumTests.swift in Sources */,
 				7C2045F91D2FD91B007E0405 /* IntSettingMatcher.swift in Sources */,
 				7C7406AA2050250700D1CD78 /* CameraFeatureAntiflickerTests.swift in Sources */,
 				F868F8C91CAD658F0045DBD1 /* DroneMatchers.swift in Sources */,
+				9B75F1DD255447F50002E9E8 /* StorableEnumTests.swift in Sources */,
 				0253D60720601DA400FA5029 /* HttpFlightPlanPilotingItfTests.swift in Sources */,
 				F877E4E320220B29006B0929 /* SkyControllerCompassTests.swift in Sources */,
 				F8441DAF1D47B8CC0062DC77 /* EnumSettingMatcher.swift in Sources */,
@@ -1734,6 +1732,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1750,6 +1749,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"GLES_SILENCE_DEPRECATION=1",
 					"DEBUG=1",
 					"$(inherited)",
 				);
@@ -1759,6 +1759,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1794,6 +1795,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1807,12 +1809,14 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "GLES_SILENCE_DEPRECATION=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1880,6 +1884,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = EA523KQ2D9;
 				INFOPLIST_FILE = ArsdkEngineTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.ArsdkEngineTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1893,6 +1898,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = EA523KQ2D9;
 				INFOPLIST_FILE = ArsdkEngineTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.ArsdkEngineTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

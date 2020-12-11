@@ -746,8 +746,6 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
         assertThat(alarms!.getAlarm(kind: .wind).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
-        assertThat(alarms!.getAlarm(kind: .verticalCamera).level, `is`(.off))
-        assertThat(alarms!.getAlarm(kind: .strongVibrations).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .magnetometerLowEarthField).level, `is`(.off))
         assertThat(alarms!.getAlarm(kind: .magnetometerPertubation).level, `is`(.critical))
         assertThat(changeCnt, `is`(31))
@@ -882,5 +880,43 @@ class AnafiAlarmsTests: ArsdkEngineTestBase {
 
         assertThat(alarms!.getAlarm(kind: .unreliableControllerLocation).level, `is`(.off))
         assertThat(changeCnt, `is`(3))
+    }
+
+    func testHeadingLock() {
+        connect(drone: drone, handle: 1)
+
+        // check initial value
+        assertThat(alarms!.getAlarm(kind: .headingLock).level, `is`(.off))
+        assertThat(changeCnt, `is`(1))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstateHeadinglockedstatechangedEncoder(state: .warning))
+        assertThat(alarms!.getAlarm(kind: .headingLock).level, `is`(.warning))
+        assertThat(changeCnt, `is`(2))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstateHeadinglockedstatechangedEncoder(state: .warning))
+        assertThat(alarms!.getAlarm(kind: .headingLock).level, `is`(.warning))
+        assertThat(changeCnt, `is`(2))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstateHeadinglockedstatechangedEncoder(state: .ok))
+        assertThat(alarms!.getAlarm(kind: .headingLock).level, `is`(.off))
+        assertThat(changeCnt, `is`(3))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstateHeadinglockedstatechangedEncoder(state: .ok))
+        assertThat(alarms!.getAlarm(kind: .headingLock).level, `is`(.off))
+        assertThat(changeCnt, `is`(3))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstateHeadinglockedstatechangedEncoder(state: .critical))
+        assertThat(alarms!.getAlarm(kind: .headingLock).level, `is`(.critical))
+        assertThat(changeCnt, `is`(4))
+
+        mockArsdkCore.onCommandReceived(
+            1, encoder: CmdEncoder.ardrone3PilotingstateHeadinglockedstatechangedEncoder(state: .critical))
+        assertThat(alarms!.getAlarm(kind: .headingLock).level, `is`(.critical))
+        assertThat(changeCnt, `is`(4))
     }
 }

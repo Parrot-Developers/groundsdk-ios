@@ -316,7 +316,7 @@ extension AnafiReturnHomePilotingItf: ArsdkFeatureRthCallback {
         ULog.d(.tag, """
             ReturnHome: updateRTHLocation: latitude=\(latitude) longitude=\(longitude) altitude =\(altitude)
             """)
-        if latitude != AnafiReturnHomePilotingItf.UnknownCoordinate &&
+        if !latitude.isNaN && !longitude.isNaN && latitude != AnafiReturnHomePilotingItf.UnknownCoordinate &&
             longitude != AnafiReturnHomePilotingItf.UnknownCoordinate {
             returnHomePilotingItf.update(homeLocation: (latitude: latitude,
                                                         longitude: longitude,

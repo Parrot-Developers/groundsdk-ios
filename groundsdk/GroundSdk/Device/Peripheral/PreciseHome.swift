@@ -31,7 +31,7 @@ import Foundation
 
 /// Precise home modes.
 @objc(GSPreciseHomeMode)
-public enum PreciseHomeMode: Int, CustomStringConvertible {
+public enum PreciseHomeMode: Int, CustomStringConvertible, CaseIterable {
     /// Precise home is off.
     case disabled
     /// Precise home is enabled, in standard mode.

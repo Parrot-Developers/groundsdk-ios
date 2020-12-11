@@ -28,9 +28,7 @@
 //    SUCH DAMAGE.
 
 attribute highp vec2 aPosition;
-attribute highp vec2 aTexCoord0;
-attribute highp vec2 aTexCoord1;
-attribute highp vec2 aTexCoord2;
+attribute highp vec2 aTexCoord;
 attribute highp vec4 aColor;
 
 uniform highp vec2 uEyeToSourceOffset;
@@ -54,9 +52,9 @@ void main()
     float var = 0.5;
     vec2 center = vec2(0.5,0.5);
 
-    vTexCoord0 = ((aTexCoord0 - center) * (uTextureCoordScale * uTextureCoordScaleDistFactor.x) ) + center + uTextureCoordOffset;
-    vTexCoord1 = ((aTexCoord1 - center) * (uTextureCoordScale * uTextureCoordScaleDistFactor.y) ) + center + uTextureCoordOffset;
-    vTexCoord2 = ((aTexCoord2 - center) * (uTextureCoordScale * uTextureCoordScaleDistFactor.z) ) + center + uTextureCoordOffset;
+    vTexCoord0 = ((aTexCoord - center) * (uTextureCoordScale * uTextureCoordScaleDistFactor.x) ) + center + uTextureCoordOffset;
+    vTexCoord1 = ((aTexCoord - center) * (uTextureCoordScale * uTextureCoordScaleDistFactor.y) ) + center + uTextureCoordOffset;
+    vTexCoord2 = ((aTexCoord - center) * (uTextureCoordScale * uTextureCoordScaleDistFactor.z) ) + center + uTextureCoordOffset;
 
     vColor = aColor;
 }

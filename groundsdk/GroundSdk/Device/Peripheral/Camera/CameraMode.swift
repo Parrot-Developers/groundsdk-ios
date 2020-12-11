@@ -31,7 +31,7 @@ import Foundation
 
 /// Camera mode.
 @objc(GSCameraMode)
-public enum CameraMode: Int, CustomStringConvertible {
+public enum CameraMode: Int, CustomStringConvertible, CaseIterable {
     /// Camera mode that is best suited to record videos.
     /// - Note: Depending on the device, it may also be possible to take photos while in this mode.
     case recording

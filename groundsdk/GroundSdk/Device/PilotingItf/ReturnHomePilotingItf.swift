@@ -62,7 +62,7 @@ public enum HomeReachability: Int, CustomStringConvertible {
 
 /// Return home destination target.
 @objc(GSReturnHomeTarget)
-public enum ReturnHomeTarget: Int, CustomStringConvertible {
+public enum ReturnHomeTarget: Int, CustomStringConvertible, CaseIterable {
     /// No home type. This might be because the drone does not have a gps fix
     case none
     /// Return to take-off position.
@@ -89,7 +89,7 @@ public enum ReturnHomeTarget: Int, CustomStringConvertible {
 
 /// Return Home ending behavior
 @objc(GSReturnHomeEndingBehavior)
-public enum ReturnHomeEndingBehavior: Int, CustomStringConvertible {
+public enum ReturnHomeEndingBehavior: Int, CustomStringConvertible, CaseIterable {
     /// Ending behavior for return home is landing.
     case landing
     /// Ending behavior for return home is hovering. In this behavior, you must use endingHoveringAltitude

@@ -139,6 +139,9 @@ extension GGLDrawable {
     func drawableDidTearDownGl(_ context: EAGLContext) {}
 
     func drawableSetupGl(context: EAGLContext) {
+        guard !isGlReady else {
+            return
+        }
         currentContext = context
         EAGLContext.setCurrent(context)
         drawableWillSetupGl(context)
@@ -216,7 +219,7 @@ extension GGLDrawable {
 
     func tearDownVboEbo() {
         if vao != 0 {
-            glDeleteBuffers(1, &vao)
+            glDeleteVertexArrays(1, &vao)
             vao = 0
         }
         if vbo != 0 {
@@ -228,7 +231,6 @@ extension GGLDrawable {
             ebo = 0
         }
     }
-
 }
 
 /// Array extension

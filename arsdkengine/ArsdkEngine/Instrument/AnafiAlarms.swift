@@ -66,7 +66,8 @@ class AnafiAlarms: DeviceComponentController {
                                                    .hoveringDifficultiesNoGpsTooDark, .hoveringDifficultiesNoGpsTooHigh,
                                                    .automaticLandingBatteryIssue, .wind, .verticalCamera,
                                                    .strongVibrations, .magnetometerLowEarthField,
-                                                   .magnetometerPertubation, .unreliableControllerLocation])
+                                                   .magnetometerPertubation, .unreliableControllerLocation,
+                                                   .headingLock])
     }
 
     /// Drone is connected
@@ -242,6 +243,23 @@ extension AnafiAlarms: ArsdkFeatureArdrone3PilotingstateCallback {
             return
         }
         alarms.update(level: level, forAlarm: .strongVibrations).notifyUpdated()
+    }
+
+    func onHeadingLockedStateChanged(state: ArsdkFeatureArdrone3PilotingstateHeadinglockedstatechangedState) {
+        let level: Alarm.Level
+        switch state {
+        case .ok:
+            level = .off
+        case .warning:
+           level = .warning
+        case .critical:
+            level = .critical
+        case .sdkCoreUnknown:
+            fallthrough
+        @unknown default:
+            return
+        }
+        alarms.update(level: level, forAlarm: .headingLock).notifyUpdated()
     }
 }
 

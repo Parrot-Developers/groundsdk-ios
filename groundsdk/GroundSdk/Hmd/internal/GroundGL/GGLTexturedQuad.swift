@@ -171,10 +171,11 @@ class GGLTexturedQuad: GGLDrawable {
         guard source == .fromExternalTexture else {
             return
         }
-
-        externalTextureName = textId
-        effect.texture2d0.name = externalTextureName
-        effect.texture2d0.enabled = GLboolean(UInt8(GL_TRUE))
+        if externalTextureName != textId {
+            externalTextureName = textId
+            effect.texture2d0.name = externalTextureName
+            effect.texture2d0.enabled = GLboolean(UInt8(GL_TRUE))
+        }
     }
 
     private func setupGl() {
@@ -183,7 +184,6 @@ class GGLTexturedQuad: GGLDrawable {
             if let cgiImage = cgiImage {
                 textureInfo = try? GLKTextureLoader.texture(with: cgiImage)
                 if let textureInfo = textureInfo {
-                    print("Quad Add texture \(textureInfo)")
                     effect.texture2d0.name = textureInfo.name
                     effect.texture2d0.enabled = GLboolean(UInt8(GL_TRUE))
                 }
@@ -231,6 +231,7 @@ class GGLTexturedQuad: GGLDrawable {
     }
 
     deinit {
+        EAGLContext.setCurrent(currentContext)
         deleteTexture()
         drawableTearDownGl()
     }

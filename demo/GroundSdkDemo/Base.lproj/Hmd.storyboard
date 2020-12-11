@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="fCW-Mq-rgq">
-    <device id="retina4_7" orientation="landscape">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="fCW-Mq-rgq">
+    <device id="retina4_7" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,6 +39,12 @@
                                     <action selector="backAction:" destination="fCW-Mq-rgq" eventType="touchUpInside" id="2s7-cW-BpY"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ck7-aV-DM5">
+                                <rect key="frame" x="20" y="0.0" width="627" height="375"/>
+                                <connections>
+                                    <action selector="tabOnScreen:" destination="fCW-Mq-rgq" eventType="touchUpInside" id="E7Q-Uy-gvU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -48,13 +52,18 @@
                             <constraint firstItem="Bjr-Cy-2Vt" firstAttribute="leading" secondItem="zSn-E3-UzF" secondAttribute="leading" constant="5" id="Eb1-Hc-hOX"/>
                             <constraint firstItem="Ce6-ob-MWt" firstAttribute="height" secondItem="zSn-E3-UzF" secondAttribute="height" id="R36-G4-H7u"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Bjr-Cy-2Vt" secondAttribute="trailing" id="S6Y-nL-2Bc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ck7-aV-DM5" secondAttribute="trailing" id="SfV-QO-CGo"/>
                             <constraint firstItem="Bjr-Cy-2Vt" firstAttribute="top" secondItem="zSn-E3-UzF" secondAttribute="topMargin" id="W3o-o7-I5T"/>
                             <constraint firstItem="Ce6-ob-MWt" firstAttribute="centerY" secondItem="zSn-E3-UzF" secondAttribute="centerY" id="aHf-OA-TC3"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="ck7-aV-DM5" secondAttribute="bottom" id="ez1-xJ-hLB"/>
+                            <constraint firstItem="ck7-aV-DM5" firstAttribute="leading" secondItem="zSn-E3-UzF" secondAttribute="leadingMargin" id="rRq-GE-mj5"/>
+                            <constraint firstItem="ck7-aV-DM5" firstAttribute="top" secondItem="VCX-NQ-1Hl" secondAttribute="bottom" id="uVs-Jr-z2A"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PHb-6W-5n2"/>
                     <connections>
                         <outlet property="backButton" destination="Bjr-Cy-2Vt" id="ndX-f9-PpR"/>
+                        <outlet property="tapButton" destination="ck7-aV-DM5" id="O3g-br-rhH"/>
                         <outlet property="viewHudDemo" destination="Ce6-ob-MWt" id="6EP-U3-ZlO"/>
                     </connections>
                 </viewController>

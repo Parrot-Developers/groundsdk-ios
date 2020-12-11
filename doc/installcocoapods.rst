@@ -110,15 +110,15 @@ editing:
 
 Replace all content with:
 
-.. substitution-code-block:: ruby
+.. code-block:: ruby
 
     platform :ios, '10.0'
 
     target ' appProject ' do
         use_frameworks!
-        pod 'GroundSdk', '~> |version|'
-        pod 'ArsdkEngine', '~> |version|'
-        pod 'SdkCore', '~> |version|'
+        pod 'GroundSdk', '~> {{version}}'
+        pod 'ArsdkEngine', '~> {{version}}'
+        pod 'SdkCore', '~> {{version}}'
     end
 
 Save and close the Podfile.

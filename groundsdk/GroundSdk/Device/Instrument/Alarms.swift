@@ -100,10 +100,22 @@ public class Alarm: NSObject {
         case strongVibrations
 
         /// A magnetic element disturbs the drone's magnetometer and alters the drone ability to fly safely.
+        ///
+        /// Deprecated: use `headingLock` instead.
         case magnetometerPertubation
 
         /// The local terrestrial magnetic field is too weak to allow to fly safely.
+        ///
+        /// Deprecated: use `headingLock` instead.
         case magnetometerLowEarthField
+
+        /// Drone heading lock altered by magnetic perturbations.
+        ///
+        ///   - `.off`: magnetometer state allows heading lock.
+        ///   - `.warning`: magnetometer detects a weak magnetic field (close to Earth pole), or a
+        ///     perturbed local magnetic field. Magnetometer has not lost heading lock yet.
+        ///   - `.critical`: magnetometer lost heading lock.
+        case headingLock
 
         /// Location information sent by the controller is unreliable.
         case unreliableControllerLocation
@@ -125,6 +137,7 @@ public class Alarm: NSObject {
             case .strongVibrations:                 return "strongVibrations"
             case .magnetometerPertubation:          return "magnetometerPertubation"
             case .magnetometerLowEarthField:        return "magnetometerLowEarthField"
+            case .headingLock:                      return "headingLock"
             case .unreliableControllerLocation:     return "unreliableControllerLocation"
             }
         }
@@ -135,7 +148,8 @@ public class Alarm: NSObject {
                                                  .hoveringDifficultiesNoGpsTooHigh,
                                                  .automaticLandingBatteryIssue, .wind,
                                                  .verticalCamera, .strongVibrations, .magnetometerPertubation,
-                                                 .magnetometerLowEarthField, .unreliableControllerLocation]
+                                                 .magnetometerLowEarthField, .unreliableControllerLocation,
+                                                 .headingLock]
     }
 
     /// Alarm level.

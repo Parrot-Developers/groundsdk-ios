@@ -132,7 +132,16 @@ class GGLMultiLayer {
         }
 
         deinit {
-            externalTextureId = 0
+            if externalTextureId != 0 {
+                switch type {
+                case .externalTexture(_, let autoRelease):
+                    if autoRelease {
+                        glDeleteTextures(1, &externalTextureId)
+                    }
+                default:
+                    break
+                }
+            }
         }
     }
 

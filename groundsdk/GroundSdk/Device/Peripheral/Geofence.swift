@@ -32,7 +32,7 @@ import CoreLocation
 
 /// Geofence modes, indicating the zone type where the drone is able to fly.
 @objc(GSGeofenceMode)
-public enum GeofenceMode: Int, CustomStringConvertible {
+public enum GeofenceMode: Int, CustomStringConvertible, CaseIterable {
     /// The drone flying zone is only bounded by the maximum altitude setting.
     case altitude
     /// The drone flying zone is bounded by the cylinder defined by the maximum altitude and distance settings.

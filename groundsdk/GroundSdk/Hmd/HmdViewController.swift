@@ -39,7 +39,7 @@ open class DrawableView: UIView {
 /// in order to implement a HMD feature
 open class HmdViewController: UIViewController {
 
-    /// enum to specify the camera source
+    /// enum to specify the camera source.
     public enum VideoOrigin {
         /// stream is disabled
         case none
@@ -49,8 +49,14 @@ open class HmdViewController: UIViewController {
         case droneCamera
     }
 
-    /// Can enable / disable CockpitGlasses rendering. Can be used during development to display the undistorted
-    /// HMD screen. (`true` disbles the distortion)
+    /// Cockpit Glasses ressources
+    private var cockpitRessources: CockpitRessources?
+
+    /// Cockpit model used for rendering. See `setCockpitModel(model: String)` to set or change the model.
+    private var cockpitName: String?
+
+    /// Can enable / disable CockpitGlasses VR rendering. Can be used during development to display the undistorted
+    /// HMD screen. (`true` disables the distortion)
     public var debugDistortionOff: Bool = false {
         didSet {
             debugQuad?.enable = debugDistortionOff
@@ -78,6 +84,13 @@ open class HmdViewController: UIViewController {
     /// Phone's camera Field Of View (read-only)
     public var phoneCameraFov: Double {
         return cameraQuad?.fov ?? 0
+    }
+
+    /// Custom rendering vertical offset (in mm)
+    public var verticalOffset: Double = 0 {
+        didSet {
+            distortionMesh?.setVerticalOffset(verticalOffset)
+        }
     }
 
     /// Closure called at every frame refresh. At each draw(), this closure is called and allows to implement specific
@@ -166,24 +179,29 @@ open class HmdViewController: UIViewController {
     /// Zoom factor to apply in the multilayer system so that the video stream "fits" the view (no crop).
     private var streamZoomForFit: CGFloat = 1
 
+    /// true / false if the rendering view is currently presented
+    private var isRenderingOnScreen = false
+
     /// Setup OpenGl
     private func setupGGl() {
-        guard let gglView = gglView else {
+        guard let gglView = gglView, let cockpitName = cockpitName, let cockpitRessources = cockpitRessources else {
             return
         }
         EAGLContext.setCurrent(gglView.context)
 
         // get a quad Camera
-        cameraQuad = GGLCameraQuad()
-        if let cameraQuad = cameraQuad {
-            cameraQuad.drawableSetupGl(context: gglView.context)
-            cameraQuad.enable = false
+        if cameraQuad == nil {
+            cameraQuad = GGLCameraQuad()
+            if let cameraQuad = cameraQuad {
+                cameraQuad.drawableSetupGl(context: gglView.context)
+                cameraQuad.enable = false
+            }
         }
 
         // get a distortion mesh
-        let model = Cockpit.glasses2
-        distortionMesh = GGLDistortionMesh(cockpit: model)
+        distortionMesh = GGLDistortionMesh(cockpitName: cockpitName, cockpitRessources: cockpitRessources)
         if let distortionMesh = distortionMesh {
+            distortionMesh.setVerticalOffset(verticalOffset)
             gglView.addDrawable(distortionMesh)
             let sizeForFbo = distortionMesh.squarePixelSize
             fboSize = CGSize(width: sizeForFbo, height: sizeForFbo)
@@ -206,6 +224,7 @@ open class HmdViewController: UIViewController {
                 cameraLayerId = multiLayer.addFrameBufferLayer(size: cameraQuad.renderSize, flip: true)
                 overCameraLayerId = multiLayer.addFrameBufferLayer(size: cameraQuad.renderSize, flip: true)
             }
+
             if let cameraLayerId = cameraLayerId, let overCameraLayerId = overCameraLayerId {
                 cameraZoomForFit = distortionMesh?.zoomForAspectFit ?? 1
                 multiLayer.setZoomForLayer(id: cameraLayerId, zoom: cameraZoomForFit )
@@ -260,6 +279,80 @@ open class HmdViewController: UIViewController {
             }
         }
         gglView.autoRefreshFps = 30
+    }
+
+    /// Remove all objects used for rendering
+    private func removeGGLRenderer() {
+        // keeps the cameraQuad, but disables it
+        cameraQuad?.enable = false
+        streamLayerId = nil
+        overStreamLayerId = nil
+        cameraLayerId = nil
+        overCameraLayerId = nil
+        hudLayerId = nil
+        offScreenStreamRender?.frameReadyAction = nil
+        if let stream = offScreenStreamRender?.stream as? StreamCore {
+            stream.stop()
+        }
+        offScreenStreamRender = nil
+        hudTimer = nil
+        multiLayer = nil
+        distortionMesh = nil
+        debugQuad = nil
+    }
+
+    @available(iOS 10.0, *)
+    /// Changes or sets a cockpit model for rendering
+    /// - Parameter toModel: model tu use for rendering
+    private func setRendering(toModel: String) {
+        let cockpitNamess = cockpitRessources?.cockpitNames
+        guard cockpitNamess?.contains(toModel) == true else {
+            ULog.e(.hmdTag, "HMD: unknown model \(toModel)")
+            return
+        }
+
+        guard let gglView = gglView else {
+            return
+        }
+
+        EAGLContext.setCurrent(gglView.context)
+
+        gglView.enabled = false
+        gglView.willDraw = nil
+        gglView.removeDrawables()
+        // if a rendering is active, stop the rendering
+        if isRenderingOnScreen {
+            setRendering(active: false)
+        }
+
+        removeGGLRenderer()
+        cockpitName = toModel
+        setupGGl()
+
+        // if a rendering was active, restart the rendering
+        if isRenderingOnScreen {
+            setRendering(active: true)
+        }
+    }
+
+    /// Enables or disables the rendering
+    /// - Parameter active: true for rendering, false otherwise
+    private func setRendering(active: Bool) {
+        if active {
+            if let context = gglView?.context {
+                EAGLContext.setCurrent(context)
+                applyVideoMode(origin: videoOrigin)
+                distortionMesh?.enable = !debugDistortionOff
+                debugQuad?.enable = debugDistortionOff
+                activeAutoRefreshHud()
+                gglView?.enabled = true
+            }
+        } else {
+            gglView?.enabled = false
+            applyVideoMode(origin: .none)
+            distortionMesh?.enable = false
+            hudTimer = nil
+        }
     }
 
     /// Enable or disable the camera overlay. The camera overlay should be visible if at least one sprite is defined
@@ -363,14 +456,8 @@ open class HmdViewController: UIViewController {
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let context = gglView?.context {
-            EAGLContext.setCurrent(context)
-            applyVideoMode(origin: videoOrigin)
-            distortionMesh?.enable = !debugDistortionOff
-            debugQuad?.enable = debugDistortionOff
-            activeAutoRefreshHud()
-            gglView?.enabled = true
-        }
+        isRenderingOnScreen = true
+        setRendering(active: true)
     }
 
     open override func viewWillDisappear(_ animated: Bool) {
@@ -378,10 +465,8 @@ open class HmdViewController: UIViewController {
         if let stream = offScreenStreamRender?.stream as? StreamCore {
             stream.stop()
         }
-        gglView?.enabled = false
-        applyVideoMode(origin: .none)
-        distortionMesh?.enable = false
-        hudTimer = nil
+        isRenderingOnScreen = false
+        setRendering(active: false)
     }
 
     /// Render the drone's stream in the multilayer Frame Buffer Object.
@@ -466,6 +551,34 @@ open class HmdViewController: UIViewController {
 // MARK: - Public Interface
 @available(iOS 10.0, *)
 extension HmdViewController {
+
+    /// Set the cockpit ressources file.
+    ///
+    /// - Parameter fileURL: URL for the cockpitGlasses file.
+    public func setupCockpitRessources(fileURL: URL) {
+        cockpitRessources = CockpitRessources(fileURL: fileURL)
+        cockpitName = nil
+    }
+
+    /// Gel all available cockpit models. Models are defined in a cockpitGlasses file
+    /// (see `setupCockpitRessources(fileURL: URL)`)
+    ///
+    /// - Returns: all available models. See `setCockpitModel(model: String)`
+    public func allCockpitModels() -> [String]? {
+        return cockpitRessources?.cockpitNames
+    }
+
+    /// Set or update the Cockit Model. Call this function during initialization (viewDidLoad() is a good place).
+    /// Subsequently, it is possible to dynamically update the model used.
+    ///
+    /// - Parameter model: Cockpit Model.
+    public func setCockpitModel(model: String) {
+        guard model != cockpitName else {
+            return
+        }
+        setRendering(toModel: model)
+    }
+
     /// Set a view as Hud template
     ///
     /// - Parameters:

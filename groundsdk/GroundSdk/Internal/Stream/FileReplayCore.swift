@@ -80,7 +80,7 @@ public class FileReplayCore: ReplayCore, FileReplay {
 
     override func handleSdkCoreStreamClose() {
         super.handleSdkCoreStreamClose()
-        unregisterAppBAckgroundObserver()
+        unregisterAppBackgroundObserver()
     }
 
     public override func streamDidClose(_ sdkCoreStream: SdkCoreStream, reason: SdkCoreStreamCloseReason) {
@@ -100,7 +100,7 @@ extension FileReplayCore {
     }
 
     /// Unregister observer notified when the application is put in background.
-    func unregisterAppBAckgroundObserver() {
+    func unregisterAppBackgroundObserver() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
     }

@@ -32,7 +32,6 @@ import GLKit
 /// Object handling a Texture Frame Buffer Object intended for offscreen rendering
 public class GGLFbo {
 
-    private var colorRenderbuffer = GLuint()
     private var depthRenderbuffer = GLuint()
 
     /// Texture of the Frame Buffer Object
@@ -52,11 +51,13 @@ public class GGLFbo {
     /// - Parameters:
     ///   - context: current OpenGl context
     ///   - size: size required for the Frame Buffer Object
-    init? (context: EAGLContext, size: CGSize) {
+    ///   - depthRender: true to create a depth or depth/stencil renderbuffer, allocate storage for it,
+    /// and attach it to the framebuffer’s depth attachment point.
+    init? (context: EAGLContext, size: CGSize, depthRender: Bool = false) {
         self.context = context
         self.size = size
         EAGLContext.setCurrent(context)
-        if createOffScreenFramebuffer() == false {
+        if createOffScreenFramebuffer(depthRender: depthRender) == false {
             return nil
         }
     }
@@ -65,8 +66,11 @@ public class GGLFbo {
     /// A framebuffer intended for offscreen rendering allocates all of its attachments as OpenGL ES renderbuffers.
     /// The function allocates a framebuffer object with color and depth attachments.
     ///
+    /// - Parameters:
+    ///   - depthRender: true to create a depth or depth/stencil renderbuffer, allocate storage for it,
+    /// and attach it to the framebuffer’s depth attachment point. false otherwise.
     /// - Returns: return true if the FBO is created (false otherwise). See `framefuffer` and `fboTexture` properties.
-    private func createOffScreenFramebuffer() -> Bool {
+    private func createOffScreenFramebuffer(depthRender: Bool) -> Bool {
 
         let success: Bool
 
@@ -88,11 +92,13 @@ public class GGLFbo {
 
         // Create a depth or depth/stencil renderbuffer, allocate storage for it,
         // and attach it to the framebuffer’s depth attachment point.
-        glGenRenderbuffers(1, &depthRenderbuffer)
-        glBindRenderbuffer(GLenum(GL_RENDERBUFFER), depthRenderbuffer)
-        glRenderbufferStorage(GLenum(GL_RENDERBUFFER), GLenum(GL_DEPTH_COMPONENT16), width, height)
-        glFramebufferRenderbuffer(GLenum(
-            GL_FRAMEBUFFER), GLenum(GL_DEPTH_ATTACHMENT), GLenum(GL_RENDERBUFFER), depthRenderbuffer)
+        if depthRender {
+            glGenRenderbuffers(1, &depthRenderbuffer)
+            glBindRenderbuffer(GLenum(GL_RENDERBUFFER), depthRenderbuffer)
+            glRenderbufferStorage(GLenum(GL_RENDERBUFFER), GLenum(GL_DEPTH_COMPONENT16), width, height)
+            glFramebufferRenderbuffer(GLenum(
+                GL_FRAMEBUFFER), GLenum(GL_DEPTH_ATTACHMENT), GLenum(GL_RENDERBUFFER), depthRenderbuffer)
+        }
 
         // Test the framebuffer for completeness.
         // This test only needs to be performed when the framebuffer’s configuration changes.
@@ -110,8 +116,15 @@ public class GGLFbo {
     }
 
     deinit {
+        EAGLContext.setCurrent(context)
         if framebuffer != 0 {
             glDeleteFramebuffers(1, &framebuffer)
+        }
+        if depthRenderbuffer != 0 {
+            glDeleteRenderbuffers(1, &depthRenderbuffer)
+        }
+        if fboTexture != 0 {
+            glDeleteTextures(1, &fboTexture)
         }
     }
 }

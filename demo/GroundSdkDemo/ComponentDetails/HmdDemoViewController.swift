@@ -34,6 +34,7 @@ class HmdDemoViewController: HmdViewController, DeviceViewController {
 
     @IBOutlet weak var viewHudDemo: UIView!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var tapButton: UIButton!
 
     private let groundSdk = GroundSdk()
     private var droneUid: String?
@@ -54,8 +55,24 @@ class HmdDemoViewController: HmdViewController, DeviceViewController {
     private var moveLeft = false
     private var moveDown = false
 
+    private var modelsId: [String]?
+    private var currentModelInd: Int = 0
+
     func setDeviceUid(_ uid: String) {
         droneUid = uid
+    }
+
+    private func setModelWithIndice(_ ind: Int) {
+        if let nbModel = modelsId?.count {
+            if ind >= nbModel {
+                currentModelInd = 0
+            } else {
+                currentModelInd = ind
+            }
+            if let name = modelsId?[currentModelInd] {
+                setCockpitModel(model: name)
+            }
+        }
     }
 
     override func viewDidLoad() {
@@ -64,6 +81,22 @@ class HmdDemoViewController: HmdViewController, DeviceViewController {
         UIDevice.current.setValue(value, forKey: "orientation")
         // call the super.viewDidLoad() after the new orientation
         super.viewDidLoad()
+        debugDistortionOff = false
+
+        let fileName = "hmd.bin"
+        if let fileURL = Bundle.main.url(forResource: fileName, withExtension: "") {
+            setupCockpitRessources(fileURL: fileURL)
+            modelsId = allCockpitModels()
+            currentModelInd = 0
+            if modelsId?.count ?? 0 <= 0 {
+                print("Error: CockitsRessources(\(fileName)) - no models in file")
+            }
+        } else {
+            print("Error: CockitsRessources(\(fileName)) - no ressource in Bundle")
+        }
+
+        setModelWithIndice(0)
+
         if let sprite = sprite1 {
             addCameraSprite(sprite: sprite)
         }
@@ -86,14 +119,10 @@ class HmdDemoViewController: HmdViewController, DeviceViewController {
         initStream()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    private func setUpHmdContent() {
+        let nameCockpit = modelsId?[currentModelInd] ?? "WELCOME"
+        messageToHud(nameCockpit)
         self.setViewForHud(view: viewHudDemo, refreshRateHz: 15, fallBackMinRefreshRateHz: 5)
-        streamServerRef?.value?.enabled = true
-        playCameraLive()
-        moveSpriteOnphoneCamera()
-        view.bringSubviewToFront(backButton)
-        messageToHud("WELCOME")
         offScreenStreamRender?.contentZoneListener = { [weak self] rect in
             if let self = self {
                 if let existingSprite = self.spriteForStream {
@@ -109,11 +138,42 @@ class HmdDemoViewController: HmdViewController, DeviceViewController {
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        streamServerRef?.value?.enabled = true
+        playCameraLive()
+        moveSpriteOnphoneCamera()
+        view.bringSubviewToFront(tapButton)
+        view.bringSubviewToFront(backButton)
+        setUpHmdContent()
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.setViewForHud(view: nil, refreshRateHz: 0)
         offScreenStreamRender?.contentZoneListener = nil
         deinitStream()
+    }
+
+   /// How to change cokpitGlasses when the HMD is active
+   private func changeCockpitOnScreen() {
+        // Clean
+        deinitStream()
+        // change the cockpit
+        currentModelInd += 1
+        setModelWithIndice(currentModelInd)
+        // redo (stream and hud content)
+        initStream()
+        setUpHmdContent()
+    }
+
+    /// How to change the vertical offset
+    func exampleOffset() {
+        verticalOffset = 6.5
+    }
+
+    @IBAction func tabOnScreen(_ sender: Any) {
+       changeCockpitOnScreen()
     }
 
     private func initStream() {

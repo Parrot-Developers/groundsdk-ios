@@ -31,7 +31,7 @@ import Foundation
 
 /// Anti-flickering modes.
 @objc(GSAntiflickerMode)
-public enum AntiflickerMode: Int, CustomStringConvertible {
+public enum AntiflickerMode: Int, CustomStringConvertible, CaseIterable {
     /// Anti-flickering is off.
     case off
     /// Anti-flickering set to 50hz.

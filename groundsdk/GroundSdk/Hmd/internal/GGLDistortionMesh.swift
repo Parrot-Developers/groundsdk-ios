@@ -43,12 +43,12 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
 
     let _calibrationPitch = GLfloat(0)
 
-    let cockpit: Cockpit
-    var textureImage = GLuint()
+    let cockpitData: CockpitData
+    var textureImage = GLuint(0)
 
     var squarePixelSize: Int {
         if let pixelPerMM = UIScreen.pixelsPerCentimeter {
-            return Int(widthSqareMesh * pixelPerMM / CGFloat(10))
+            return Int(widthSquareMesh * pixelPerMM / CGFloat(10))
         } else {
             return 1280
         }
@@ -57,7 +57,7 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
     // Renderer parameters
     let kInchInMM: CGFloat =  25.4
     let kDefaultScale: GLfloat = 1.0
-    let widthSqareMesh: CGFloat
+    let widthSquareMesh: CGFloat
 
     let calculatedDistScaleFactor: (red: Float, green: Float, blue: Float)
 
@@ -79,6 +79,7 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
     private var _xScale = GLfloat()
     private var _yScale = GLfloat()
     private var textScale = GLfloat(1)
+    private var customVerticalOffset = GLfloat(0)
     private var _screenSize: CGSize {
         let scale = UIScreen.main.nativeScale
         return CGSize(width: UIScreen.main.bounds.size.width * scale, height: UIScreen.main.bounds.size.height * scale)
@@ -87,25 +88,19 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
     // buffers Data
     private var positionData: [GLfloat]
     private var indicesData: [GLuint]
-    private var texCoordsRedData: [GLfloat]
-    private var texCoordsGreenData: [GLfloat]
-    private var texCoordsBlueData: [GLfloat]
-    private var colorData: [GLfloat]
+    private var texCoordsData: [GLfloat]
+    private var colorData: [GLfloat]?
 
     // Buffers Ids
     private var positionID = GLuint()
-    private var texCoords0 = GLuint()
-    private var texCoords1 = GLuint()
-    private var texCoords2 = GLuint()
+    private var texCoords = GLuint()
     private var colorID = GLuint()
     private var indicesID = GLuint()
 
     // Program Attributes
     // Attributes
     private var programAttrPosition = GLint()
-    private var programAttrTexCoord0 = GLint()
-    private var programAttrTexCoord1 = GLint()
-    private var programAttrTexCoord2 = GLint()
+    private var programAttrTexCoord = GLint()
     private var programAttrColor = GLint()
 
     // Program Uniforms
@@ -135,18 +130,22 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
         height: UIScreen.main.bounds.height * UIScreen.main.scale)
     let halfWidth = (UIScreen.main.bounds.width * UIScreen.main.scale) / 2
 
-    init(cockpit: Cockpit) {
-        self.cockpit = cockpit
-
-        interpupillaryDistanceMM = cockpit.defaultInterpupillaryDistanceMM
-        positionData = GGLDistortionMeshLoader.dataArray(.positions, cockpit)
-        widthSqareMesh = CGFloat(positionData.max() ?? 31.39) * 2
-        indicesData = GGLDistortionMeshLoader.dataArray(.indices, cockpit)
-        texCoordsRedData = GGLDistortionMeshLoader.dataArray(.texRed, cockpit)
-        texCoordsBlueData = GGLDistortionMeshLoader.dataArray(.texBlue, cockpit)
-        texCoordsGreenData = GGLDistortionMeshLoader.dataArray(.texGreen, cockpit)
-        colorData = GGLDistortionMeshLoader.dataArray(.colors, cockpit)
-        calculatedDistScaleFactor = cockpit.calculatedDistScaleFactor
+    init?(cockpitName: String, cockpitRessources: CockpitRessources) {
+        guard let cockpitData = cockpitRessources.getCockpit(name: cockpitName) else {
+            return nil
+        }
+        self.cockpitData = cockpitData
+        interpupillaryDistanceMM = cockpitData.defaultInterpupillaryDistanceMM
+        positionData = cockpitRessources.getPositions(cockpitName: cockpitName)
+        if let max = positionData.max() {
+            widthSquareMesh = CGFloat(max * 2)
+        } else {
+            widthSquareMesh = CGFloat(cockpitData.meshSize)
+        }
+        indicesData = cockpitRessources.getIndices(cockpitName: cockpitName)
+        texCoordsData = cockpitRessources.getTextCoords(cockpitName: cockpitName)
+        colorData = cockpitRessources.getColorsFilter(cockpitName: cockpitName)
+        calculatedDistScaleFactor = cockpitData.calculatedDistScaleFactor
 
         _dpi = UIScreen.pixelsPerInch ?? 401
         _deviceScale = UIScreen.main.scale
@@ -167,9 +166,12 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
         computeDimensions()
     }
 
+    /// Specify the interpupillar distance
+    ///
+    /// - Parameter ipd: interpupilalr distance in mm
     func setInterpullarDistance(_ ipd: CGFloat) {
         let newIpd: CGFloat
-        let interval = cockpit.minMaxInterpupillaryDistanceMM
+        let interval = cockpitData.minMaxInterpupillaryDistanceMM
         if interval.contains(ipd) {
             newIpd = ipd
         } else {
@@ -178,28 +180,35 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
         interpupillaryDistanceMM = newIpd
     }
 
+    /// Specify the vertical offset of the rendering
+    ///
+    /// - Parameter verticalOffset: vertical Offset to apply  in mm
+    func setVerticalOffset(_ verticalOffset: Double) {
+        customVerticalOffset = GLfloat(verticalOffset)
+    }
+
     private func computeDimensions() {
-        let totalWidth = interpupillaryDistanceMM + widthSqareMesh
+        let totalWidth = interpupillaryDistanceMM + widthSquareMesh
         let cropWidth = max(totalWidth - _mmWidth, 0)
 
-        let visibleSqareWidth: CGFloat
+        let visibleSquareWidth: CGFloat
         if betterImmersion {
             shiftTextureForImmersion = GLfloat(cropWidth / 2)
-            visibleSqareWidth = widthSqareMesh - CGFloat(shiftTextureForImmersion)
+            visibleSquareWidth = widthSquareMesh - CGFloat(shiftTextureForImmersion)
         } else {
             shiftTextureForImmersion = 0
-            visibleSqareWidth = widthSqareMesh - cropWidth
+            visibleSquareWidth = widthSquareMesh - cropWidth
         }
 
-        let zoomForWidth = (visibleSqareWidth / widthSqareMesh)
+        let zoomForWidth = (visibleSquareWidth / widthSquareMesh)
 
-        let totalHeight = widthSqareMesh
+        let totalHeight = widthSquareMesh
         let cropHeight = (totalHeight - _mmHeight)
-        let visibleSqareHeight = widthSqareMesh - cropHeight
-        let zoomForHeight = (visibleSqareHeight / widthSqareMesh)
+        let visibleSquareHeight = widthSquareMesh - cropHeight
+        let zoomForHeight = (visibleSquareHeight / widthSquareMesh)
 
-        if widthSqareMesh < _mmHeight {
-            phoneOffsetY = GLfloat((_mmHeight - widthSqareMesh) / 2)
+        if widthSquareMesh < _mmHeight {
+            phoneOffsetY = GLfloat((_mmHeight - widthSquareMesh) / 2)
         } else {
             phoneOffsetY = 0
         }
@@ -219,34 +228,23 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
                      positionData.size(),
                      positionData,
                      GLenum(GL_STATIC_DRAW))
-        // RED
-        glGenBuffers(1, &texCoords0)
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), texCoords0)
+        // TEX COORDS
+        glGenBuffers(1, &texCoords)
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), texCoords)
         glBufferData(GLenum(GL_ARRAY_BUFFER),
-                     texCoordsRedData.size(),
-                     texCoordsRedData,
+                     texCoordsData.size(),
+                     texCoordsData,
                      GLenum(GL_STATIC_DRAW))
-        // GREEN
-        glGenBuffers(1, &texCoords1)
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), texCoords1)
-        glBufferData(GLenum(GL_ARRAY_BUFFER),
-                     texCoordsGreenData.size(),
-                     texCoordsGreenData,
-                     GLenum(GL_STATIC_DRAW))
-        // BLUE
-        glGenBuffers(1, &texCoords2)
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), texCoords2)
-        glBufferData(GLenum(GL_ARRAY_BUFFER),
-                     texCoordsBlueData.size(),
-                     texCoordsBlueData,
-                     GLenum(GL_STATIC_DRAW))
+
         // Colors
-        glGenBuffers(1, &colorID)
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), colorID)
-        glBufferData(GLenum(GL_ARRAY_BUFFER),
-                     colorData.size(),
-                     colorData,
-                     GLenum(GL_STATIC_DRAW))
+        if let colorData = colorData {
+            glGenBuffers(1, &colorID)
+            glBindBuffer(GLenum(GL_ARRAY_BUFFER), colorID)
+            glBufferData(GLenum(GL_ARRAY_BUFFER),
+                         colorData.size(),
+                         colorData,
+                         GLenum(GL_STATIC_DRAW))
+        }
         /// EBO
         glGenBuffers(1, &indicesID)
         glBindBuffer(GLenum(GL_ELEMENT_ARRAY_BUFFER), indicesID)
@@ -269,9 +267,7 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
 
         // Attributes
         programAttrPosition = glGetAttribLocation(programId, "aPosition")
-        programAttrTexCoord0 = glGetAttribLocation(programId, "aTexCoord0")
-        programAttrTexCoord1 = glGetAttribLocation(programId, "aTexCoord1")
-        programAttrTexCoord2 = glGetAttribLocation(programId, "aTexCoord2")
+        programAttrTexCoord = glGetAttribLocation(programId, "aTexCoord")
         programAttrColor = glGetAttribLocation(programId, "aColor")
 
         // Get uniform locations.
@@ -286,7 +282,7 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
         glUseProgram(0)
     }
 
-    func finalizeRender(eye: Eye) {
+    private func finalizeRender(eye: Eye) {
 
         let halfIDM = GLfloat(self.interpupillaryDistanceMM / 2)
 
@@ -300,14 +296,15 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
         }
 
         /* Render to distortion shader */
-        renderWithEye(mEyeOffsetX: (eye == .left) ? -GLfloat(halfIDM) : GLfloat(halfIDM), mEyeOffsetY: 0.0,
-                      ipdOffset: (eye == .left) ? -shiftTextureForImmersion: shiftTextureForImmersion)
+        renderWithEye(
+            mEyeOffsetX: (eye == .left) ? -GLfloat(halfIDM) : GLfloat(halfIDM), mEyeOffsetY: customVerticalOffset,
+            ipdOffset: (eye == .left) ? -shiftTextureForImmersion: shiftTextureForImmersion)
 
         /* End GL_SCISSOR */
         glDisable(GLenum(GL_SCISSOR_TEST))
     }
 
-    func renderWithEye(mEyeOffsetX: GLfloat, mEyeOffsetY: GLfloat, ipdOffset: GLfloat) {
+    private func renderWithEye(mEyeOffsetX: GLfloat, mEyeOffsetY: GLfloat, ipdOffset: GLfloat) {
 
         let xOffset = 2.0 * mEyeOffsetX / GLfloat(_mmWidth)
 
@@ -355,27 +352,19 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
         glEnableVertexAttribArray(GLuint(programAttrPosition))
 
         /* Color */
+        if colorID != 0 {
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), colorID)
         glVertexAttribPointer(GLuint(programAttrColor), 4, GLenum(GL_FLOAT), GLboolean(UInt8(GL_FALSE)), 0, nil)
-        glEnableVertexAttribArray(GLuint(programAttrColor))
+            glEnableVertexAttribArray(GLuint(programAttrColor))
+        } else {
+            glDisableVertexAttribArray(GLuint(programAttrColor))
+            glVertexAttrib4f(GLuint(programAttrColor), 1, 1, 1, 1)
+        }
 
-        /* Chromatic Abberation texCoords */
-        /* Red texCoords */
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), texCoords0)
-        glVertexAttribPointer(GLuint(programAttrTexCoord0), 2, GLenum(GL_FLOAT), GLboolean(UInt8(GL_FALSE)), 0, nil)
-        glEnableVertexAttribArray(GLuint(programAttrTexCoord0))
-
-        /* Chromatic Abberation texCoords */
-        /* Green texCoords */
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), texCoords1)
-        glVertexAttribPointer(GLuint(programAttrTexCoord1), 2, GLenum(GL_FLOAT), GLboolean(UInt8(GL_FALSE)), 0, nil)
-        glEnableVertexAttribArray(GLuint(programAttrTexCoord1))
-
-        /* Chromatic Abberation texCoords */
-        /* Blue texCoords */
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), texCoords2)
-        glVertexAttribPointer(GLuint(programAttrTexCoord2), 2, GLenum(GL_FLOAT), GLboolean(UInt8(GL_FALSE)), 0, nil)
-        glEnableVertexAttribArray(GLuint(programAttrTexCoord2))
+        /* TexCoords */
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), texCoords)
+        glVertexAttribPointer(GLuint(programAttrTexCoord), 2, GLenum(GL_FLOAT), GLboolean(UInt8(GL_FALSE)), 0, nil)
+        glEnableVertexAttribArray(GLuint(programAttrTexCoord))
 
         finalizeRender(eye: .left)
         finalizeRender(eye: .right)
@@ -388,23 +377,14 @@ class GGLDistortionMesh: GGLDrawable, GGLShaderLoader {
     }
 
     func drawableWillTearDownGl(_ context: EAGLContext) {
-
         // Buffers Ids
         if positionID != 0 {
             glDeleteBuffers(1, &positionID)
             positionID = 0
         }
-        if texCoords0 != 0 {
-            glDeleteBuffers(1, &texCoords0)
-            texCoords0 = 0
-        }
-        if texCoords1 != 0 {
-            glDeleteBuffers(1, &texCoords1)
-            texCoords1 = 0
-        }
-        if texCoords2 != 0 {
-            glDeleteBuffers(1, &texCoords2)
-            texCoords2 = 0
+        if texCoords != 0 {
+            glDeleteBuffers(1, &texCoords)
+            texCoords = 0
         }
         if colorID != 0 {
             glDeleteBuffers(1, &colorID)

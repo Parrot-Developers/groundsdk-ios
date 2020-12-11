@@ -34,11 +34,11 @@ public class HmdSprite: Hashable {
 
     /// true or false whether the sprite is visible.
     public var enable: Bool {
-        set(newValue) {
-            quad.enable = newValue
-        }
         get {
             return quad.enable
+        }
+        set(newValue) {
+            quad.enable = newValue
         }
     }
 

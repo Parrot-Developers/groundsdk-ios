@@ -110,20 +110,7 @@
 		7060707422C9FA7E00006C80 /* textureShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 7060706E22C9FA7E00006C80 /* textureShader.fsh */; };
 		7060707522C9FA7E00006C80 /* distortionShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 7060706F22C9FA7E00006C80 /* distortionShader.fsh */; };
 		7060707622C9FA7E00006C80 /* streamShader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 7060707022C9FA7E00006C80 /* streamShader.vsh */; };
-		7060708622C9FB8E00006C80 /* cockpitg1_tex_coords_red.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060707A22C9FB8D00006C80 /* cockpitg1_tex_coords_red.txt */; };
-		7060708722C9FB8E00006C80 /* cockpitg2_tex_coords_blue.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060707B22C9FB8D00006C80 /* cockpitg2_tex_coords_blue.txt */; };
-		7060708822C9FB8E00006C80 /* cockpitg2_tex_coords_green.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060707C22C9FB8D00006C80 /* cockpitg2_tex_coords_green.txt */; };
-		7060708922C9FB8E00006C80 /* cockpitg2_colors.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060707D22C9FB8D00006C80 /* cockpitg2_colors.txt */; };
-		7060708A22C9FB8E00006C80 /* cockpitg1_positions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060707E22C9FB8D00006C80 /* cockpitg1_positions.txt */; };
-		7060708B22C9FB8E00006C80 /* cockpitg1_tex_coords_green.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060707F22C9FB8D00006C80 /* cockpitg1_tex_coords_green.txt */; };
-		7060708C22C9FB8E00006C80 /* cockpitg2_tex_coords_red.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060708022C9FB8D00006C80 /* cockpitg2_tex_coords_red.txt */; };
-		7060708D22C9FB8E00006C80 /* cockpitg2_indices.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060708122C9FB8E00006C80 /* cockpitg2_indices.txt */; };
-		7060708E22C9FB8E00006C80 /* cockpitg1_colors.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060708222C9FB8E00006C80 /* cockpitg1_colors.txt */; };
-		7060708F22C9FB8E00006C80 /* cockpitg1_indices.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060708322C9FB8E00006C80 /* cockpitg1_indices.txt */; };
-		7060709022C9FB8E00006C80 /* cockpitg1_tex_coords_blue.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060708422C9FB8E00006C80 /* cockpitg1_tex_coords_blue.txt */; };
-		7060709122C9FB8E00006C80 /* cockpitg2_positions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7060708522C9FB8E00006C80 /* cockpitg2_positions.txt */; };
 		7060709622C9FBBB00006C80 /* UIScreenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7060709222C9FBBA00006C80 /* UIScreenExtension.swift */; };
-		7060709722C9FBBB00006C80 /* GGLDistortionMeshLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7060709322C9FBBA00006C80 /* GGLDistortionMeshLoader.swift */; };
 		7060709822C9FBBB00006C80 /* Cockpit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7060709422C9FBBA00006C80 /* Cockpit.swift */; };
 		7060709922C9FBBB00006C80 /* GGLDistortionMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7060709522C9FBBB00006C80 /* GGLDistortionMesh.swift */; };
 		7060709E22C9FD9900006C80 /* GGLUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7060709D22C9FD9900006C80 /* GGLUtils.swift */; };
@@ -148,6 +135,7 @@
 		708D7D74213ED260009DBD12 /* FlightLogDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7D73213ED260009DBD12 /* FlightLogDownloaderTests.swift */; };
 		708D7D76213ED378009DBD12 /* FlightLogReporterMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7D75213ED378009DBD12 /* FlightLogReporterMatcher.swift */; };
 		708D7D78213ED39F009DBD12 /* FlightLogDownloaderMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7D77213ED39F009DBD12 /* FlightLogDownloaderMatcher.swift */; };
+		70AFB52F2559C8CB00DA7DE7 /* CockpitRessources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AFB52E2559C8CB00DA7DE7 /* CockpitRessources.swift */; };
 		70C2C98A230E8FF000159B4B /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B56C2B221F1DA510002EC1C /* UIDevice.swift */; };
 		70E8ECD9230E997300DE0776 /* PilotingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8ECD8230E997300DE0776 /* PilotingControl.swift */; };
 		70E8ECDB230EA10C00DE0776 /* PilotingControlCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8ECDA230EA10B00DE0776 /* PilotingControlCore.swift */; };
@@ -330,11 +318,11 @@
 		9D9A6FA9238846BB00BE6C7C /* TakeOffCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A6FA8238846BB00BE6C7C /* TakeOffCommand.swift */; };
 		B27C8B112132D9A100E05DB4 /* MockFirmwareDownloaderCoreTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27C8B102132D9A100E05DB4 /* MockFirmwareDownloaderCoreTask.swift */; };
 		B27C8B132132E2BE00E05DB4 /* FirmwareManagerEntryMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27C8B122132E2BE00E05DB4 /* FirmwareManagerEntryMatcher.swift */; };
+		F73982F4247C07EB00B5E5E6 /* BlendedThermalCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73982F3247C07EA00B5E5E6 /* BlendedThermalCamera.swift */; };
+		F73982F6247C099500B5E5E6 /* BlendedThermalCameraCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73982F5247C099500B5E5E6 /* BlendedThermalCameraCore.swift */; };
 		F749377C2435E03000F1A47C /* DriTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F749377B2435E02F00F1A47C /* DriTests.swift */; };
 		F76FA24F24333E08006DD7F4 /* Dri.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76FA24E24333E08006DD7F4 /* Dri.swift */; };
 		F76FA25324336C70006DD7F4 /* DriCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76FA25224336C70006DD7F4 /* DriCore.swift */; };
-		F73982F4247C07EB00B5E5E6 /* BlendedThermalCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73982F3247C07EA00B5E5E6 /* BlendedThermalCamera.swift */; };
-		F73982F6247C099500B5E5E6 /* BlendedThermalCameraCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73982F5247C099500B5E5E6 /* BlendedThermalCameraCore.swift */; };
 		F7893BDD248E834A009A89FB /* LogControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7893BDC248E834A009A89FB /* LogControl.swift */; };
 		F7893BDF248E96AD009A89FB /* LogControlCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7893BDE248E96AD009A89FB /* LogControlCore.swift */; };
 		F7893BE5248F6A70009A89FB /* LogControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7893BE4248F6A70009A89FB /* LogControlTests.swift */; };
@@ -757,20 +745,7 @@
 		7060706E22C9FA7E00006C80 /* textureShader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = textureShader.fsh; sourceTree = "<group>"; };
 		7060706F22C9FA7E00006C80 /* distortionShader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = distortionShader.fsh; sourceTree = "<group>"; };
 		7060707022C9FA7E00006C80 /* streamShader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = streamShader.vsh; sourceTree = "<group>"; };
-		7060707A22C9FB8D00006C80 /* cockpitg1_tex_coords_red.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg1_tex_coords_red.txt; sourceTree = "<group>"; };
-		7060707B22C9FB8D00006C80 /* cockpitg2_tex_coords_blue.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg2_tex_coords_blue.txt; sourceTree = "<group>"; };
-		7060707C22C9FB8D00006C80 /* cockpitg2_tex_coords_green.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg2_tex_coords_green.txt; sourceTree = "<group>"; };
-		7060707D22C9FB8D00006C80 /* cockpitg2_colors.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg2_colors.txt; sourceTree = "<group>"; };
-		7060707E22C9FB8D00006C80 /* cockpitg1_positions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg1_positions.txt; sourceTree = "<group>"; };
-		7060707F22C9FB8D00006C80 /* cockpitg1_tex_coords_green.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg1_tex_coords_green.txt; sourceTree = "<group>"; };
-		7060708022C9FB8D00006C80 /* cockpitg2_tex_coords_red.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg2_tex_coords_red.txt; sourceTree = "<group>"; };
-		7060708122C9FB8E00006C80 /* cockpitg2_indices.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg2_indices.txt; sourceTree = "<group>"; };
-		7060708222C9FB8E00006C80 /* cockpitg1_colors.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg1_colors.txt; sourceTree = "<group>"; };
-		7060708322C9FB8E00006C80 /* cockpitg1_indices.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg1_indices.txt; sourceTree = "<group>"; };
-		7060708422C9FB8E00006C80 /* cockpitg1_tex_coords_blue.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg1_tex_coords_blue.txt; sourceTree = "<group>"; };
-		7060708522C9FB8E00006C80 /* cockpitg2_positions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cockpitg2_positions.txt; sourceTree = "<group>"; };
 		7060709222C9FBBA00006C80 /* UIScreenExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScreenExtension.swift; sourceTree = "<group>"; };
-		7060709322C9FBBA00006C80 /* GGLDistortionMeshLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLDistortionMeshLoader.swift; sourceTree = "<group>"; };
 		7060709422C9FBBA00006C80 /* Cockpit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cockpit.swift; sourceTree = "<group>"; };
 		7060709522C9FBBB00006C80 /* GGLDistortionMesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLDistortionMesh.swift; sourceTree = "<group>"; };
 		7060709D22C9FD9900006C80 /* GGLUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGLUtils.swift; sourceTree = "<group>"; };
@@ -795,6 +770,7 @@
 		708D7D73213ED260009DBD12 /* FlightLogDownloaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogDownloaderTests.swift; sourceTree = "<group>"; };
 		708D7D75213ED378009DBD12 /* FlightLogReporterMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogReporterMatcher.swift; sourceTree = "<group>"; };
 		708D7D77213ED39F009DBD12 /* FlightLogDownloaderMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogDownloaderMatcher.swift; sourceTree = "<group>"; };
+		70AFB52E2559C8CB00DA7DE7 /* CockpitRessources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CockpitRessources.swift; sourceTree = "<group>"; };
 		70E8ECD8230E997300DE0776 /* PilotingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotingControl.swift; sourceTree = "<group>"; };
 		70E8ECDA230EA10B00DE0776 /* PilotingControlCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotingControlCore.swift; sourceTree = "<group>"; };
 		70EE171C2268A863001D8424 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -988,11 +964,11 @@
 		9D9A6FA8238846BB00BE6C7C /* TakeOffCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeOffCommand.swift; sourceTree = "<group>"; };
 		B27C8B102132D9A100E05DB4 /* MockFirmwareDownloaderCoreTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFirmwareDownloaderCoreTask.swift; sourceTree = "<group>"; };
 		B27C8B122132E2BE00E05DB4 /* FirmwareManagerEntryMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareManagerEntryMatcher.swift; sourceTree = "<group>"; };
+		F73982F3247C07EA00B5E5E6 /* BlendedThermalCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlendedThermalCamera.swift; sourceTree = "<group>"; };
+		F73982F5247C099500B5E5E6 /* BlendedThermalCameraCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlendedThermalCameraCore.swift; sourceTree = "<group>"; };
 		F749377B2435E02F00F1A47C /* DriTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriTests.swift; sourceTree = "<group>"; };
 		F76FA24E24333E08006DD7F4 /* Dri.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dri.swift; sourceTree = "<group>"; };
 		F76FA25224336C70006DD7F4 /* DriCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriCore.swift; sourceTree = "<group>"; };
-		F73982F3247C07EA00B5E5E6 /* BlendedThermalCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlendedThermalCamera.swift; sourceTree = "<group>"; };
-		F73982F5247C099500B5E5E6 /* BlendedThermalCameraCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlendedThermalCameraCore.swift; sourceTree = "<group>"; };
 		F7893BDC248E834A009A89FB /* LogControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogControl.swift; sourceTree = "<group>"; };
 		F7893BDE248E96AD009A89FB /* LogControlCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogControlCore.swift; sourceTree = "<group>"; };
 		F7893BE4248F6A70009A89FB /* LogControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogControlTests.swift; sourceTree = "<group>"; };
@@ -1414,6 +1390,7 @@
 		7037D19322C63DC3002CB93A /* Hmd */ = {
 			isa = PBXGroup;
 			children = (
+				70AFB52E2559C8CB00DA7DE7 /* CockpitRessources.swift */,
 				7037D19422C63EF7002CB93A /* HmdViewController.swift */,
 				70FF52AA22D3929C00DEB90F /* HmdSprite.swift */,
 				7037D19622C63F8D002CB93A /* internal */,
@@ -1424,11 +1401,9 @@
 		7037D19622C63F8D002CB93A /* internal */ = {
 			isa = PBXGroup;
 			children = (
-				7060707922C9FB6D00006C80 /* Ressources */,
 				7060706A22C9FA5E00006C80 /* Shaders */,
 				7060709A22C9FD5D00006C80 /* GroundGL */,
 				7060709422C9FBBA00006C80 /* Cockpit.swift */,
-				7060709322C9FBBA00006C80 /* GGLDistortionMeshLoader.swift */,
 				7060709522C9FBBB00006C80 /* GGLDistortionMesh.swift */,
 				7060709222C9FBBA00006C80 /* UIScreenExtension.swift */,
 			);
@@ -1446,25 +1421,6 @@
 				7060706D22C9FA7D00006C80 /* textureShader.vsh */,
 			);
 			path = Shaders;
-			sourceTree = "<group>";
-		};
-		7060707922C9FB6D00006C80 /* Ressources */ = {
-			isa = PBXGroup;
-			children = (
-				7060708222C9FB8E00006C80 /* cockpitg1_colors.txt */,
-				7060708322C9FB8E00006C80 /* cockpitg1_indices.txt */,
-				7060707E22C9FB8D00006C80 /* cockpitg1_positions.txt */,
-				7060708422C9FB8E00006C80 /* cockpitg1_tex_coords_blue.txt */,
-				7060707F22C9FB8D00006C80 /* cockpitg1_tex_coords_green.txt */,
-				7060707A22C9FB8D00006C80 /* cockpitg1_tex_coords_red.txt */,
-				7060707D22C9FB8D00006C80 /* cockpitg2_colors.txt */,
-				7060708122C9FB8E00006C80 /* cockpitg2_indices.txt */,
-				7060708522C9FB8E00006C80 /* cockpitg2_positions.txt */,
-				7060707B22C9FB8D00006C80 /* cockpitg2_tex_coords_blue.txt */,
-				7060707C22C9FB8D00006C80 /* cockpitg2_tex_coords_green.txt */,
-				7060708022C9FB8D00006C80 /* cockpitg2_tex_coords_red.txt */,
-			);
-			path = Ressources;
 			sourceTree = "<group>";
 		};
 		7060709A22C9FD5D00006C80 /* GroundGL */ = {
@@ -2706,7 +2662,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1210;
 				ORGANIZATIONNAME = "Parrot SA";
 				TargetAttributes = {
 					7C31C9311CC7A9F90007833F = {
@@ -2764,22 +2720,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7060709122C9FB8E00006C80 /* cockpitg2_positions.txt in Resources */,
-				7060708622C9FB8E00006C80 /* cockpitg1_tex_coords_red.txt in Resources */,
-				7060708922C9FB8E00006C80 /* cockpitg2_colors.txt in Resources */,
-				7060708B22C9FB8E00006C80 /* cockpitg1_tex_coords_green.txt in Resources */,
-				7060708722C9FB8E00006C80 /* cockpitg2_tex_coords_blue.txt in Resources */,
-				7060708A22C9FB8E00006C80 /* cockpitg1_positions.txt in Resources */,
-				7060708822C9FB8E00006C80 /* cockpitg2_tex_coords_green.txt in Resources */,
-				7060708F22C9FB8E00006C80 /* cockpitg1_indices.txt in Resources */,
-				7060708C22C9FB8E00006C80 /* cockpitg2_tex_coords_red.txt in Resources */,
-				7060708D22C9FB8E00006C80 /* cockpitg2_indices.txt in Resources */,
 				7060707622C9FA7E00006C80 /* streamShader.vsh in Resources */,
-				7060708E22C9FB8E00006C80 /* cockpitg1_colors.txt in Resources */,
 				7060707422C9FA7E00006C80 /* textureShader.fsh in Resources */,
 				7060707122C9FA7E00006C80 /* streamShader.fsh in Resources */,
 				7060707322C9FA7E00006C80 /* textureShader.vsh in Resources */,
-				7060709022C9FB8E00006C80 /* cockpitg1_tex_coords_blue.txt in Resources */,
 				7060707222C9FA7E00006C80 /* distortionShader.vsh in Resources */,
 				7060707522C9FA7E00006C80 /* distortionShader.fsh in Resources */,
 			);
@@ -2864,6 +2808,7 @@
 				F8C04D7D1FB0A7740020ED18 /* BoolSetting.swift in Sources */,
 				9B193ED42167993000A8AA41 /* SphericalPhotoPanoramaAnimation.swift in Sources */,
 				F8C04D5A1FB0A7120020ED18 /* RemoteControlListEntry.swift in Sources */,
+				70AFB52F2559C8CB00DA7DE7 /* CockpitRessources.swift in Sources */,
 				F8C04CFD1FB0A7120020ED18 /* FlipAnimationCore.swift in Sources */,
 				F8C04D7B1FB0A7740020ED18 /* IntSetting.swift in Sources */,
 				F8C04D621FB0A7120020ED18 /* DroneFinder.swift in Sources */,
@@ -3080,7 +3025,6 @@
 				F8C04D341FB0A7120020ED18 /* DeviceState.swift in Sources */,
 				023752542074F95800825545 /* TargetTrackerCore.swift in Sources */,
 				F8C04D461FB0A7120020ED18 /* ReturnHomePilotingItf.swift in Sources */,
-				7060709722C9FBBB00006C80 /* GGLDistortionMeshLoader.swift in Sources */,
 				F8884B6B1FB3668B00D1E7CC /* InternetConnectivityCore.swift in Sources */,
 				9B193ED821679C9C00A8AA41 /* SphericalPhotoPanoramaAnimationCore.swift in Sources */,
 				F8884B5B1FB33A2C00D1E7CC /* CameraModeSettingCore.swift in Sources */,
@@ -3528,6 +3472,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -3544,6 +3489,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"GLES_SILENCE_DEPRECATION=1",
 					"DEBUG=1",
 					"$(inherited)",
 				);
@@ -3553,6 +3499,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -3588,6 +3535,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -3601,12 +3549,14 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "GLES_SILENCE_DEPRECATION=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -3674,6 +3624,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = EA523KQ2D9;
 				INFOPLIST_FILE = GroundSdkTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.GroundSdkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3687,6 +3638,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = EA523KQ2D9;
 				INFOPLIST_FILE = GroundSdkTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.GroundSdkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3703,7 +3655,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = EA523KQ2D9;
 				INFOPLIST_FILE = GroundSdkObjCTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.GroundSdkObjCTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3720,7 +3672,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = EA523KQ2D9;
 				INFOPLIST_FILE = GroundSdkObjCTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.parrot.drone.GroundSdkObjCTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

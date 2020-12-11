@@ -86,8 +86,16 @@ internal class GGLView: GLKView {
     ///
     /// - Parameter drawable: drawable object
     public func addDrawable(_ drawable: GGLDrawable) {
-        drawable.drawableSetupGl(context: context)
+        if !drawable.isGlReady {
+            drawable.drawableSetupGl(context: context)
+        }
         drawableObjects.append(drawable)
+    }
+
+    /// Remove any GGLDrawable object in the list of objects to render
+    ///
+    public func removeDrawables() {
+        drawableObjects.removeAll()
     }
 
     private func contextInit() {

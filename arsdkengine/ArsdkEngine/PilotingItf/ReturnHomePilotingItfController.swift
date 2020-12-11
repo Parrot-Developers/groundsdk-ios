@@ -487,7 +487,7 @@ class ReturnHomePilotingItfController: ActivablePilotingItfController, ReturnHom
             case let .autoTriggerMode(value):
                 if let preset: Bool = presetStore?.read(key: setting.key) {
                     if preset != value {
-                        _ = sendAutoTriggerModeCommand(active: preset)
+                        sendAutoTriggerModeCommand(active: preset)
                     }
                     returnHomePilotingItf.update(autoTriggerMode: preset)
                 } else {

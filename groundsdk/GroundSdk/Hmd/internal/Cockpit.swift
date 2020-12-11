@@ -30,7 +30,7 @@
 import Foundation
 
 /// Parameters used according to the model of CockpitGlasses used
-enum Cockpit {
+public enum Cockpit {
     /// Parrot CockpitGlasses1 (Bebop, Disco)
     case glasses1
     /// Parrot CockpitGlasses2 (Bebop Power, Anafi)

@@ -98,6 +98,7 @@ class DroneInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             addCell("cameraExposureValues", section: instrumentSection)
             addCell("photoProgressIndicator", section: instrumentSection)
             // PilotingItf
+            addCell("manualCopter", section: pilotingItfSection)
             addCell("returnHome", section: pilotingItfSection)
             addCell("guided", section: pilotingItfSection)
             addCell("pointOfInterest", section: pilotingItfSection)

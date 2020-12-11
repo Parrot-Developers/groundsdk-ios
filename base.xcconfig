@@ -2,7 +2,7 @@
 #include "../../../out/product.xcconfig"
 
 // deployment target
-IPHONEOS_DEPLOYMENT_TARGET = 9.0
+IPHONEOS_DEPLOYMENT_TARGET = 10.0
 // deployment target for tests
 IPHONEOS_TEST_TARGET = 10.0
 

@@ -62,6 +62,7 @@
 		708D7D6E213E87E1009DBD12 /* FlightLogDownloaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7D6D213E87E1009DBD12 /* FlightLogDownloaderCell.swift */; };
 		708D7D70213E87E9009DBD12 /* FlightLogReporterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D7D6F213E87E9009DBD12 /* FlightLogReporterCell.swift */; };
 		70ABC3A323157FD700327AB0 /* PilotingControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ABC3A223157FD700327AB0 /* PilotingControlCell.swift */; };
+		70AFB52D2559C75E00DA7DE7 /* hmd.bin in Resources */ = {isa = PBXBuildFile; fileRef = 70AFB52C2559C75E00DA7DE7 /* hmd.bin */; };
 		71044D1921524409006BAF88 /* CameraExposureLockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71044D1821524409006BAF88 /* CameraExposureLockViewController.swift */; };
 		712A9F55220447B900BD4DFC /* FileReplay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 712A9F54220447B900BD4DFC /* FileReplay.storyboard */; };
 		712A9F5722044D2300BD4DFC /* FileReplayListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712A9F5622044D2300BD4DFC /* FileReplayListViewController.swift */; };
@@ -273,6 +274,7 @@
 		708D7D6D213E87E1009DBD12 /* FlightLogDownloaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogDownloaderCell.swift; sourceTree = "<group>"; };
 		708D7D6F213E87E9009DBD12 /* FlightLogReporterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLogReporterCell.swift; sourceTree = "<group>"; };
 		70ABC3A223157FD700327AB0 /* PilotingControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotingControlCell.swift; sourceTree = "<group>"; };
+		70AFB52C2559C75E00DA7DE7 /* hmd.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = hmd.bin; sourceTree = "<group>"; };
 		71044D1821524409006BAF88 /* CameraExposureLockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraExposureLockViewController.swift; sourceTree = "<group>"; };
 		712A9F54220447B900BD4DFC /* FileReplay.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = FileReplay.storyboard; path = Base.lproj/FileReplay.storyboard; sourceTree = "<group>"; };
 		712A9F5622044D2300BD4DFC /* FileReplayListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileReplayListViewController.swift; path = GroundSdkDemo/Replay/FileReplayListViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -459,6 +461,7 @@
 		7C5C42F31E00576700B8829C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				70AFB52C2559C75E00DA7DE7 /* hmd.bin */,
 				F73982F9247D1CA900B5E5E6 /* BlendedThermalCamera.storyboard */,
 				7CA1C99B1C807D5000FE9ED4 /* Assets.xcassets */,
 				7C7406AB2051926300D1CD78 /* Antiflicker.storyboard */,
@@ -756,7 +759,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1210;
 				ORGANIZATIONNAME = "Parrot SA";
 				TargetAttributes = {
 					7CA1C9901C807D5000FE9ED4 = {
@@ -811,6 +814,7 @@
 				7C32DDE01F03AE8300B9E8F9 /* Camera.storyboard in Resources */,
 				02BBE9C72051745300476F93 /* PoiPiloting.storyboard in Resources */,
 				02F39FF920AC22900058890D /* UserAccount.storyboard in Resources */,
+				70AFB52D2559C75E00DA7DE7 /* hmd.bin in Resources */,
 				9B31E00C21C947E9006F389E /* ThermalControl.storyboard in Resources */,
 				F80065442003A506006669BD /* MagnetometerWith1StepCalib.storyboard in Resources */,
 				7037D19022C616FC002CB93A /* Hmd.storyboard in Resources */,
@@ -1269,6 +1273,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1284,6 +1289,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"GLES_SILENCE_DEPRECATION=1",
 					"DEBUG=1",
 					"$(inherited)",
 				);
@@ -1293,6 +1299,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1326,6 +1333,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1338,12 +1346,14 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "GLES_SILENCE_DEPRECATION=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
