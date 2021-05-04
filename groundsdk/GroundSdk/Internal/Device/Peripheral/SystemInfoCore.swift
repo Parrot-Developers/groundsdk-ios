@@ -54,6 +54,9 @@ public class SystemInfoCore: PeripheralCore, SystemInfo {
     /// Whether firmware is blacklisted
     public var isFirmwareBlacklisted = false
 
+    /// Whether an update is required.
+    public var isUpdateRequired = false
+
     /// Hardware version of the device
     private(set) public var hardwareVersion = ""
 
@@ -135,6 +138,19 @@ extension SystemInfoCore {
     @discardableResult public func update(isBlacklisted newValue: Bool) -> SystemInfoCore {
         if newValue != isFirmwareBlacklisted {
             isFirmwareBlacklisted = newValue
+            markChanged()
+        }
+        return self
+    }
+
+    /// Changes the update requirement info.
+    ///
+    /// - Parameter isUpdateRequired: whether an update is required
+    /// - Returns: self to allow call chaining
+    /// - Note: Changes are not notified until notifyUpdated() is called.
+    @discardableResult public func update(isUpdateRequired newValue: Bool) -> SystemInfoCore {
+        if newValue != isUpdateRequired {
+            isUpdateRequired = newValue
             markChanged()
         }
         return self

@@ -59,6 +59,9 @@
 		1D2194E21EE6D479005A6883 /* ArsdkCrashmlDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2194E11EE6D479005A6883 /* ArsdkCrashmlDownloader.swift */; };
 		1DA626ED1EF8137E0031AA69 /* CrashReportDownloaderMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA626EC1EF8137E0031AA69 /* CrashReportDownloaderMatcher.swift */; };
 		1DA626EF1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA626EE1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift */; };
+		682B3A4823D84F95001C5D25 /* AnafiDevToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B3A4723D84F95001C5D25 /* AnafiDevToolbox.swift */; };
+		682B3A4E23D9E286001C5D25 /* AnafiDevToolboxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B3A4D23D9E286001C5D25 /* AnafiDevToolboxTests.swift */; };
+		682B3A5023DA050D001C5D25 /* DebugSettingMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B3A4F23DA050D001C5D25 /* DebugSettingMatcher.swift */; };
 		702D4594230FD46200FEAE56 /* PilotingControlMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D4593230FD46200FEAE56 /* PilotingControlMatcher.swift */; };
 		702D4596230FD4A100FEAE56 /* AnafiPilotingControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D4595230FD4A100FEAE56 /* AnafiPilotingControlTests.swift */; };
 		70E8ECDD230EC10800DE0776 /* AnafiPilotingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8ECDC230EC10800DE0776 /* AnafiPilotingControl.swift */; };
@@ -370,6 +373,9 @@
 		1D2194E11EE6D479005A6883 /* ArsdkCrashmlDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkCrashmlDownloader.swift; sourceTree = "<group>"; };
 		1DA626EC1EF8137E0031AA69 /* CrashReportDownloaderMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashReportDownloaderMatcher.swift; sourceTree = "<group>"; };
 		1DA626EE1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArsdkCrashmlDownloaderTests.swift; sourceTree = "<group>"; };
+		682B3A4723D84F95001C5D25 /* AnafiDevToolbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiDevToolbox.swift; sourceTree = "<group>"; };
+		682B3A4D23D9E286001C5D25 /* AnafiDevToolboxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiDevToolboxTests.swift; sourceTree = "<group>"; };
+		682B3A4F23DA050D001C5D25 /* DebugSettingMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugSettingMatcher.swift; sourceTree = "<group>"; };
 		702D4593230FD46200FEAE56 /* PilotingControlMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotingControlMatcher.swift; sourceTree = "<group>"; };
 		702D4595230FD4A100FEAE56 /* AnafiPilotingControlTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiPilotingControlTests.swift; sourceTree = "<group>"; };
 		70E8ECDC230EC10800DE0776 /* AnafiPilotingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnafiPilotingControl.swift; sourceTree = "<group>"; };
@@ -973,6 +979,7 @@
 				F8D32CD41EF1802A00074795 /* AnafiMotors.swift */,
 				70E8ECDC230EC10800DE0776 /* AnafiPilotingControl.swift */,
 				F857E0841DF71CA70026CAF2 /* AnafiSystemInfo.swift */,
+				682B3A4723D84F95001C5D25 /* AnafiDevToolbox.swift */,
 				7C74069B204EE24F00D1CD78 /* AntiflickerController.swift */,
 				F8D993101FFF76520061579B /* ArsdkCrashmlDownloader */,
 				1D2194E11EE6D479005A6883 /* ArsdkCrashmlDownloader.swift */,
@@ -1041,6 +1048,8 @@
 			isa = PBXGroup;
 			children = (
 				F78564C42440CC4600273CAA /* ReturnHomeEndingMatcher.swift */,
+				682B3A4F23DA050D001C5D25 /* DebugSettingMatcher.swift */,
+				7C2045F61D2FD792007E0405 /* ReturnHomePreferredTargetMatcher.swift */,
 				9B31E00121C93545006F389E /* ThermalControlMatcher.swift */,
 				9BDDF1AC2147A050008252BA /* FlightLogDownloaderMatcher.swift */,
 				F86BA98A21231DFC004DFAB2 /* FirmwareInfoMatcher.swift */,
@@ -1072,7 +1081,6 @@
 				7C2045F81D2FD91B007E0405 /* IntSettingMatcher.swift */,
 				7C9B8FE51D48ACAC00366ADD /* BoolSettingMatcher.swift */,
 				7CE1371F1CFC8C0C0041E197 /* FlyingIndicatorsMatcher.swift */,
-				7C2045F61D2FD792007E0405 /* ReturnHomePreferredTargetMatcher.swift */,
 				7CCFFA941E1260D50029D35A /* MediaItemMatcher.swift */,
 				7CCFFA961E1278FD0029D35A /* MediaDownloaderMatcher.swift */,
 				7CCFFA9A1E12A5FA0029D35A /* MediaDeleterMatcher.swift */,
@@ -1166,6 +1174,7 @@
 				F7893BE2248F5DC7009A89FB /* LogControlControllerTests.swift */,
 				02D12B2B2028A3CD002C00BB /* AnafiBeeperControllerTests.swift */,
 				1DA626EE1EF824AE0031AA69 /* ArsdkCrashmlDownloaderTests.swift */,
+				682B3A4D23D9E286001C5D25 /* AnafiDevToolboxTests.swift */,
 				02375855209C9C8A0077F63C /* ArsdkFlightDataDownloaderTests.swift */,
 				F8DB46401D33EA7000297E15 /* AnafiMagnetometerTests.swift */,
 				F87D5A46200387FC005AF079 /* SkyControllerMagnetometerTests.swift */,
@@ -1440,6 +1449,7 @@
 				7CE5B8D61DA261E500C7D688 /* ProxyDeviceController.swift in Sources */,
 				F8F2B19D20E3914200A1A802 /* CameraFeatureExposureValues.swift in Sources */,
 				022637C3205FD52D00D390B3 /* FlightPlanRestApi.swift in Sources */,
+				682B3A4823D84F95001C5D25 /* AnafiDevToolbox.swift in Sources */,
 				845A3DAA2397E63F00EC3871 /* FileConverter.swift in Sources */,
 				F8ED95541FDEDDE9004300DE /* BlackBoxEnvironmentData.swift in Sources */,
 				0216F7BD1FCF1D3900841577 /* GuidedPilotingItfController.swift in Sources */,
@@ -1573,6 +1583,7 @@
 				F8D0078B1DDE1B07002D478A /* LiveStreamMatcher.swift in Sources */,
 				F870056A1FC885E0003114D9 /* MockEnginesController.swift in Sources */,
 				F884689B1DEF3FAC00ACE941 /* SkyControllerSystemInfoTests.swift in Sources */,
+				682B3A5023DA050D001C5D25 /* DebugSettingMatcher.swift in Sources */,
 				020F1DBA20907FE100CCEB5E /* Sc3GamepadTests.swift in Sources */,
 				F8D32CBD1EF025AC00074795 /* CommonBatteryInfoTests.swift in Sources */,
 				F832FA4B1E48BC580019AC08 /* UpdaterMatcher.swift in Sources */,
@@ -1623,6 +1634,7 @@
 				F8DB46431D33ECCB00297E15 /* MagnetometerCalibrationProcessStateMatcher.swift in Sources */,
 				7C9F73491CFDA963004DE672 /* AnafiReturnHomePilotingItfTests.swift in Sources */,
 				F86BA98F2125B129004DFAB2 /* RcFirmwareUpdaterTests.swift in Sources */,
+				682B3A4E23D9E286001C5D25 /* AnafiDevToolboxTests.swift in Sources */,
 				02FC4C8120285F7A00D76490 /* AnafiFlightMeterTests.swift in Sources */,
 				02108837209B021500F013E4 /* FlightDataDownloaderMatcher.swift in Sources */,
 				7C76AB621C8D75BF00FC213E /* StringMatchers.swift in Sources */,

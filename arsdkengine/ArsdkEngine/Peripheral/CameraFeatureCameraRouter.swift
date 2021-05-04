@@ -644,9 +644,8 @@ extension CameraFeatureCameraRouter: ArsdkFeatureCameraCallback {
         } else {
             mode = .none
         }
-        // if there is no pending request and mode has changed or if the requested lock mode matches the received mode
-        if (cameraController.requestedExposureLockMode == nil &&
-            !mode.isSameRequest(as: cameraController.camera.exposureLock?.mode)) ||
+        // if there is no pending request or if the requested lock mode matches the received mode
+        if cameraController.requestedExposureLockMode == nil ||
             mode.isSameRequest(as: cameraController.requestedExposureLockMode) {
 
             cameraController.requestedExposureLockMode = nil
@@ -1615,7 +1614,7 @@ extension CameraExposureLockMode {
                  (.currentValues, .currentValues):
                 return true
             case let (.region(lx, ly, _, _), .region(rx, ry, _, _)):
-                return lx == rx && ly == ry
+                return lx.isCloseTo(rx, withDelta: 0.1) && ly.isCloseTo(ry, withDelta: 0.1)
             default:
                 return false
             }

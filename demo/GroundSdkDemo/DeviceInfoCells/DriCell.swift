@@ -1,4 +1,4 @@
-// Copyright (C) 2019 Parrot Drones SAS
+// Copyright (C) 2020 Parrot Drones SAS
 //
 //    Redistribution and use in source and binary forms, with or without
 //    modification, are permitted provided that the following conditions
@@ -36,6 +36,10 @@ class DriCell: PeripheralProviderContentCell {
 
     @IBOutlet weak var switchLabel: UILabel!
 
+    @IBOutlet weak var typeConfigLabel: UILabel!
+
+    @IBOutlet weak var typeStateLabel: UILabel!
+
     @IBOutlet weak var startStopButton: UIButton!
 
     private var dri: Ref<Dri>?
@@ -52,6 +56,8 @@ class DriCell: PeripheralProviderContentCell {
                     self.switchLabel.text = "disabled"
                     self.startStopButton.setTitle("Enable", for: .normal)
                 }
+                self.typeConfigLabel.text = dri.type.type?.description ?? "-"
+                self.typeStateLabel.text = dri.type.state?.description ?? "-"
                 self.startStopButton.isEnabled = dri.mode != nil
                 self.show()
             } else {
@@ -61,15 +67,9 @@ class DriCell: PeripheralProviderContentCell {
     }
 
     @IBAction func activateOrDeactivaAction(_ sender: Any) {
-        if let dri = dri?.value {
-            if let mode = dri.mode {
-                if mode.value {
-                    mode.value = false
-                } else {
-                    mode.value = true
-                }
-            }
+        if let dri = dri?.value,
+           let mode = dri.mode {
+            mode.value = !mode.value
         }
     }
-
 }

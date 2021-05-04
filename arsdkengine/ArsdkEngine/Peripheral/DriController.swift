@@ -69,25 +69,29 @@ class DriController: DeviceComponentController, DriBackend {
 
     /// All settings that can be stored
     enum SettingKey: String, StoreKey {
-        case modeKey = "mode"
+        case mode = "mode"
         case identifier = "id"
+        case type = "type"
     }
 
     /// Stored settings
     enum Setting: Hashable {
         case mode(Bool)
         case identifier(DriCore.DroneIdentifier)
+        case type(DriTypeConfig)
 
         /// Setting storage key
         var key: SettingKey {
             switch self {
-            case .mode: return .modeKey
+            case .mode: return .mode
             case .identifier: return .identifier
+            case .type: return .type
             }
         }
         /// All values to allow enumerating settings
         static let allCases: Set<Setting> = [.mode(false),
-                                             .identifier(DriCore.DroneIdentifier(type: .ANSI_CTA_2063, id: ""))]
+                                             .identifier(DriCore.DroneIdentifier(type: .ANSI_CTA_2063, id: "")),
+                                             .type(.french)]
 
         func hash(into hasher: inout Hasher) {
             hasher.combine(key)
@@ -101,14 +105,16 @@ class DriController: DeviceComponentController, DriBackend {
     /// Stored capabilities for settings
     enum Capabilities {
         case modeSwitchSupport(Bool)
+        case type(Set<DriType>)
 
         /// All values to allow enumerating settings
-        static let allCases: [Capabilities] = [.modeSwitchSupport(false)]
+        static let allCases: [Capabilities] = [.modeSwitchSupport(false), .type([])]
 
         /// Setting storage key
         var key: SettingKey {
             switch self {
-            case .modeSwitchSupport: return .modeKey
+            case .modeSwitchSupport: return .mode
+            case .type: return .type
             }
         }
     }
@@ -116,8 +122,8 @@ class DriController: DeviceComponentController, DriBackend {
     /// Setting values as received from the drone
     private var droneSettings = Set<Setting>()
 
-    /// Whether mode switch is supported.
-    private (set) public var modeSwitchSupported = false
+    /// Whether DRI is supported.
+    private (set) public var supported = false
 
     /// Constructor
     ///
@@ -146,7 +152,7 @@ class DriController: DeviceComponentController, DriBackend {
     /// - Parameter mode: the new dri mode
     /// - Returns: true if the command has been sent, false if not connected and the value has been changed immediately
     func set(mode: Bool) -> Bool {
-        presetStore?.write(key: SettingKey.modeKey, value: mode).commit()
+        presetStore?.write(key: SettingKey.mode, value: mode).commit()
         if connected {
             return sendModeCommand(mode)
         } else {
@@ -155,7 +161,22 @@ class DriController: DeviceComponentController, DriBackend {
         }
     }
 
-    /// Send mode command. Subclass must override this function to send the command
+    /// Sets type configuration.
+    ///
+    /// - Parameter type: the new type configuration
+    func set(type: DriTypeConfig?) {
+        if let type = type {
+            presetStore?.write(key: SettingKey.type, value: type).commit()
+            if connected && sendTypeCommand(type) {
+                dri.update(typeState: .updating)
+            }
+        } else {
+            presetStore?.write(key: SettingKey.type, value: "").commit()
+        }
+        dri.update(type: type).notifyUpdated()
+    }
+
+    /// Send mode command.
     ///
     /// - Parameter mode: requested mode. `true` if enabled
     /// - Returns: true if the command has been sent
@@ -164,21 +185,48 @@ class DriController: DeviceComponentController, DriBackend {
         return true
     }
 
+    /// Send type command.
+    ///
+    /// - Parameter type: requested type
+    /// - Returns: true if the command has been sent
+    func sendTypeCommand(_ type: DriTypeConfig) -> Bool {
+        var arsdkType: ArsdkFeatureDriDriType?
+        var arsdkOperatorId = ""
+        switch type {
+        case .french:
+            arsdkType = .french
+        case .en4709_002(let operatorId):
+            arsdkType = .en4709_002
+            arsdkOperatorId = operatorId
+        }
+        if let arsdkType = arsdkType {
+            sendCommand(ArsdkFeatureDri.setDriTypeEncoder(type: arsdkType, id: arsdkOperatorId))
+            return true
+        }
+        return false
+    }
+
     /// Load saved settings
     private func loadPresets() {
         if let presetStore = presetStore, let deviceStore = deviceStore {
-            Setting.allCases.forEach {
-                switch $0 {
+            Setting.allCases.forEach { setting in
+                switch setting {
                 case .mode:
-                    if let modeSwitchSupported: Bool = deviceStore.read(key: $0.key) {
-                        self.modeSwitchSupported = modeSwitchSupported
-                    }
-                    if let mode: Bool = presetStore.read(key: $0.key) {
+                    if let mode: Bool = presetStore.read(key: setting.key) {
                         dri.update(mode: mode)
                     }
                 case .identifier:
-                    if let id: DriCore.DroneIdentifier = deviceStore.read(key: $0.key) {
+                    if let id: DriCore.DroneIdentifier = deviceStore.read(key: setting.key) {
                         dri.update(droneId: id)
+                    }
+                case .type:
+                    if let supportedTypesValues: StorableArray<DriType> = deviceStore.read(key: setting.key) {
+                        let supportedTypes = Set(supportedTypesValues.storableValue)
+                        dri.update(supportedTypes: supportedTypes)
+                        if let type: DriTypeConfig = presetStore.read(key: setting.key),
+                           supportedTypes.contains(type.type) {
+                            dri.update(type: type)
+                        }
                     }
                 }
             }
@@ -189,7 +237,11 @@ class DriController: DeviceComponentController, DriBackend {
     /// Drone is connected
     override func didConnect() {
         applyPresets()
-        if modeSwitchSupported {
+        if supported {
+            // send DRI type configuration
+            if let driType = dri.type.type {
+                _ = sendTypeCommand(driType)
+            }
             dri.publish()
         } else {
             dri.unpublish()
@@ -198,7 +250,11 @@ class DriController: DeviceComponentController, DriBackend {
 
     /// Drone is disconnected
     override func didDisconnect() {
-        dri.cancelSettingsRollback()
+        supported = false
+
+        dri.update(typeState: nil)
+            .cancelSettingsRollback()
+
         // unpublish if offline settings are disabled
         if GroundSdkConfig.sharedInstance.offlineSettings == .off {
             dri.unpublish()
@@ -223,7 +279,7 @@ class DriController: DeviceComponentController, DriBackend {
         }
     }
 
-    /// Apply a preset
+    /// Apply presets.
     ///
     /// Iterate settings received during connection
     private func applyPresets() {
@@ -239,7 +295,7 @@ class DriController: DeviceComponentController, DriBackend {
                 } else {
                     dri.update(mode: mode).notifyUpdated()
                 }
-            case .identifier:
+            case .identifier, .type:
                 break
             }
         }
@@ -258,6 +314,8 @@ class DriController: DeviceComponentController, DriBackend {
         case .identifier(let id):
             dri.update(droneId: id)
             deviceStore?.write(key: setting.key, value: id).commit()
+        case .type(let type):
+            dri.update(type: type)
         }
         dri.notifyUpdated()
     }
@@ -269,10 +327,11 @@ class DriController: DeviceComponentController, DriBackend {
         switch capabilities {
         case .modeSwitchSupport(let supported):
             deviceStore?.write(key: capabilities.key, value: AnyStorable(supported))
-            modeSwitchSupported = supported
+        case .type(let types):
+            deviceStore?.write(key: capabilities.key, value: StorableArray(Array(types)))
+            dri.update(supportedTypes: types)
         }
         deviceStore?.commit()
-        dri.notifyUpdated()
     }
 
     /// A command has been received
@@ -319,41 +378,71 @@ extension DriController: ArsdkFeatureDriCallback {
         }
     }
 
-    func onCapabilities(supportedCapabilitiesBitField: UInt) {
-        let modeSwitchSupported = DriSupportedCapabilities.createSetFrom(
-            bitField: supportedCapabilitiesBitField).contains(.onOff)
-        capabilitiesDidChange(.modeSwitchSupport(modeSwitchSupported))
-    }
-}
-
-/// Extension that adds conversion from/to arsdk enum.
-extension DriSupportedCapabilities: ArsdkMappableEnum {
-
-    /// Create set of dri capabilites from all value set in a bitfield
-    ///
-    /// - Parameter bitField: arsdk bitfield
-    /// - Returns: set containing all dri capabilites set in bitField
-    static func createSetFrom(bitField: UInt) -> Set<DriSupportedCapabilities> {
-        var result = Set<DriSupportedCapabilities>()
-        ArsdkFeatureDriSupportedCapabilitiesBitField.forAllSet(in: UInt(bitField)) { arsdkValue in
-            if let state = DriSupportedCapabilities(fromArsdk: arsdkValue) {
-                result.insert(state)
-            }
+    func onDriType(id: String!, type: ArsdkFeatureDriDriType, status: ArsdkFeatureDriStatus) {
+        var typeConfig: DriTypeConfig?
+        switch type {
+        case .en4709_002:
+            typeConfig = .en4709_002(operatorId: id)
+        case .french:
+            typeConfig = .french
+        case .sdkCoreUnknown:
+            fallthrough
+        @unknown default:
+            ULog.w(.tag, "Unknown ArsdkFeatureDriType.")
         }
-        return result
+
+        switch status {
+        case .failure:
+            dri.update(typeState: .failure)
+        case .invalidId:
+            dri.update(typeState: .invalid_operator_id)
+        case .success:
+            if let typeConfig = typeConfig {
+                dri.update(typeState: .configured(type: typeConfig))
+            }
+        case .sdkCoreUnknown:
+            fallthrough
+        @unknown default:
+            ULog.w(.tag, "Unknown ArsdkFeatureDriStatus, skipping this event.")
+        }
+
+        dri.notifyUpdated()
     }
 
-    static var arsdkMapper = Mapper<DriSupportedCapabilities, ArsdkFeatureDriSupportedCapabilities>([
-        .onOff: .onOff])
+    func onCapabilities(supportedCapabilitiesBitField: UInt) {
+        supported = true
+
+        let onOff = ArsdkFeatureDriSupportedCapabilitiesBitField.isSet(.onOff,
+                                                                       inBitField: supportedCapabilitiesBitField)
+        capabilitiesDidChange(.modeSwitchSupport(onOff))
+
+        var supportedTypes = Set<DriType>()
+        if ArsdkFeatureDriSupportedCapabilitiesBitField.isSet(.frenchRegulation,
+                                                              inBitField: supportedCapabilitiesBitField) {
+            supportedTypes.insert(.french)
+        }
+        if ArsdkFeatureDriSupportedCapabilitiesBitField.isSet(.en4709_002Regulation,
+                                                              inBitField: supportedCapabilitiesBitField) {
+            supportedTypes.insert(.en4709_002)
+        }
+        capabilitiesDidChange(.type(supportedTypes))
+        dri.notifyUpdated()
+    }
 }
 
-/// Extension to make DriIdType storable.
+/// Extension to make `DriIdType` storable.
 extension DriIdType: StorableEnum {
     static var storableMapper = Mapper<DriIdType, String>([
         .ANSI_CTA_2063: "ansiCta2063",
         .FR_30_Octets: "fr30Octets"])
 }
 
+/// Extension to make `DriType` storable.
+extension DriType: StorableEnum {
+    static var storableMapper = Mapper<DriType, String>([
+        .en4709_002: "en4709_002",
+        .french: "french"])
+}
 /// Extension to make DriCore.DroneIdentifier storable.
 extension DriCore.DroneIdentifier: StorableType {
 
@@ -382,5 +471,52 @@ extension DriCore.DroneIdentifier: StorableType {
         return StorableDict([
             Key.type.rawValue: AnyStorable(type),
             Key.id.rawValue: AnyStorable(id)])
+    }
+}
+
+/// Extension to make DriType storable.
+extension DriTypeConfig: StorableType {
+
+    /// Store key.
+    private enum Key: String {
+        case type, operatorId
+    }
+
+    /// Constructor from store data.
+    ///
+    /// - Parameter content: store data
+    init?(from content: AnyObject?) {
+        if let content = StorableDict<String, AnyStorable>(from: content),
+            let type = String(AnyStorable(content[Key.type.rawValue])),
+            let operatorId = String(AnyStorable(content[Key.operatorId.rawValue])) {
+            switch type {
+            case "en4709_002":
+                self = .en4709_002(operatorId: operatorId)
+            case "french":
+                self = .french
+            default:
+                return nil
+            }
+        } else {
+            return nil
+        }
+    }
+
+    /// Convert to storable.
+    ///
+    /// - Returns: storable containing drone identifier
+    func asStorable() -> StorableProtocol {
+        let type: String
+        var operatorId: String = ""
+        switch self {
+        case .en4709_002(let id):
+            type = "en4709_002"
+            operatorId = id
+        case .french:
+            type = "french"
+        }
+        return StorableDict([
+            Key.type.rawValue: AnyStorable(type),
+            Key.operatorId.rawValue: AnyStorable(operatorId)])
     }
 }

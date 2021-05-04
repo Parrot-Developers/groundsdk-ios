@@ -87,12 +87,12 @@ public class OffScreenStreamRender {
     ///
     /// Histograms will be received by the call of renderOverlay(OverlayerData).
     public var histogramsEnabled: Bool {
+        get {
+            return _histogramsEnabled
+        }
         set {
             _histogramsEnabled = newValue
             applyHistogramsEnable()
-        }
-        get {
-            return _histogramsEnabled
         }
     }
 
@@ -101,7 +101,19 @@ public class OffScreenStreamRender {
     private var _histogramsEnabled = false
 
     /// Rendering overlayer.
+    /// Deprecated: use `overlayer2` instead.
     public weak var overlayer: Overlayer? {
+        didSet {
+            if overlayer != nil {
+                overlayer2 = self
+            } else {
+                overlayer2 = nil
+            }
+        }
+    }
+
+    /// Rendering overlayer.
+    public weak var overlayer2: Overlayer2? {
         didSet {
             applyOverlayer()
         }
@@ -110,12 +122,12 @@ public class OffScreenStreamRender {
     /// Enabling of zebras of overexposure image zones.
     /// 'true' to enable the zebras of overexposure zone.
     public var zebrasEnabled: Bool {
+        get {
+            return _zebrasEnabled
+        }
         set {
             _zebrasEnabled = newValue
             applyZebrasEnable()
-        }
-        get {
-            return _zebrasEnabled
         }
     }
 
@@ -266,8 +278,16 @@ public class OffScreenStreamRender {
     /// Applies configured overlayer to renderer.
     private func applyOverlayer() {
         if let renderer = renderer {
-            renderer.overlayer = overlayer
+            renderer.overlayer2 = overlayer2
         }
+    }
+}
+
+/// Extension to convert old `Overlayer` to `Overlayer2`.
+extension OffScreenStreamRender: Overlayer2 {
+    public func overlay(overlayContext: OverlayContext) {
+        overlayer?.overlay(renderPos: overlayContext.renderZoneHandle, contentPos: overlayContext.contentZoneHandle,
+                          histogram: overlayContext.histogram)
     }
 }
 

@@ -49,6 +49,7 @@ public protocol Histogram {
 /// Listener for rendering an overlay over a stream.
 ///
 /// Such a listener can be passed to a 'StreamView' by setting 'StreamView.overlayer'.
+/// Deprecated: use `Overlayer2` instead.
 @objc(GSOverlayer)
 public protocol Overlayer {
 
@@ -59,4 +60,45 @@ public protocol Overlayer {
     ///    - contentPos: Content position
     ///    - histogram: Frame histogram
     func overlay(renderPos: UnsafeRawPointer, contentPos: UnsafeRawPointer, histogram: Histogram?)
+}
+
+/// Overlay context data.
+@objc(GSOverlayContext)
+public protocol OverlayContext {
+    /** Area where the frame was rendered (including any padding introduced by scaling). */
+    var renderZone: CGRect {get}
+
+    /** Render zone handle; pointer of const struct pdraw_rect. */
+    var renderZoneHandle: UnsafeRawPointer {get}
+
+    /** Area where frame content was rendered (excluding any padding introduced by scaling). */
+    var contentZone: CGRect {get}
+
+    /** Content zone handle; pointer of const struct pdraw_rect. */
+    var contentZoneHandle: UnsafeRawPointer {get}
+
+    /** Session info handle; pointer of const struct pdraw_session_info. */
+    var sessionInfoHandle: UnsafeRawPointer {get}
+
+    /** Session metadata handle; pointer of const struct vmeta_session. */
+    var sessionMetadataHandle: UnsafeRawPointer {get}
+
+    /** Session metadata handle; pointer of const struct vmeta_session. */
+    var frameMetadataHandle: UnsafeRawPointer? {get}
+
+    /// Histogram.
+    var histogram: Histogram? {get}
+}
+
+/// Listener for rendering an overlay over a stream.
+///
+/// Such a listener can be passed to a 'StreamView' by setting 'StreamView.overlayer'.
+@objc(GSOverlayer2)
+public protocol Overlayer2 {
+
+    /// Called to render a GL overlay over a stream frame.
+    ///
+    /// - Parameters:
+    ///    - overlayContext: Overlay context
+    func overlay(overlayContext: OverlayContext)
 }

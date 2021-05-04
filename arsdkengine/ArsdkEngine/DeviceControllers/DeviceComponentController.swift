@@ -98,6 +98,12 @@ public class DeviceComponentController: NSObject {
     func didReceiveCommand(_ command: OpaquePointer) {
     }
 
+    /// API capabilities of the managed device are known.
+    ///
+    /// - Parameter api: the API capabilities received
+    func apiCapabilities(_ api: ArsdkApiCapabilities) {
+    }
+
     /// Send a command to the device
     ///
     /// - Parameter encoder: encoder of the command to send

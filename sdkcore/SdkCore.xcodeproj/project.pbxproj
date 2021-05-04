@@ -73,6 +73,7 @@
 		9B11B49C22243BED00C5408E /* SdkCore+Sink.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B11B49A22243BED00C5408E /* SdkCore+Sink.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9B3AD49622256F9000955E85 /* SdkCore+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3AD49422256F9000955E85 /* SdkCore+Frame.m */; };
 		9B3AD49722256F9000955E85 /* SdkCore+Frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B3AD49522256F9000955E85 /* SdkCore+Frame.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9B3F5AE225E7B8690010225E /* ArsdkApiCapabilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B3F5AE125E7B8690010225E /* ArsdkApiCapabilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9BB12FBF214A84730051A0F2 /* ArsdkCore+FlightLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9BB12FBD214A84730051A0F2 /* ArsdkCore+FlightLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9BB12FC0214A84730051A0F2 /* ArsdkCore+FlightLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB12FBE214A84730051A0F2 /* ArsdkCore+FlightLog.m */; };
 		F8140E941C98684500712C50 /* ArsdkNetBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = F8140E921C98684500712C50 /* ArsdkNetBackend.h */; };
@@ -201,6 +202,7 @@
 		9B11B49A22243BED00C5408E /* SdkCore+Sink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SdkCore+Sink.h"; path = "Stream/SdkCore+Sink.h"; sourceTree = SOURCE_ROOT; };
 		9B3AD49422256F9000955E85 /* SdkCore+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SdkCore+Frame.m"; sourceTree = "<group>"; };
 		9B3AD49522256F9000955E85 /* SdkCore+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SdkCore+Frame.h"; sourceTree = "<group>"; };
+		9B3F5AE125E7B8690010225E /* ArsdkApiCapabilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkApiCapabilities.h; sourceTree = "<group>"; };
 		9BB12FBD214A84730051A0F2 /* ArsdkCore+FlightLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ArsdkCore+FlightLog.h"; sourceTree = "<group>"; };
 		9BB12FBE214A84730051A0F2 /* ArsdkCore+FlightLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ArsdkCore+FlightLog.m"; sourceTree = "<group>"; };
 		F8140E921C98684500712C50 /* ArsdkNetBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArsdkNetBackend.h; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 				706070B822CA075500006C80 /* GLError.h */,
 				706070B922CA075500006C80 /* GLError.m */,
 				7C7C27811E5C54960084B4BD /* ArsdkBackendType.h */,
+				9B3F5AE125E7B8690010225E /* ArsdkApiCapabilities.h */,
 				F8B5369B1CC147E800277331 /* ArsdkCommand.h */,
 				F8B5369C1CC147E800277331 /* ArsdkCommand.m */,
 				F83BFC731CBBE32A00513169 /* ArsdkCore.h */,
@@ -530,6 +533,7 @@
 				710CAB8321F8B93900C6199B /* SdkCore+Stream.h in Headers */,
 				717246B421FA0D7300AB82E5 /* SdkCore+Source.h in Headers */,
 				710CAB8721F8B96200C6199B /* SdkCore+Renderer.h in Headers */,
+				9B3F5AE225E7B8690010225E /* ArsdkApiCapabilities.h in Headers */,
 				70569A0F21F8B4AC000FE1C2 /* PompLoopUtil.h in Headers */,
 				F83BFC751CBBE32A00513169 /* ArsdkCore.h in Headers */,
 				9B3AD49722256F9000955E85 /* SdkCore+Frame.h in Headers */,

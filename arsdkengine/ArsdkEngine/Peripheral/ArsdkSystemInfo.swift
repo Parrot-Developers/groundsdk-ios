@@ -48,6 +48,7 @@ class ArsdkSystemInfo: DeviceComponentController {
         case boardId = "boardId"
         case firmwareVersion = "firmwareVersion"
         case hardwareVersion = "hardwareVersion"
+        case updateRequirement = "updateRequirement"
     }
 
     private static let settingKey = "SystemInfo"
@@ -109,6 +110,16 @@ class ArsdkSystemInfo: DeviceComponentController {
         super.willForget()
     }
 
+    /// API capabilities of the managed device are known.
+    ///
+    /// - Parameter api: the API capabilities received
+    override func apiCapabilities(_ api: ArsdkApiCapabilities) {
+        let isUpdateRequired = (api == ArsdkApiCapabilities.updateOnly)
+        deviceStore.write(key: PersistedDataKey.updateRequirement, value: isUpdateRequired).commit()
+        systemInfo.update(isUpdateRequired: isUpdateRequired)
+        systemInfo.notifyUpdated()
+    }
+
     /// Called when the current firmware version changed
     ///
     /// - Note: this function will call `notifyUpdated()`.
@@ -137,6 +148,9 @@ class ArsdkSystemInfo: DeviceComponentController {
         }
         if let boardId: String = deviceStore.read(key: PersistedDataKey.boardId) {
             systemInfo.update(boardId: boardId)
+        }
+        if let isUpdateRequired: Bool = deviceStore.read(key: PersistedDataKey.updateRequirement) {
+            systemInfo.update(isUpdateRequired: isUpdateRequired)
         }
     }
 

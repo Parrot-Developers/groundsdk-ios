@@ -121,8 +121,13 @@ static struct arsdk_crashml_itf *get_crashml_itf(struct arsdk_ctrl *ctrl, short 
     return self;
 }
 
--(void)cancel {
+- (void)cancel {
     [super cancel];
+    // ignore request if already canceled
+    if (self.canceled) {
+        return;
+    }
+
     [self.arsdkCore dispatch:^{
         if (self->_request) {
             arsdk_crashml_req_cancel(self->_request);

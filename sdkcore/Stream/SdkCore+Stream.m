@@ -115,14 +115,7 @@ static void pdraw_open_response(struct pdraw *pdraw, int status, void *userdata)
         return;
     }
     [ULog e:TAG msg:@"pdraw_open_response error status: %d", status];
-    if (this.pdrawState == SdkCorePdrawStateOpening) {
-        this.pdrawState = SdkCorePdrawStateClosing;
-        [this streamClosing];
-    }
-    if (this.pdrawState == SdkCorePdrawStateClosing) {
-        this.pdrawState = SdkCorePdrawStateClosed;
-        [this streamClosed];
-    }
+    [this closeStream];
 }
 
 /**

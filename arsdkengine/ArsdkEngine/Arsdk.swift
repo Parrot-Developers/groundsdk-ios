@@ -67,7 +67,7 @@ class Arsdk: NSObject {
 extension Arsdk: ArsdkCoreListener {
 
     func onDeviceAdded(_ uid: String, type: Int, backendType: ArsdkBackendType,
-                       name: String, handle: CShort) {
+                       name: String, api: ArsdkApiCapabilities, handle: CShort) {
         if let model = DeviceModel.from(internalId: type),
             let provider = ArsdkDeviceProvider.getProvider(backendType: backendType) {
             let deviceController = engine.getOrCreateDeviceController(uid: uid, model: model, name: name)
@@ -340,7 +340,8 @@ extension ArsdkDeviceCtrlBackend: ArsdkCoreDeviceListener {
         deviceController.linkWillConnect(provider: provider)
     }
 
-    func onConnected() {
+    func onConnected(api: ArsdkApiCapabilities) {
+        deviceController.apiCapabilities(api)
         deviceController.linkDidConnect(provider: provider, backend: self)
     }
 

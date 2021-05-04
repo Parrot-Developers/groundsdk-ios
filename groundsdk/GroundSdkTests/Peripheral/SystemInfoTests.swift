@@ -97,6 +97,29 @@ class SystemInfoTests: XCTestCase {
         assertThat(systemInfo.isFirmwareBlacklisted, `is`(true))
     }
 
+    func testIsUpdateRequired() {
+        impl.publish()
+        var cnt = 0
+        let systemInfo = store.get(Peripherals.systemInfo)!
+        _ = store.register(desc: Peripherals.systemInfo) {
+            cnt += 1
+        }
+
+        // test initial value
+        assertThat(systemInfo.isUpdateRequired, `is`(false))
+        assertThat(cnt, `is`(0))
+
+        // change update requirement information
+        impl.update(isUpdateRequired: true).notifyUpdated()
+        assertThat(cnt, `is`(1))
+        assertThat(systemInfo.isUpdateRequired, `is`(true))
+
+        // setting the same should not change anything
+        impl.update(isUpdateRequired: true).notifyUpdated()
+        assertThat(cnt, `is`(1))
+        assertThat(systemInfo.isUpdateRequired, `is`(true))
+    }
+
     func testHardwareVersion() {
         impl.publish()
         var cnt = 0

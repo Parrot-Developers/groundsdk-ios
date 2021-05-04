@@ -48,6 +48,8 @@ extern ULogTag *TAG;
 @property (nonatomic) NSString * _Nonnull url;
 /** Tcp proxy for rtsp over mux */
 @property (nonatomic, assign) struct arsdk_device_tcp_proxy * _Nullable rtspProxy;
+/** Pdraw instance used */
+@property (nonatomic, assign) struct pdraw *pdraw;
 
 @end
 
@@ -74,20 +76,21 @@ extern ULogTag *TAG;
         [ULog e:TAG msg:@"ArsdkSource creation: nativeDevice not found"];
         return -ENODEV;
     }
-    
+
     const struct arsdk_device_info *info = NULL;
     int res = arsdk_device_get_info(device, &info);
     if (info == NULL) {
         [ULog e:TAG msg:@"ArsdkSource arsdk_device_get_info failed: %s", strerror(-res)];
         return res;
     }
-    
+
     struct arsdkctrl_backend *backend = arsdk_device_get_backend(device);
     if (backend == NULL) {
         [ULog e:TAG msg:@"ArsdkSource arsdk_device_get_backend failed"];
         return -ENODEV;
     }
-    
+
+    _pdraw = ppdraw;
     char *rtsp_url = NULL;
     switch (info->backend_type) {
         case ARSDK_BACKEND_TYPE_NET:
@@ -99,7 +102,7 @@ extern ULogTag *TAG;
                     res = asprintf(&rtsp_url, "rtsp://%s/%s", info->addr, [_url UTF8String]);
                     if (res <= 0) {
                         res = -ENOMEM;
-                        break;
+                        goto error;
                     }
                     res = pdraw_open_url(pdraw, rtsp_url);
                     free(rtsp_url);
@@ -115,30 +118,31 @@ extern ULogTag *TAG;
             if (backend_mux == NULL) {
                 res = -EINVAL;
                 [ULog e:TAG msg:@"ArsdkSource failed to get backend mux"];
-                break;
+                goto error;
             }
-            
+
             struct mux_ctx *mux = arsdkctrl_backend_mux_get_mux_ctx(backend_mux);
-            
+
             switch(info->type) {
                 case ARSDK_DEVICE_TYPE_SKYCTRL_3:
-                case ARSDK_DEVICE_TYPE_SKYCTRL_UA:
-                    res = arsdk_device_create_tcp_proxy(device, info->type, 554, &_rtspProxy);
-                    if (res < 0)
-                        break;
-                    res = asprintf(&rtsp_url, "rtsp://127.0.0.1:%d/%s",
-                                   arsdk_device_tcp_proxy_get_port(_rtspProxy), [_url UTF8String]);
-                    if (res <= 0) {
-                        res = -ENOMEM;
-                        break;
+                case ARSDK_DEVICE_TYPE_SKYCTRL_UA: {
+                    struct arsdk_device_tcp_proxy_cbs proxy_cbs = {
+                        .open = &proxy_open,
+                        .close = &proxy_close,
+                        .userdata = (__bridge_retained void *)self,
+                    };
+                    res = arsdk_device_create_tcp_proxy(device, info->type, 554, &proxy_cbs, &_rtspProxy);
+                    if (res < 0) {
+                        (void)(__bridge_transfer ArsdkSource *)proxy_cbs.userdata;
+                        goto error;
                     }
-                    res = pdraw_open_url_mux(pdraw, rtsp_url, mux);
-                    free(rtsp_url);
+                    /* wait proxy opening */
                     break;
+                }
                 default:
                     res = -ENODEV;
                     [ULog e:TAG msg:@"ArsdkSource device type(%d) unsupported", info->type];
-                    break;
+                    goto error;
             }
             break;
         }
@@ -147,6 +151,10 @@ extern ULogTag *TAG;
             [ULog e:TAG msg:@"ArsdkSource backend type(%d) unsupported", info->backend_type];
             break;
     }
+
+    return 0;
+error:
+    _pdraw = NULL;
     return res;
 }
 
@@ -157,4 +165,55 @@ extern ULogTag *TAG;
     }
 }
 
+static void proxy_open(struct arsdk_device_tcp_proxy *proxy, uint16_t localport,
+        void *userdata)
+{
+    ArsdkSource *source = (__bridge ArsdkSource *)(userdata);
+
+    [ULog i:TAG msg:@"ArsdkSource backend proxy_open"];
+
+    struct arsdk_device *device = arsdk_ctrl_get_device([source.arsdkCore ctrl], source.deviceHandle);
+    if (device == NULL) {
+        [ULog e:TAG msg:@"ArsdkSource backend arsdk_ctrl_get_device failed"];
+        return;
+    }
+
+    struct arsdkctrl_backend *backend = arsdk_device_get_backend(device);
+    if (backend == NULL) {
+        [ULog e:TAG msg:@"ArsdkSource backend arsdk_device_get_backend failed"];
+        return;
+    }
+
+    struct arsdkctrl_backend_mux *backend_mux = arsdkctrl_backend_get_child(backend);
+    if (backend_mux == NULL) {
+        [ULog e:TAG msg:@"ArsdkSource backend arsdkctrl_backend_get_child failed"];
+        return;
+    }
+
+    struct mux_ctx *mux = arsdkctrl_backend_mux_get_mux_ctx(backend_mux);
+    if (mux == NULL) {
+        [ULog e:TAG msg:@"ArsdkSource backend arsdkctrl_backend_mux_get_mux_ctx failed"];
+        return;
+    }
+
+    char *rtsp_url = NULL;
+    int res = asprintf(&rtsp_url, "rtsp://127.0.0.1:%d/%s",
+                   arsdk_device_tcp_proxy_get_port(source.rtspProxy), [source.url UTF8String]);
+    if (res <= 0) {
+        [ULog e:TAG msg:@"ArsdkSource backend asprintf failed"];
+        return;
+    }
+
+    res = pdraw_open_url_mux(source.pdraw, rtsp_url, mux);
+    free(rtsp_url);
+    if (res < 0)
+        [ULog e:TAG msg:@"ArsdkSource backend pdraw_open_url_mux failed"];
+}
+
+static void proxy_close(struct arsdk_device_tcp_proxy *proxy, void *userdata)
+{
+    (void)(__bridge_transfer ArsdkSource *)(userdata);
+
+    [ULog i:TAG msg:@"ArsdkSource backend proxy_close"];
+}
 @end

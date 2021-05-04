@@ -113,7 +113,11 @@ public protocol GlRenderSink: StreamSink {
     var histogramsEnabled: Bool { get set }
 
     /// Listener for overlay rendering.
+    /// Deprecated: use `overlayer2` instead.
     var overlayer: Overlayer? { get set }
+
+    /// Listener for overlay rendering.
+    var overlayer2: Overlayer2? { get set }
 
     /// Start renderer.
     ///

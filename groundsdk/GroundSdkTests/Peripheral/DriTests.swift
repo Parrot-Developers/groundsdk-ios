@@ -42,7 +42,6 @@ class DriTests: XCTestCase {
         store = ComponentStoreCore()
         backend = Backend()
         impl = DriCore(store: store!, backend: backend!)
-        backend.impl = impl
     }
 
     func testPublishUnpublish() {
@@ -86,30 +85,30 @@ class DriTests: XCTestCase {
         }
 
         assertThat(store!.get(Peripherals.dri), present())
-         // test initial value
-         assertThat(dri.mode!, `is`(false))
-         assertThat(cnt, `is`(0))
-         assertThat(backend.mode, `is`(false))
+        // test initial value
+        assertThat(dri.mode!, `is`(false))
+        assertThat(cnt, `is`(0))
+        assertThat(backend.mode, `is`(false))
 
-         // Activate switch mode
-         dri.mode!.value = true
-         assertThat(backend.mode, `is`(true))
-         assertThat(cnt, `is`(1))
+        // Activate switch mode
+        dri.mode!.value = true
+        assertThat(backend.mode, `is`(true))
+        assertThat(cnt, `is`(1))
 
-         // switch mode already enabled, nothing should happen
-         dri.mode!.value = true
-         assertThat(backend.mode, `is`(true))
-         assertThat(cnt, `is`(1))
+        // switch mode already enabled, nothing should happen
+        dri.mode!.value = true
+        assertThat(backend.mode, `is`(true))
+        assertThat(cnt, `is`(1))
 
-         // Disable switch mode
-         dri.mode!.value = false
-         assertThat(backend.mode, `is`(false))
-         assertThat(cnt, `is`(2))
+        // Disable switch mode
+        dri.mode!.value = false
+        assertThat(backend.mode, `is`(false))
+        assertThat(cnt, `is`(2))
 
-         // switch mode already disabled, nothing should happen
-         dri.mode!.value = false
-         assertThat(backend.mode, `is`(false))
-         assertThat(cnt, `is`(2))
+        // switch mode already disabled, nothing should happen
+        dri.mode!.value = false
+        assertThat(backend.mode, `is`(false))
+        assertThat(cnt, `is`(2))
     }
 
     func testTypeAndid() {
@@ -133,26 +132,184 @@ class DriTests: XCTestCase {
         assertThat(cnt, `is`(1))
 
         impl.update(droneId: DriCore.DroneIdentifier(type: .FR_30_Octets,
-                              id: "123456789012345678901234567890")).notifyUpdated()
+                                                     id: "123456789012345678901234567890")).notifyUpdated()
         assertThat(dri.droneId?.type, `is`(.FR_30_Octets))
         assertThat(dri.droneId?.id, `is`("123456789012345678901234567890"))
         assertThat(cnt, `is`(2))
 
         impl.update(droneId: DriCore.DroneIdentifier(type: .ANSI_CTA_2063,
-                             id: "1234567890123456789012345678901234567890")).notifyUpdated()
+                                                     id: "1234567890123456789012345678901234567890")).notifyUpdated()
         assertThat(dri.droneId?.type, `is`(.ANSI_CTA_2063))
         assertThat(dri.droneId?.id, `is`("1234567890123456789012345678901234567890"))
         assertThat(cnt, `is`(3))
+    }
+
+    func testSupportedTypes() {
+        impl.publish()
+        var cnt = 0
+        let dri = store.get(Peripherals.dri)!
+        _ = store.register(desc: Peripherals.dri) {
+            cnt += 1
+        }
+
+        // test initial value
+        assertThat(dri.type.supportedTypes, empty())
+        assertThat(cnt, `is`(0))
+
+        // update from backend
+        impl.update(supportedTypes: [.en4709_002]).notifyUpdated()
+        assertThat(dri.type, present())
+        assertThat(dri.type.supportedTypes, `is`([.en4709_002]))
+        assertThat(cnt, `is`(1))
+
+        // update from backend
+        impl.update(supportedTypes: Set(DriType.allCases)).notifyUpdated()
+        assertThat(dri.type.supportedTypes, `is`(Set(DriType.allCases)))
+        assertThat(cnt, `is`(2))
+
+        // same update from backend, should change nothing
+        impl.update(supportedTypes: Set(DriType.allCases)).notifyUpdated()
+        assertThat(dri.type.supportedTypes, `is`(Set(DriType.allCases)))
+        assertThat(cnt, `is`(2))
+    }
+
+    func testTypeState() {
+        impl.publish()
+        var cnt = 0
+        let dri = store.get(Peripherals.dri)!
+        _ = store.register(desc: Peripherals.dri) {
+            cnt += 1
+        }
+
+        // test initial value
+        assertThat(dri.type.state, nilValue())
+        assertThat(cnt, `is`(0))
+
+        // update from backend
+        impl.update(typeState: .updating).notifyUpdated()
+        assertThat(dri.type.state, `is`(.updating))
+        assertThat(cnt, `is`(1))
+
+        // same update from backend, should change nothing
+        impl.update(typeState: .updating).notifyUpdated()
+        assertThat(dri.type.state, `is`(.updating))
+        assertThat(cnt, `is`(1))
+
+        // update from backend
+        impl.update(typeState: .configured(type: .french)).notifyUpdated()
+        assertThat(dri.type.state, `is`(.configured(type: .french)))
+        assertThat(cnt, `is`(2))
+
+        // update from backend
+        impl.update(typeState: .configured(type: .en4709_002(operatorId: "operator1"))).notifyUpdated()
+        assertThat(dri.type.state, `is`(.configured(type: .en4709_002(operatorId: "operator1"))))
+        assertThat(cnt, `is`(3))
+
+        // update from backend
+        impl.update(typeState: .configured(type: .en4709_002(operatorId: "operator2"))).notifyUpdated()
+        assertThat(dri.type.state, `is`(.configured(type: .en4709_002(operatorId: "operator2"))))
+        assertThat(cnt, `is`(4))
+
+        // same update from backend, should change nothing
+        impl.update(typeState: .configured(type: .en4709_002(operatorId: "operator2"))).notifyUpdated()
+        assertThat(dri.type.state, `is`(.configured(type: .en4709_002(operatorId: "operator2"))))
+        assertThat(cnt, `is`(4))
+
+        // same update from backend
+        impl.update(typeState: nil).notifyUpdated()
+        assertThat(dri.type.state, nilValue())
+        assertThat(cnt, `is`(5))
+    }
+
+    func testTypeConfig() {
+        impl.update(supportedTypes: Set(DriType.allCases))
+        impl.publish()
+        var cnt = 0
+        let dri = store.get(Peripherals.dri)!
+        _ = store.register(desc: Peripherals.dri) {
+            cnt += 1
+        }
+
+        // test initial value
+        assertThat(dri.type.type, nilValue())
+        assertThat(backend.type, nilValue())
+        assertThat(cnt, `is`(0))
+
+        // change from api
+        dri.type.type = .french
+        assertThat(dri.type.type, nilValue())
+        assertThat(backend.type, `is`(.french))
+        assertThat(cnt, `is`(0))
+
+        // update from backend
+        impl.update(type: .french).notifyUpdated()
+        assertThat(dri.type.type, `is`(.french))
+        assertThat(cnt, `is`(1))
+
+        // set to same value from api, should change nothing
+        backend.type = nil
+        dri.type.type = .french
+        assertThat(dri.type.type, `is`(.french))
+        assertThat(backend.type, nilValue())
+        assertThat(cnt, `is`(1))
+
+        // change from api with an invalid operator identifier, should change nothing
+        dri.type.type = .en4709_002(operatorId: "invalidOperatorId")
+        assertThat(dri.type.type, `is`(.french))
+        assertThat(backend.type, nilValue())
+        assertThat(cnt, `is`(1))
+
+        // change from api with a valid operator identifier
+        dri.type.type = .en4709_002(operatorId: "FIN87astrdge12k8-xyz")
+        assertThat(dri.type.type, `is`(.french))
+        assertThat(backend.type, `is`(.en4709_002(operatorId: "FIN87astrdge12k8-xyz")))
+        assertThat(cnt, `is`(1))
+
+        // update from backend
+        impl.update(type: .en4709_002(operatorId: "FIN87astrdge12k8-xyz")).notifyUpdated()
+        assertThat(dri.type.type, `is`(.en4709_002(operatorId: "FIN87astrdge12k8-xyz")))
+        assertThat(cnt, `is`(2))
+
+        // same update from backend, should change nothing
+        impl.update(type: .en4709_002(operatorId: "FIN87astrdge12k8-xyz")).notifyUpdated()
+        assertThat(dri.type.type, `is`(.en4709_002(operatorId: "FIN87astrdge12k8-xyz")))
+        assertThat(cnt, `is`(2))
+
+        // change from api with a another operator identifier
+        dri.type.type = .en4709_002(operatorId: "FRAgroundsdktstp-abc")
+        assertThat(dri.type.type, `is`(.en4709_002(operatorId: "FIN87astrdge12k8-xyz")))
+        assertThat(backend.type, `is`(.en4709_002(operatorId: "FRAgroundsdktstp-abc")))
+        assertThat(cnt, `is`(2))
+
+        // update from backend
+        impl.update(type: .en4709_002(operatorId: "FRAgroundsdktstp-abc")).notifyUpdated()
+        assertThat(dri.type.type, `is`(.en4709_002(operatorId: "FRAgroundsdktstp-abc")))
+        assertThat(cnt, `is`(3))
+    }
+
+    func testDriTypeConfigValidation() {
+        assertThat(DriTypeConfig.french.isValid, `is`(true))
+        assertThat(DriTypeConfig.en4709_002(operatorId: "FIN87astrdge12k8-xyz").isValid, `is`(true))
+        assertThat(DriTypeConfig.en4709_002(operatorId: "fin87astrdge12k8-xyz").isValid, `is`(false))
+        assertThat(DriTypeConfig.en4709_002(operatorId: "FIN87Astrdge12k8-xyz").isValid, `is`(false))
+        assertThat(DriTypeConfig.en4709_002(operatorId: "FIN87bstrdge12k8-xyz").isValid, `is`(false))
+        assertThat(DriTypeConfig.en4709_002(operatorId: "FIN87astrdge12k8.xyz").isValid, `is`(false))
+        assertThat(DriTypeConfig.en4709_002(operatorId: "FIN87astrdge12k0-xyz").isValid, `is`(false))
+        assertThat(DriTypeConfig.en4709_002(operatorId: "FIN87astrdge12k8-xyy").isValid, `is`(false))
+        assertThat(DriTypeConfig.en4709_002(operatorId: "FIN87astrdge12k8").isValid, `is`(false))
     }
 }
 
 private class Backend: DriBackend {
     var mode: Bool = false
+    var type: DriTypeConfig?
 
     func set(mode: Bool) -> Bool {
         self.mode = mode
         return true
     }
 
-    var impl: DriCore?
+    func set(type: DriTypeConfig?) {
+        self.type = type
+    }
 }

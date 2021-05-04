@@ -37,10 +37,11 @@
     if (self) {
         int res;
 
-        struct arsdkctrl_backend_net_cfg cfg;
-        memset(&cfg, 0, sizeof(cfg));
-        cfg.stream_supported = 1;
-        cfg.qos_mode_supported = 0;
+        struct arsdkctrl_backend_net_cfg cfg = {
+            .stream_supported = 1,
+            .qos_mode_supported = 0,
+            .proto_v_max = 1,
+        };
         res = arsdkctrl_backend_net_new(arsdkCore.ctrl, &cfg, &_netBackend);
         if (res < 0) {
             [NSException raise:@"ArsdkNetBackend" format:@"arsdkctrl_backend_net_new returned an error: %i", res];

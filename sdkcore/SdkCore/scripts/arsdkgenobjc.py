@@ -72,7 +72,8 @@ def arg_type(feature_strict_name, arg, is_fun_arg = False):
         arsdkparser.ArArgType.U64: "uint64_t",
         arsdkparser.ArArgType.FLOAT: "float",
         arsdkparser.ArArgType.DOUBLE: "double",
-        arsdkparser.ArArgType.STRING: "NSString*"
+        arsdkparser.ArArgType.STRING: "NSString*",
+        arsdkparser.ArArgType.BINARY: "NSData*"
     }
 
     if isinstance(arg.argType, arsdkparser.ArEnum):
@@ -100,7 +101,8 @@ def arg_c_type(arg, is_fun_arg=False):
         arsdkparser.ArArgType.U64: "uint64_t",
         arsdkparser.ArArgType.FLOAT: "float",
         arsdkparser.ArArgType.DOUBLE: "double",
-        arsdkparser.ArArgType.STRING: "const char*"
+        arsdkparser.ArArgType.STRING: "const char*",
+        arsdkparser.ArArgType.BINARY: "struct arsdk_binary"
     }
     if isinstance(arg.argType, arsdkparser.ArEnum):
         argType = args[arsdkparser.ArArgType.I32]
@@ -122,6 +124,8 @@ def arg_name(arg):
 def arg_value_from_c_to_obj_c(feature_strict_name, arg):
     if arg.argType == arsdkparser.ArArgType.STRING:
         return "[NSString stringWithUTF8String:" + arg_name(arg) + "]"
+    elif arg.argType == arsdkparser.ArArgType.BINARY:
+        return "[NSData dataWithBytes:" + arg_name(arg) + ".cdata length:" + arg_name(arg) + ".len]"
     else:
         return arg_name(arg)
 
@@ -129,6 +133,8 @@ def arg_value_from_c_to_obj_c(feature_strict_name, arg):
 def arg_value_from_obj_c_to_c(feature_strict_name, arg):
     if arg.argType == arsdkparser.ArArgType.STRING:
         return "[" + arg_name(arg) + " UTF8String]"
+    elif arg.argType == arsdkparser.ArArgType.BINARY:
+        return "&c_" + arg_name(arg)
     elif arg_c_type(arg) != arg_type(feature_strict_name, arg):
         return "(" + arg_c_type(arg) + ")" + arg_name(arg)
     else:
@@ -309,6 +315,11 @@ def gen_encode_implementations(feature_obj, feature_name, cmds, out):
         out.write(" {\n")
         out.write("    return ^(struct arsdk_cmd* cmd) { \n")
         if cmd.args:
+            for arg in cmd.args:
+                if arg.argType == arsdkparser.ArArgType.BINARY:
+                    out.write("        struct arsdk_binary c_%s;\n", arg_name(arg))
+                    out.write("        c_%s.cdata = [%s bytes];\n", arg_name(arg), arg_name(arg))
+                    out.write("        c_%s.len = (uint32_t)[%s length];\n", arg_name(arg), arg_name(arg))
             out.write("        return arsdk_cmd_enc_%s_%s(cmd, %s);\n",
                     c_name(feature_name), c_name(cmd.name),
                     ", ".join(arg_value_from_obj_c_to_c(feature_obj.name, arg) for arg in cmd.args))

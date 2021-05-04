@@ -505,3 +505,76 @@ public class HistogramCore: Histogram {
         self.backend = backend
     }
 }
+
+/// Overlay context backend part.
+public protocol OverlayContextBackend: class {
+    /// Area where the frame was rendered (including any padding introduced by scaling).
+    var renderZone: CGRect {get}
+
+    /// Render zone handle.
+    var renderZoneHandle: UnsafeRawPointer {get}
+
+    /// Area where frame content was rendered (excluding any padding introduced by scaling)
+    var contentZone: CGRect {get}
+
+    /// Render zone handle.
+    var contentZoneHandle: UnsafeRawPointer {get}
+
+    /// Session info handle.
+    var sessionInfoHandle: UnsafeRawPointer {get}
+
+    /// Session metadata handle.
+    var sessionMetadataHandle: UnsafeRawPointer {get}
+
+    /// Frame metadata handler.
+    var frameMetadataHandle: UnsafeRawPointer? {get}
+
+    /// Histogram.
+    var histogram: Histogram? {get}
+}
+
+/// Internal histogram implementation.
+public class OverlayContextCore: OverlayContext {
+
+    /// Implementation backend.
+    private let backend: OverlayContextBackend
+
+    public var renderZone: CGRect {
+        return backend.renderZone
+    }
+
+    public var renderZoneHandle: UnsafeRawPointer {
+        return backend.renderZoneHandle
+    }
+
+    public var contentZone: CGRect {
+        return backend.contentZone
+    }
+
+    public var contentZoneHandle: UnsafeRawPointer {
+        return backend.contentZoneHandle
+    }
+
+    public var sessionInfoHandle: UnsafeRawPointer {
+        return backend.sessionInfoHandle
+    }
+
+    public var sessionMetadataHandle: UnsafeRawPointer {
+        return backend.sessionMetadataHandle
+    }
+
+    public var frameMetadataHandle: UnsafeRawPointer? {
+        return backend.frameMetadataHandle
+    }
+
+    public var histogram: Histogram? {
+        return backend.histogram
+    }
+
+    /// Constructor
+    ///
+    /// - Parameter backend: histogram backend
+    public init(backend: OverlayContextBackend) {
+        self.backend = backend
+    }
+}

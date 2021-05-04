@@ -74,7 +74,7 @@ extension Double {
     ///   - other: the other value
     ///   - delta: the maximal acceptance delta
     /// - Returns: `true` if this value is equal to the other one with the given acceptation delta
-    func isCloseTo(_ other: Double, withDelta delta: Double) -> Bool {
+    public func isCloseTo(_ other: Double, withDelta delta: Double) -> Bool {
         return abs(self - other) <= delta
     }
 

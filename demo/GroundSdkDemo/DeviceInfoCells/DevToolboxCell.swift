@@ -27,44 +27,48 @@
 //    OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 //    SUCH DAMAGE.
 
-import Foundation
+import UIKit
 import GroundSdk
 
-/// Extension that adds a formatted display string.
-extension IntSetting {
-    var displayString: String {
-        return String(format: "%d / %d / %d", min, value, max)
-    }
-}
+class DevToolboxCell: PeripheralProviderContentCell {
 
-/// Extension that adds a formatted display string.
-extension DoubleSetting {
-    var displayString: String {
-        return String(format: "%.2f / %.2f / %.2f", min, value, max)
-    }
-}
+    @IBOutlet weak var debugSettingsCount: UILabel!
+    @IBOutlet weak var latestDebugTagId: UILabel!
+    private var devToolbox: Ref<DevToolbox>?
 
-/// Extension that adds a formatted display string.
-extension NumericDebugSetting {
-    var displayString: String {
-        if let range = range {
-            return String(format: "%.2f / %.2f / %.2f", range.lowerBound, value, range.upperBound)
-        } else {
-            return String(format: "%.2f", value)
+    var viewController: UIViewController?
+
+    override func set(peripheralProvider: PeripheralProvider) {
+        super.set(peripheralProvider: peripheralProvider)
+        devToolbox = peripheralProvider.getPeripheral(Peripherals.devToolbox) { [unowned self] devToolbox in
+            if devToolbox != nil {
+                self.debugSettingsCount.text = devToolbox?.debugSettings.count.description
+                self.latestDebugTagId.text = devToolbox?.latestDebugTagId?.description ?? "-"
+                self.show()
+            } else {
+                self.hide()
+            }
         }
     }
-}
 
-/// Extension that adds a formatted display string.
-extension BoolSetting {
-    var displayString: String {
-        return value ? "On" : "Off"
-    }
-}
+    @IBAction func sendDebugTag(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Debug tag", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
-/// Extension that adds a formatted display string to CameraStyleParameter.
-extension CameraStyleParameter {
-    var displayString: String {
-        return String(format: "%d / %d / %d", min, value, max)
+        alert.addTextField(configurationHandler: { textField in
+            textField.placeholder = "Enter debug tag here..."
+        })
+
+        alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { [unowned self] _ in
+            if let debugTag = alert.textFields?.first?.text {
+                self.devToolbox?.value?.sendDebugTag(tag: debugTag)
+            }
+        }))
+        if let presenter = alert.popoverPresentationController {
+            presenter.sourceView = self
+            presenter.sourceRect = self.bounds
+        }
+
+        viewController?.present(alert, animated: true)
     }
 }

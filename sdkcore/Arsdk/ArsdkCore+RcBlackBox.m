@@ -108,7 +108,13 @@ static struct arsdk_blackbox_itf *get_blackbox_itf(struct arsdk_ctrl *ctrl, shor
     return self;
 }
 
--(void)cancel {
+- (void)cancel {
+    [super cancel];
+    // ignore request if already canceled
+    if (self.canceled) {
+        return;
+    }
+
     [self.arsdkCore dispatch:^{
         if (self->_listener) {
             arsdk_blackbox_listener_unregister(self->_listener);

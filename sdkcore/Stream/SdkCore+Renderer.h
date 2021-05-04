@@ -126,6 +126,35 @@ typedef NS_ENUM(NSInteger, SdkCoreStreamRenderingFillMode) {
 
 @end
 
+/** Data relative to the overlay. */
+@interface SdkCoreOverlayContext: NSObject
+
+/** Area where the frame was rendered (including any padding introduced by scaling). */
+@property (nonatomic, readonly) CGRect renderZone;
+
+/** Render zone handle; pointer of const struct pdraw_rect.*/
+@property (nonatomic, readonly) const void * _Nonnull renderZoneHandle;
+
+/** Area where frame content was rendered (excluding any padding introduced by scaling). */
+@property (nonatomic, readonly) CGRect contentZone;
+
+/** Content zone handle; pointer of const struct pdraw_rect. */
+@property (nonatomic, readonly) const void * _Nonnull contentZoneHandle;
+
+/** Session info handle; pointer of const struct pdraw_session_info. */
+@property (nonatomic, readonly) const void * _Nonnull sessionInfoHandle;
+
+/** Session metadata handle; pointer of const struct vmeta_session. */
+@property (nonatomic, readonly) const void * _Nonnull sessionMetadataHandle;
+
+/** Frame metadata handle; pointer of const struct vmeta_frame. */
+@property (nonatomic, readonly) const void * _Nullable frameMetadataHandle;
+
+/** Histograme. **/
+@property (nonatomic, readonly) SdkCoreHistogram * _Nonnull histogram;
+
+@end
+
 /**
  Listener that will be called when overlay data are available.
  */
@@ -136,14 +165,10 @@ typedef NS_ENUM(NSInteger, SdkCoreStreamRenderingFillMode) {
  
  Called back on the render thread.
  
- @param renderZone: rendering area.
- @param contentPos: stream rendering area.
- @param histogram: histogram data,
-                   non-persistent data, should not be used after the return of the callback.
+ @param context: overlay context.
+                non-persistent data, should not be used after the return of the callback.
  */
-- (void)overlay:(const void * _Nonnull)renderZone
-     contentPos:(const void * _Nonnull)contentPos
-      histogram:(SdkCoreHistogram * _Nullable)histogram;
+- (void)overlay:(SdkCoreOverlayContext * _Nonnull)context;
 
 @end
 

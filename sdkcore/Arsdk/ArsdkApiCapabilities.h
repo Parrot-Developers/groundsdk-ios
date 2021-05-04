@@ -1,4 +1,4 @@
-// Copyright (C) 2019 Parrot Drones SAS
+//    Copyright (C) 2021 Parrot Drones SAS
 //
 //    Redistribution and use in source and binary forms, with or without
 //    modification, are permitted provided that the following conditions
@@ -27,44 +27,16 @@
 //    OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 //    SUCH DAMAGE.
 
-import Foundation
-import GroundSdk
+#import <Foundation/Foundation.h>
 
-/// Extension that adds a formatted display string.
-extension IntSetting {
-    var displayString: String {
-        return String(format: "%d / %d / %d", min, value, max)
-    }
-}
+/** Int definition of API capabilities. */
+typedef NS_ENUM(NSInteger, ArsdkApiCapabilities) {
+    // Numerical values must be kept in sync with C code (enum enum arsdk_device_api)
 
-/// Extension that adds a formatted display string.
-extension DoubleSetting {
-    var displayString: String {
-        return String(format: "%.2f / %.2f / %.2f", min, value, max)
-    }
-}
-
-/// Extension that adds a formatted display string.
-extension NumericDebugSetting {
-    var displayString: String {
-        if let range = range {
-            return String(format: "%.2f / %.2f / %.2f", range.lowerBound, value, range.upperBound)
-        } else {
-            return String(format: "%.2f", value)
-        }
-    }
-}
-
-/// Extension that adds a formatted display string.
-extension BoolSetting {
-    var displayString: String {
-        return value ? "On" : "Off"
-    }
-}
-
-/// Extension that adds a formatted display string to CameraStyleParameter.
-extension CameraStyleParameter {
-    var displayString: String {
-        return String(format: "%d / %d / %d", min, value, max)
-    }
-}
+    /** API capabilities unknown. */
+    ArsdkApiCapabilitiesUnknown = 0,
+    /** Full API supported. */
+    ArsdkApiCapabilitiesFull = 1,
+    /** Update API only. */
+    ArsdkApiCapabilitiesUpdateOnly = 2,
+};

@@ -112,6 +112,8 @@ public class Peripherals: NSObject {
     public static let logControl = LogControlDesc()
     /// Certificate Uploader
     public static let certificateUploader = CertificateUploaderDesc()
+    /// Development toolbox.
+    public static let devToolbox = DevToolboxDesc()
 }
 
 /// Peripheral uid.
@@ -151,6 +153,7 @@ enum PeripheralUid: Int {
     case dri
     case logControl
     case certificateUploader
+    case devToolbox
 }
 
 /// Objective-C wrapper of Ref<Peripheral>. Required because swift generics can't be used from Objective-C.

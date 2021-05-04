@@ -781,6 +781,8 @@ public class MockGroundSdk: NSObject {
     let driMockBackend = DriMockBackend()
     class DriMockBackend: DriBackend {
         func set(mode: Bool) -> Bool {  return true }
+
+        func set(type: DriTypeConfig?) { }
     }
 }
 

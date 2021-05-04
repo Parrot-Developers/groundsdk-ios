@@ -49,6 +49,9 @@ public protocol SystemInfo: Peripheral {
     /// unavailable.
     var isFirmwareBlacklisted: Bool { get }
 
+    /// Whether an update is required.
+    var isUpdateRequired: Bool { get }
+
     /// Hardware version of the device.
     var hardwareVersion: String { get }
 

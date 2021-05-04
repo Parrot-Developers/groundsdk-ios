@@ -404,6 +404,9 @@ class DeviceController: NSObject {
     /// Memorize the previous data sync allowance value in order to notify only if it has changed.
     private var previousDataSyncAllowed = false
 
+    /// API Capabilities.
+    private var apiCapabilities = ArsdkApiCapabilities.unknown
+
     /// Constructor
     ///
     /// - Parameters:
@@ -929,6 +932,17 @@ extension DeviceController: DeviceCoreDelegate {
 
 // Backend callbacks
 extension DeviceController {
+    final func apiCapabilities(_ api: ArsdkApiCapabilities) {
+        if api != apiCapabilities {
+            guard api != ArsdkApiCapabilities.unknown else {
+                ULog.w(.ctrlTag, "Bad API capabilities \(api)")
+                return
+            }
+            apiCapabilities = api
+            componentControllers.forEach { component in component.apiCapabilities(api) }
+        }
+    }
+
     final func linkWillConnect(provider: DeviceProvider) {
         if activeProvider == nil || activeProvider == provider {
             activeProvider = provider

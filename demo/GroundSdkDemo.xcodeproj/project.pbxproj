@@ -51,6 +51,11 @@
 		681A967522147CFF00172594 /* ThermalStreamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681A967422147CFF00172594 /* ThermalStreamCell.swift */; };
 		681A967722147E4400172594 /* ThermalStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681A967622147E4400172594 /* ThermalStreamViewController.swift */; };
 		682AB15422CCF43300F8C763 /* ThermalCameraAlignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682AB15322CCF43300F8C763 /* ThermalCameraAlignmentViewController.swift */; };
+		682B3A5223DB3DE8001C5D25 /* DevToolboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B3A5123DB3DE8001C5D25 /* DevToolboxCell.swift */; };
+		682B3A5423DB4F73001C5D25 /* DevToolboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B3A5323DB4F73001C5D25 /* DevToolboxViewController.swift */; };
+		682B3A5923DEDDCD001C5D25 /* DevToolbox.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 682B3A5723DEDDCD001C5D25 /* DevToolbox.storyboard */; };
+		68D4FC9E25B7470800CD84CA /* Dri.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68D4FC9C25B7470800CD84CA /* Dri.storyboard */; };
+		68D4FCA025B7472400CD84CA /* DriViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D4FC9F25B7472400CD84CA /* DriViewController.swift */; };
 		68ED066422159FC2007DAECE /* ThermalStream.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68ED066222159FC2007DAECE /* ThermalStream.storyboard */; };
 		70139B4A23181C7A0014F200 /* PilotingControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70139B4923181C7A0014F200 /* PilotingControlViewController.swift */; };
 		70139B4D23181CCD0014F200 /* PilotingControl.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70139B4B23181CCD0014F200 /* PilotingControl.storyboard */; };
@@ -263,6 +268,11 @@
 		681A967422147CFF00172594 /* ThermalStreamCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalStreamCell.swift; sourceTree = "<group>"; };
 		681A967622147E4400172594 /* ThermalStreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalStreamViewController.swift; sourceTree = "<group>"; };
 		682AB15322CCF43300F8C763 /* ThermalCameraAlignmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalCameraAlignmentViewController.swift; sourceTree = "<group>"; };
+		682B3A5123DB3DE8001C5D25 /* DevToolboxCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevToolboxCell.swift; sourceTree = "<group>"; };
+		682B3A5323DB4F73001C5D25 /* DevToolboxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevToolboxViewController.swift; sourceTree = "<group>"; };
+		682B3A5823DEDDCD001C5D25 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/DevToolbox.storyboard; sourceTree = "<group>"; };
+		68D4FC9D25B7470800CD84CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Dri.storyboard; sourceTree = "<group>"; };
+		68D4FC9F25B7472400CD84CA /* DriViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriViewController.swift; sourceTree = "<group>"; };
 		68ED066322159FC2007DAECE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ThermalStream.storyboard; sourceTree = "<group>"; };
 		70139B4923181C7A0014F200 /* PilotingControlViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotingControlViewController.swift; sourceTree = "<group>"; };
 		70139B4C23181CCD0014F200 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PilotingControl.storyboard; sourceTree = "<group>"; };
@@ -468,6 +478,8 @@
 				70139B4B23181CCD0014F200 /* PilotingControl.storyboard */,
 				7C6BD8781D476158005D415A /* BoolSettingView.xib */,
 				7C32DDDF1F03AE8300B9E8F9 /* Camera.storyboard */,
+				682B3A5723DEDDCD001C5D25 /* DevToolbox.storyboard */,
+				68D4FC9C25B7470800CD84CA /* Dri.storyboard */,
 				7C5C43461E0156C100B8829C /* DroneFinder.storyboard */,
 				712A9F54220447B900BD4DFC /* FileReplay.storyboard */,
 				F8C252F51FD04CCE00A87B5F /* FirmwareManager.storyboard */,
@@ -524,6 +536,7 @@
 				F8D32CDA1EF1955600074795 /* CopterMotorsCell.swift */,
 				1D2194E71EE83883005A6883 /* CrashReportDownloaderCell.swift */,
 				F88468801DED8AC900ACE941 /* DeviceContentCell.swift */,
+				682B3A5123DB3DE8001C5D25 /* DevToolboxCell.swift */,
 				7C1EBC1B1DB0FF41002B4724 /* DroneFinderCell.swift */,
 				0237585B209D9F390077F63C /* FlightDataDownloaderCell.swift */,
 				7C4487601CF5FEAB0056F5AC /* FlightIndicatorsCell.swift */,
@@ -584,6 +597,8 @@
 				7C7425041F5ED0AA003A396E /* ChooseEnumViewController.swift */,
 				F878C5F2203356B90090B7C2 /* ChooseNumberViewController.swift */,
 				9BF5448C22BA3D1D00452895 /* CopilotViewController.swift */,
+				682B3A5323DB4F73001C5D25 /* DevToolboxViewController.swift */,
+				68D4FC9F25B7472400CD84CA /* DriViewController.swift */,
 				7C1EBC1D1DB10AC0002B4724 /* DroneFinderViewController.swift */,
 				F8C252F31FD043B400A87B5F /* FirmwareManagerViewController.swift */,
 				027364AB209753E900C16142 /* GeofenceViewController.swift */,
@@ -812,12 +827,14 @@
 				712A9F55220447B900BD4DFC /* FileReplay.storyboard in Resources */,
 				7CA1C99C1C807D5000FE9ED4 /* Assets.xcassets in Resources */,
 				7C32DDE01F03AE8300B9E8F9 /* Camera.storyboard in Resources */,
+				682B3A5923DEDDCD001C5D25 /* DevToolbox.storyboard in Resources */,
 				02BBE9C72051745300476F93 /* PoiPiloting.storyboard in Resources */,
 				02F39FF920AC22900058890D /* UserAccount.storyboard in Resources */,
 				70AFB52D2559C75E00DA7DE7 /* hmd.bin in Resources */,
 				9B31E00C21C947E9006F389E /* ThermalControl.storyboard in Resources */,
 				F80065442003A506006669BD /* MagnetometerWith1StepCalib.storyboard in Resources */,
 				7037D19022C616FC002CB93A /* Hmd.storyboard in Resources */,
+				68D4FC9E25B7470800CD84CA /* Dri.storyboard in Resources */,
 				9B48547C217F60B6007D1CFC /* RemovableUserStorage.storyboard in Resources */,
 				7CA1C99A1C807D5000FE9ED4 /* Main.storyboard in Resources */,
 				F804B01B20D9879800BE2CF7 /* anafi4k_app_defaults.plist in Resources */,
@@ -941,6 +958,7 @@
 				7CD6766F1DEEE7BF005BFA68 /* MediaStoreDeleteViewController.swift in Sources */,
 				02FC4C7F2024C40100D76490 /* FlightMeterCell.swift in Sources */,
 				F87C03751D12EB0F007B2391 /* VerticalSlider.swift in Sources */,
+				682B3A5223DB3DE8001C5D25 /* DevToolboxCell.swift in Sources */,
 				F8A2E0CF1D7487C6001E391E /* ReturnHomeGpControllerBackend.swift in Sources */,
 				7C7CF4DE1D18288D000BB8FC /* AlarmsCell.swift in Sources */,
 				F87C03731D12E0C2007B2391 /* CompassView.swift in Sources */,
@@ -979,6 +997,7 @@
 				02CE4472208E1900007B9F9F /* SkyCtrl3MappingEditViewController.swift in Sources */,
 				027364A7209748B400C16142 /* GeofenceCell.swift in Sources */,
 				7CA8BDBB1ECC847200B79CCC /* RadioCell.swift in Sources */,
+				68D4FCA025B7472400CD84CA /* DriViewController.swift in Sources */,
 				02DDAB2E1FE41B7500B9150B /* AnnotationMapViewController.swift in Sources */,
 				708D7D70213E87E9009DBD12 /* FlightLogReporterCell.swift in Sources */,
 				02D39E1C207D03B200494EC4 /* TargetTrackerCell.swift in Sources */,
@@ -987,6 +1006,7 @@
 				F821EA17203448A00091C186 /* CameraChangeZoomViewController.swift in Sources */,
 				F82C3E9F1DDC6975000804C5 /* StreamServerCell.swift in Sources */,
 				F8A437C81D4F34A6009873EB /* VerticalJoystickView.swift in Sources */,
+				682B3A5423DB4F73001C5D25 /* DevToolboxViewController.swift in Sources */,
 				9B73BDC62216FFF8008DA1F7 /* LedsCell.swift in Sources */,
 				7C5F9D251DEC3BDF00E846D8 /* MediaStoreCell.swift in Sources */,
 				F8ED48BA1E828D4100C0FFC0 /* UpdaterCell.swift in Sources */,
@@ -1092,6 +1112,22 @@
 				02F39FF820AC22900058890D /* Base */,
 			);
 			name = UserAccount.storyboard;
+			sourceTree = "<group>";
+		};
+		682B3A5723DEDDCD001C5D25 /* DevToolbox.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				682B3A5823DEDDCD001C5D25 /* Base */,
+			);
+			name = DevToolbox.storyboard;
+			sourceTree = "<group>";
+		};
+		68D4FC9C25B7470800CD84CA /* Dri.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				68D4FC9D25B7470800CD84CA /* Base */,
+			);
+			name = Dri.storyboard;
 			sourceTree = "<group>";
 		};
 		68ED066222159FC2007DAECE /* ThermalStream.storyboard */ = {

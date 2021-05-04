@@ -116,8 +116,13 @@ static struct arsdk_updater_itf *get_updater_itf(struct arsdk_ctrl *ctrl, short 
     return self;
 }
 
--(void)cancel {
+- (void)cancel {
     [super cancel];
+    // ignore request if already canceled
+    if (self.canceled) {
+        return;
+    }
+
     [self.arsdkCore dispatch:^{
         if (self->_request) {
             arsdk_updater_req_upload_cancel(self->_request);

@@ -71,6 +71,31 @@ PDRAW_VIDEO_RENDERER_TRANSITION_FLAG_RECONFIGURE \
 @property (nonatomic) const float * _Nullable histogramLuma;
 /** Length of histogram channel luma. */
 @property (nonatomic) size_t histogramLumaLen;
+/**
+ Updates hitogram data.
+
+ @param frameExtra: frame extraneous data.
+ */
+- (void) update:(const struct pdraw_video_frame_extra * _Nullable) frameExtra;
+@end
+
+@interface SdkCoreOverlayContext()
+/** Render zone. */
+@property (nonatomic) CGRect renderZone;
+/** Render zone handle; (const struct pdraw_rect *) */
+@property (nonatomic) const void * _Nonnull renderZoneHandle;
+/** Content zone. */
+@property (nonatomic) CGRect contentZone;
+/** Content zone handle; (const struct pdraw_rect *) */
+@property (nonatomic) const void * _Nonnull contentZoneHandle;
+/** Session Info handle; (const struct pdraw_session_info *) */
+@property (nonatomic) const void * _Nonnull sessionInfoHandle;
+/** Session metadata handle; (const struct vmeta_session *) */
+@property (nonatomic) const void * _Nonnull sessionMetadataHandle;
+/** Frame metadata handle; (const struct vmeta_frame *) */
+@property (nonatomic) const void * _Nullable frameMetadataHandle;
+/** Histogram */
+@property (nonatomic) SdkCoreHistogram * _Nonnull histogram;
 @end
 
 @interface SdkCoreRenderer()
@@ -83,6 +108,9 @@ PDRAW_VIDEO_RENDERER_TRANSITION_FLAG_RECONFIGURE \
 @property (nonatomic) CGRect contentZoneTmp;
 @property (nonatomic) id<SdkCoreTextureLoaderListener>textureLoaderListener;
 @property (nonatomic) id<SdkCoreRendererOverlayListener>overlayListener;
+
+/** Overlay context. Only used in overlay callback. */
+@property (nonatomic) SdkCoreOverlayContext* overlayContext;
 
 @end
 
@@ -142,47 +170,30 @@ static void render_overlay_cb(struct pdraw *pdraw,
     if (this == nil ||
         render_pos == NULL ||
         content_pos == NULL ||
-        frame_extra == NULL) {
+        session_info == NULL ||
+        session_meta == NULL) {
         // invalid parameters
         return;
     }
 
-    SdkCoreHistogram *histogram = [[SdkCoreHistogram alloc] init];
-
-    if (frame_extra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_RED] > 0) {
-        [histogram setHistogramRed:frame_extra->histogram[PDRAW_HISTOGRAM_CHANNEL_RED]];
-        [histogram setHistogramRedLen:frame_extra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_RED]];
-    } else {
-        [histogram setHistogramRed:nil];
-        [histogram setHistogramRedLen:0];
-    }
-
-    if (frame_extra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_GREEN] > 0) {
-        [histogram setHistogramGreen:frame_extra->histogram[PDRAW_HISTOGRAM_CHANNEL_GREEN]];
-        [histogram setHistogramGreenLen:frame_extra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_GREEN]];
-    } else {
-        [histogram setHistogramGreen:nil];
-        [histogram setHistogramGreenLen:0];
-    }
-
-    if (frame_extra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_BLUE] > 0) {
-        [histogram setHistogramBlue:frame_extra->histogram[PDRAW_HISTOGRAM_CHANNEL_BLUE]];
-        [histogram setHistogramBlueLen:frame_extra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_BLUE]];
-    } else {
-        [histogram setHistogramBlue:nil];
-        [histogram setHistogramBlueLen:0];
-    }
-
-    if (frame_extra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_LUMA] > 0) {
-        [histogram setHistogramLuma:frame_extra->histogram[PDRAW_HISTOGRAM_CHANNEL_LUMA]];
-        [histogram setHistogramLumaLen:frame_extra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_LUMA]];
-    } else {
-        [histogram setHistogramLuma:nil];
-        [histogram setHistogramLumaLen:0];
-    }
-
     if (this.overlayListener != nil) {
-        [this.overlayListener overlay:render_pos contentPos:content_pos histogram:histogram];
+        [this.overlayContext setRenderZoneHandle: render_pos];
+        [this.overlayContext setRenderZone: CGRectMake(render_pos->x, render_pos->y,
+                                                       render_pos->width, render_pos->height)];
+
+        [this.overlayContext setContentZoneHandle: content_pos];
+        [this.overlayContext setContentZone: CGRectMake(content_pos->x, content_pos->y,
+                                                        content_pos->width, content_pos->height)];
+
+        [this.overlayContext setSessionInfoHandle: session_info];
+
+        [this.overlayContext setSessionMetadataHandle: session_meta];
+
+        [this.overlayContext setFrameMetadataHandle: frame_meta];
+
+        [this.overlayContext.histogram update: frame_extra];
+
+        [this.overlayListener overlay:this.overlayContext];
     }
 }
 
@@ -205,6 +216,7 @@ static void render_overlay_cb(struct pdraw *pdraw,
         self.overlayListener = overlayListener;
         self.pdraw = pdraw;
         self.pdrawRenderer = NULL;
+        self.overlayContext = [[SdkCoreOverlayContext alloc] init];
 
         struct pdraw_video_renderer_params params = {
             .enable_hmd_distortion_correction = 0,
@@ -393,4 +405,49 @@ static void render_overlay_cb(struct pdraw *pdraw,
 @end
 
 @implementation SdkCoreHistogram
+
+- (void) update:(const struct pdraw_video_frame_extra * _Nullable) frameExtra {
+    if (frameExtra != NULL && frameExtra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_RED] > 0) {
+        [self setHistogramRed:frameExtra->histogram[PDRAW_HISTOGRAM_CHANNEL_RED]];
+        [self setHistogramRedLen:frameExtra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_RED]];
+    } else {
+        [self setHistogramRed:nil];
+        [self setHistogramRedLen:0];
+    }
+
+    if (frameExtra != NULL && frameExtra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_GREEN] > 0) {
+        [self setHistogramGreen:frameExtra->histogram[PDRAW_HISTOGRAM_CHANNEL_GREEN]];
+        [self setHistogramGreenLen:frameExtra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_GREEN]];
+    } else {
+        [self setHistogramGreen:nil];
+        [self setHistogramGreenLen:0];
+    }
+
+    if (frameExtra != NULL && frameExtra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_BLUE] > 0) {
+        [self setHistogramBlue:frameExtra->histogram[PDRAW_HISTOGRAM_CHANNEL_BLUE]];
+        [self setHistogramBlueLen:frameExtra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_BLUE]];
+    } else {
+        [self setHistogramBlue:nil];
+        [self setHistogramBlueLen:0];
+    }
+
+    if (frameExtra != NULL && frameExtra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_LUMA] > 0) {
+        [self setHistogramLuma:frameExtra->histogram[PDRAW_HISTOGRAM_CHANNEL_LUMA]];
+        [self setHistogramLumaLen:frameExtra->histogram_len[PDRAW_HISTOGRAM_CHANNEL_LUMA]];
+    } else {
+        [self setHistogramLuma:nil];
+        [self setHistogramLumaLen:0];
+    }
+}
+@end
+
+@implementation SdkCoreOverlayContext
+
+- (instancetype _Nullable)init {
+    self = [super init];
+    if (self) {
+        self.histogram = [[SdkCoreHistogram alloc] init];
+    }
+    return self;
+}
 @end

@@ -138,6 +138,7 @@ class DroneInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             addCell("flightLogDownloader", section: peripheralSection)
             addCell("logControl", section: peripheralSection)
             addCell("certificateUploader", section: peripheralSection)
+            addCell("devToolbox", section: peripheralSection)
         }
     }
 
@@ -165,6 +166,8 @@ class DroneInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             removableUserStorageCell.viewController = self
         } else if let attitudeIndicatorCell = cell as? AttitudeIndicatorCell {
             attitudeIndicatorCell.viewController = self
+        } else if let devToolboxCell = cell as? DevToolboxCell {
+            devToolboxCell.viewController = self
         }
 
         cells[section].append(cell)

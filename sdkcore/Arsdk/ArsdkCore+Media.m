@@ -225,8 +225,13 @@ static struct arsdk_media_res *get_resource_of_format(struct arsdk_media* media,
     return self;
 }
 
--(void)cancel {
+- (void)cancel {
     [super cancel];
+    // ignore request if already canceled
+    if (self.canceled) {
+        return;
+    }
+
     [self.arsdkCore dispatch:^{
         if (self->_request) {
             arsdk_media_req_list_cancel(self->_request);
@@ -319,8 +324,13 @@ static void request_list_completed(struct arsdk_media_itf *itf, struct arsdk_med
     return self;
 }
 
--(void)cancel {
+- (void)cancel {
     [super cancel];
+    // ignore request if already canceled
+    if (self.canceled) {
+        return;
+    }
+
     [self.arsdkCore dispatch:^{
         if (self->_request) {
             arsdk_media_req_download_cancel(self->_request);
@@ -445,8 +455,13 @@ static void download_thumbnail_completed(struct arsdk_media_itf *itf, struct ars
     return self;
 }
 
--(void)cancel {
+- (void)cancel {
     [super cancel];
+    // ignore request if already canceled
+    if (self.canceled) {
+        return;
+    }
+
     [self.arsdkCore dispatch:^{
         if (self->_request) {
             arsdk_media_req_download_cancel(self->_request);

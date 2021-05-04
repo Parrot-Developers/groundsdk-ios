@@ -29,6 +29,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ArsdkBackendType.h"
+#import "ArsdkApiCapabilities.h"
 
 /**
  ArsdkCore listener, notified when a device has been added/removed form arsdk
@@ -44,7 +45,7 @@
  @param handle: handle on the arsdk device
  */
 - (void)onDeviceAdded:(NSString* _Nonnull)uid type:(NSInteger)type backendType:(ArsdkBackendType)backendType
-                 name:(NSString* _Nonnull)name handle:(int16_t)handle;
+                 name:(NSString* _Nonnull)name api:(ArsdkApiCapabilities)api handle:(int16_t)handle;
 
 /**
  Called when a device has been removed from the native backend

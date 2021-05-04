@@ -84,6 +84,8 @@ import Foundation
 ///  - `Ephemeris` (Bool): Ephemeris files help the drone to be aware of its own gps position faster.
 ///      Default is `true`.
 ///
+///  - `DevToolbox` (Bool): enable development toolbox. Default is `false`.
+///
 /// Example: Enable Usb debug and disable offline settings
 ///
 ///     <key>GroundSdk</key>
@@ -283,6 +285,13 @@ public class GroundSdkConfig: NSObject {
         }
     }
 
+    /// Whether development toobox is enabled.
+    public var enableDevToolbox = false {
+        willSet(newValue) {
+            checkLocked()
+        }
+    }
+
     /// List of all supported devices.
     /// This API is ObjC only. For Swift, please use `supportedDevices`.
     @objc(supportedDevices)
@@ -425,6 +434,9 @@ public class GroundSdkConfig: NSObject {
             !blackboxPublicFolder.isEmpty {
             self.blackboxPublicFolder = blackboxPublicFolder
         }
+        if let enableDevToolbox = config?[Keys.enableDevToolbox.rawValue] as? Bool {
+            self.enableDevToolbox = enableDevToolbox
+        }
     }
 
     /// Settings info.plist keys.
@@ -456,6 +468,7 @@ public class GroundSdkConfig: NSObject {
         case gutmaLogQuotaMb = "GutmaLogQuotaMb"
         case crashReportQuotaMb = "CrashReportQuotaMb"
         case blackboxPublicFolder = "BlackboxPublicFolder"
+        case enableDevToolbox = "DevToolbox"
     }
 
     /// `true` if configuration is locked, i.e. the first ground sdk instance has already been created.

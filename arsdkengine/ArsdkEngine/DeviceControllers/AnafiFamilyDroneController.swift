@@ -123,6 +123,9 @@ class AnafiFamilyDroneController: DroneController {
         componentControllers.append(DriController(deviceController: self))
         componentControllers.append(LogControlController(deviceController: self))
         componentControllers.append(CertificateUploaderController(deviceController: self))
+        if GroundSdkConfig.sharedInstance.enableDevToolbox {
+            componentControllers.append(AnafiDevToolbox(deviceController: self))
+        }
         sendDateAndTime = { [weak self] in
             let dateFormatter = DateFormatter()
             dateFormatter.timeZone = NSTimeZone.system

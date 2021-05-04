@@ -79,7 +79,8 @@ typedef NS_ENUM(NSInteger, ArsdkConnCancelReason) {
  Called when the device is connected (i.e device json has be received). At this time the command interface has
  been created and the device may start to send commands
  */
-- (void)onConnected;
+- (void)onConnectedWithApi:(ArsdkApiCapabilities)api
+NS_SWIFT_NAME(onConnected(api:));
 
 /**
  Called when device has been disconnected

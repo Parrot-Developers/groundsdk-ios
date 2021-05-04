@@ -2,6 +2,7 @@
 #define Arsdk_h
 
 #include "ArsdkBackendType.h"
+#include "ArsdkApiCapabilities.h"
 #include "ArsdkCore.h"
 #include "ArsdkCore+Devices.h"
 #include "ArsdkCore+Stream.h"

@@ -33,6 +33,7 @@ import GroundSdk
 class SystemInfoCell: PeripheralProviderContentCell {
     @IBOutlet weak var firmwareVersion: UILabel!
     @IBOutlet weak var isFirmwareBlacklisted: UILabel!
+    @IBOutlet weak var isUpdateRequired: UILabel!
     @IBOutlet weak var hardwareVersion: UILabel!
     @IBOutlet weak var serial: UILabel!
     @IBOutlet weak var boardId: UILabel!
@@ -56,6 +57,7 @@ class SystemInfoCell: PeripheralProviderContentCell {
                     strongSelf.show()
                     strongSelf.firmwareVersion.text = systemInfo.firmwareVersion
                     strongSelf.isFirmwareBlacklisted.text = systemInfo.isFirmwareBlacklisted.description
+                    strongSelf.isUpdateRequired.text = systemInfo.isUpdateRequired.description
                     strongSelf.hardwareVersion.text = systemInfo.hardwareVersion
                     strongSelf.serial.text = systemInfo.serial
                     strongSelf.boardId.text = systemInfo.boardId

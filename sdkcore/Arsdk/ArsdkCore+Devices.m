@@ -45,17 +45,51 @@ short const ARSDK_INVALID_DEVICE_HANDLE = ARSDK_INVALID_HANDLE;
 @interface ArsdkTcpProxy ()
 /** The native tcp proxy */
 @property (nonatomic, assign) struct arsdk_device_tcp_proxy * _Nonnull proxy;
+/** Creation completion block */
+@property (nonatomic, copy) ArsdkTcpProxyCreationCompletion completionBlock;
+/** `YES` if the creation completion has already been called, otherwise `NO` */
+@property (nonatomic) BOOL completionCalled;
 
 @end
 
 @implementation ArsdkTcpProxy
 
-- (instancetype)initWithNativeProxy:(struct arsdk_device_tcp_proxy * _Nonnull) proxy {
+- (instancetype)initWithCompletion:(ArsdkTcpProxyCreationCompletion)completion {
     self = [super init];
     if (self) {
-        _proxy = proxy;
+        _completionBlock = completion;
+        _completionCalled = NO;
     }
     return self;
+}
+
+- (void) openWithNativeProxy:(struct arsdk_device_tcp_proxy * _Nonnull) proxy {
+    // Set native proxy
+    _proxy = proxy;
+
+    if (!_completionCalled) {
+        NSString *proxyAddress = nil;
+        int proxyPort = 0;
+
+        const char *addressCStr = arsdk_device_tcp_proxy_get_addr(_proxy);
+        proxyPort = arsdk_device_tcp_proxy_get_port(_proxy);
+        if (addressCStr != NULL && proxyPort > 0) {
+            proxyAddress = [NSString stringWithUTF8String:addressCStr];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.completionBlock(self, proxyAddress, proxyPort);
+        });
+        _completionCalled = YES;
+    }
+}
+
+- (void) close {
+    if (!_completionCalled) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.completionBlock(nil, nil, 0);
+        });
+        _completionCalled = YES;
+    }
 }
 
 - (void)dealloc {
@@ -303,26 +337,27 @@ short const ARSDK_INVALID_DEVICE_HANDLE = ARSDK_INVALID_HANDLE;
         struct arsdk_device *nativeDevice = arsdk_ctrl_get_device(self.ctrl, handle);
         if (nativeDevice ==  NULL) {
             [ULog e:TAG msg:@"ArsdkCore.createTcpProxy arsdk_ctrl_get_device: device not found"];
-            goto completion;
+            goto error;
         }
 
-        int res = arsdk_device_create_tcp_proxy(nativeDevice, (enum arsdk_device_type)deviceType, port, &proxy);
+        arsdkProxy = [[ArsdkTcpProxy alloc] initWithCompletion:completion];
+        struct arsdk_device_tcp_proxy_cbs proxy_cbs = {
+            .open = &proxy_open_cb,
+            .close = &proxy_close_cb,
+            .userdata = (__bridge_retained void *)arsdkProxy,
+        };
+        int res = arsdk_device_create_tcp_proxy(nativeDevice, (enum arsdk_device_type)deviceType, port, &proxy_cbs,
+                                                &proxy);
         if (res < 0) {
             [ULog e:TAG msg:@"ArsdkCore.createTcpProxy creating tcp proxy failed"];
-            goto completion;
+            (void)(__bridge_transfer ArsdkCoreDeviceListenerHandler *)proxy_cbs.userdata;
+            arsdkProxy = nil;
+            goto error;
         }
 
-        const char *addressCStr = arsdk_device_tcp_proxy_get_addr(proxy);
-        proxyPort = arsdk_device_tcp_proxy_get_port(proxy);
-        if (addressCStr != NULL && proxyPort >= 0) {
-            proxyAddress = [NSString stringWithUTF8String:addressCStr];
-        }
-
-        arsdkProxy = [[ArsdkTcpProxy alloc] initWithNativeProxy:proxy];
-
-    completion:
+    error:
         dispatch_async(dispatch_get_main_queue(), ^{
-            completion(arsdkProxy, proxyAddress, proxyPort);
+            completion(nil, nil, 0);
         });
     }];
 }
@@ -385,7 +420,7 @@ static void connected (struct arsdk_device *nativeDevice, const struct arsdk_dev
 
     dispatch_async(dispatch_get_main_queue(), ^{
         [handler.core deviceConnected:handler.handle];
-        [handler.listener onConnected];
+        [handler.listener onConnectedWithApi:(ArsdkApiCapabilities)info->api];
     });
 }
 
@@ -489,6 +524,19 @@ static void link_quality_log(struct arsdk_cmd_itf *itf, int32_t tx_quality,
                      int32_t rx_quality, int32_t rx_useful, void *userdata) {
     [ULog i:TAG msg:@"link quality tx_quality:%d rx_quality:%d rx_useful:%d",
             tx_quality, rx_quality, rx_useful];
+}
+
+static void proxy_open_cb(struct arsdk_device_tcp_proxy *proxy, uint16_t localport,
+        void *userdata)
+{
+    ArsdkTcpProxy *arsdkProxy = (__bridge ArsdkTcpProxy *)(userdata);
+    [arsdkProxy openWithNativeProxy: proxy];
+}
+
+static void proxy_close_cb(struct arsdk_device_tcp_proxy *proxy, void *userdata)
+{
+    ArsdkTcpProxy *arsdkProxy = (__bridge_transfer ArsdkTcpProxy *)(userdata);
+    [arsdkProxy close];
 }
 
 @end

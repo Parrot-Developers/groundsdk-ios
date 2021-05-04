@@ -121,8 +121,13 @@ static struct arsdk_flight_log_itf *get_flight_log_itf(struct arsdk_ctrl *ctrl, 
     return self;
 }
 
--(void)cancel {
+- (void)cancel {
     [super cancel];
+    // ignore request if already canceled
+    if (self.canceled) {
+        return;
+    }
+
     [self.arsdkCore dispatch:^{
         if (self->_request) {
             arsdk_flight_log_req_cancel(self->_request);

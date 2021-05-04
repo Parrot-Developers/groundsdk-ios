@@ -125,13 +125,25 @@ public class GlRenderSinkCore: SinkCore, GlRenderSink {
     private var textureFrameBackend = TextureLoaderFrameBackendCore()
 
     /// Listener for overlay rendering.
-    public var overlayer: Overlayer?
+    /// Deprecated: use `overlayer2` instead.
+    public var overlayer: Overlayer? {
+        didSet {
+            if overlayer == nil {
+                overlayer2 = nil
+            } else {
+                overlayer2 = self
+            }
+        }
+    }
 
-    /// Histogram.
-    private var histogram: HistogramCore
+    /// Listener for overlay rendering.
+    public var overlayer2: Overlayer2?
 
-    /// Histogram backend.
-    private var histogramBackend = HistogramBackendCore()
+    /// Overlay context.
+    private var overlayContext: OverlayContextCore?
+
+    /// Overlay context backend.
+    private var overlayContextBackend: OverlayContextBackendCore?
 
     /// Constructor.
     ///
@@ -141,7 +153,6 @@ public class GlRenderSinkCore: SinkCore, GlRenderSink {
     public init(streamCore: StreamCore, config: Config) {
         self.config = config
         textureFrame = TextureLoaderFrameCore(backend: textureFrameBackend)
-        histogram = HistogramCore(backend: histogramBackend)
         super.init(streamCore: streamCore)
     }
 
@@ -204,6 +215,14 @@ public class GlRenderSinkCore: SinkCore, GlRenderSink {
     }
 }
 
+/// Extension to convert old `Overlayer` to `Overlayer2`.
+extension GlRenderSinkCore: Overlayer2 {
+    public func overlay(overlayContext: OverlayContext) {
+        overlayer?.overlay(renderPos: overlayContext.renderZoneHandle, contentPos: overlayContext.contentZoneHandle,
+                           histogram: overlayContext.histogram)
+    }
+}
+
 /// Extension to convert rendering scale type and padding mode to SdkCoreStreamRenderingFillMode.
 extension GlRenderSinkCore {
 
@@ -258,11 +277,20 @@ extension GlRenderSinkCore: SdkCoreTextureLoaderListener {
 /// Implementation of overlay rendering listener protocol.
 extension GlRenderSinkCore: SdkCoreRendererOverlayListener {
 
-    public func overlay(_ renderZone: UnsafeRawPointer, contentPos: UnsafeRawPointer, histogram: SdkCoreHistogram?) {
-        if let overlayer = overlayer {
-            histogramBackend.data = histogram
-            overlayer.overlay(renderPos: renderZone, contentPos: contentPos,
-                              histogram: histogram != nil ? self.histogram : nil)
+    public func overlay(_ context: SdkCoreOverlayContext) {
+
+        if let overlayer = overlayer2 {
+            if let overlayContextBackend = overlayContextBackend {
+                overlayContextBackend.data = context
+            } else {
+                let backend = OverlayContextBackendCore(coreContext: context)
+                overlayContextBackend = backend
+                overlayContext = OverlayContextCore(backend: backend)
+            }
+
+            if let overlayContext = overlayContext {
+                overlayer.overlay(overlayContext: overlayContext)
+            }
         }
     }
 }
@@ -333,5 +361,67 @@ class HistogramBackendCore: HistogramBackend {
         } else {
             return nil
         }
+    }
+}
+
+/// Overlay context backend implementation.
+class OverlayContextBackendCore: OverlayContextBackend {
+
+    /// Overlay context core
+    var data: SdkCoreOverlayContext {
+        didSet {
+            histogramBackend.data = data.histogram
+        }
+    }
+
+    /// Histogram backend.
+    private var histogramBackend = HistogramBackendCore()
+
+    /// Histogram core.
+    private var histogramCore: HistogramCore
+
+    /// Area where the frame was rendered (including any padding introduced by scaling).
+    var renderZone: CGRect {
+        return data.renderZone
+    }
+
+    /// Render zone handle; pointer of const struct pdraw_rect.
+    var renderZoneHandle: UnsafeRawPointer {
+        return data.renderZoneHandle
+    }
+
+    /// Area where frame content was rendered (excluding any padding introduced by scaling).
+    var contentZone: CGRect {
+        return data.contentZone
+    }
+
+    /// Content zone handle; pointer of const struct pdraw_rect.
+    var contentZoneHandle: UnsafeRawPointer {
+        return data.contentZoneHandle
+    }
+
+    /// Session info handle; pointer of const struct pdraw_session_info.
+    var sessionInfoHandle: UnsafeRawPointer {
+        return data.sessionInfoHandle
+    }
+
+    /// Session metadata handle; pointer of const struct vmeta_session.
+    var sessionMetadataHandle: UnsafeRawPointer {
+        return data.sessionMetadataHandle
+    }
+
+    /// Session metadata handle; pointer of const struct vmeta_session.
+    var frameMetadataHandle: UnsafeRawPointer? {
+        return data.frameMetadataHandle
+    }
+
+    /// Histogram.
+    var histogram: Histogram? {
+        return histogramCore
+    }
+
+    init(coreContext: SdkCoreOverlayContext) {
+        data = coreContext
+        histogramCore = HistogramCore(backend: histogramBackend)
     }
 }

@@ -72,8 +72,8 @@
     GroundSdk *gsdk = [[GroundSdk alloc] init];
     __block int expectedList1Size = 2;
     __block int expectedList2Size = 1;
-    __block int list1ChangeCnt;
-    __block int list2ChangeCnt;
+    __block int list1ChangeCnt = 0;
+    __block int list2ChangeCnt = 0;
     // check getDroneList is callable
     GSDroneListRef *list1 = [gsdk getDroneList:^(NSArray<GSDroneListEntry *> *list) {
         XCTAssertEqual(list.count, expectedList1Size);

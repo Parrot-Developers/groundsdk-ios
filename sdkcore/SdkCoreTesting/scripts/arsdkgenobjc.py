@@ -40,7 +40,8 @@ def arg_type(feature_strict_name, arg, is_fun_arg=False):
         arsdkparser.ArArgType.U64: "uint64_t",
         arsdkparser.ArArgType.FLOAT: "float",
         arsdkparser.ArArgType.DOUBLE: "double",
-        arsdkparser.ArArgType.STRING: "NSString*"
+        arsdkparser.ArArgType.STRING: "NSString*",
+        arsdkparser.ArArgType.BINARY: "NSData*"
     }
 
     if isinstance(arg.argType, arsdkparser.ArEnum):
@@ -67,7 +68,8 @@ def arg_c_type(arg, is_fun_arg=False):
         arsdkparser.ArArgType.U64: "uint64_t",
         arsdkparser.ArArgType.FLOAT: "float",
         arsdkparser.ArArgType.DOUBLE: "double",
-        arsdkparser.ArArgType.STRING: "const char*"
+        arsdkparser.ArArgType.STRING: "const char*",
+        arsdkparser.ArArgType.BINARY: "struct arsdk_binary"
     }
     if isinstance(arg.argType, arsdkparser.ArEnum):
         argType = args[arsdkparser.ArArgType.I32]
@@ -90,6 +92,8 @@ def arg_name(arg):
 def arg_value_from_obj_c_to_c(feature_strict_name, arg):
     if arg.argType == arsdkparser.ArArgType.STRING:
         return "[" + arg_name(arg) + " UTF8String]"
+    elif arg.argType == arsdkparser.ArArgType.BINARY:
+        return "&c_" + arg_name(arg)
     elif arg_c_type(arg) != arg_type(feature_strict_name, arg):
         return "(" + arg_c_type(arg) + ")" + arg_name(arg)
     else:
@@ -216,6 +220,11 @@ def gen_expected_source_file(ctx, out):
             out.write("\n")
 
             if cmd.args:
+                for arg in cmd.args:
+                    if arg.argType == arsdkparser.ArArgType.BINARY:
+                        out.write("    struct arsdk_binary c_%s;\n", arg_name(arg))
+                        out.write("    c_%s.cdata = [%s bytes];\n", arg_name(arg), arg_name(arg))
+                        out.write("    c_%s.len = (uint32_t)[%s length];\n", arg_name(arg), arg_name(arg))
                 out.write("    int res = arsdk_cmd_enc_%s_%s(expectedCmd.cmd, %s);\n",
                     c_name(feature_name), c_name(cmd.name),
                     ", ".join(arg_value_from_obj_c_to_c(feature_obj.name, arg) for arg in cmd.args))
@@ -276,6 +285,9 @@ def gen_expected_source_file(ctx, out):
                         out.write("        NSString* my%sObj = [NSString stringWithUTF8String:my%s];\n",
                             arg_name(arg).title(), arg_name(arg).title())
                         out.write("        if (![%sObj isEqual:my%sObj]) return false;\n", arg_name(arg), arg_name(arg).title())
+                    elif arg.argType == arsdkparser.ArArgType.BINARY:
+                        out.write("        if (_%s.len != my%s.len) return false;\n", arg_name(arg), arg_name(arg).title())
+                        out.write("        if (memcmp(_%s.cdata, my%s.cdata, my%s.len)) return false;\n", arg_name(arg), arg_name(arg).title(), arg_name(arg).title())
                     else:
                         out.write("        if (_%s != my%s) return false;\n", arg_name(arg), arg_name(arg).title())
                     out.write("\n")
@@ -354,6 +366,11 @@ def gen_encoder_source_file(ctx, out):
 
             out.write("    return ^(struct arsdk_cmd* cmd) {\n")
             if evt.args:
+                for arg in evt.args:
+                    if arg.argType == arsdkparser.ArArgType.BINARY:
+                        out.write("        struct arsdk_binary c_%s;\n", arg_name(arg))
+                        out.write("        c_%s.cdata = [%s bytes];\n", arg_name(arg), arg_name(arg))
+                        out.write("        c_%s.len = (uint32_t)[%s length];\n", arg_name(arg), arg_name(arg))
                 out.write("        return arsdk_cmd_enc_%s_%s(cmd, %s);\n",
                     c_name(feature_name), c_name(evt.name),
                     ", ".join(arg_value_from_obj_c_to_c(feature_obj.name, arg) for arg in evt.args))

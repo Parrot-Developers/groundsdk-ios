@@ -60,6 +60,8 @@
 		<string>$(GSDK_INTERNAL_UPDATE_URL)</string>
 		<key>ApplicationKey</key>
 		<string>$(GSDK_APPKEY)</string>
+		<key>DevToolbox</key>
+		<true/>
 	</dict>
 	<key>LSApplicationCategoryType</key>
 	<false/>

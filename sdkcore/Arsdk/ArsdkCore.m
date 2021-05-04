@@ -192,6 +192,7 @@ static void device_added(struct arsdk_device *nativeDevice, void *userdata)
                                 type:info->type
                          backendType:(ArsdkBackendType)info->backend_type
                                 name:[NSString stringWithUTF8String:info->name]
+                                 api:(ArsdkApiCapabilities)info->api
                               handle:handle];
     });
 }

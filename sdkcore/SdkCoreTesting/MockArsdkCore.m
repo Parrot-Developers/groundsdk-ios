@@ -532,7 +532,8 @@
     device.type = (int)type;
     device.backendType = backendType;
     [_devices setObject:device forKey:[NSNumber numberWithShort:handle]];
-    [_listener onDeviceAdded:uid type:type backendType:backendType name:name handle:handle];
+    [_listener onDeviceAdded:uid type:type backendType:backendType name:name
+                         api:ArsdkApiCapabilitiesFull handle:handle];
 }
 
 - (void)removeDevice:(int16_t)handle {
@@ -547,7 +548,8 @@
 }
 
 - (void)deviceConnected:(int16_t)handle {
-    [[_devices objectForKey:[NSNumber numberWithShort:handle]].deviceListener onConnected];
+    [[_devices objectForKey:[NSNumber numberWithShort:handle]].deviceListener
+     onConnectedWithApi:ArsdkApiCapabilitiesFull];
 }
 
 - (void)deviceDisconnected:(int16_t)handle removing:(BOOL)removing {

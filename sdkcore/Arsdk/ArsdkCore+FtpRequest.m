@@ -122,8 +122,13 @@ static struct arsdk_ftp_itf *get_ftp_itf(struct arsdk_ctrl *ctrl, short device_h
     return self;
 }
 
--(void)cancel {
+- (void)cancel {
     [super cancel];
+    // ignore request if already canceled
+    if (self.canceled) {
+        return;
+    }
+
     [self.arsdkCore dispatch:^{
         if (self->_request) {
             arsdk_ftp_req_put_cancel(self->_request);

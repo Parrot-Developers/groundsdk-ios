@@ -184,6 +184,7 @@ static const void *const kLooperQueueIdentifier = &kLooperQueueIdentifier;
             self.running = false;
             pomp_loop_wakeup(self.loop);
         }
+        pomp_loop_idle_flush(_loop);
         pomp_loop_destroy(_loop);
         _loop = nil;
     }
